@@ -2,51 +2,51 @@
 
 import React, { useState, useMemo } from "react";
 import {
-  X,
-  BookOpen,
-  Search,
-  ChevronDown,
-  Sparkles,
-  HelpCircle,
-  Lightbulb,
-  Scale,
-  CheckCircle2,
+ X,
+ BookOpen,
+ Search,
+ ChevronDown,
+ Sparkles,
+ HelpCircle,
+ Lightbulb,
+ Scale,
+ CheckCircle2,
 } from "lucide-react";
 import { ZUS_GLOSSARY_TERMS } from "@hacknation/shared";
 import { useParentProfile } from "@/context/ParentProfileContext";
 
 export function TrudneSlowaModal() {
-  const { isGlossaryOpen, closeGlossary, activeGlossaryTermId } = useParentProfile();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [expandedId, setExpandedId] = useState<string | null>(activeGlossaryTermId || "podstawa-wymiaru");
+ const { isGlossaryOpen, closeGlossary, activeGlossaryTermId } = useParentProfile();
+ const [searchQuery, setSearchQuery] = useState("");
+ const [activeCategory, setActiveCategory] = useState<string>("all");
+ const [expandedId, setExpandedId] = useState<string | null>(activeGlossaryTermId || "podstawa-wymiaru");
 
-  React.useEffect(() => {
-    if (activeGlossaryTermId) {
-      setExpandedId(activeGlossaryTermId);
+ React.useEffect(() => {
+ if (activeGlossaryTermId) {
+ setExpandedId(activeGlossaryTermId);
     }
   }, [activeGlossaryTermId]);
 
-  const filteredTerms = useMemo(() => {
-    return ZUS_GLOSSARY_TERMS.filter((item) => {
-      const matchesCategory =
-        activeCategory === "all" || item.category === activeCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
+ const filteredTerms = useMemo(() => {
+ return ZUS_GLOSSARY_TERMS.filter((item) => {
+ const matchesCategory =
+ activeCategory === "all" || item.category === activeCategory;
+ const q = searchQuery.toLowerCase().trim();
+ const matchesSearch =
         !q ||
-        item.term.toLowerCase().includes(q) ||
-        item.plainTitle.toLowerCase().includes(q) ||
-        item.shortExplanation.toLowerCase().includes(q) ||
-        item.tags.some((t) => t.toLowerCase().includes(q));
-      return matchesCategory && matchesSearch;
+ item.term.toLowerCase().includes(q) ||
+ item.plainTitle.toLowerCase().includes(q) ||
+ item.shortExplanation.toLowerCase().includes(q) ||
+ item.tags.some((t) => t.toLowerCase().includes(q));
+ return matchesCategory && matchesSearch;
     });
   }, [searchQuery, activeCategory]);
 
-  if (!isGlossaryOpen) return null;
+ if (!isGlossaryOpen) return null;
 
-  return (
+ return (
     <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in">
-      <div className="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded max-w-3xl w-full shadow-2xl border border-[#dce1e5] overflow-hidden flex flex-col max-h-[90vh]">
         {/* Górny pasek modala */}
         <div className="bg-[#00416E] text-white p-5 sm:p-6 flex items-start justify-between gap-4">
           <div className="space-y-1">
@@ -59,85 +59,85 @@ export function TrudneSlowaModal() {
               <span>Słowniczek Trudnych Słów ZUS</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-300">
-              Urzędowe pojęcia przetłumaczone na prosty, ludzki język. Sprawdź, co dokładnie oznacza każde wyrażenie!
+ Urzędowe pojęcia przetłumaczone na prosty, ludzki język. Sprawdź, co dokładnie oznacza każde wyrażenie!
             </p>
           </div>
 
           <button
-            type="button"
-            onClick={closeGlossary}
-            className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors shrink-0"
-            aria-label="Zamknij słowniczek"
+ type="button"
+ onClick={closeGlossary}
+ className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-colors shrink-0"
+ aria-label="Zamknij słowniczek"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
         {/* Wyszukiwarka i filtry kategorii */}
-        <div className="p-4 sm:p-6 bg-slate-50 border-b border-slate-200 space-y-3">
+        <div className="p-4 sm:p-6 bg-[#f4f6f7] border-b border-[#dce1e5] space-y-3">
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
-              type="text"
-              placeholder="Szukaj pojęcia (np. 81,5%, L4 w ciąży, podstawa, 9 tygodni taty)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007834] shadow-2xs"
+ type="text"
+ placeholder="Szukaj pojęcia (np. 81,5%, L4 w ciąży, podstawa, 9 tygodni taty)..."
+ value={searchQuery}
+ onChange={(e) => setSearchQuery(e.target.value)}
+ className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007834] "
             />
           </div>
 
           <div className="flex flex-wrap items-center gap-1.5 text-xs">
             <button
-              type="button"
-              onClick={() => setActiveCategory("all")}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-                activeCategory === "all"
-                  ? "bg-[#007834] text-white shadow-2xs"
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-slate-200"
+ type="button"
+ onClick={() => setActiveCategory("all")}
+ className={`px-3 py-1.5 rounded font-bold transition-all ${
+ activeCategory === "all"
+                  ? "bg-[#007834] text-white "
+                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
               }`}
             >
-              Wszystkie ({ZUS_GLOSSARY_TERMS.length})
+ Wszystkie ({ZUS_GLOSSARY_TERMS.length})
             </button>
             <button
-              type="button"
-              onClick={() => setActiveCategory("finanse")}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-                activeCategory === "finanse"
-                  ? "bg-[#007834] text-white shadow-2xs"
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-slate-200"
+ type="button"
+ onClick={() => setActiveCategory("finanse")}
+ className={`px-3 py-1.5 rounded font-bold transition-all ${
+ activeCategory === "finanse"
+                  ? "bg-[#007834] text-white "
+                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
               }`}
             >
               💰 Pieniądze & Zasiłki
             </button>
             <button
-              type="button"
-              onClick={() => setActiveCategory("urlopy")}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-                activeCategory === "urlopy"
-                  ? "bg-[#007834] text-white shadow-2xs"
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-slate-200"
+ type="button"
+ onClick={() => setActiveCategory("urlopy")}
+ className={`px-3 py-1.5 rounded font-bold transition-all ${
+ activeCategory === "urlopy"
+                  ? "bg-[#007834] text-white "
+                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
               }`}
             >
               🗓️ Urlopy & Tygodnie
             </button>
             <button
-              type="button"
-              onClick={() => setActiveCategory("formalnosci")}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-                activeCategory === "formalnosci"
-                  ? "bg-[#007834] text-white shadow-2xs"
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-slate-200"
+ type="button"
+ onClick={() => setActiveCategory("formalnosci")}
+ className={`px-3 py-1.5 rounded font-bold transition-all ${
+ activeCategory === "formalnosci"
+                  ? "bg-[#007834] text-white "
+                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
               }`}
             >
               📑 Wnioski & Druki
             </button>
             <button
-              type="button"
-              onClick={() => setActiveCategory("szczegolne")}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-                activeCategory === "szczegolne"
-                  ? "bg-[#007834] text-white shadow-2xs"
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-slate-200"
+ type="button"
+ onClick={() => setActiveCategory("szczegolne")}
+ className={`px-3 py-1.5 rounded font-bold transition-all ${
+ activeCategory === "szczegolne"
+                  ? "bg-[#007834] text-white "
+                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
               }`}
             >
               ⚠️ Sytuacje szczególne
@@ -152,25 +152,25 @@ export function TrudneSlowaModal() {
               <HelpCircle className="w-10 h-10 text-slate-400 mx-auto" />
               <p className="text-sm font-bold text-slate-700">Nie znaleziono takiego hasła</p>
               <p className="text-xs text-slate-500">
-                Spróbuj wpisać inne słowo kluczowe lub zapytać naszego Asystenta AI.
+ Spróbuj wpisać inne słowo kluczowe lub zapytać naszego Asystenta AI.
               </p>
             </div>
           ) : (
-            filteredTerms.map((item) => {
-              const isExpanded = expandedId === item.id;
-              return (
+ filteredTerms.map((item) => {
+ const isExpanded = expandedId === item.id;
+ return (
                 <div
-                  key={item.id}
-                  className={`rounded-2xl border transition-all pt-3 ${
-                    isExpanded
-                      ? "bg-emerald-50/40 border-[#007834]/40 shadow-xs"
-                      : "bg-white border-slate-200 hover:border-slate-300"
+ key={item.id}
+ className={`rounded border transition-all pt-3 ${
+ isExpanded
+                      ? "bg-emerald-50/40 border-[#007834]/40 "
+                      : "bg-white border-[#dce1e5] hover:border-slate-300"
                   }`}
                 >
                   <button
-                    type="button"
-                    onClick={() => setExpandedId(isExpanded ? null : item.id)}
-                    className="w-full px-4 pb-3 flex items-start justify-between gap-3 text-left focus:outline-none"
+ type="button"
+ onClick={() => setExpandedId(isExpanded ? null : item.id)}
+ className="w-full px-4 pb-3 flex items-start justify-between gap-3 text-left focus:outline-none"
                   >
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
@@ -192,8 +192,8 @@ export function TrudneSlowaModal() {
                     </div>
 
                     <div
-                      className={`p-1.5 rounded-lg text-slate-500 transition-transform ${
-                        isExpanded ? "rotate-180 text-[#007834] bg-emerald-100" : "bg-slate-100"
+ className={`p-1.5 rounded text-slate-500 transition-transform ${
+ isExpanded ? "rotate-180 text-[#007834] bg-emerald-100" : "bg-slate-100"
                       }`}
                     >
                       <ChevronDown className="w-4 h-4" />
@@ -202,8 +202,8 @@ export function TrudneSlowaModal() {
 
                   {/* Rozwinięcie ze szczegółowym przykładem */}
                   {isExpanded && (
-                    <div className="px-4 pb-4 pt-1 space-y-3 text-xs border-t border-slate-200/60 mt-1 animate-in fade-in">
-                      <div className="p-3 bg-white rounded-xl border border-emerald-200 space-y-1.5">
+                    <div className="px-4 pb-4 pt-1 space-y-3 text-xs border-t border-[#dce1e5]/60 mt-1 animate-in fade-in">
+                      <div className="p-3 bg-white rounded border border-emerald-200 space-y-1.5">
                         <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-xs">
                           <Lightbulb className="w-4 h-4 text-amber-500 shrink-0" />
                           <span>Szczegóły i przykład z życia:</span>
@@ -224,8 +224,8 @@ export function TrudneSlowaModal() {
                         <span className="text-[10px] text-slate-400 font-semibold mr-1">Słowa powiązane:</span>
                         {item.tags.map((tag) => (
                           <span
-                            key={tag}
-                            className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md"
+ key={tag}
+ className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md"
                           >
                             #{tag}
                           </span>
@@ -240,17 +240,17 @@ export function TrudneSlowaModal() {
         </div>
 
         {/* Dolna belka modala */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="p-4 bg-[#f4f6f7] border-t border-[#dce1e5] flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="text-slate-500 flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-[#007834]" />
             <span>Zgodne z Ustawą Zasiłkową i Kodeksem Pracy 2026</span>
           </div>
           <button
-            type="button"
-            onClick={closeGlossary}
-            className="px-5 py-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold rounded-xl transition-colors shadow-2xs"
+ type="button"
+ onClick={closeGlossary}
+ className="px-5 py-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold rounded transition-colors "
           >
-            Rozumiem, zamknij
+ Rozumiem, zamknij
           </button>
         </div>
       </div>
