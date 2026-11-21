@@ -13,8 +13,6 @@ import {
   Calculator,
   FileText,
   HeartHandshake,
-  Sliders,
-  Scale,
   Bot,
   Smartphone,
   LogIn,
@@ -53,14 +51,17 @@ export function Header() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  // Całkowite odseparowanie: ukrycie nagłówka klienta w panelu pracownika (intranet ZUS)
+  if (pathname?.startsWith("/panel-pracownika")) {
+    return null;
+  }
+
   const navItems = [
     { href: "/przewodnik", label: "Co mi przysługuje?", icon: Compass },
     { href: "/kalkulator", label: "Kalkulator świadczeń", icon: Calculator },
     { href: "/e-uslugi", label: "Wniosek ZAM i eZUS", icon: FileText },
     { href: "/trudne-sytuacje", label: "Wsparcie szczególne", icon: HeartHandshake },
     { href: "/asystent-ai", label: "Pomoc i pytania AI", icon: Bot },
-    { href: "/jury-sandbox", label: "Strefa testowa", icon: Scale },
-    { href: "/admin", label: "Parametry prawne", icon: Sliders },
   ];
 
   return (

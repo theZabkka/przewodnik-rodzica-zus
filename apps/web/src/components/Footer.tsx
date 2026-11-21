@@ -1,9 +1,19 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ExternalLink, Phone, ShieldCheck, MapPin, Clock, FileCheck2, Lock } from "lucide-react";
 import { ZusLogo } from "./ZusLogo";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Całkowite odseparowanie: ukrycie stopki klienta w panelu pracownika (intranet ZUS)
+  if (pathname?.startsWith("/panel-pracownika")) {
+    return null;
+  }
+
   return (
     <footer className="w-full bg-[#212529] text-slate-300 border-t-4 border-[#007834] mt-auto">
       {/* Sekcja Główna */}

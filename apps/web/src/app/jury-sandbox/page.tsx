@@ -183,11 +183,19 @@ export default function JurySandboxPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
-      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
-        <Link href="/">Strona główna</Link>
-        <span className="text-slate-400">/</span>
-        <span className="text-slate-800 font-semibold">Strefa Jurora (Kazusy ZUS)</span>
-      </nav>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+          <Link href="/">Strona główna</Link>
+          <span className="text-slate-400">/</span>
+          <span className="text-slate-800 font-semibold">Strefa Jurora (Kazusy ZUS)</span>
+        </nav>
+        <Link
+          href="/panel-pracownika"
+          className="px-3 py-1.5 bg-[#0b2447] hover:bg-[#143c72] text-white rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+        >
+          <span>&larr; Wróć do Pulpitu Inspektora ZUS</span>
+        </Link>
+      </div>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>

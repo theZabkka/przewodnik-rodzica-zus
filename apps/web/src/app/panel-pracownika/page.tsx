@@ -1325,6 +1325,25 @@ export default function PanelPracownikaPage() {
         )}
       </main>
 
+      {/* Intranetowa Stopka Bezpieczeństwa ZSI KSI ZUS */}
+      <footer className="bg-[#07172c] border-t border-slate-800 text-slate-400 py-4 px-4 sm:px-6 text-xs mt-auto">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-2 text-slate-300">
+            <Lock className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="font-semibold text-white">Zakład Ubezpieczeń Społecznych &bull; Pulpit Operacyjny KSI ZUS 2026.2</span>
+          </div>
+          <div className="flex items-center gap-3 text-[11px] text-slate-400">
+            <span>Sesja: <strong className="text-emerald-400 font-mono">TLS 1.3 Kwalifikowany</strong></span>
+            <span>&bull;</span>
+            <span>Wydział Świadczeń Krótkoterminowych</span>
+            <span>&bull;</span>
+            <Link href="/" className="text-emerald-400 hover:text-emerald-300 underline font-semibold">
+              Serwis Obywatela (zus.pl) &rarr;
+            </Link>
+          </div>
+        </div>
+      </footer>
+
       {/* Modal Potwierdzenia Podpisania Decyzji */}
       {decisionSuccessModal && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
