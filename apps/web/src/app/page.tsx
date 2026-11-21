@@ -42,7 +42,7 @@ export default function HomePage() {
       </nav>
 
       {/* Oficjalny Hero Banner w czystym, płaskim stylu zus.pl — tło identyczne jak tło strony */}
-      <section className="bg-white border-b border-[#dce1e5] py-4 sm:py-8">
+      <section className="bg-white border-b border-[#dce1e5] px-6 sm:px-10 py-6 sm:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8">
           <div className="lg:col-span-7 space-y-4 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
