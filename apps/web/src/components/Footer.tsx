@@ -139,6 +139,19 @@ export function Footer() {
                   <Clock className="w-3 h-3" />
                   <span>Dostępne: pn.–pt. 7:00–18:00</span>
                 </div>
+                <div className="pt-1.5 border-t border-slate-700/80 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+                  <a href="mailto:mama@zus.pl" className="text-emerald-400 hover:underline font-semibold">
+                    mama@zus.pl
+                  </a>
+                  <a
+                    href="https://www.zus.pl/e-wizyta"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-300 hover:text-white hover:underline"
+                  >
+                    zus.pl/e-wizyta
+                  </a>
+                </div>
               </div>
 
               <div className="text-[11px] text-slate-400 flex items-start gap-1.5">
@@ -162,20 +175,6 @@ export function Footer() {
             <span className="hover:text-white transition-colors cursor-pointer">Polityka prywatności i cookies</span>
             <span>&bull;</span>
             <span className="text-emerald-400 font-medium">Dyrektywa Work-Life Balance</span>
-            <span>&bull;</span>
-            <Link
-              href="/jury-sandbox"
-              className="text-slate-500 hover:text-slate-200 transition-colors text-[11px]"
-            >
-              Strefa testowa
-            </Link>
-            <span>&bull;</span>
-            <Link
-              href="/admin"
-              className="text-slate-500 hover:text-slate-200 transition-colors text-[11px]"
-            >
-              Parametry ZUS
-            </Link>
             <span>&bull;</span>
             <Link
               href="/panel-pracownika"
