@@ -17,7 +17,7 @@ import {
   Smartphone,
   LogIn,
   BookOpen,
-  Sparkles,
+  UserCheck,
 } from "lucide-react";
 import { ZusLogo, PolishEmblem } from "./ZusLogo";
 import { MobileSimulatorModal } from "./MobileSimulatorModal";
@@ -253,7 +253,7 @@ export function Header() {
             }`}
             title="Otwórz konfigurator profilu rodziny"
           >
-            <Sparkles className="w-3.5 h-3.5 shrink-0" />
+            <UserCheck className="w-3.5 h-3.5 shrink-0" />
             {hasProfile ? (
               <span className="hidden md:inline">
                 Profil: {profile?.whoOnLeave === "both" ? "Oboje" : profile?.whoOnLeave === "father" ? "Tata" : "Mama"} ({profile?.monthlySalaryGross.toLocaleString("pl-PL")} zł)

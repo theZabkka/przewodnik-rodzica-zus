@@ -17,7 +17,6 @@ import {
  ArrowRight,
  ArrowLeft,
  CheckCircle2,
- Sparkles,
  RotateCcw,
  BookOpen,
 } from "lucide-react";
@@ -511,7 +510,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
         <div className="space-y-5 animate-in fade-in">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#007834]">
-              <Sparkles className="w-4 h-4" />
+              <HeartPulse className="w-4 h-4" />
               <span>KROK 4 &bull; TWOJE PLANY I SYTUACJA</span>
             </div>
             <h3 className="text-lg sm:text-xl font-black text-slate-900">
@@ -624,7 +623,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={handleSaveProfile}
  className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded transition-all hover:scale-[1.01]"
             >
-              <Sparkles className="w-4 h-4 text-emerald-200" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-200" />
               <span>Generuj mój plan zasiłkowy</span>
             </button>
           </div>
@@ -683,7 +682,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
 
             {/* Rekomendacja wariantu */}
             <div className="p-3 bg-emerald-950/40 border border-emerald-500/30 rounded text-xs text-emerald-200 flex items-start gap-2.5">
-              <Sparkles className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <div>
                 <strong>Rekomendacja ZUS:</strong> Złóż wniosek ZAM w terminie <strong>do 21 dni po porodzie</strong>. Dzięki temu otrzymasz stałą, przewidywalną stawkę <strong>81,5%</strong> przez cały rok bez gwałtownego spadku dochodów w drugiej połowie urlopu.
               </div>
@@ -810,7 +809,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
           <div className="flex items-center justify-between border-b border-[#edf0f2] pb-3">
             <div className="flex items-center gap-2">
               <div className="p-2 bg-emerald-100 text-[#007834] rounded">
-                <Sparkles className="w-5 h-5" />
+                <Baby className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900">Mój Profil Rodzica ZUS 2026</h3>
             </div>

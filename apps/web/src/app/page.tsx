@@ -21,7 +21,6 @@ import {
   Mail,
   Video,
   BookOpen,
-  Sparkles,
 } from "lucide-react";
 import { ParentWizard } from "@/components/ParentWizard";
 import { useParentProfile } from "@/context/ParentProfileContext";
@@ -117,7 +116,7 @@ export default function HomePage() {
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#edf0f2] pb-3">
           <div className="flex items-center gap-2">
             <span className="p-2 bg-[#eef6f1] text-[#007834] rounded">
-              <Sparkles className="w-5 h-5" />
+              <Baby className="w-5 h-5" />
             </span>
             <div>
               <h2 className="text-base sm:text-lg font-black text-slate-900">
