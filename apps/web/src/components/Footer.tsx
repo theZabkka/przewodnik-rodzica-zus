@@ -26,7 +26,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="w-full bg-[#f4f6f7] text-[#333333] border-t-2 border-[#007834] mt-auto">
+    <footer className="w-full bg-[#EFF3EA] text-[#10371E] border-t-2 border-[#10371E] mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-9">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Kolumna 1: ZUS */}
@@ -179,7 +179,7 @@ export function Footer() {
       </div>
 
       {/* Dolna belka prawna */}
-      <div className="bg-white py-3.5 px-4 sm:px-8 text-xs text-[#59636e] border-t border-[#dce1e5]">
+      <div className="bg-[#FAF8F2] py-3.5 px-4 sm:px-8 text-xs text-[#425B4A] border-t border-[#C8D7C5]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <p>&copy; 2026 Zakład Ubezpieczeń Społecznych</p>
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 text-xs">

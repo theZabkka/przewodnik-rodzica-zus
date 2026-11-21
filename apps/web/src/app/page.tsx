@@ -21,6 +21,8 @@ import {
   Mail,
   Video,
   BookOpen,
+  Sprout,
+  Heart,
 } from "lucide-react";
 import { ParentWizard } from "@/components/ParentWizard";
 import { useParentProfile } from "@/context/ParentProfileContext";
@@ -40,63 +42,38 @@ export default function HomePage() {
         </span>
       </nav>
 
-      {/* Oficjalny Hero Banner w czystym, płaskim stylu zus.pl — tło identyczne jak tło strony */}
-      <section className="bg-white border-b border-[#dce1e5] px-6 sm:px-10 py-6 sm:py-10">
+      {/* Ciepły szałwiowy Hero Banner inspirowany projektem Przewodnika Rodzica */}
+      <section className="bg-[#DCE8D3] rounded-2xl px-6 sm:px-10 py-7 sm:py-9">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8">
           <div className="lg:col-span-7 space-y-4 min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="zus-badge">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#007834]" />
-              ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH
-            </span>
-            <span className="text-xs font-semibold text-[#59636e]">Stan prawny: 2026</span>
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-[#10371E] tracking-tight leading-[1.12]">
+              Zasiłkowy Przewodnik Przyszłego Rodzica
+            </h1>
+
+            <p className="text-base sm:text-lg text-[#1D4029] leading-relaxed max-w-2xl">
+              Sprawdź, jakie pieniądze możesz dostać, gdy opiekujesz się dzieckiem. Oblicz zasiłek krok po kroku i wygeneruj gotowy wniosek ZAM do ZUS.
+            </p>
+
+            {/* Główne przyciski akcji */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <Link
+                href="/kalkulator"
+                className="inline-flex items-center gap-2 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors focus:outline-none"
+              >
+                <Calculator className="w-4 h-4" />
+                <span>Oblicz wysokość zasiłku</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <Link
+                href="/e-uslugi"
+                className="inline-flex items-center gap-2 bg-white hover:bg-[#FAF8F2] text-[#10371E] font-bold text-sm px-5 py-3 rounded-xl border-[1.5px] border-[#10371E] transition-colors focus:outline-none"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Wniosek ZAM i eZUS</span>
+              </Link>
+            </div>
           </div>
-
-          <h1 className="text-2xl sm:text-4xl font-bold text-[#222222] tracking-tight leading-snug">
-            Zasiłkowy Przewodnik Rodzica
-          </h1>
-
-          <p className="text-base text-[#333333] leading-relaxed">
-            Spodziewasz się dziecka lub niedawno zostałeś rodzicem? W jednym miejscu sprawdzisz przysługujące Ci uprawnienia, obliczysz wysokość zasiłku macierzyńskiego oraz wygenerujesz wniosek ZAM do złożenia przez portal <strong>PUE/eZUS</strong>.
-          </p>
-
-          {/* Przyciski akcji w płaskim stylu zus.pl */}
-          <div className="flex flex-wrap items-center gap-2.5 pt-2">
-            <Link
-              href="/kalkulator"
-              className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#005f29] text-white font-semibold text-sm px-5 py-2.5 rounded transition-colors focus:outline-none"
-            >
-              <Calculator className="w-4 h-4" />
-              <span>Oblicz wysokość zasiłku</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <Link
-              href="/e-uslugi"
-              className="inline-flex items-center gap-2 bg-white hover:bg-[#eef6f1] text-[#007834] font-semibold text-sm px-4 py-2.5 rounded border border-[#007834] transition-colors focus:outline-none"
-            >
-              <FileText className="w-4 h-4" />
-              <span>Wniosek ZAM i eZUS</span>
-            </Link>
-
-            <Link
-              href="/przewodnik"
-              className="inline-flex items-center gap-2 bg-white hover:bg-[#f4f6f7] text-[#222222] hover:text-[#007834] font-semibold text-sm px-4 py-2.5 rounded border border-[#dce1e5] hover:border-[#007834] transition-colors focus:outline-none"
-            >
-              <Compass className="w-4 h-4 text-[#007834]" />
-              <span>Przewodnik krok po kroku</span>
-            </Link>
-
-            <button
-              type="button"
-              onClick={() => openGlossary()}
-              className="inline-flex items-center gap-2 bg-white hover:bg-[#f4f6f7] text-[#222222] hover:text-[#007834] font-semibold text-sm px-4 py-2.5 rounded border border-[#dce1e5] hover:border-[#007834] transition-colors focus:outline-none"
-            >
-              <BookOpen className="w-4 h-4 text-[#007834]" />
-              <span>Trudne słowa</span>
-            </button>
-          </div>
-        </div>
 
           <div className="hidden lg:flex lg:col-span-5 justify-end">
             <Image
@@ -108,6 +85,88 @@ export default function HomePage() {
               className="w-full max-w-[360px] h-auto object-contain"
             />
           </div>
+        </div>
+      </section>
+
+      {/* Sekcja wyboru sytuacji: "Jaka jest Twoja sytuacja?" */}
+      <section className="space-y-5">
+        <div className="space-y-1">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
+            Jaka jest Twoja sytuacja?
+          </h2>
+          <p className="text-sm sm:text-base text-[#425B4A]">
+            Wybierz jedną odpowiedź, a przejdziesz prosto do właściwych informacji.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/przewodnik"
+            className="bg-white border-[1.5px] border-[#9BB39A] hover:border-[#10371E] rounded-2xl p-6 flex flex-col items-center text-center gap-4 transition-all group"
+          >
+            <div className="w-24 h-24 rounded-2xl bg-[#DCE8D3] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Sprout className="w-11 h-11 text-[#10371E]" />
+            </div>
+            <span className="text-base sm:text-lg font-extrabold text-[#10371E]">
+              Planuję dziecko
+            </span>
+          </Link>
+
+          <Link
+            href="/kalkulator"
+            className="bg-white border-[1.5px] border-[#9BB39A] hover:border-[#10371E] rounded-2xl p-6 flex flex-col items-center text-center gap-4 transition-all group"
+          >
+            <div className="w-24 h-24 rounded-2xl bg-[#F6E9C8] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Heart className="w-11 h-11 text-[#8A4B16]" />
+            </div>
+            <span className="text-base sm:text-lg font-extrabold text-[#10371E]">
+              Oczekuję dziecka
+            </span>
+          </Link>
+
+          <Link
+            href="/e-uslugi"
+            className="bg-white border-[1.5px] border-[#9BB39A] hover:border-[#10371E] rounded-2xl p-6 flex flex-col items-center text-center gap-4 transition-all group"
+          >
+            <div className="w-24 h-24 rounded-2xl bg-[#F5DFD7] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Baby className="w-11 h-11 text-[#8C3B2B]" />
+            </div>
+            <span className="text-base sm:text-lg font-extrabold text-[#10371E]">
+              Dziecko już się urodziło
+            </span>
+          </Link>
+
+          <Link
+            href="/trudne-sytuacje"
+            className="bg-white border-[1.5px] border-[#9BB39A] hover:border-[#10371E] rounded-2xl p-6 flex flex-col items-center text-center gap-4 transition-all group"
+          >
+            <div className="w-24 h-24 rounded-2xl bg-[#D8EAF7] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-11 h-11 text-[#00416E]" />
+            </div>
+            <span className="text-base sm:text-lg font-extrabold text-[#10371E]">
+              Przyjmuję dziecko pod opiekę
+            </span>
+          </Link>
+        </div>
+
+        {/* 2 wyróżnione przyciski pomocnicze pod kafelkami (jak na wzorze) */}
+        <div className="flex flex-wrap items-center justify-center gap-4 pt-1">
+          <button
+            type="button"
+            onClick={() => openGlossary()}
+            className="inline-flex items-center justify-center gap-2.5 bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[1.5px] border-[#10371E] font-bold text-sm sm:text-base px-7 py-3 rounded-xl transition-colors min-w-[220px]"
+          >
+            <BookOpen className="w-5 h-5" />
+            <span>Trudne słowa</span>
+          </button>
+
+          <Link
+            href="/trudne-sytuacje"
+            className="inline-flex items-center justify-center gap-2.5 bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[1.5px] border-[#10371E] font-bold text-sm sm:text-base px-7 py-3 rounded-xl transition-colors min-w-[220px]"
+          >
+            <HeartHandshake className="w-5 h-5" />
+            <span>Potrzebuję wsparcia</span>
+          </Link>
         </div>
       </section>
 

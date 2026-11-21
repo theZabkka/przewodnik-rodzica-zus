@@ -18,6 +18,8 @@ import {
   LogIn,
   BookOpen,
   UserCheck,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { ZusLogo, PolishEmblem } from "./ZusLogo";
 import { MobileSimulatorModal } from "./MobileSimulatorModal";
@@ -33,6 +35,35 @@ export function Header() {
   const [fontSizeLevel, setFontSizeLevel] = useState<0 | 1 | 2>(0);
   const [isSimulatorOpen, setIsSimulatorOpen] = useState(false);
   const [isInMobileFrame, setIsInMobileFrame] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const handleToggleSpeech = () => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+    const mainEl = document.querySelector("main") || document.body;
+    const text = (mainEl?.innerText || "").replace(/\s+/g, " ").trim().slice(0, 1800);
+    if (!text) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "pl-PL";
+    utterance.rate = 0.96;
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    setIsSpeaking(true);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [pathname]);
 
   useEffect(() => {
     try {
@@ -82,88 +113,91 @@ export function Header() {
   ];
 
   return (
-    <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+    <header className="w-full bg-[#FAF8F2] border-b border-[#C8D7C5] sticky top-0 z-40">
       {/* Link dostępności dla czytników ekranu (Skip link) */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#007834] focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#007834]"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#10371E] focus:text-white focus:rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#10371E]"
       >
         Przejdź do treści głównej
       </a>
 
-      {/* Rząd 1: Pasek Rządowy i Dostępności ZUS (ukrywany w kompaktowym podglądzie mobilnym) */}
+      {/* Rząd 1: Ciepły pasek dostępności w stylu Przewodnika (Posłuchaj, Aa Wielkość liter, Kontrast) */}
       {!isInMobileFrame && (
-        <div className="bg-[#f8f9fa] border-b border-slate-200 text-xs text-slate-700 py-1.5 px-4 sm:px-8">
+        <div className="bg-[#EFF3EA] border-b border-[#D2DFCF] text-xs text-[#10371E] py-1.5 px-4 sm:px-8">
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 sm:gap-3">
             {/* Godło RP i oficjalna tożsamość */}
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 font-medium text-slate-800">
-                <PolishEmblem className="w-4 h-4 shadow-2xs" />
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 font-semibold text-[#10371E]">
+                <PolishEmblem className="w-4 h-4" />
                 <span>Rzeczpospolita Polska</span>
               </div>
-              <span className="hidden md:inline text-slate-300">|</span>
-              <span className="hidden md:inline text-slate-600 font-normal">
-                Oficjalny serwis Zakładu Ubezpieczeń Społecznych &bull; zus.pl
-              </span>
-            </div>
-
-            {/* Infolinia, Dostępność, Język oraz Przycisk eZUS */}
-            <div className="flex items-center gap-2 sm:gap-4">
+              <span className="hidden md:inline text-[#B9CCB6]">|</span>
               <a
                 href="tel:225601600"
-                className="hidden sm:flex items-center gap-1.5 text-slate-700 hover:text-[#007834] transition-colors"
+                className="hidden sm:inline-flex items-center gap-1.5 text-[#10371E] hover:text-[#007834] transition-colors"
                 title="Centrum Obsługi Telefonicznej ZUS (pn-pt 7:00-18:00)"
               >
                 <Phone className="w-3.5 h-3.5 text-[#007834]" />
-                <span className="hidden lg:inline text-slate-500">Infolinia:</span>
-                <span className="font-bold text-slate-800">22 560 16 00</span>
+                <span className="hidden lg:inline text-[#425B4A]">Infolinia ZUS:</span>
+                <span className="font-bold">22 560 16 00</span>
               </a>
+            </div>
 
-              {/* Narzędzia dostępności WCAG */}
-              <div className="flex items-center gap-1 bg-white border border-slate-300 rounded px-2 py-0.5">
-                <button
-                  type="button"
-                  onClick={() => setHighContrast(!highContrast)}
-                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold transition-colors ${
-                    highContrast
-                      ? "bg-black text-yellow-300 font-bold"
-                      : "text-slate-700 hover:bg-slate-100"
-                  }`}
-                  aria-pressed={highContrast}
-                  title="Przełącz wysoki kontrast (WCAG AAA)"
-                >
-                  <Eye className="w-3 h-3" />
-                  <span className="hidden sm:inline">Kontrast</span>
-                </button>
+            {/* Przyciski dostępności inspirowane makietą: Posłuchaj + Aa Wielkość liter + Kontrast */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleToggleSpeech}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl border-[1.5px] text-xs font-bold transition-colors ${
+                  isSpeaking
+                    ? "bg-[#10371E] text-white border-[#10371E]"
+                    : "bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[#10371E]"
+                }`}
+                aria-pressed={isSpeaking}
+                title="Odsłuchaj treść strony (lektor głosowy)"
+              >
+                {isSpeaking ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                <span>{isSpeaking ? "Zatrzymaj" : "Posłuchaj"}</span>
+              </button>
 
-                <span className="text-slate-300">|</span>
+              <button
+                type="button"
+                onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl border-[1.5px] text-xs font-bold transition-colors ${
+                  fontSizeLevel > 0
+                    ? "bg-[#10371E] text-white border-[#10371E]"
+                    : "bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[#10371E]"
+                }`}
+                title="Zmień wielkość liter na całej stronie"
+              >
+                <Type className="w-3.5 h-3.5 hidden sm:inline" />
+                <span>
+                  Aa Wielkość liter{fontSizeLevel === 1 ? " (+)" : fontSizeLevel === 2 ? " (++)" : ""}
+                </span>
+              </button>
 
-                <button
-                  type="button"
-                  onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
-                  className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors"
-                  title="Zmień rozmiar czcionki"
-                >
-                  <Type className="w-3 h-3" />
-                  <span>
-                    {fontSizeLevel === 0 ? "A" : fontSizeLevel === 1 ? "A+" : "A++"}
-                  </span>
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setHighContrast(!highContrast)}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl border-[1.5px] text-xs font-bold transition-colors ${
+                  highContrast
+                    ? "bg-black text-yellow-300 border-black"
+                    : "bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[#B9CCB6]"
+                }`}
+                aria-pressed={highContrast}
+                title="Przełącz wysoki kontrast (WCAG AAA)"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">Kontrast</span>
+              </button>
 
-              {/* Wybór języka jak na zus.pl */}
-              <span className="hidden xs:inline-block text-xs font-bold text-[#007834] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                PL
-              </span>
-
-              {/* Przycisk Logowania do PUE/eZUS w stylu zus.pl */}
               <Link
                 href="/e-uslugi"
-                className="inline-flex items-center gap-1.5 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-2.5 sm:px-3 py-1 rounded transition-colors shadow-2xs whitespace-nowrap"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-xs px-3 py-1 rounded-xl transition-colors whitespace-nowrap"
                 title="Przejdź do e-usług ZUS i wniosku ZAM"
               >
                 <LogIn className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Zaloguj do</span>
                 <span>PUE/eZUS</span>
               </Link>
             </div>
@@ -289,16 +323,16 @@ export function Header() {
         </div>
       </div>
 
-      {/* Rząd 3: Czysta, płaska nawigacja w stylu zus.pl (białe tło + zielone podkreślenie) */}
-      <nav className="hidden lg:block bg-white border-t border-[#edf0f2]">
+      {/* Rząd 3: Czysta, ciepła nawigacja w motywie Przewodnika Rodzica */}
+      <nav className="hidden lg:block bg-[#FAF8F2] border-t border-[#DCE8D3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
           <div className="flex items-center gap-1">
             <Link
               href="/"
-              className={`px-3.5 py-3 text-[13px] font-semibold border-b-[3px] transition-colors ${
+              className={`px-3.5 py-3 text-[13px] font-bold border-b-[3px] transition-colors ${
                 pathname === "/"
-                  ? "border-[#007834] text-[#007834]"
-                  : "border-transparent text-[#222222] hover:text-[#007834] hover:border-[#c2e4cc]"
+                  ? "border-[#10371E] text-[#10371E]"
+                  : "border-transparent text-[#355240] hover:text-[#10371E] hover:border-[#B9CCB6]"
               }`}
             >
               Strona główna
@@ -311,10 +345,10 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3.5 py-3 text-[13px] font-semibold border-b-[3px] transition-colors ${
+                  className={`px-3.5 py-3 text-[13px] font-bold border-b-[3px] transition-colors ${
                     isActive
-                      ? "border-[#007834] text-[#007834]"
-                      : "border-transparent text-[#222222] hover:text-[#007834] hover:border-[#c2e4cc]"
+                      ? "border-[#10371E] text-[#10371E]"
+                      : "border-transparent text-[#355240] hover:text-[#10371E] hover:border-[#B9CCB6]"
                   }`}
                 >
                   {item.label}
@@ -323,8 +357,8 @@ export function Header() {
             })}
           </div>
 
-          <span className="text-xs text-[#59636e]">
-            Stan prawny: <strong className="text-[#222222]">2026</strong>
+          <span className="text-xs text-[#425B4A]">
+            Stan prawny: <strong className="text-[#10371E]">2026</strong>
           </span>
         </div>
       </nav>
