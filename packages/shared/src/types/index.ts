@@ -230,3 +230,76 @@ export interface DocumentGenerationInput {
     supplementaryPrematureWeeks?: number;
   };
 }
+
+export type RiskLevel = 'GREEN' | 'YELLOW' | 'RED';
+
+export interface InspectorCase {
+  id: string;
+  caseNumber: string; // np. "ZUS/2026/ZAM/04812"
+  submissionDate: string;
+  applicantName: string;
+  pesel: string;
+  email?: string;
+  phone?: string;
+  bankAccountNumber?: string;
+  benefitType: 'MATERNITY_PARENTAL_UNIFIED' | 'MATERNITY_STANDARD' | 'PARENTAL_STANDARD' | 'PATERNITY';
+  contractType: ContractType;
+  monthlySalaryGross: number;
+  childBirthDate: string;
+  daysSinceBirth: number;
+  isPremature: boolean;
+  birthWeek?: number;
+  hospitalDays?: number;
+  employerNip: string;
+  employerName: string;
+  isEmployerOver20: boolean;
+  hasDebt: boolean;
+  debtAmount?: number;
+  insuranceTenureDays: number;
+  riskLevel: RiskLevel;
+  riskCategory: 'FAST_TRACK' | 'PREMATURE_AUDIT' | 'JDG_DEBT_BLOCK' | 'SUSPECT_CONTRACT' | 'LATE_SUBMISSION';
+  riskReasons: string[];
+  suggestedDecision: 'AUTO_APPROVE_81_5' | 'AUDIT_HOSPITAL_DOCS' | 'BLOCK_PAYOUT_DEBT' | 'SEND_TO_AUDIT_DEPT' | 'CORRECT_TO_100_70';
+  status: 'NEW' | 'IN_REVIEW' | 'APPROVED' | 'BLOCKED' | 'AUDIT_REQUESTED';
+  assignedOfficer?: string;
+  upoHash: string;
+  decisionDocument?: {
+    formal: string;
+    plainLanguage: string;
+    generatedAt: string;
+    officerSignature: string;
+  };
+}
+
+export interface Z3SalaryMonth {
+  monthName: string;
+  year: number;
+  grossAmount: number;
+  pensionAndDisabilityDeduction: number; // 13.71%
+  netBenefitBase: number; // grossAmount * (1 - 0.1371)
+}
+
+export interface Z3Certificate {
+  employerName: string;
+  employerNip: string;
+  employeeName: string;
+  employeePesel: string;
+  employeePosition: string;
+  months: Z3SalaryMonth[];
+  averageMonthlyGross: number;
+  averageMonthlyBase: number;
+  dailyBenefitBase: number;
+}
+
+export interface WorkSharingSchedule {
+  childName: string;
+  parentName: string;
+  baseParentalWeeks: number;
+  fteRatio: number; // np. 0.5 (pół etatu)
+  workWeeksCount: number;
+  extensionWeeksCount: number; // proporcjonalne wydłużenie (workWeeksCount * fteRatio)
+  totalParentalWeeksAfterExtension: number;
+  weeklySalaryAmount: number;
+  weeklyBenefitAmount: number;
+  totalWeeklyCombinedIncome: number;
+}
