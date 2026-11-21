@@ -78,6 +78,45 @@ export default function EUslugiPage() {
       const dateStr = now.toISOString().replace("T", " ").substring(0, 19);
       const hash = `SHA256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f${randomId}`;
 
+      const submittedCase = {
+        id: `case-${randomId}`,
+        caseNumber: `ZUS/2026/ZAM/${randomId}`,
+        submissionDate: now.toISOString().split("T")[0],
+        applicantName: parentName,
+        pesel: pesel,
+        bankAccountNumber: bankAccount,
+        benefitType: chosenRate === "815" ? "MATERNITY_PARENTAL_UNIFIED" : "MATERNITY_STANDARD",
+        contractType,
+        monthlySalaryGross,
+        childBirthDate,
+        daysSinceBirth: 4,
+        isPremature,
+        birthWeek: isPremature ? 31 : 39,
+        hospitalDays: isPremature ? hospitalDays : 0,
+        employerNip,
+        employerName: contractType === "b2b" ? "Własna Działalność Gospodarcza" : "Pracodawca Zgłoszony w ZUS",
+        isEmployerOver20: contractType === "employment",
+        hasDebt: contractType === "b2b" && jdgDebtAmount > 48.06,
+        debtAmount: contractType === "b2b" ? jdgDebtAmount : 0,
+        insuranceTenureDays: 365,
+        riskLevel: isPremature ? "YELLOW" : (contractType === "b2b" && jdgDebtAmount > 48.06 ? "RED" : "GREEN"),
+        riskCategory: isPremature ? "PREMATURE_AUDIT" : (contractType === "b2b" && jdgDebtAmount > 48.06 ? "JDG_DEBT_BLOCK" : "FAST_TRACK"),
+        riskReasons: [
+          `Wniosek złożony w portalu obywatelskim (UPO: UPO-ZUS-2026-${randomId})`,
+          isPremature ? `Zgłoszono hospitalizację noworodka (${hospitalDays} dni)` : "Wniosek terminowy 81,5%",
+        ],
+        suggestedDecision: isPremature ? "AUDIT_HOSPITAL_DOCS" : "AUTO_APPROVE_81_5",
+        status: "NEW",
+        upoHash: hash,
+      };
+
+      try {
+        const stored = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("zus_submitted_applications") || "[]") : [];
+        localStorage.setItem("zus_submitted_applications", JSON.stringify([submittedCase, ...stored]));
+      } catch (err) {
+        console.error("Failed to store submitted application in local registry", err);
+      }
+
       setIsSubmitting(false);
       setSubmissionSuccess(true);
       setUpoNumber(`UPO-ZUS-2026-${randomId}`);
@@ -212,7 +251,7 @@ export default function EUslugiPage() {
             activeTab === "mobywatel"
               ? "bg-[#005A9C] text-white shadow-sm"
               : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-          }`}
+            }`}
         >
           <Smartphone className="w-4 h-4" />
           <span>mObywatel (Tożsamość i alerty)</span>
