@@ -22,6 +22,9 @@ export * from './paternity';
 export * from './sick-leave-b';
 export * from './care';
 export * from './risk-detector';
+export * from './riskEngine';
+export * from './decisionGenerator';
+export * from './z3Generator';
 
 /**
  * Master calculation engine for ZUS parental benefits (Stan prawny 2026).
@@ -50,21 +53,7 @@ export function calculateParentalBenefits(
     params
   );
 
-  // 3. Urlop uzupełniający dla wcześniaków (art. 180² KP)
-  const supplementaryResult = calculateSupplementaryLeave(
-    {
-      isPrematureOrHospitalized: input.isPrematureOrHospitalized,
-      birthWeek: input.birthWeek,
-      birthWeightGrams: input.birthWeightGrams,
-      hospitalDaysTotal: input.hospitalDaysTotal,
-      hospitalizationConsecutiveMin2DaysBetweenDay5And28: input.hospitalizationConsecutiveMin2DaysBetweenDay5And28,
-    },
-    dailyBase,
-    netBase,
-    params
-  );
-
-  // 4. Urlop rodzicielski
+  // 3. Urlop rodzicielski
   const parentalResult = calculateParentalLeave(
     input.childrenCount,
     input.hasLifeCertificate,
@@ -74,156 +63,164 @@ export function calculateParentalBenefits(
     params
   );
 
-  // 5. Łączenie urlopu rodzicielskiego z pracą (art. 182¹ᶠ KP)
-  let parentalExtensionWeeks = 0;
-  let totalExtendedParentalWeeks = parentalResult.motherMaxWeeks;
-  let momParentalRatePercent = parentalResult.motherRatePercent;
-  let momParentalMonthlyBenefit = parentalResult.monthlyBenefitAmountMom;
-  let momParentalTotalBenefit = parentalResult.totalBenefitAmountMom;
+  // 4. Urlop uzupełniający dla wcześniaków i hospitalizowanych (art. 180² KP)
+  const supplementaryResult = calculateSupplementaryLeave(
+    input.isPrematureOrHospitalized,
+    input.birthWeek,
+    input.birthWeightGrams,
+    input.hospitalDaysTotal,
+    input.hospitalizationConsecutiveMin2DaysBetweenDay5And28,
+    dailyBase,
+    netBase,
+    params
+  );
 
-  if (input.workPartTimeDuringParental && input.workFteRatio && input.workFteRatio > 0) {
-    const workSharingResult = calculateWorkSharing({
-      nominalParentalWeeks: parentalResult.motherMaxWeeks,
-      fteRatio: input.workFteRatio,
-      workWeeks: input.workWeeks,
-      nominalRatePercent: parentalResult.motherRatePercent,
-      netBaseMonthly: netBase,
-      dailyBaseAmount: dailyBase,
-      grossSalaryMonthly: input.monthlyBaseGross,
-      hasLifeCertificate: input.hasLifeCertificate,
-      childrenCount: input.childrenCount,
-    });
+  // 5. Łączenie z pracą na urlopie rodzicielskim (art. 182¹ᶠ KP)
+  const workSharingResult = calculateWorkSharing(
+    input.workPartTimeDuringParental,
+    input.workFteRatio,
+    input.workWeeks,
+    parentalResult.parentalMomWeeks,
+    params
+  );
 
-    parentalExtensionWeeks = workSharingResult.extensionWeeksGranted;
-    totalExtendedParentalWeeks = workSharingResult.totalExtendedParentalWeeks;
-    momParentalRatePercent = workSharingResult.reducedBenefitRatePercent;
-    momParentalMonthlyBenefit = workSharingResult.monthlyBenefitDuringWorkGross;
-    momParentalTotalBenefit = workSharingResult.totalBenefitPaidAcrossPeriod;
-  }
+  // 6. Urlop ojcowski (art. 182³ KP)
+  const paternityResult = calculatePaternityLeave(
+    Boolean(input.includePaternityLeave),
+    dailyBase,
+    netBase,
+    params
+  );
 
-  // 6. Urlop ojcowski (14 dni)
-  const paternityResult = calculatePaternityLeave(dailyBase, params);
-  const includePaternity = input.includePaternityLeave ?? false;
-  const paternityWeeks = includePaternity ? paternityResult.totalWeeks : 0;
-  const paternityTotalBenefit = includePaternity ? paternityResult.totalBenefitAmount : 0;
-
-  // 7. Suma łączna świadczeń
-  const totalBenefitAmountSum = Math.round(
-    (maternityResult.totalBenefitAmount +
-      supplementaryResult.totalBenefitAmount +
-      momParentalTotalBenefit +
-      parentalResult.totalBenefitAmountDadReserved +
-      paternityTotalBenefit) *
-      100
-  ) / 100;
-
-  // 8. Oś czasu (Timeline Segments)
+  // 7. Oś czasu i segmenty
   const timelineSegments: BenefitTimelineSegment[] = [];
 
-  // Segment 1: Urlop macierzyński
+  // Segment macierzyński matki (14 tyg. obowiązkowe dla matki)
+  const mandatoryMomDays = params.maternityMomObligatoryWeeks * 7;
   timelineSegments.push({
-    title: `Urlop macierzyński (${maternityResult.totalWeeks} tyg.)`,
+    title: 'Urlop macierzyński (część obligatoryjna dla matki)',
     recipient: 'mother',
-    durationWeeks: maternityResult.totalWeeks,
-    durationDays: maternityResult.totalDays,
-    ratePercent: maternityResult.ratePercent,
-    monthlyAmountGross: maternityResult.monthlyBenefitAmount,
-    dailyRateGross: maternityResult.dailyBenefitAmount,
-    totalGrossAmount: maternityResult.totalBenefitAmount,
-    notes: `Pierwsze 14 tygodni obligatoryjnie dla matki; pozostałe ${maternityResult.transferableToFatherWeeks} tyg. może przejąć ojciec.`,
+    durationWeeks: params.maternityMomObligatoryWeeks,
+    durationDays: mandatoryMomDays,
+    ratePercent: maternityResult.maternityRatePercent,
+    monthlyAmountGross: maternityResult.monthlyMaternityGross,
+    dailyRateGross: maternityResult.dailyMaternityGross,
+    totalGrossAmount: Number((maternityResult.dailyMaternityGross * mandatoryMomDays).toFixed(2)),
+    notes: 'Pierwsze 14 tygodni po porodzie przysługuje wyłącznie ubezpieczonej matce.',
   });
 
-  // Segment 2: Uzupełniający urlop macierzyński (jeśli przysługuje)
-  if (supplementaryResult.isEligible && supplementaryResult.weeksGranted > 0) {
+  // Pozostała część macierzyńskiego (np. 6 tyg. dla 1 dziecka)
+  const remainingMaternityWeeks = maternityResult.maternityWeeksTotal - params.maternityMomObligatoryWeeks;
+  if (remainingMaternityWeeks > 0) {
+    const remainingDays = remainingMaternityWeeks * 7;
     timelineSegments.push({
-      title: `Uzupełniający urlop macierzyński (${supplementaryResult.weeksGranted} tyg. - art. 180² KP)`,
-      recipient: input.parentRole,
-      durationWeeks: supplementaryResult.weeksGranted,
-      durationDays: supplementaryResult.daysGranted,
-      ratePercent: supplementaryResult.ratePercent,
-      monthlyAmountGross: supplementaryResult.monthlyBenefitAmount,
-      dailyRateGross: supplementaryResult.dailyBenefitAmount,
-      totalGrossAmount: supplementaryResult.totalBenefitAmount,
-      notes: supplementaryResult.qualifyingReason,
+      title: 'Urlop macierzyński (część do podziału)',
+      recipient: input.parentRole === 'father' ? 'father' : 'mother',
+      durationWeeks: remainingMaternityWeeks,
+      durationDays: remainingDays,
+      ratePercent: maternityResult.maternityRatePercent,
+      monthlyAmountGross: maternityResult.monthlyMaternityGross,
+      dailyRateGross: maternityResult.dailyMaternityGross,
+      totalGrossAmount: Number((maternityResult.dailyMaternityGross * remainingDays).toFixed(2)),
+      notes: 'Może wykorzystać matka lub ojciec wychowujący dziecko.',
     });
   }
 
-  // Segment 3: Urlop rodzicielski (część matki / wspólna)
+  // Segment uzupełniający dla wcześniaków (art. 180² KP)
+  if (supplementaryResult.supplementaryWeeksGranted > 0) {
+    const suppDays = supplementaryResult.supplementaryWeeksGranted * 7;
+    timelineSegments.push({
+      title: 'Uzupełniający urlop macierzyński (art. 180² KP)',
+      recipient: 'mother',
+      durationWeeks: supplementaryResult.supplementaryWeeksGranted,
+      durationDays: suppDays,
+      ratePercent: 100,
+      monthlyAmountGross: netBase,
+      dailyRateGross: dailyBase,
+      totalGrossAmount: Number((dailyBase * suppDays).toFixed(2)),
+      notes: supplementaryResult.statutoryBasisNote,
+    });
+  }
+
+  // Segment rodzicielski matki (lub rodzica zgłaszającego)
+  const momParentalDays = parentalResult.parentalMomWeeks * 7;
   timelineSegments.push({
-    title: input.workPartTimeDuringParental
-      ? `Urlop rodzicielski łączony z pracą (${totalExtendedParentalWeeks} tyg. po wydłużeniu)`
-      : `Urlop rodzicielski (${parentalResult.motherMaxWeeks} tyg.)`,
+    title: 'Urlop rodzicielski (część standardowa)',
     recipient: 'mother',
-    durationWeeks: totalExtendedParentalWeeks,
-    durationDays: Math.round(totalExtendedParentalWeeks * 7),
-    ratePercent: momParentalRatePercent,
-    monthlyAmountGross: momParentalMonthlyBenefit,
-    dailyRateGross: Math.round(dailyBase * (momParentalRatePercent / 100) * 100) / 100,
-    totalGrossAmount: momParentalTotalBenefit,
-    notes: input.workPartTimeDuringParental
-      ? `Praca na ${input.workFteRatio} etatu u obecnego pracodawcy; proporcjonalne wydłużenie o ${parentalExtensionWeeks} tyg.`
-      : `Maksymalny wymiar dla jednego rodzica; 9 tygodni pozostaje dla taty.`,
+    durationWeeks: parentalResult.parentalMomWeeks,
+    durationDays: momParentalDays,
+    ratePercent: parentalResult.parentalMomRatePercent,
+    monthlyAmountGross: parentalResult.monthlyParentalMomGross,
+    dailyRateGross: parentalResult.dailyParentalMomGross,
+    totalGrossAmount: Number((parentalResult.dailyParentalMomGross * momParentalDays).toFixed(2)),
+    notes: workSharingResult.isWorkSharingApplied ? workSharingResult.scheduleNotes : undefined,
   });
 
-  // Segment 4: 9 tygodni nieprzenoszalnych dla ojca
+  // Segment nieprzenoszalny dla drugiego rodzica (9 tygodni)
+  const dadReservedDays = parentalResult.parentalDadReservedWeeks * 7;
   timelineSegments.push({
-    title: `Urlop rodzicielski – niezbywalna część dla ojca (9 tyg.)`,
+    title: 'Urlop rodzicielski (9 tygodni wyłącznie dla drugiego rodzica)',
     recipient: 'father',
-    durationWeeks: parentalResult.fatherReservedWeeks,
-    durationDays: parentalResult.fatherReservedDays,
-    ratePercent: parentalResult.fatherReservedRatePercent,
-    monthlyAmountGross: parentalResult.monthlyBenefitAmountDadReserved,
-    dailyRateGross: parentalResult.dailyBenefitAmountDadReserved,
-    totalGrossAmount: parentalResult.totalBenefitAmountDadReserved,
-    notes: 'Wyłączne prawo ojca (Dyrektywa Work-Life Balance). Wymiar nieprzenoszalny na matkę.',
+    durationWeeks: parentalResult.parentalDadReservedWeeks,
+    durationDays: dadReservedDays,
+    ratePercent: parentalResult.parentalDadRatePercent,
+    monthlyAmountGross: parentalResult.monthlyParentalDadGross,
+    dailyRateGross: parentalResult.dailyParentalDadGross,
+    totalGrossAmount: Number((parentalResult.dailyParentalDadGross * dadReservedDays).toFixed(2)),
+    notes: 'Prawo nieprzenoszalne – niewykorzystane do końca 6. r.ż. dziecka bezpowrotnie przepada.',
   });
 
-  // Segment 5: Urlop ojcowski (jeśli uwzględniony)
-  if (includePaternity) {
+  // Segment ojcowski
+  if (paternityResult.isGranted) {
     timelineSegments.push({
-      title: `Urlop ojcowski (2 tyg. / 14 dni)`,
+      title: 'Urlop ojcowski (art. 182³ KP)',
       recipient: 'father',
-      durationWeeks: paternityResult.totalWeeks,
-      durationDays: paternityResult.totalDays,
-      ratePercent: paternityResult.ratePercent,
-      monthlyAmountGross: Math.round(netBase * (paternityResult.ratePercent / 100) * 100) / 100,
-      dailyRateGross: paternityResult.dailyBenefitAmount,
-      totalGrossAmount: paternityResult.totalBenefitAmount,
-      notes: 'Do wykorzystania do ukończenia przez dziecko 12. miesiąca życia.',
+      durationWeeks: paternityResult.weeksGranted,
+      durationDays: paternityResult.daysGranted,
+      ratePercent: 100,
+      monthlyAmountGross: netBase,
+      dailyRateGross: dailyBase,
+      totalGrossAmount: paternityResult.totalGrossBenefit,
+      notes: '14 dni kalendarzowych do ukończenia 12. miesiąca życia dziecka.',
     });
   }
 
-  // 9. Ryzyka
+  // 8. Ostrzeżenia i ryzyka
   const riskWarnings = detectRiskWarnings(input, undefined, undefined, params);
 
+  // 9. Sumaryczne kwoty brutto
+  const totalBenefitAmountSum = Number(
+    timelineSegments.reduce((sum, seg) => sum + seg.totalGrossAmount, 0).toFixed(2)
+  );
+
   return {
-    maternityWeeks: maternityResult.totalWeeks,
-    supplementaryWeeks: supplementaryResult.weeksGranted,
-    parentalTotalWeeks: parentalResult.totalWeeks,
-    parentalMomWeeks: parentalResult.motherMaxWeeks,
-    parentalDadReservedWeeks: parentalResult.fatherReservedWeeks,
-    paternityWeeks,
-    parentalExtensionWeeks,
-    totalExtendedParentalWeeks,
+    maternityWeeks: maternityResult.maternityWeeksTotal,
+    supplementaryWeeks: supplementaryResult.supplementaryWeeksGranted,
+    parentalTotalWeeks: parentalResult.parentalTotalWeeks,
+    parentalMomWeeks: parentalResult.parentalMomWeeks,
+    parentalDadReservedWeeks: parentalResult.parentalDadReservedWeeks,
+    paternityWeeks: paternityResult.weeksGranted,
+
+    parentalExtensionWeeks: workSharingResult.extensionWeeksGranted,
+    totalExtendedParentalWeeks: workSharingResult.totalParentalWeeksAfterExtension,
+
     netBaseMonthly: netBase,
     dailyBaseAmount: dailyBase,
-    maternityMonthlyBenefit: maternityResult.monthlyBenefitAmount,
-    parentalMonthlyBenefitMom: momParentalMonthlyBenefit,
-    parentalMonthlyBenefitDad: parentalResult.monthlyBenefitAmountDadReserved,
-    supplementaryMonthlyBenefit: supplementaryResult.monthlyBenefitAmount,
-    paternityTotalBenefit,
+
+    maternityMonthlyBenefit: maternityResult.monthlyMaternityGross,
+    parentalMonthlyBenefitMom: parentalResult.monthlyParentalMomGross,
+    parentalMonthlyBenefitDad: parentalResult.monthlyParentalDadGross,
+    supplementaryMonthlyBenefit: supplementaryResult.supplementaryWeeksGranted > 0 ? netBase : 0,
+    paternityTotalBenefit: paternityResult.totalGrossBenefit,
     totalBenefitAmountSum,
-    momMaternityRatePercent: maternityResult.ratePercent,
-    momParentalRatePercent,
-    dadParentalReservedRatePercent: parentalResult.fatherReservedRatePercent,
-    supplementaryRatePercent: supplementaryResult.ratePercent,
-    paternityRatePercent: paternityResult.ratePercent,
+
+    momMaternityRatePercent: maternityResult.maternityRatePercent,
+    momParentalRatePercent: parentalResult.parentalMomRatePercent,
+    dadParentalReservedRatePercent: parentalResult.parentalDadRatePercent,
+    supplementaryRatePercent: 100,
+    paternityRatePercent: 100,
+
     timelineSegments,
     riskWarnings,
   };
 }
-
-/**
- * Standard alias for calculateParentalBenefits
- */
-export const calculateBenefits = calculateParentalBenefits;
