@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { SupportHeartIllustration } from "@/components/ZusIllustrations";
 import {
- HeartHandshake,
  Heart,
  Baby,
  ShieldAlert,
@@ -62,7 +61,7 @@ export default function TrudneSytuacjePage() {
  const loss8WeeksAmount = Math.round(lossDaily * 56 * 100) / 100;
 
  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
         <span className="text-slate-400">/</span>
@@ -75,17 +74,13 @@ export default function TrudneSytuacjePage() {
             <SupportHeartIllustration className="w-full h-auto" />
           </div>
           <div>
-          <div className="inline-flex items-center gap-2 text-rose-700 font-semibold text-xs tracking-wider uppercase mb-1">
-            <HeartHandshake className="w-4 h-4 text-rose-600" />
-            <span>Moduł 4 &bull; Empatyczne centrum wsparcia rodziców</span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E]">
+              Wsparcie w trudnych sytuacjach
+            </h1>
+            <p className="text-sm text-[#425B4A] mt-1 max-w-2xl">
+              Świadczenia i formalności po stracie dziecka, przy wcześniaku w szpitalu albo ciężkiej diagnozie.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#10371E]">
- Wsparcie w sytuacjach trudnych i szczególnych
-          </h1>
-          <p className="text-sm text-[#425B4A] mt-1 max-w-3xl">
- Prawa rodzicielskie, świadczenia i procedury urzędowe w obliczu utraty dziecka, przedwczesnego porodu lub diagnozy ciężkiej choroby noworodka. Jesteśmy tu, by pomóc przejść przez formalności z empatią i zrozumieniem.
-          </p>
-        </div>
         </div>
 
         {/* Całodobowa Infolinia Wsparcia */}

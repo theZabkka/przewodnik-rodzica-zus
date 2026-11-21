@@ -378,7 +378,7 @@ export default function EUslugiPage() {
   };
 
  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-6 flex flex-col gap-6 w-full">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6 w-full">
       {/* Pasek Okruszków (Breadcrumbs) ZUS */}
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
@@ -397,21 +397,13 @@ export default function EUslugiPage() {
             <DocumentZamIllustration className="w-full h-auto" />
           </div>
           <div>
-          <div className="flex items-center gap-2">
-            <span className="zus-badge">
-              <FileText className="w-3.5 h-3.5 mr-1 text-[#007834]" />
- ZUS PUE / eZUS &bull; OFICJALNY SYSTEM ELEKTRONICZNY
-            </span>
-            <span className="zus-badge-navy">DRUK ZAM 2026</span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
+              Wniosek ZAM
+            </h1>
+            <p className="text-sm text-[#425B4A] mt-1 max-w-2xl">
+              Wypełnij wniosek krok po kroku. Pod formularzem masz gotową kartkę A4 do druku lub wysłania.
+            </p>
           </div>
-
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight mt-1.5">
- Wniosek ZAM i usługi elektroniczne ZUS
-          </h1>
-          <p className="text-xs sm:text-sm text-[#425B4A] mt-1 max-w-3xl">
- Wypełnij zunifikowany wniosek o zasiłek macierzyński (druk ZAM) krok po kroku. Poniżej formularza na bieżąco generowany jest autentyczny podgląd urzędowego dokumentu ZUS.
-          </p>
-        </div>
         </div>
 
         {/* Węzeł krajowy & status tożsamości */}

@@ -12,7 +12,6 @@ import {
  ParentRole,
 } from "@hacknation/shared";
 import {
- Calculator,
  TrendingUp,
  AlertTriangle,
  CheckCircle2,
@@ -372,7 +371,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
   };
 
  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-6 flex flex-col gap-6 w-full">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6 w-full">
       {/* Pasek Okruszków (Breadcrumbs) ZUS */}
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
@@ -391,21 +390,13 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
             <CalculatorIllustration className="w-full h-auto" />
           </div>
           <div>
-          <div className="flex items-center gap-2">
-            <span className="zus-badge">
-              <Calculator className="w-3.5 h-3.5 mr-1 text-[#007834]" />
- OFICJALNY KALKULATOR ZUS 2026
-            </span>
-            <span className="zus-badge-navy">KROK PO KROKU</span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
+              Kalkulator zasiłku
+            </h1>
+            <p className="text-sm text-[#425B4A] mt-1 max-w-xl">
+              Odpowiedz na kilka pytań, a policzymy Twoją miesięczną wypłatę.
+            </p>
           </div>
-
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight mt-1.5">
- Kalkulator świadczeń rodzicielskich
-          </h1>
-          <p className="text-xs sm:text-sm text-[#425B4A] mt-1 max-w-2xl">
- Odpowiedz na kilka prostych pytań jedno po drugim. Formularz automatycznie dopasuje przepisy Kodeksu Pracy i wyliczy Twoje miesięczne świadczenie.
-          </p>
-        </div>
         </div>
 
         {/* Przełącznik trybu oraz presety */}

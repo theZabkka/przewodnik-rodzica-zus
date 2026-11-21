@@ -182,7 +182,7 @@ export default function JurySandboxPage() {
   };
 
  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
           <Link href="/">Strona główna</Link>

@@ -306,7 +306,7 @@ export default function AsystentAiPage() {
   };
 
  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 w-full flex-1">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 w-full flex-1">
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
         <span className="text-slate-400">/</span>

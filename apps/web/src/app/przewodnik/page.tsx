@@ -294,7 +294,7 @@ export default function PrzewodnikPage() {
   };
 
  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
         <span className="text-slate-400">/</span>
@@ -308,10 +308,10 @@ export default function PrzewodnikPage() {
             <span>Plan formalności i uprawnień rodzica</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
- Co przysługuje Ci krok po kroku
+            Co Ci przysługuje krok po kroku
           </h1>
-          <p className="text-sm text-[#425B4A] mt-1 max-w-3xl leading-relaxed">
- Spokojny przewodnik przez 4 etapy: od ciąży i przygotowań, przez poród i kluczowy termin 21 dni, po urlop dla taty i powrót do pracy.
+          <p className="text-sm text-[#425B4A] mt-1 max-w-2xl leading-relaxed">
+            Cztery etapy: ciąża, poród i termin 21 dni, urlop taty oraz powrót do pracy.
           </p>
         </div>
 
