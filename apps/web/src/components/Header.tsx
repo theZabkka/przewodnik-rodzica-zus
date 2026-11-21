@@ -91,114 +91,153 @@ export function Header() {
         Przejdź do treści głównej
       </a>
 
-      {/* Rząd 1: Pasek Rządowy i Dostępności ZUS (jak na zus.pl) */}
-      <div className="bg-[#f8f9fa] border-b border-slate-200 text-xs text-slate-700 py-1.5 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          {/* Godło RP i oficjalna tożsamość */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 font-medium text-slate-800">
-              <PolishEmblem className="w-4 h-4 shadow-2xs" />
-              <span>Rzeczpospolita Polska</span>
-            </div>
-            <span className="hidden md:inline text-slate-300">|</span>
-            <span className="hidden md:inline text-slate-600 font-normal">
-              Oficjalny serwis Zakładu Ubezpieczeń Społecznych &bull; zus.pl
-            </span>
-          </div>
-
-          {/* Infolinia, Dostępność, Język oraz Przycisk eZUS */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <a
-              href="tel:225601600"
-              className="hidden sm:flex items-center gap-1.5 text-slate-700 hover:text-[#007834] transition-colors"
-              title="Centrum Obsługi Telefonicznej ZUS (pn-pt 7:00-18:00)"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#007834]" />
-              <span className="hidden lg:inline text-slate-500">Infolinia:</span>
-              <span className="font-bold text-slate-800">22 560 16 00</span>
-            </a>
-
-            {/* Narzędzia dostępności WCAG */}
-            <div className="flex items-center gap-1 bg-white border border-slate-300 rounded px-2 py-0.5">
-              <button
-                type="button"
-                onClick={() => setHighContrast(!highContrast)}
-                className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold transition-colors ${
-                  highContrast
-                    ? "bg-black text-yellow-300 font-bold"
-                    : "text-slate-700 hover:bg-slate-100"
-                }`}
-                aria-pressed={highContrast}
-                title="Przełącz wysoki kontrast (WCAG AAA)"
-              >
-                <Eye className="w-3 h-3" />
-                <span className="hidden sm:inline">Kontrast</span>
-              </button>
-
-              <span className="text-slate-300">|</span>
-
-              <button
-                type="button"
-                onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
-                className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors"
-                title="Zmień rozmiar czcionki"
-              >
-                <Type className="w-3 h-3" />
-                <span>
-                  {fontSizeLevel === 0 ? "A" : fontSizeLevel === 1 ? "A+" : "A++"}
-                </span>
-              </button>
+      {/* Rząd 1: Pasek Rządowy i Dostępności ZUS (ukrywany w kompaktowym podglądzie mobilnym) */}
+      {!isInMobileFrame && (
+        <div className="bg-[#f8f9fa] border-b border-slate-200 text-xs text-slate-700 py-1.5 px-4 sm:px-8">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+            {/* Godło RP i oficjalna tożsamość */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 font-medium text-slate-800">
+                <PolishEmblem className="w-4 h-4 shadow-2xs" />
+                <span>Rzeczpospolita Polska</span>
+              </div>
+              <span className="hidden md:inline text-slate-300">|</span>
+              <span className="hidden md:inline text-slate-600 font-normal">
+                Oficjalny serwis Zakładu Ubezpieczeń Społecznych &bull; zus.pl
+              </span>
             </div>
 
-            {/* Wybór języka jak na zus.pl */}
-            <span className="text-xs font-bold text-[#007834] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              PL
-            </span>
+            {/* Infolinia, Dostępność, Język oraz Przycisk eZUS */}
+            <div className="flex items-center gap-2 sm:gap-4">
+              <a
+                href="tel:225601600"
+                className="hidden sm:flex items-center gap-1.5 text-slate-700 hover:text-[#007834] transition-colors"
+                title="Centrum Obsługi Telefonicznej ZUS (pn-pt 7:00-18:00)"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#007834]" />
+                <span className="hidden lg:inline text-slate-500">Infolinia:</span>
+                <span className="font-bold text-slate-800">22 560 16 00</span>
+              </a>
 
-            {/* Przycisk Logowania do PUE/eZUS w stylu zus.pl */}
-            <Link
-              href="/e-uslugi"
-              className="inline-flex items-center gap-1.5 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-3 py-1 rounded transition-colors shadow-2xs"
-              title="Przejdź do e-usług ZUS i wniosku ZAM"
-            >
-              <LogIn className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Zaloguj do</span>
-              <span>PUE/eZUS</span>
-            </Link>
+              {/* Narzędzia dostępności WCAG */}
+              <div className="flex items-center gap-1 bg-white border border-slate-300 rounded px-2 py-0.5">
+                <button
+                  type="button"
+                  onClick={() => setHighContrast(!highContrast)}
+                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+                    highContrast
+                      ? "bg-black text-yellow-300 font-bold"
+                      : "text-slate-700 hover:bg-slate-100"
+                  }`}
+                  aria-pressed={highContrast}
+                  title="Przełącz wysoki kontrast (WCAG AAA)"
+                >
+                  <Eye className="w-3 h-3" />
+                  <span className="hidden sm:inline">Kontrast</span>
+                </button>
+
+                <span className="text-slate-300">|</span>
+
+                <button
+                  type="button"
+                  onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
+                  className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors"
+                  title="Zmień rozmiar czcionki"
+                >
+                  <Type className="w-3 h-3" />
+                  <span>
+                    {fontSizeLevel === 0 ? "A" : fontSizeLevel === 1 ? "A+" : "A++"}
+                  </span>
+                </button>
+              </div>
+
+              {/* Wybór języka jak na zus.pl */}
+              <span className="hidden xs:inline-block text-xs font-bold text-[#007834] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                PL
+              </span>
+
+              {/* Przycisk Logowania do PUE/eZUS w stylu zus.pl */}
+              <Link
+                href="/e-uslugi"
+                className="inline-flex items-center gap-1.5 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-2.5 sm:px-3 py-1 rounded transition-colors shadow-2xs whitespace-nowrap"
+                title="Przejdź do e-usług ZUS i wniosku ZAM"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Zaloguj do</span>
+                <span>PUE/eZUS</span>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Rząd 2: Pasek z Oficjalnym Logo ZUS i Tytułem */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-5">
-          <Link href="/" className="flex items-center group focus:outline-none">
-            {/* Oficjalne SVG z zus.pl */}
-            <ZusLogo size="md" />
+      {/* Rząd 2: Pasek z Oficjalnym Logo ZUS i Akcjami (dopasowany do ekranu telefonu i desktopu) */}
+      <div
+        className={`max-w-7xl mx-auto flex items-center justify-between gap-2 ${
+          isInMobileFrame ? "px-3 py-2.5" : "px-3 sm:px-8 py-3"
+        }`}
+      >
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <Link href="/" className="flex items-center group focus:outline-none shrink-0">
+            {/* Na wąskich ekranach / w podglądzie telefonu sam sygnet ZUS, na większych pełne logo */}
+            <span className={isInMobileFrame ? "block" : "sm:hidden"}>
+              <ZusLogo size="sm" showText={false} />
+            </span>
+            {!isInMobileFrame && (
+              <span className="hidden sm:block">
+                <ZusLogo size="md" />
+              </span>
+            )}
           </Link>
 
           <div className="h-10 w-px bg-slate-200 hidden sm:block"></div>
 
-          <div className="hidden sm:flex flex-col">
-            <span className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-tight">
+          <div className="hidden sm:flex flex-col min-w-0">
+            <span className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-tight truncate">
               Przewodnik Rodzica
             </span>
-            <span className="text-xs text-slate-500 font-medium">
+            <span className="text-xs text-slate-500 font-medium truncate">
               Oficjalny portal uprawnień, świadczeń i kalkulatora rodzicielskiego 2026
             </span>
           </div>
         </div>
 
-        {/* Prawy róg: Trudne Słowa, Profil Rodzica, Symulator Mobilny, Hamburger */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        {/* Prawy róg: Dostępność (w mobileSim), Trudne Słowa, Profil Rodzica, Symulator Mobilny, Hamburger */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {isInMobileFrame && (
+            <div className="flex items-center gap-0.5 bg-slate-50 border border-slate-200 rounded-md px-1 py-0.5">
+              <button
+                type="button"
+                onClick={() => setHighContrast(!highContrast)}
+                className={`p-1 rounded transition-colors ${
+                  highContrast
+                    ? "bg-black text-yellow-300"
+                    : "text-slate-600 hover:bg-slate-200"
+                }`}
+                aria-pressed={highContrast}
+                title="Wysoki kontrast"
+              >
+                <Eye className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
+                className="px-1 py-0.5 rounded text-[10px] font-extrabold text-slate-700 hover:bg-slate-200 transition-colors"
+                title="Zmień rozmiar czcionki"
+              >
+                {fontSizeLevel === 0 ? "A" : fontSizeLevel === 1 ? "A+" : "A++"}
+              </button>
+            </div>
+          )}
+
           {/* Przycisk Słowniczka Trudnych Słów */}
           <button
             type="button"
             onClick={() => openGlossary()}
-            className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none shadow-2xs"
+            className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 font-bold text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all focus:outline-none shadow-2xs whitespace-nowrap"
             title="Otwórz słowniczek trudnych pojęć ZUS"
           >
-            <BookOpen className="w-4 h-4 text-[#00416E]" />
+            <BookOpen className="w-3.5 h-3.5 text-[#00416E] shrink-0" />
             <span className="hidden sm:inline">Trudne słowa</span>
             <span className="sm:hidden">Słownik</span>
           </button>
@@ -207,21 +246,21 @@ export function Header() {
           <button
             type="button"
             onClick={openWizard}
-            className={`inline-flex items-center gap-1.5 font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none shadow-2xs border ${
+            className={`inline-flex items-center gap-1 font-bold text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all focus:outline-none shadow-2xs border whitespace-nowrap ${
               hasProfile
                 ? "bg-emerald-50 hover:bg-emerald-100 text-[#007834] border-emerald-300"
                 : "bg-[#007834] hover:bg-[#00622a] text-white border-[#007834]"
             }`}
             title="Otwórz konfigurator profilu rodziny"
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5 shrink-0" />
             {hasProfile ? (
               <span className="hidden md:inline">
                 Profil: {profile?.whoOnLeave === "both" ? "Oboje" : profile?.whoOnLeave === "father" ? "Tata" : "Mama"} ({profile?.monthlySalaryGross.toLocaleString("pl-PL")} zł)
               </span>
             ) : null}
             <span className={hasProfile ? "md:hidden" : ""}>
-              {hasProfile ? "Profil" : "Szybki start"}
+              {hasProfile ? "Profil" : isInMobileFrame ? "Start" : "Szybki start"}
             </span>
           </button>
 
@@ -229,7 +268,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setIsSimulatorOpen(true)}
-              className="inline-flex items-center gap-1.5 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none"
+              className="inline-flex items-center gap-1.5 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none whitespace-nowrap"
               title="Otwórz symulator smartfona z aplikacją mobilną"
             >
               <Smartphone className="w-4 h-4 text-[#007834]" />
@@ -241,11 +280,11 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-700 hover:text-[#007834] hover:bg-slate-100 rounded-lg lg:hidden focus:outline-none"
+            className="p-1.5 sm:p-2 text-slate-700 hover:text-[#007834] hover:bg-slate-100 rounded-lg lg:hidden focus:outline-none shrink-0"
             aria-expanded={mobileMenuOpen}
             aria-label="Otwórz menu nawigacji"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
           </button>
         </div>
       </div>
