@@ -13,8 +13,6 @@ import {
   Calculator, 
   FileText, 
   HeartHandshake, 
-  Sliders, 
-  Scale, 
   Bot,
   Smartphone,
 } from "lucide-react";
@@ -55,8 +53,6 @@ export function Header() {
     { href: "/e-uslugi", label: "Wniosek ZAM i eZUS", icon: FileText },
     { href: "/trudne-sytuacje", label: "Wsparcie szczególne", icon: HeartHandshake },
     { href: "/asystent-ai", label: "Pomoc i pytania AI", icon: Bot },
-    { href: "/jury-sandbox", label: "Strefa testowa", icon: Scale },
-    { href: "/admin", label: "Parametry prawne", icon: Sliders },
   ];
 
   return (

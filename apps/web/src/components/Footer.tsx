@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ExternalLink, Heart, Phone, HelpCircle, ShieldCheck } from "lucide-react";
+import { ExternalLink, Heart, Phone, HelpCircle, ShieldCheck, Lock } from "lucide-react";
 import { ZusLogo } from "./ZusLogo";
 
 export function Footer() {
@@ -89,14 +89,26 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/jury-sandbox" className="hover:text-white transition-colors text-slate-400">
-                  Strefa testowa i weryfikacja dokumentów PDF
-                </Link>
+                <a
+                  href="https://empatia.mpips.gov.pl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-400"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Portal Informacyjno-Usługowy Emp@tia</span>
+                </a>
               </li>
               <li>
-                <Link href="/admin" className="hover:text-white transition-colors text-slate-400">
-                  Parametry legislacyjne ZUS
-                </Link>
+                <a
+                  href="https://pacjent.gov.pl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-400"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Internetowe Konto Pacjenta (pacjent.gov.pl)</span>
+                </a>
               </li>
             </ul>
           </div>
@@ -131,7 +143,7 @@ export function Footer() {
           <p>
             &copy; 2026 Zakład Ubezpieczeń Społecznych &bull; Projekt Przewodnik Rodzica
           </p>
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 text-slate-400">
             <span>Dyrektywa Work-Life Balance</span>
             <span>&bull;</span>
             <span>Kodeks pracy 2026</span>
@@ -139,6 +151,15 @@ export function Footer() {
             <span className="flex items-center gap-1 text-slate-300">
               Dla polskich rodzin z <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
             </span>
+            <span>&bull;</span>
+            <Link
+              href="/panel-pracownika"
+              className="text-slate-600 hover:text-slate-300 transition-colors flex items-center gap-1 text-[11px]"
+              title="ZSI ZUS: Dostęp wewnętrzny dla pracowników i płatników"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Intranet ZUS</span>
+            </Link>
           </div>
         </div>
       </div>
