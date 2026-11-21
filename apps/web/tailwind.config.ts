@@ -12,37 +12,47 @@ const config: Config = {
     extend: {
       colors: {
         zus: {
-          blue: {
-            DEFAULT: "#005A9C",
-            50: "#eaf3fa",
-            100: "#d0e4f5",
-            200: "#a3cbee",
-            300: "#6aaae5",
-            400: "#3285db",
-            500: "#005A9C",
-            600: "#004b85",
-            700: "#003d6d",
-            800: "#003056",
-            900: "#002441",
-          },
           green: {
-            DEFAULT: "#00823C",
-            50: "#edfcf2",
-            100: "#d5f7e1",
-            200: "#abefc3",
-            500: "#00823C",
-            600: "#006c32",
-            700: "#005727",
+            DEFAULT: "#007834", // Oficjalny ZUS Green z portalu zus.pl
+            50: "#f0f8f3",
+            100: "#e2f2e6",
+            200: "#c2e4cc",
+            300: "#8ac99d",
+            400: "#4ca869",
+            500: "#007834",
+            600: "#00622a",
+            700: "#004e22",
+            800: "#003e1c",
+            900: "#003217",
+          },
+          navy: {
+            DEFAULT: "#00416E", // Granat ZUS stosowany w nagłówkach i PUE
+            50: "#f0f6fa",
+            100: "#dbe8f3",
+            200: "#bad5e8",
+            500: "#00416E",
+            600: "#003457",
+            700: "#002844",
           },
           amber: {
-            DEFAULT: "#D97706",
+            DEFAULT: "#f39200", // Złoty/pomarańczowy ZUS do wyróżnień
             50: "#fffbeb",
             100: "#fef3c7",
-            500: "#d97706",
-            600: "#b45309",
+            500: "#f39200",
+            600: "#d97706",
           },
-          navy: "#0C2340",
-          light: "#F4F7FA",
+          gray: {
+            50: "#f8f9fa",
+            100: "#f1f3f5",
+            200: "#e9ecef",
+            300: "#dee2e6",
+            400: "#ced4da",
+            500: "#adb5bd",
+            600: "#6c757d",
+            700: "#495057",
+            800: "#343a40",
+            900: "#212529",
+          },
         },
         gov: {
           blue: "#005A9C",
@@ -55,6 +65,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
+          '"Open Sans"',
           "-apple-system",
           "BlinkMacSystemFont",
           '"Segoe UI"',

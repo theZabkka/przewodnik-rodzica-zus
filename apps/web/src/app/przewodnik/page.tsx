@@ -278,10 +278,15 @@ export default function PrzewodnikPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+        <Link href="/">Strona główna</Link>
+        <span className="text-slate-400">/</span>
+        <span className="text-slate-800 font-semibold">Przewodnik i terminarz 21 dni</span>
+      </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-[#00823C] font-semibold text-xs tracking-wider uppercase mb-1">
+          <div className="inline-flex items-center gap-2 text-[#007834] font-semibold text-xs tracking-wider uppercase mb-1">
             <Compass className="w-4 h-4" />
             <span>Plan formalności i uprawnień rodzica</span>
           </div>
@@ -297,11 +302,11 @@ export default function PrzewodnikPage() {
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-2 min-w-[220px]">
           <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
             <span>Twój postęp checklisty:</span>
-            <span className="text-[#005A9C] font-bold">{progressPct}%</span>
+            <span className="text-[#00416E] font-bold">{progressPct}%</span>
           </div>
           <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
             <div
-              className="bg-[#005A9C] h-2.5 rounded-full transition-all duration-300"
+              className="bg-[#00416E] h-2.5 rounded-full transition-all duration-300"
               style={{ width: `${progressPct}%` }}
             ></div>
           </div>
@@ -312,7 +317,7 @@ export default function PrzewodnikPage() {
             <button
               type="button"
               onClick={handleDownloadChecklist}
-              className="text-[#005A9C] font-semibold hover:underline flex items-center gap-1"
+              className="text-[#00416E] font-semibold hover:underline flex items-center gap-1"
             >
               <Download className="w-3 h-3" />
               <span>Pobierz</span>
@@ -325,7 +330,7 @@ export default function PrzewodnikPage() {
       <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 sm:p-6 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2 text-[#005A9C] font-bold text-sm">
+            <div className="flex items-center gap-2 text-[#00416E] font-bold text-sm">
               <Calendar className="w-4 h-4" />
               <span>Personalizuj harmonogram wg daty porodu:</span>
             </div>
@@ -343,7 +348,7 @@ export default function PrzewodnikPage() {
               type="date"
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
-              className="px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#005A9C]"
+              className="px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00416E]"
             />
           </div>
         </div>
@@ -369,7 +374,7 @@ export default function PrzewodnikPage() {
             </div>
 
             <div className="bg-white p-3.5 rounded-xl border border-blue-100 shadow-xs space-y-1">
-              <div className="text-[11px] font-semibold text-[#005A9C] uppercase">
+              <div className="text-[11px] font-semibold text-[#00416E] uppercase">
                 Koniec macierzyńskiego (20 tyg):
               </div>
               <div className="text-base font-bold text-slate-900">
@@ -428,7 +433,7 @@ export default function PrzewodnikPage() {
               onClick={() => setSelectedStage(1)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 selectedStage === 1
-                  ? "bg-[#005A9C] text-white shadow-sm"
+                  ? "bg-[#00416E] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -439,7 +444,7 @@ export default function PrzewodnikPage() {
               onClick={() => setSelectedStage(2)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 selectedStage === 2
-                  ? "bg-[#005A9C] text-white shadow-sm"
+                  ? "bg-[#00416E] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -450,7 +455,7 @@ export default function PrzewodnikPage() {
               onClick={() => setSelectedStage(3)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 selectedStage === 3
-                  ? "bg-[#005A9C] text-white shadow-sm"
+                  ? "bg-[#00416E] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -461,7 +466,7 @@ export default function PrzewodnikPage() {
               onClick={() => setSelectedStage(4)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 selectedStage === 4
-                  ? "bg-[#005A9C] text-white shadow-sm"
+                  ? "bg-[#00416E] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -525,7 +530,7 @@ export default function PrzewodnikPage() {
                 setInstitutionFilter("all");
                 setRoleFilter("all");
               }}
-              className="inline-flex items-center gap-1.5 text-xs text-[#005A9C] font-semibold hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs text-[#00416E] font-semibold hover:underline"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Resetuj filtry</span>
@@ -573,7 +578,7 @@ export default function PrzewodnikPage() {
                     className={`mt-0.5 w-6 h-6 rounded-md border flex items-center justify-center transition-colors shrink-0 focus:outline-none ${
                       isDone
                         ? "bg-emerald-600 border-emerald-600 text-white"
-                        : "border-slate-300 hover:border-[#005A9C] bg-white text-transparent"
+                        : "border-slate-300 hover:border-[#00416E] bg-white text-transparent"
                     }`}
                     aria-label={`Oznacz zadanie ${item.title} jako zrealizowane`}
                   >
@@ -613,7 +618,7 @@ export default function PrzewodnikPage() {
                 <div className="shrink-0 flex items-center gap-2">
                   <Link
                     href="/kalkulator"
-                    className="inline-flex items-center gap-1.5 text-xs text-[#005A9C] font-semibold hover:bg-blue-50 px-3 py-2 rounded-lg border border-blue-200 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs text-[#00416E] font-semibold hover:bg-blue-50 px-3 py-2 rounded-lg border border-blue-200 transition-colors"
                   >
                     <span>Przelicz w kalkulatorze</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -637,7 +642,7 @@ export default function PrzewodnikPage() {
         </div>
         <Link
           href="/kalkulator"
-          className="inline-flex items-center gap-2 bg-[#005A9C] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-lg transition-colors shrink-0"
+          className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-lg transition-colors shrink-0"
         >
           <span>Otwórz kalkulator zasiłków</span>
           <ArrowRight className="w-4 h-4" />

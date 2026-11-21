@@ -183,6 +183,11 @@ export default function JurySandboxPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+        <Link href="/">Strona główna</Link>
+        <span className="text-slate-400">/</span>
+        <span className="text-slate-800 font-semibold">Strefa Jurora (Kazusy ZUS)</span>
+      </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
@@ -212,7 +217,7 @@ export default function JurySandboxPage() {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <FileCheck className="w-5 h-5 text-[#005A9C]" />
+            <FileCheck className="w-5 h-5 text-[#00416E]" />
             <span>Wybierz kazus z oficjalnych materiałów konkursowych ZUS:</span>
           </h2>
           <span className="text-xs text-slate-500 font-mono">6 oficjalnych scenariuszy</span>
@@ -232,13 +237,13 @@ export default function JurySandboxPage() {
                 }}
                 className={`p-4 rounded-xl text-left border-2 transition-all flex flex-col justify-between gap-3 ${
                   isSelected
-                    ? "border-[#005A9C] bg-blue-50/70 shadow-sm ring-2 ring-[#005A9C]/20"
+                    ? "border-[#00416E] bg-blue-50/70 shadow-sm ring-2 ring-[#00416E]/20"
                     : "border-slate-200 hover:border-slate-300 bg-white"
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="font-bold text-[#005A9C] uppercase font-mono">{tCase.caseNumber}</span>
+                    <span className="font-bold text-[#00416E] uppercase font-mono">{tCase.caseNumber}</span>
                     <span className="font-semibold text-slate-500 text-[11px] capitalize">
                       {tCase.contractType === "employment" ? "Umowa o pracę" : tCase.contractType === "b2b" ? "Działalność JDG" : "Zlecenie"}
                     </span>
@@ -261,7 +266,7 @@ export default function JurySandboxPage() {
       <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#005A9C]">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#00416E]">
               <span>{activeCase.caseNumber}</span>
               <span>&bull;</span>
               <span>Kategoria: {activeCase.category.toUpperCase()}</span>
@@ -283,7 +288,7 @@ export default function JurySandboxPage() {
 
             <Link
               href="/kalkulator"
-              className="inline-flex items-center gap-2 bg-[#005A9C] hover:bg-[#00477d] text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-colors shadow-sm shrink-0"
+              className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#00477d] text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-colors shadow-sm shrink-0"
             >
               <Calculator className="w-4 h-4" />
               <span>Przejdź do kalkulatora</span>
@@ -309,7 +314,7 @@ export default function JurySandboxPage() {
             </div>
 
             <div className="text-xs text-slate-500 flex items-center gap-2">
-              <Info className="w-4 h-4 text-[#005A9C]" />
+              <Info className="w-4 h-4 text-[#00416E]" />
               <span>Plik źródłowy kazusu: <strong className="font-mono text-slate-700">{activeCase.pdfFileName}</strong></span>
             </div>
           </div>
@@ -342,7 +347,7 @@ export default function JurySandboxPage() {
         <div className="p-5 bg-blue-50/70 border-2 border-blue-200 rounded-2xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Layers className="w-5 h-5 text-[#005A9C]" />
+              <Layers className="w-5 h-5 text-[#00416E]" />
               <h4 className="text-sm font-bold text-slate-900">
                 Wyliczenia certyfikowanego silnika matematycznego (@hacknation/shared):
               </h4>
@@ -384,7 +389,7 @@ export default function JurySandboxPage() {
           <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div>
               <span className="text-slate-500">Miesięczna wypłata zasiłku (podstawa netto po odliczeniu 13,71%):</span>
-              <div className="text-lg font-extrabold text-[#005A9C]">
+              <div className="text-lg font-extrabold text-[#00416E]">
                 {liveResult.maternityMonthlyBenefit.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN / m-c
               </div>
             </div>
@@ -430,7 +435,7 @@ export default function JurySandboxPage() {
       {/* SEKCJA 3: Upload i Weryfikacja Własnego Pliku PDF Jurora */}
       <div className="gov-card p-6 sm:p-8 space-y-6">
         <div>
-          <div className="text-xs font-bold uppercase tracking-wider text-[#005A9C]">
+          <div className="text-xs font-bold uppercase tracking-wider text-[#00416E]">
             Audyt formularzy PDF jurorów
           </div>
           <h2 className="text-xl font-bold text-slate-900 mt-1">
@@ -468,7 +473,7 @@ export default function JurySandboxPage() {
         </div>
 
         {/* Dropzone PDF */}
-        <div className="border-2 border-dashed border-slate-300 hover:border-[#005A9C] bg-slate-50/60 rounded-2xl p-8 text-center transition-all relative">
+        <div className="border-2 border-dashed border-slate-300 hover:border-[#00416E] bg-slate-50/60 rounded-2xl p-8 text-center transition-all relative">
           <input
             type="file"
             accept=".pdf"
@@ -477,7 +482,7 @@ export default function JurySandboxPage() {
             aria-label="Wgraj plik formularza PDF"
           />
           <div className="space-y-3 pointer-events-none">
-            <div className="w-12 h-12 rounded-xl bg-blue-100 text-[#005A9C] flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-xl bg-blue-100 text-[#00416E] flex items-center justify-center mx-auto">
               <UploadCloud className="w-6 h-6" />
             </div>
             <div>
@@ -489,7 +494,7 @@ export default function JurySandboxPage() {
               </span>
             </div>
             {uploadedFileName && (
-              <div className="text-xs font-mono font-bold text-[#005A9C] bg-blue-50 py-1 px-3 rounded-full inline-block border border-blue-200">
+              <div className="text-xs font-mono font-bold text-[#00416E] bg-blue-50 py-1 px-3 rounded-full inline-block border border-blue-200">
                 Wczytano dokument: {uploadedFileName}
               </div>
             )}
@@ -498,8 +503,8 @@ export default function JurySandboxPage() {
 
         {/* Stan przetwarzania OCR/Parsera */}
         {isProcessingPdf && (
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-3 text-xs text-[#005A9C] animate-in fade-in">
-            <RefreshCw className="w-4 h-4 animate-spin text-[#005A9C]" />
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-3 text-xs text-[#00416E] animate-in fade-in">
+            <RefreshCw className="w-4 h-4 animate-spin text-[#00416E]" />
             <span>Parsowanie struktury PDF i walidacja pól formularza ZUS w toku...</span>
           </div>
         )}
@@ -530,7 +535,7 @@ export default function JurySandboxPage() {
               </div>
               <div>
                 <span className="text-slate-500 block">Podstawa wynagrodzenia:</span>
-                <strong className="text-[#005A9C] text-sm">{extractedPdfData.grossBase.toLocaleString("pl-PL")} PLN</strong>
+                <strong className="text-[#00416E] text-sm">{extractedPdfData.grossBase.toLocaleString("pl-PL")} PLN</strong>
               </div>
               <div>
                 <span className="text-slate-500 block">Data wystawienia:</span>
@@ -570,7 +575,7 @@ export default function JurySandboxPage() {
 
               <Link
                 href="/kalkulator"
-                className="inline-flex items-center gap-2 bg-[#005A9C] hover:bg-[#00477d] text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#00477d] text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors shadow-sm"
               >
                 <span>Przejdź do pełnego kalkulatora z tymi danymi</span>
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   HeartHandshake,
   Heart,
@@ -61,6 +62,11 @@ export default function TrudneSytuacjePage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+        <Link href="/">Strona główna</Link>
+        <span className="text-slate-400">/</span>
+        <span className="text-slate-800 font-semibold">Sytuacje trudne i wsparcie</span>
+      </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
@@ -121,15 +127,15 @@ export default function TrudneSytuacjePage() {
           onClick={() => setActiveTopic("preterm")}
           className={`p-5 rounded-2xl text-left border-2 transition-all flex flex-col justify-between gap-3 ${
             activeTopic === "preterm"
-              ? "border-[#005A9C] bg-blue-50/50 shadow-sm"
+              ? "border-[#00416E] bg-blue-50/50 shadow-sm"
               : "border-slate-200 hover:border-slate-300 bg-white"
           }`}
         >
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#005A9C] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#00416E] flex items-center justify-center">
               <Baby className="w-5 h-5" />
             </div>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-[#005A9C]">
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-[#00416E]">
               Art. 180² KP 2026
             </span>
           </div>
@@ -217,7 +223,7 @@ export default function TrudneSytuacjePage() {
 
               <div className="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#005A9C]">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#00416E]">
                     Zasiłek pogrzebowy w 2026 r.
                   </span>
                   <span className="text-xs font-mono font-bold bg-white px-2 py-0.5 rounded border border-slate-300">
@@ -251,7 +257,7 @@ export default function TrudneSytuacjePage() {
             {/* Interaktywna Checklista Krok po Kroku */}
             <div className="space-y-3 pt-2">
               <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-[#005A9C]" />
+                <FileText className="w-4 h-4 text-[#00416E]" />
                 <span>Ścieżka formalna krok po kroku (zaznacz załatwione etapy):</span>
               </h3>
               
@@ -331,7 +337,7 @@ export default function TrudneSytuacjePage() {
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
             <div>
               <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <Baby className="w-5 h-5 text-[#005A9C]" />
+                <Baby className="w-5 h-5 text-[#00416E]" />
                 <span>Uzupełniający urlop macierzyński dla rodziców wcześniaków (art. 180² KP)</span>
               </h2>
               <p className="text-xs text-slate-600 mt-1">
@@ -342,7 +348,7 @@ export default function TrudneSytuacjePage() {
             {/* Interaktywny Kalkulator Uzupełniającego Urlopu */}
             <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
               <div className="flex items-center gap-2 text-sm font-bold text-slate-900 border-b border-slate-200 pb-2">
-                <Calculator className="w-4 h-4 text-[#005A9C]" />
+                <Calculator className="w-4 h-4 text-[#00416E]" />
                 <span>Kalkulator uprawnień uzupełniającego urlopu macierzyńskiego</span>
               </div>
 
@@ -407,7 +413,7 @@ export default function TrudneSytuacjePage() {
                   <span className="text-xs font-bold text-blue-900 block">
                     Przyznany wymiar uzupełniającego urlopu:
                   </span>
-                  <div className="text-2xl font-bold text-[#005A9C]">
+                  <div className="text-2xl font-bold text-[#00416E]">
                     {pretermCalc.supplementaryWeeks} tygodni ({pretermCalc.supplementaryWeeks * 7} dni) w 100% płatne
                   </div>
                   <span className="text-xs text-blue-700">
@@ -475,7 +481,7 @@ export default function TrudneSytuacjePage() {
               </div>
 
               <div className="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#005A9C] block">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#00416E] block">
                   Jednorazowe świadczenie 4 000 zł
                 </span>
                 <p className="text-xs text-slate-700 leading-relaxed">

@@ -183,11 +183,16 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 w-full">
+      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+        <Link href="/">Strona główna</Link>
+        <span className="text-slate-400">/</span>
+        <span className="text-slate-800 font-semibold">Panel Legislacyjny ZUS (Admin)</span>
+      </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
           <div className="inline-flex items-center gap-2 text-slate-700 font-semibold text-xs tracking-wider uppercase mb-1">
-            <Sliders className="w-4 h-4 text-[#005A9C]" />
+            <Sliders className="w-4 h-4 text-[#00416E]" />
             <span>Moduł 5 &bull; Panel Konfiguracji Legislacyjnej ZUS</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
@@ -230,7 +235,7 @@ export default function AdminPage() {
       {/* Szybkie presety scenariuszy legislacyjnych */}
       <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 text-xs text-blue-900">
-          <Sparkles className="w-4 h-4 text-[#005A9C] shrink-0" />
+          <Sparkles className="w-4 h-4 text-[#00416E] shrink-0" />
           <span>
             <strong>Narzędzie symulacji dla jurorów:</strong> Przetestuj wpływ projektu nowelizacji ustawy (np. podniesienie stawki do 85% i 12 tyg. dla taty).
           </span>
@@ -239,7 +244,7 @@ export default function AdminPage() {
           <button
             type="button"
             onClick={loadPresetNovela2027}
-            className="text-xs font-bold bg-[#005A9C] hover:bg-[#00477d] text-white px-3.5 py-1.5 rounded-lg transition-colors"
+            className="text-xs font-bold bg-[#00416E] hover:bg-[#00477d] text-white px-3.5 py-1.5 rounded-lg transition-colors"
           >
             Załaduj projekt nowelizacji 2027
           </button>
@@ -258,7 +263,7 @@ export default function AdminPage() {
         <div className="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-[#005A9C]" />
+              <FileCode className="w-4 h-4 text-[#00416E]" />
               <span>Edytor wskaźników finansowych i stawek procentowych</span>
             </h2>
             <button
@@ -285,7 +290,7 @@ export default function AdminPage() {
                   setMinWage(val);
                   setJdgDebtThreshold(Number((val * 0.01).toFixed(2)));
                 }}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">Podstawa dla 100% płacy minimalnej</span>
             </div>
@@ -300,7 +305,7 @@ export default function AdminPage() {
                 step="0.01"
                 value={socialContributionRate}
                 onChange={(e) => setSocialContributionRate(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">Ustawowe 13,71% (emerytalne, rentowe, chorobowe)</span>
             </div>
@@ -315,7 +320,7 @@ export default function AdminPage() {
                 step="0.01"
                 value={jdgDebtThreshold}
                 onChange={(e) => setJdgDebtThreshold(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">Równe 1% minimalnego wynagrodzenia (art. 2a ustawy)</span>
             </div>
@@ -330,7 +335,7 @@ export default function AdminPage() {
                 step="0.1"
                 value={averageRate815}
                 onChange={(e) => setAverageRate815(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">Art. 30a ustawy zasiłkowej (długi wniosek)</span>
             </div>
@@ -345,7 +350,7 @@ export default function AdminPage() {
                 step="0.1"
                 value={standardMaternityRate}
                 onChange={(e) => setStandardMaternityRate(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">100% przy wniosku poza 21 dniami</span>
             </div>
@@ -360,7 +365,7 @@ export default function AdminPage() {
                 step="0.1"
                 value={standardParentalRate}
                 onChange={(e) => setStandardParentalRate(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">70% w wariancie etapowym</span>
             </div>
@@ -375,7 +380,7 @@ export default function AdminPage() {
                 step="0.1"
                 value={dadReservedParentalRate}
                 onChange={(e) => setDadReservedParentalRate(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">Art. 31 ust. 3 pkt 2 ustawy (domyślnie 70%)</span>
             </div>
@@ -390,7 +395,7 @@ export default function AdminPage() {
                 step="100"
                 value={funeralBenefitAmount}
                 onChange={(e) => setFuneralBenefitAmount(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#005A9C]"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
               />
               <span className="text-[10px] text-slate-500">Kwota podwyższona w 2026 r. (7 000 zł)</span>
             </div>
@@ -452,7 +457,7 @@ export default function AdminPage() {
               type="button"
               onClick={handleSaveAndPublish}
               disabled={isSaving}
-              className="inline-flex items-center gap-2 bg-[#005A9C] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-all shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-all shadow-sm disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               <span>{isSaving ? "Zapisywanie parametrów..." : "Opublikuj wersję legislacyjną"}</span>
@@ -518,7 +523,7 @@ export default function AdminPage() {
           {/* Karta: Rejestr Zmian (Audit Trail) */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
             <div className="flex items-center gap-2 text-slate-900 font-bold text-sm border-b border-slate-100 pb-3">
-              <History className="w-4 h-4 text-[#005A9C]" />
+              <History className="w-4 h-4 text-[#00416E]" />
               <span>Rejestr audytu zmian (Audit Log)</span>
             </div>
 
@@ -529,7 +534,7 @@ export default function AdminPage() {
                   className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 text-xs"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-[#005A9C]">{log.version}</span>
+                    <span className="font-mono font-bold text-[#00416E]">{log.version}</span>
                     <span className="text-[10px] text-slate-400">{log.timestamp}</span>
                   </div>
                   <div className="text-slate-700 font-medium leading-relaxed">{log.changesSummary}</div>

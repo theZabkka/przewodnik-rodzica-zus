@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   Compass,
   Calculator,
-  Calendar,
   Clock,
   ArrowRight,
   CheckCircle2,
@@ -14,95 +13,145 @@ import {
   HeartHandshake,
   Bot,
   ShieldCheck,
+  FileText,
+  AlertCircle,
+  ChevronRight,
 } from "lucide-react";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-16 py-12 px-4 sm:px-8 max-w-6xl mx-auto w-full">
-      {/* Sekcja Powitalna - Ciepła, uspokajająca i przestrzenna */}
-      <section className="bg-gradient-to-b from-white to-slate-50 border border-slate-200/80 rounded-3xl p-8 sm:p-14 shadow-xs text-center sm:text-left relative overflow-hidden">
-        <div className="max-w-3xl space-y-5">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 text-[#00823C] border border-emerald-200/80 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide">
-            <ShieldCheck className="w-4 h-4 text-[#00823C]" />
-            <span>Oficjalny serwis Zakładu Ubezpieczeń Społecznych</span>
+    <div className="flex flex-col gap-10 py-6 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+      {/* Pasek Okruszków (Breadcrumbs) charakterystyczny dla portalu zus.pl */}
+      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+        <Link href="/">Strona główna</Link>
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <Link href="/przewodnik">Świadczenia</Link>
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <span className="text-slate-800 font-semibold">
+          Zasiłkowy Przewodnik Przyszłego i Obecnego Rodzica
+        </span>
+      </nav>
+
+      {/* Oficjalny Hero Banner ZUS */}
+      <section className="bg-white border border-[#dee2e6] border-l-4 border-l-[#007834] rounded-lg p-6 sm:p-10 shadow-xs relative overflow-hidden">
+        <div className="max-w-4xl space-y-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="zus-badge">
+              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#007834]" />
+              ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH &bull; SERWIS OFICJALNY
+            </span>
+            <span className="zus-badge-navy">STAN PRAWNY: 2026</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]">
-            Wszystko o prawach i zasiłkach dla Twojej rodziny — prosto i spokojnie
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#00416E] tracking-tight leading-snug">
+            Zasiłkowy Przewodnik Rodzica
           </h1>
 
-          <p className="text-base sm:text-xl text-slate-600 font-normal leading-relaxed">
-            Spodziewasz się dziecka lub właśnie zostałeś rodzicem? Pomożemy Ci zrozumieć przysługujące świadczenia, dokładnie policzyć kwoty i dopilnować ważnych terminów.
+          <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+            Spodziewasz się dziecka lub niedawno zostałeś rodzicem? W jednym miejscu sprawdzisz przysługujące Ci uprawnienia, bezbłędnie obliczysz wysokość zasiłku macierzyńskiego oraz wygenerujesz wniosek ZAM do złożenia przez portal <strong>PUE/eZUS</strong>.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-3 justify-center sm:justify-start">
+          {/* Przyciski akcji w stylu ZUS */}
+          <div className="flex flex-wrap items-center gap-3 pt-3">
             <Link
               href="/kalkulator"
-              className="inline-flex items-center gap-2 bg-[#00823C] hover:bg-[#006e33] text-white font-bold text-sm sm:text-base px-6 py-3.5 rounded-2xl transition-all shadow-sm focus:outline-none"
+              className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-sm px-6 py-3 rounded transition-colors shadow-2xs focus:outline-none"
             >
-              <Calculator className="w-5 h-5" />
-              <span>Oblicz wysokość zasiłku</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
+              <Calculator className="w-4 h-4" />
+              <span>Oblicz wysokość zasiłku (Kalkulator)</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
               href="/przewodnik"
-              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm sm:text-base px-6 py-3.5 rounded-2xl border border-slate-300 transition-all shadow-2xs focus:outline-none"
+              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-[#007834] font-bold text-sm px-5 py-3 rounded border border-[#007834] transition-colors focus:outline-none"
             >
-              <Compass className="w-5 h-5 text-[#00823C]" />
-              <span>Zobacz plan krok po kroku</span>
+              <Compass className="w-4 h-4" />
+              <span>Przewodnik krok po kroku</span>
+            </Link>
+
+            <Link
+              href="/e-uslugi"
+              className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#003457] text-white font-bold text-sm px-5 py-3 rounded transition-colors shadow-2xs focus:outline-none"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Wniosek ZAM i eZUS</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Trzy Główne Pytania Rodzica (Core UI - Zero Szumu) */}
-      <section className="space-y-6">
-        <div className="text-center sm:text-left">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Wybierz to, czego teraz najbardziej potrzebujesz
+      {/* Ważny Komunikat Urzędowy ZUS (Alert Box) */}
+      <section className="bg-[#fffbeb] border border-[#fef3c7] border-l-4 border-l-[#f39200] rounded-lg p-5">
+        <div className="flex items-start gap-3.5">
+          <AlertCircle className="w-5 h-5 text-[#b45309] shrink-0 mt-0.5" />
+          <div className="space-y-1.5 text-xs sm:text-sm text-slate-800">
+            <p className="font-bold text-[#b45309] uppercase tracking-wider text-xs">
+              Ważne terminy i zasady wypłaty zasiłków w 2026 r.:
+            </p>
+            <ul className="list-disc list-inside space-y-1 text-slate-700">
+              <li>
+                <strong>Termin 21 dni po porodzie:</strong> Złożenie wniosku (druk ZAM) w terminie do 21 dni po porodzie gwarantuje uśrednioną stawkę <strong>81,5%</strong> za cały okres urlopu macierzyńskiego i rodzicielskiego.
+              </li>
+              <li>
+                <strong>9 tygodni dla drugiego rodzica:</strong> Zgodnie z dyrektywą Work-Life Balance ojciec ma wyłączne prawo do 9 tygodni rodzicielskiego (płatne 70%), które nie przepadają i nie pomniejszają urlopu matki.
+              </li>
+              <li>
+                <strong>Wcześniaki i pobyt w szpitalu:</strong> Wprowadzono do 15 dodatkowych tygodni zasiłku w 100% dla rodziców hospitalizowanych noworodków (art. 180 KP).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Główne Moduły Portalu - Karty Katalogu Usług w Stylu ZUS */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#00416E] tracking-tight">
+            Katalog spraw i modułów przewodnika
           </h2>
-          <p className="text-sm sm:text-base text-slate-500 mt-1">
-            Kliknij jedną z trzech głównych ścieżek, aby przejść od razu do odpowiedzi.
-          </p>
+          <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+            Wybierz sprawę, aby przejść do szczegółowych informacji
+          </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Pytanie 1 */}
-          <div className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-xs flex flex-col justify-between hover:border-[#00823C] transition-all group">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#00823C] flex items-center justify-center font-bold">
-                <Compass className="w-6 h-6" />
+          {/* Karta 1: Uprawnienia */}
+          <div className="zus-card zus-card-accent p-6 flex flex-col justify-between">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="zus-badge">KROK 1 &bull; UPRAWNIENIA</span>
+                <Compass className="w-5 h-5 text-[#007834]" />
               </div>
 
-              <div>
-                <span className="text-xs font-bold text-[#00823C] uppercase tracking-wider">
-                  Krok 1 &bull; Uprawnienia
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mt-1 leading-snug group-hover:text-[#00823C] transition-colors">
-                  Planuję dziecko lub jestem w ciąży — co mi przysługuje?
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 leading-relaxed">
-                  Dowiedz się, jak działa zwolnienie lekarskie w ciąży (100% płatne z kodem B), kiedy rozpocząć urlop macierzyński oraz jak chronione jest Twoje zatrudnienie.
-                </p>
-              </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                Co mi przysługuje w ciąży i po porodzie?
+              </h3>
 
-              <ul className="space-y-1.5 text-xs text-slate-500 pt-2 border-t border-slate-100">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Zasady zwolnienia lekarskiego w ciąży (100% płatne z kodem B do 270 dni), ochrona stosunku pracy, urlop macierzyński i ojcowski.
+              </p>
+
+              <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Zwolnienia w ciąży do 270 dni</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>Zasiłek chorobowy w ciąży 100%</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Ochrona przed wypowiedzeniem</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>20 tygodni urlopu macierzyńskiego</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>14 dni urlopu ojcowskiego (100%)</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-4">
+            <div className="pt-6">
               <Link
                 href="/przewodnik"
-                className="w-full inline-flex items-center justify-between bg-slate-50 hover:bg-[#00823C] text-slate-800 hover:text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-xl transition-all"
+                className="w-full inline-flex items-center justify-between bg-slate-50 hover:bg-[#007834] text-slate-800 hover:text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded border border-slate-200 hover:border-[#007834] transition-all"
               >
                 <span>Sprawdź uprawnienia</span>
                 <ArrowRight className="w-4 h-4" />
@@ -110,85 +159,87 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Pytanie 2 */}
-          <div className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-xs flex flex-col justify-between hover:border-[#00823C] transition-all group">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#005A9C] flex items-center justify-center font-bold">
-                <Calculator className="w-6 h-6" />
+          {/* Karta 2: Kalkulator */}
+          <div className="zus-card zus-card-accent p-6 flex flex-col justify-between">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="zus-badge">KROK 2 &bull; KALKULATOR</span>
+                <Calculator className="w-5 h-5 text-[#007834]" />
               </div>
 
-              <div>
-                <span className="text-xs font-bold text-[#005A9C] uppercase tracking-wider">
-                  Krok 2 &bull; Finanse
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mt-1 leading-snug group-hover:text-[#005A9C] transition-colors">
-                  Ile pieniędzy dostanę podczas urlopu?
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 leading-relaxed">
-                  Skorzystaj z prostego kalkulatora: wpisz swoje wynagrodzenie i zobacz porównanie równej stawki 81,5% przez cały rok z wariantem 100% i 70%.
-                </p>
-              </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                Kalkulator wysokości zasiłku macierzyńskiego
+              </h3>
 
-              <ul className="space-y-1.5 text-xs text-slate-500 pt-2 border-t border-slate-100">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Wpisz swoje wynagrodzenie brutto i sprawdź porównanie finansowe: uśredniona stawka 81,5% vs wariant 100% i 70%.
+              </p>
+
+              <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#005A9C] shrink-0" />
-                  <span>Wariant 81,5% vs 100/70%</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>Porównanie netto i brutto obu wariantów</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#005A9C] shrink-0" />
-                  <span>Łączenie urlopu z pracą na 1/2 etatu</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>Łączenie zasiłku z pracą na 1/2 etatu</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>Dla umowy o pracę, zlecenia i JDG</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-4">
+            <div className="pt-6">
               <Link
                 href="/kalkulator"
-                className="w-full inline-flex items-center justify-between bg-slate-50 hover:bg-[#005A9C] text-slate-800 hover:text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-xl transition-all"
+                className="w-full inline-flex items-center justify-between bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded transition-all shadow-2xs"
               >
-                <span>Przejdź do kalkulatora</span>
+                <span>Otwórz kalkulator świadczeń</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
 
-          {/* Pytanie 3 */}
-          <div className="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-xs flex flex-col justify-between hover:border-amber-600 transition-all group">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
-                <Calendar className="w-6 h-6" />
+          {/* Karta 3: Formalności i Wniosek ZAM */}
+          <div className="zus-card zus-card-accent p-6 flex flex-col justify-between">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="zus-badge-navy">KROK 3 &bull; FORMALNOŚCI</span>
+                <FileText className="w-5 h-5 text-[#00416E]" />
               </div>
 
-              <div>
-                <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">
-                  Krok 3 &bull; Terminy
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mt-1 leading-snug group-hover:text-amber-700 transition-colors">
-                  Jakie terminy muszę dopilnować, aby nie stracić zasiłku?
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 leading-relaxed">
-                  Najważniejszy jest termin 21 dni po porodzie na wniosek ZAM. Sprawdź także 14 dni urlopu ojcowskiego i formalności w USC oraz u pracodawcy.
-                </p>
-              </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                Wniosek ZAM i elektroniczne usługi eZUS
+              </h3>
 
-              <ul className="space-y-1.5 text-xs text-slate-500 pt-2 border-t border-slate-100">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Wygeneruj gotowy wniosek ZAM o zasiłek macierzyński i rodzicielski. Instrukcja krok po kroku składania dokumentu w portalu PUE/eZUS.
+              </p>
+
+              <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Kluczowy termin 21 dni po porodzie</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#00416E] shrink-0" />
+                  <span>Generator formularza ZAM z walidacją</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Checklista formalności z odliczaniem</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#00416E] shrink-0" />
+                  <span>Kroki logowania przez Profil Zaufany</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#00416E] shrink-0" />
+                  <span>Weryfikacja załączników i skróconego aktu urodzenia</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6 mt-4">
+            <div className="pt-6">
               <Link
-                href="/przewodnik"
-                className="w-full inline-flex items-center justify-between bg-slate-50 hover:bg-amber-600 text-slate-800 hover:text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-xl transition-all"
+                href="/e-uslugi"
+                className="w-full inline-flex items-center justify-between bg-slate-50 hover:bg-[#00416E] text-slate-800 hover:text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded border border-slate-200 hover:border-[#00416E] transition-all"
               >
-                <span>Sprawdź kalendarz terminów</span>
+                <span>Wypełnij wniosek ZAM</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -196,92 +247,98 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Trzy Ważne Zasady, Które Warto Znać */}
-      <section className="bg-slate-100/70 rounded-3xl p-8 sm:p-12 border border-slate-200">
-        <div className="max-w-2xl mb-8">
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            Trzy zasady, o których pamięta niewielu rodziców
+      {/* Trzy Ważne Zasady ZUS (Styl Kafelków Informacyjnych) */}
+      <section className="bg-white border border-[#dee2e6] rounded-lg p-6 sm:p-8">
+        <div className="max-w-3xl mb-6">
+          <h2 className="text-lg sm:text-xl font-bold text-[#00416E] tracking-tight">
+            Kluczowe uprawnienia rodzicielskie wynikające z przepisów
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-1">
-            Nowe przepisy dają rodzicom większą elastyczność i dodatkowe uprawnienia.
+            Standardy Kodeksu Pracy i ustawy zasiłkowej gwarantujące stabilność i bezpieczeństwo rodziny.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <div className="flex items-center gap-2 text-[#00823C] font-bold text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="bg-[#f8f9fa] p-4.5 rounded border border-slate-200 space-y-2">
+            <div className="flex items-center gap-2 text-[#007834] font-bold text-xs uppercase tracking-wide">
               <Users className="w-4 h-4" />
-              <span>9 tygodni tylko dla drugiego rodzica</span>
+              <span>9 tygodni tylko dla taty</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Tata ma wyłączne prawo do 9 tygodni rodzicielskiego (płatne 70%). Te tygodnie nie pomniejszają urlopu mamy!
+            <p className="text-xs text-slate-700 leading-relaxed">
+              Urlop rodzicielski w wymiarze 9 tygodni przysługuje drugiemu z rodziców i nie może zostać przeniesiony. Zasiłek wynosi 70% podstawy.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <div className="flex items-center gap-2 text-rose-700 font-bold text-sm">
+          <div className="bg-[#f8f9fa] p-4.5 rounded border border-slate-200 space-y-2">
+            <div className="flex items-center gap-2 text-[#b45309] font-bold text-xs uppercase tracking-wide">
               <Baby className="w-4 h-4" />
-              <span>Wcześniaki: do 15 tyg. w 100%</span>
+              <span>Dodatkowy urlop dla wcześniaków</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Jeśli dziecko urodziło się przed 37. tygodniem lub było w szpitalu, przysługuje dodatkowy pełnopłatny urlop macierzyński.
+            <p className="text-xs text-slate-700 leading-relaxed">
+              Rodzice dzieci urodzonych przed 37. tygodniem lub hospitalizowanych mogą otrzymać do 15 dodatkowych tygodni płatnych w 100%.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <div className="flex items-center gap-2 text-[#005A9C] font-bold text-sm">
+          <div className="bg-[#f8f9fa] p-4.5 rounded border border-slate-200 space-y-2">
+            <div className="flex items-center gap-2 text-[#00416E] font-bold text-xs uppercase tracking-wide">
               <Clock className="w-4 h-4" />
-              <span>Praca na pół etatu i wydłużenie</span>
+              <span>Łączenie urlopu z pracą (1/2 etatu)</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Możesz wrócić do pracy na część etatu u swojego pracodawcy — urlop się wydłuży, a kwota zasiłku nie przepada!
+            <p className="text-xs text-slate-700 leading-relaxed">
+              Praca u obecnego pracodawcy na część etatu wydłuża okres pobierania urlopu rodzicielskiego proporcjonalnie aż do 82 tygodni.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Sprawy Szczególne i Pomoc AI */}
+      {/* Pomoc AI oraz Sytuacje Szczególne */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-7 rounded-3xl border border-slate-200 flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
-            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center font-bold">
-              <HeartHandshake className="w-5 h-5" />
+        <div className="zus-card p-6 flex flex-col justify-between border-l-4 border-l-[#b45309]">
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-2 text-[#b45309] font-bold text-xs uppercase tracking-wide">
+              <HeartHandshake className="w-4 h-4" />
+              <span>Wsparcie szczególne</span>
             </div>
-            <h3 className="text-lg font-bold text-slate-900">
-              Wsparcie w sytuacjach szczególnych i trudnych
+            <h3 className="text-base sm:text-lg font-bold text-slate-900">
+              Poronienie, martwe urodzenie i ustawa „Za życiem”
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Informacje i formalności krok po kroku w razie poronienia lub martwego urodzenia (8 tygodni urlopu w 100%, zasiłek pogrzebowy 7000 zł) oraz uprawnienia z ustawy „Za życiem”.
+              Prawa rodziców w trudnych sytuacjach: 8 tygodni urlopu w 100%, uprawnienia do zasiłku pogrzebowego (7000 zł) oraz jednorazowe świadczenie 4000 zł.
             </p>
           </div>
-          <Link
-            href="/trudne-sytuacje"
-            className="inline-flex items-center gap-2 text-rose-700 font-bold text-xs sm:text-sm hover:underline"
-          >
-            <span>Przejdź do wsparcia</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="pt-4">
+            <Link
+              href="/trudne-sytuacje"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#b45309] hover:underline"
+            >
+              <span>Zobacz procedury wsparcia</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
-        <div className="bg-white p-7 rounded-3xl border border-slate-200 flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
-            <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center font-bold">
-              <Bot className="w-5 h-5" />
+        <div className="zus-card p-6 flex flex-col justify-between border-l-4 border-l-[#007834]">
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-2 text-[#007834] font-bold text-xs uppercase tracking-wide">
+              <Bot className="w-4 h-4" />
+              <span>Asystent AI ZUS</span>
             </div>
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900">
               Masz nietypową sytuację? Zapytaj asystenta
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Nasz doradca sztucznej inteligencji wyjaśnia przepisy prostym, ludzkim językiem bez prawniczego żargonu. Możesz zapytać o umowy, terminy i sytuacje szczególne.
+              Wirtualny doradca wyjaśnia przepisy prostym, przystępnym językiem. Odpowie na pytania o umowy zlecenie, JDG, łączenie etatów czy zagraniczne ubezpieczenie.
             </p>
           </div>
-          <Link
-            href="/asystent-ai"
-            className="inline-flex items-center gap-2 text-[#00823C] font-bold text-xs sm:text-sm hover:underline"
-          >
-            <span>Zadaj pytanie asystentowi</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="pt-4">
+            <Link
+              href="/asystent-ai"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#007834] hover:underline"
+            >
+              <span>Zadaj pytanie asystentowi</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>

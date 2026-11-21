@@ -4,15 +4,15 @@
 
 @layer base {
   :root {
-    --primary: #005A9C;
-    --primary-dark: #004274;
-    --secondary: #00823C;
-    --accent: #DC143C;
-    --bg-page: #F8FAFC;
-    --bg-surface: #FFFFFF;
-    --text-main: #1A1A1A;
+    --primary: #007834;
+    --primary-dark: #00622a;
+    --secondary: #00416E;
+    --accent: #f39200;
+    --bg-page: #f8f9fa;
+    --bg-surface: #ffffff;
+    --text-main: #212529;
     --text-muted: #555555;
-    --border-color: #DDE2E8;
+    --border-color: #dee2e6;
   }
 
   body {
@@ -28,44 +28,44 @@
   input:focus-visible,
   select:focus-visible,
   textarea:focus-visible {
-    outline: 3px solid #005A9C;
+    outline: 3px solid #007834;
     outline-offset: 2px;
   }
 }
 
-/* Tryb Wysokiego Kontrastu (WCAG AAA - gov.pl standard) */
+/* Tryb Wysokiego Kontrastu (WCAG AAA - standard instytucji publicznych) */
 body.high-contrast {
   background-color: #000000 !important;
-  color: #FFFF00 !important;
+  color: #ffff00 !important;
 }
 
 body.high-contrast * {
   background-color: #000000 !important;
-  color: #FFFF00 !important;
-  border-color: #FFFF00 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
   box-shadow: none !important;
   text-shadow: none !important;
 }
 
 body.high-contrast a,
 body.high-contrast button {
-  color: #00FFFF !important;
+  color: #00ffff !important;
   text-decoration: underline !important;
-  border: 1px solid #00FFFF !important;
+  border: 1px solid #00ffff !important;
 }
 
 body.high-contrast a:hover,
 body.high-contrast button:hover {
-  background-color: #00FFFF !important;
+  background-color: #00ffff !important;
   color: #000000 !important;
 }
 
 body.high-contrast input,
 body.high-contrast select,
 body.high-contrast textarea {
-  border: 2px solid #FFFF00 !important;
+  border: 2px solid #ffff00 !important;
   background: #111111 !important;
-  color: #FFFF00 !important;
+  color: #ffff00 !important;
 }
 
 /* Skalowanie czcionek a11y */
@@ -77,40 +77,119 @@ body.font-xlarge {
   font-size: 130%;
 }
 
-/* Pomocnicze klasy stylów urzędowych */
-.gov-card {
-  background: #FFFFFF;
-  border: 1px solid #DDE2E8;
+/* Karty i elementy wizualne w oficjalnym stylu ZUS.pl */
+.zus-card {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease-in-out;
 }
 
-.gov-card:hover {
-  border-color: #005A9C;
-  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.1);
+.zus-card:hover {
+  border-color: #007834;
+  box-shadow: 0 4px 14px rgba(0, 120, 52, 0.08);
 }
 
-.badge-zus {
+.zus-card-accent {
+  border-left: 4px solid #007834;
+}
+
+.zus-badge {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.625rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  font-weight: 600;
-  background-color: #eaf3fa;
-  color: #005A9C;
-  border: 1px solid #a3cbee;
+  font-weight: 700;
+  background-color: #f0f8f3;
+  color: #007834;
+  border: 1px solid #c2e4cc;
 }
 
-.badge-wlb {
+.zus-badge-navy {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.625rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  font-weight: 600;
-  background-color: #edfcf2;
-  color: #00823C;
-  border: 1px solid #abefc3;
+  font-weight: 700;
+  background-color: #f0f6fa;
+  color: #00416E;
+  border: 1px solid #bad5e8;
+}
+
+.zus-badge-amber {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fef3c7;
+}
+
+/* Stylizowany pasek okruszków (breadcrumbs) ZUS */
+.zus-breadcrumbs {
+  font-size: 0.8125rem;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.zus-breadcrumbs a {
+  color: #007834;
+  text-decoration: none;
+}
+
+.zus-breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+/* Style wydruku dla oficjalnej kartki A4 wniosku ZUS ZAM */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #zam-a4-sheet,
+  #zam-a4-sheet * {
+    visibility: visible;
+  }
+
+  #zam-a4-sheet {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    padding: 14mm 15mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
 }

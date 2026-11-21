@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   Bot,
   Send,
@@ -291,10 +292,15 @@ export default function AsystentAiPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 w-full flex-1">
+      <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
+        <Link href="/">Strona główna</Link>
+        <span className="text-slate-400">/</span>
+        <span className="text-slate-800 font-semibold">Asystent AI ZUS (Doradca prawny)</span>
+      </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
-          <div className="inline-flex items-center gap-2 text-[#005A9C] font-semibold text-xs tracking-wider uppercase mb-1">
+          <div className="inline-flex items-center gap-2 text-[#00416E] font-semibold text-xs tracking-wider uppercase mb-1">
             <Bot className="w-4 h-4" />
             <span>Moduł 6 &bull; Inteligentny doradca prawny ZUS AI</span>
           </div>
@@ -327,7 +333,7 @@ export default function AsystentAiPage() {
               onClick={() => setIsSimpleMode(true)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 isSimpleMode
-                  ? "bg-[#005A9C] text-white shadow-sm"
+                  ? "bg-[#00416E] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -338,7 +344,7 @@ export default function AsystentAiPage() {
               onClick={() => setIsSimpleMode(false)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 !isSimpleMode
-                  ? "bg-[#005A9C] text-white shadow-sm"
+                  ? "bg-[#00416E] text-white shadow-sm"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -418,7 +424,7 @@ export default function AsystentAiPage() {
               key={idx}
               type="button"
               onClick={() => sendMessage(prompt)}
-              className="px-3 py-2 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#005A9C] rounded-xl text-xs font-medium text-slate-700 hover:text-[#005A9C] transition-all text-left shadow-xs"
+              className="px-3 py-2 bg-white hover:bg-blue-50 border border-slate-200 hover:border-[#00416E] rounded-xl text-xs font-medium text-slate-700 hover:text-[#00416E] transition-all text-left shadow-xs"
             >
               {prompt}
             </button>
@@ -431,7 +437,7 @@ export default function AsystentAiPage() {
         {/* Pasek Górny Czatu */}
         <div className="bg-slate-50 border-b border-slate-200 px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#005A9C] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            <div className="w-8 h-8 rounded-full bg-[#00416E] text-white flex items-center justify-center font-bold text-xs shadow-xs">
               <Bot className="w-4 h-4" />
             </div>
             <div>
@@ -477,7 +483,7 @@ export default function AsystentAiPage() {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
                     isAi
-                      ? "bg-[#005A9C] text-white"
+                      ? "bg-[#00416E] text-white"
                       : "bg-slate-800 text-white"
                   }`}
                 >
@@ -488,7 +494,7 @@ export default function AsystentAiPage() {
                   className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed space-y-3 relative group ${
                     isAi
                       ? "bg-slate-50 text-slate-800 border border-slate-200"
-                      : "bg-[#005A9C] text-white"
+                      : "bg-[#00416E] text-white"
                   }`}
                 >
                   <p>{displayText}</p>
@@ -496,7 +502,7 @@ export default function AsystentAiPage() {
                   {/* Wskazówki rekomendacyjne */}
                   {isAi && msg.recommendationTips && msg.recommendationTips.length > 0 && (
                     <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl space-y-1 text-xs text-blue-900">
-                      <span className="font-bold flex items-center gap-1.5 text-[#005A9C]">
+                      <span className="font-bold flex items-center gap-1.5 text-[#00416E]">
                         <Sparkles className="w-3.5 h-3.5" />
                         <span>Kluczowe wskazówki dla Ciebie:</span>
                       </span>
@@ -554,7 +560,7 @@ export default function AsystentAiPage() {
 
           {isTyping && (
             <div className="flex items-center gap-2 text-xs text-slate-500 animate-pulse">
-              <Bot className="w-4 h-4 text-[#005A9C]" />
+              <Bot className="w-4 h-4 text-[#00416E]" />
               <span>Asystent ZUS analizuje przepisy i przygotowuje odpowiedź...</span>
             </div>
           )}
@@ -572,13 +578,13 @@ export default function AsystentAiPage() {
                 sendMessage(inputText);
               }
             }}
-            className="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#005A9C]"
+            className="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00416E]"
           />
           <button
             type="button"
             onClick={() => sendMessage(inputText)}
             disabled={!inputText.trim() || isTyping}
-            className="p-2.5 bg-[#005A9C] hover:bg-[#00477d] text-white rounded-xl transition-colors disabled:opacity-40"
+            className="p-2.5 bg-[#00416E] hover:bg-[#00477d] text-white rounded-xl transition-colors disabled:opacity-40"
             aria-label="Wyślij wiadomość"
           >
             <Send className="w-4 h-4" />

@@ -3,20 +3,21 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  Menu, 
-  X, 
-  Eye, 
-  Type, 
-  Phone, 
-  Compass, 
-  Calculator, 
-  FileText, 
-  HeartHandshake, 
-  Sliders, 
-  Scale, 
+import {
+  Menu,
+  X,
+  Eye,
+  Type,
+  Phone,
+  Compass,
+  Calculator,
+  FileText,
+  HeartHandshake,
+  Sliders,
+  Scale,
   Bot,
   Smartphone,
+  LogIn,
 } from "lucide-react";
 import { ZusLogo, PolishEmblem } from "./ZusLogo";
 import { MobileSimulatorModal } from "./MobileSimulatorModal";
@@ -61,107 +62,129 @@ export function Header() {
 
   return (
     <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
-      {/* Skip to main content accessibility link */}
+      {/* Link dostępności dla czytników ekranu (Skip link) */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#00823C] focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#007834] focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#007834]"
       >
         Przejdź do treści głównej
       </a>
 
-      {/* Rząd 1: Pasek Rządowy i Dostępności */}
-      <div className="bg-slate-50 border-b border-slate-200 text-xs text-slate-700 py-2 px-4 sm:px-8">
+      {/* Rząd 1: Pasek Rządowy i Dostępności ZUS (jak na zus.pl) */}
+      <div className="bg-[#f8f9fa] border-b border-slate-200 text-xs text-slate-700 py-1.5 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          {/* Godło i oficjalna identyfikacja */}
+          {/* Godło RP i oficjalna tożsamość */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 font-medium text-slate-800">
-              <PolishEmblem className="w-4 h-4 shadow-xs" />
+              <PolishEmblem className="w-4 h-4 shadow-2xs" />
               <span>Rzeczpospolita Polska</span>
             </div>
-            <span className="hidden sm:inline text-slate-300">|</span>
-            <span className="hidden sm:inline text-slate-600 font-medium">
-              Oficjalny serwis Zakładu Ubezpieczeń Społecznych
+            <span className="hidden md:inline text-slate-300">|</span>
+            <span className="hidden md:inline text-slate-600 font-normal">
+              Oficjalny serwis Zakładu Ubezpieczeń Społecznych &bull; zus.pl
             </span>
           </div>
 
-          {/* Infolinia i Dostępność */}
-          <div className="flex items-center gap-4">
+          {/* Infolinia, Dostępność, Język oraz Przycisk eZUS */}
+          <div className="flex items-center gap-3 sm:gap-4">
             <a
               href="tel:225601600"
-              className="flex items-center gap-1.5 text-slate-700 hover:text-[#00823C] transition-colors"
-              title="Centrum Obsługi Telefonicznej ZUS"
+              className="hidden sm:flex items-center gap-1.5 text-slate-700 hover:text-[#007834] transition-colors"
+              title="Centrum Obsługi Telefonicznej ZUS (pn-pt 7:00-18:00)"
             >
-              <Phone className="w-3.5 h-3.5 text-[#00823C]" />
-              <span className="hidden md:inline">Infolinia:</span>
-              <span className="font-bold">22 560 16 00</span>
+              <Phone className="w-3.5 h-3.5 text-[#007834]" />
+              <span className="hidden lg:inline text-slate-500">Infolinia:</span>
+              <span className="font-bold text-slate-800">22 560 16 00</span>
             </a>
 
-            <div className="flex items-center gap-1.5 bg-white border border-slate-300 rounded-md px-2 py-0.5 shadow-2xs">
+            {/* Narzędzia dostępności WCAG */}
+            <div className="flex items-center gap-1 bg-white border border-slate-300 rounded px-2 py-0.5">
               <button
                 type="button"
                 onClick={() => setHighContrast(!highContrast)}
-                className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-xs transition-colors ${
+                className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold transition-colors ${
                   highContrast
                     ? "bg-black text-yellow-300 font-bold"
                     : "text-slate-700 hover:bg-slate-100"
                 }`}
                 aria-pressed={highContrast}
-                title="Włącz lub wyłącz wysoki kontrast"
+                title="Przełącz wysoki kontrast (WCAG AAA)"
               >
-                <Eye className="w-3.5 h-3.5" />
-                <span className="sr-only sm:not-sr-only">Kontrast</span>
+                <Eye className="w-3 h-3" />
+                <span className="hidden sm:inline">Kontrast</span>
               </button>
 
-              <span className="text-slate-300" aria-hidden="true">|</span>
+              <span className="text-slate-300">|</span>
 
               <button
                 type="button"
                 onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
-                className="flex items-center gap-1 px-1.5 py-0.5 rounded text-xs text-slate-700 hover:bg-slate-100 transition-colors"
+                className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors"
                 title="Zmień rozmiar czcionki"
               >
-                <Type className="w-3.5 h-3.5" />
-                <span className="font-bold">
+                <Type className="w-3 h-3" />
+                <span>
                   {fontSizeLevel === 0 ? "A" : fontSizeLevel === 1 ? "A+" : "A++"}
                 </span>
               </button>
             </div>
+
+            {/* Wybór języka jak na zus.pl */}
+            <span className="text-xs font-bold text-[#007834] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              PL
+            </span>
+
+            {/* Przycisk Logowania do PUE/eZUS w stylu zus.pl */}
+            <Link
+              href="/e-uslugi"
+              className="inline-flex items-center gap-1.5 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-3 py-1 rounded transition-colors shadow-2xs"
+              title="Przejdź do e-usług ZUS i wniosku ZAM"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span className="hidden xs:inline">Zaloguj do</span>
+              <span>PUE/eZUS</span>
+            </Link>
           </div>
         </div>
       </div>
 
-      {/* Rząd 2: Główny Pasek z Logo ZUS, Tytułem i Przełącznikiem Aplikacji Mobilnej */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-4 group focus:outline-none">
-          <ZusLogo size="md" />
-          <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight group-hover:text-[#00823C] transition-colors leading-none">
+      {/* Rząd 2: Pasek z Oficjalnym Logo ZUS i Tytułem */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-5">
+          <Link href="/" className="flex items-center group focus:outline-none">
+            {/* Oficjalne SVG z zus.pl */}
+            <ZusLogo size="md" />
+          </Link>
+
+          <div className="h-10 w-px bg-slate-200 hidden sm:block"></div>
+
+          <div className="hidden sm:flex flex-col">
+            <span className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-tight">
               Przewodnik Rodzica
             </span>
-            <span className="text-xs text-slate-500 font-medium mt-1">
-              Spokojny przewodnik po prawach i świadczeniach dla Twojej rodziny
+            <span className="text-xs text-slate-500 font-medium">
+              Oficjalny portal uprawnień, świadczeń i kalkulatora rodzicielskiego 2026
             </span>
           </div>
-        </Link>
+        </div>
 
-        {/* Prawy róg: Przycisk Aplikacji Mobilnej oraz Hamburger Menu */}
+        {/* Prawy róg: Narzędzia, Symulator Mobilny, Hamburger */}
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setIsSimulatorOpen(true)}
-            className="inline-flex items-center gap-2 bg-[#00823C] hover:bg-[#006e33] text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition-all shadow-sm focus:outline-none"
-            title="Otwórz symulator smartfona dla jurorów i rodziców"
+            className="inline-flex items-center gap-2 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs sm:text-sm px-3.5 py-2 rounded-lg transition-all focus:outline-none"
+            title="Otwórz symulator smartfona z aplikacją mobilną"
           >
-            <Smartphone className="w-4 h-4" />
+            <Smartphone className="w-4 h-4 text-[#007834]" />
             <span className="hidden sm:inline">Widok aplikacji mobilnej</span>
-            <span className="sm:hidden">Aplikacja</span>
+            <span className="sm:hidden">Mobilna</span>
           </button>
 
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-700 hover:text-[#00823C] hover:bg-slate-100 rounded-lg lg:hidden focus:outline-none"
+            className="p-2 text-slate-700 hover:text-[#007834] hover:bg-slate-100 rounded-lg lg:hidden focus:outline-none"
             aria-expanded={mobileMenuOpen}
             aria-label="Otwórz menu nawigacji"
           >
@@ -170,56 +193,84 @@ export function Header() {
         </div>
       </div>
 
-      {/* Rząd 3: Czysta, przestronna nawigacja desktopowa */}
-      <nav className="hidden lg:block bg-white border-t border-slate-100">
+      {/* Rząd 3: Główny Pasek Menu w stylu ZUS.pl (ZUS Green Bar) */}
+      <nav className="hidden lg:block bg-[#007834] text-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
-          <div className="flex items-center space-x-1 py-1.5">
+          <div className="flex items-center space-x-0.5 py-1">
+            <Link
+              href="/"
+              className={`flex items-center gap-1.5 px-3 py-2 rounded text-xs font-bold transition-colors ${
+                pathname === "/"
+                  ? "bg-[#00622a] text-white shadow-inner"
+                  : "text-emerald-50 hover:bg-[#00622a] hover:text-white"
+              }`}
+            >
+              <span>Strona główna</span>
+            </Link>
+
             {navItems.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const isActive =
+                pathname === item.href || pathname.startsWith(`${item.href}/`);
               const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded text-xs font-bold transition-colors ${
                     isActive
-                      ? "bg-[#00823C] text-white shadow-xs"
-                      : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                      ? "bg-[#00622a] text-white shadow-inner"
+                      : "text-emerald-50 hover:bg-[#00622a] hover:text-white"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-500"}`} />
+                  <Icon className="w-3.5 h-3.5 text-emerald-200" />
                   <span>{item.label}</span>
                 </Link>
               );
             })}
           </div>
 
-          <div className="text-xs text-slate-400 font-medium">
-            Stan prawny: 2026
+          <div className="text-[11px] text-emerald-100 font-semibold flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-300"></span>
+            <span>Stan prawny: 2026 (WLB & art. 180 KP)</span>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobilne Menu (Drawer) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 shadow-xl px-5 py-4 space-y-2 animate-in fade-in duration-150">
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-400 pb-1">
-            Nawigacja serwisu
+        <div className="lg:hidden bg-white border-t border-slate-200 shadow-xl px-4 py-4 space-y-1">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-2">
+            Menu Przewodnika Rodzica ZUS
           </div>
+          <Link
+            href="/"
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold ${
+              pathname === "/"
+                ? "bg-[#007834] text-white"
+                : "text-slate-800 hover:bg-slate-100"
+            }`}
+          >
+            <span>Strona główna</span>
+          </Link>
           {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const isActive =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
             const Icon = item.icon;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold ${
                   isActive
-                    ? "bg-[#00823C] text-white"
-                    : "text-slate-700 hover:bg-slate-100"
+                    ? "bg-[#007834] text-white"
+                    : "text-slate-800 hover:bg-slate-100"
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? "text-white" : "text-[#00823C]"}`} />
+                <Icon
+                  className={`w-4 h-4 ${
+                    isActive ? "text-white" : "text-[#007834]"
+                  }`}
+                />
                 <span>{item.label}</span>
               </Link>
             );
@@ -227,11 +278,11 @@ export function Header() {
         </div>
       )}
 
-      {/* Modal Symulatora Aplikacji Mobilnej */}
+      {/* Modal Symulatora Mobilnego */}
       <MobileSimulatorModal
         isOpen={isSimulatorOpen}
         onClose={() => setIsSimulatorOpen(false)}
       />
     </header>
   );
-};
+}
