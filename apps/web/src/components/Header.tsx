@@ -16,6 +16,7 @@ import {
  Bot,
  Smartphone,
  LogIn,
+ Lock,
  BookOpen,
  UserCheck,
  Volume2,
@@ -193,12 +194,21 @@ export function Header() {
               </button>
 
               <Link
- href="/e-uslugi"
- className="hidden sm:inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-xs px-3 py-1 rounded-xl transition-colors whitespace-nowrap"
- title="Przejdź do e-usług ZUS i wniosku ZAM"
+                href="/e-uslugi"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-xs px-3 py-1 rounded-xl transition-colors whitespace-nowrap"
+                title="Przejdź do e-usług ZUS i wniosku ZAM"
               >
                 <LogIn className="w-3.5 h-3.5" />
                 <span>PUE/eZUS</span>
+              </Link>
+
+              <Link
+                href="/panel-pracownika"
+                className="hidden md:inline-flex items-center gap-1.5 bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[1.5px] border-[#B9CCB6] font-bold text-xs px-2.5 py-1 rounded-xl transition-colors whitespace-nowrap"
+                title="Dostęp wewnętrzny do intranetu i decyzji ZUS dla inspektorów i płatników"
+              >
+                <Lock className="w-3.5 h-3.5 text-[#10371E]" />
+                <span>Panel pracownika</span>
               </Link>
             </div>
           </div>

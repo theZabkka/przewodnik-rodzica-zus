@@ -195,7 +195,7 @@ export function Footer() {
                   title="ZSI ZUS: Dostęp wewnętrzny dla pracowników i płatników"
                 >
                   <Lock className="w-3 h-3" />
-                  <span>Intranet ZUS</span>
+                  <span>Panel pracownika (Logowanie)</span>
                 </Link>
               </>
             )}
