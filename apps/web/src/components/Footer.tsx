@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ExternalLink, Phone, ShieldCheck, MapPin, Clock, FileCheck2, Lock } from "lucide-react";
@@ -8,6 +8,17 @@ import { ZusLogo } from "./ZusLogo";
 
 export function Footer() {
   const pathname = usePathname();
+  const [isInMobileFrame, setIsInMobileFrame] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (window.self !== window.top) {
+        setIsInMobileFrame(true);
+      }
+    } catch {
+      setIsInMobileFrame(true);
+    }
+  }, []);
 
   // Całkowite odseparowanie: ukrycie stopki klienta w panelu pracownika (intranet ZUS)
   if (pathname?.startsWith("/panel-pracownika")) {
@@ -114,12 +125,14 @@ export function Footer() {
                   <span>Serwis RP gov.pl</span>
                 </a>
               </li>
-              <li>
-                <Link href="/jury-sandbox" className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-400">
-                  <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Jury Sandbox & Weryfikacja kazusów</span>
-                </Link>
-              </li>
+              {!isInMobileFrame && (
+                <li>
+                  <Link href="/jury-sandbox" className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-400">
+                    <FileCheck2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Jury Sandbox & Weryfikacja kazusów</span>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -175,15 +188,19 @@ export function Footer() {
             <span className="hover:text-white transition-colors cursor-pointer">Polityka prywatności i cookies</span>
             <span>&bull;</span>
             <span className="text-emerald-400 font-medium">Dyrektywa Work-Life Balance</span>
-            <span>&bull;</span>
-            <Link
-              href="/panel-pracownika"
-              className="text-slate-500 hover:text-slate-200 transition-colors flex items-center gap-1 text-[11px]"
-              title="ZSI ZUS: Dostęp wewnętrzny dla pracowników i płatników"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Intranet ZUS</span>
-            </Link>
+            {!isInMobileFrame && (
+              <>
+                <span>&bull;</span>
+                <Link
+                  href="/panel-pracownika"
+                  className="text-slate-500 hover:text-slate-200 transition-colors flex items-center gap-1 text-[11px]"
+                  title="ZSI ZUS: Dostęp wewnętrzny dla pracowników i płatników"
+                >
+                  <Lock className="w-3 h-3" />
+                  <span>Intranet ZUS</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

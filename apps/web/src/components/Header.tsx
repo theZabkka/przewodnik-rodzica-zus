@@ -32,6 +32,17 @@ export function Header() {
   const [highContrast, setHighContrast] = useState(false);
   const [fontSizeLevel, setFontSizeLevel] = useState<0 | 1 | 2>(0);
   const [isSimulatorOpen, setIsSimulatorOpen] = useState(false);
+  const [isInMobileFrame, setIsInMobileFrame] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (window.self !== window.top) {
+        setIsInMobileFrame(true);
+      }
+    } catch {
+      setIsInMobileFrame(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (highContrast) {
@@ -214,16 +225,18 @@ export function Header() {
             </span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setIsSimulatorOpen(true)}
-            className="inline-flex items-center gap-1.5 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none"
-            title="Otwórz symulator smartfona z aplikacją mobilną"
-          >
-            <Smartphone className="w-4 h-4 text-[#007834]" />
-            <span className="hidden xl:inline">Aplikacja mobilna</span>
-            <span className="xl:hidden">Mobilna</span>
-          </button>
+          {!isInMobileFrame && (
+            <button
+              type="button"
+              onClick={() => setIsSimulatorOpen(true)}
+              className="inline-flex items-center gap-1.5 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none"
+              title="Otwórz symulator smartfona z aplikacją mobilną"
+            >
+              <Smartphone className="w-4 h-4 text-[#007834]" />
+              <span className="hidden xl:inline">Aplikacja mobilna</span>
+              <span className="xl:hidden">Mobilna</span>
+            </button>
+          )}
 
           <button
             type="button"
