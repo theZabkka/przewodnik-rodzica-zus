@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ExternalLink, Phone, ShieldCheck, MapPin, Clock, FileCheck2 } from "lucide-react";
+import { ExternalLink, Phone, ShieldCheck, MapPin, Clock, FileCheck2, Lock } from "lucide-react";
 import { ZusLogo } from "./ZusLogo";
 
 export function Footer() {
@@ -146,12 +146,21 @@ export function Footer() {
           <p>
             &copy; 2026 Zakład Ubezpieczeń Społecznych &bull; Wszelkie prawa zastrzeżone
           </p>
-          <div className="flex items-center gap-4 text-xs text-slate-400">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-xs text-slate-400">
             <span className="hover:text-white transition-colors cursor-pointer">Deklaracja dostępności</span>
             <span>&bull;</span>
             <span className="hover:text-white transition-colors cursor-pointer">Polityka prywatności i cookies</span>
             <span>&bull;</span>
             <span className="text-emerald-400 font-medium">Dyrektywa Work-Life Balance</span>
+            <span>&bull;</span>
+            <Link
+              href="/panel-pracownika"
+              className="text-slate-500 hover:text-slate-200 transition-colors flex items-center gap-1 text-[11px]"
+              title="ZSI ZUS: Dostęp wewnętrzny dla pracowników i płatników"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Intranet ZUS</span>
+            </Link>
           </div>
         </div>
       </div>

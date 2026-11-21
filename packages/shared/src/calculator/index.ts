@@ -22,6 +22,9 @@ export * from './paternity';
 export * from './sick-leave-b';
 export * from './care';
 export * from './risk-detector';
+export * from './riskEngine';
+export * from './decisionGenerator';
+export * from './z3Generator';
 
 /**
  * Master calculation engine for ZUS parental benefits (Stan prawny 2026).
