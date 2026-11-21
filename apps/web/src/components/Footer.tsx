@@ -164,6 +164,20 @@ export function Footer() {
             <span className="text-emerald-400 font-medium">Dyrektywa Work-Life Balance</span>
             <span>&bull;</span>
             <Link
+              href="/jury-sandbox"
+              className="text-slate-500 hover:text-slate-200 transition-colors text-[11px]"
+            >
+              Strefa testowa
+            </Link>
+            <span>&bull;</span>
+            <Link
+              href="/admin"
+              className="text-slate-500 hover:text-slate-200 transition-colors text-[11px]"
+            >
+              Parametry ZUS
+            </Link>
+            <span>&bull;</span>
+            <Link
               href="/panel-pracownika"
               className="text-slate-500 hover:text-slate-200 transition-colors flex items-center gap-1 text-[11px]"
               title="ZSI ZUS: Dostęp wewnętrzny dla pracowników i płatników"
