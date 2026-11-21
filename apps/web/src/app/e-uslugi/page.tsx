@@ -541,11 +541,27 @@ export default function EUslugiPage() {
                   {Math.round((zamStep / totalZamSteps) * 100)}% wypełniono
                 </span>
               </div>
-              <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                <div
- className="h-full bg-[#007834] transition-all duration-300 rounded-full"
- style={{ width: `${(zamStep / totalZamSteps) * 100}%` }}
-                ></div>
+              <div className="grid grid-cols-6 gap-1.5" role="progressbar" aria-valuenow={zamStep} aria-valuemin={1} aria-valuemax={totalZamSteps}>
+                {Array.from({ length: totalZamSteps }).map((_, idx) => {
+                  const stepNum = idx + 1;
+                  const isCompleted = stepNum < zamStep;
+                  const isCurrent = stepNum === zamStep;
+                  return (
+                    <button
+                      key={stepNum}
+                      type="button"
+                      onClick={() => setZamStep(stepNum)}
+                      title={`Przejdź do kroku ${stepNum}`}
+                      className={`h-2.5 rounded-sm transition-colors ${
+                        isCurrent
+                          ? "bg-[#007834] ring-1 ring-offset-1 ring-[#007834]"
+                          : isCompleted
+                          ? "bg-[#007834]/75 hover:bg-[#007834]"
+                          : "bg-[#dce1e5] hover:bg-slate-300"
+                      }`}
+                    />
+                  );
+                })}
               </div>
 
               {/* Szybkie przełączniki kroków */}

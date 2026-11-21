@@ -469,11 +469,27 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
                   {Math.round((currentStep / totalSteps) * 100)}% ukończono
                 </span>
               </div>
-              <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                <div
- className="h-full bg-[#007834] transition-all duration-300 rounded-full"
- style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-                ></div>
+              <div className="grid grid-cols-8 gap-1.5" role="progressbar" aria-valuenow={currentStep} aria-valuemin={1} aria-valuemax={totalSteps}>
+                {Array.from({ length: totalSteps }).map((_, idx) => {
+                  const stepNum = idx + 1;
+                  const isCompleted = stepNum < currentStep;
+                  const isCurrent = stepNum === currentStep;
+                  return (
+                    <button
+                      key={stepNum}
+                      type="button"
+                      onClick={() => setCurrentStep(stepNum)}
+                      title={`Przejdź do pytania ${stepNum}`}
+                      className={`h-2.5 rounded-sm transition-colors ${
+                        isCurrent
+                          ? "bg-[#007834] ring-1 ring-offset-1 ring-[#007834]"
+                          : isCompleted
+                          ? "bg-[#007834]/75 hover:bg-[#007834]"
+                          : "bg-[#dce1e5] hover:bg-slate-300"
+                      }`}
+                    />
+                  );
+                })}
               </div>
             </div>
 

@@ -321,11 +321,25 @@ export default function PrzewodnikPage() {
             <span>Twój postęp checklisty:</span>
             <span className="text-[#00416E] font-bold">{progressPct}%</span>
           </div>
-          <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-            <div
- className="bg-[#00416E] h-2.5 rounded-full transition-all duration-300"
- style={{ width: `${progressPct}%` }}
-            ></div>
+          <div
+            className="flex items-center gap-1"
+            role="progressbar"
+            aria-valuenow={Object.values(completedItems).filter(Boolean).length}
+            aria-valuemin={0}
+            aria-valuemax={MILESTONES.length}
+          >
+            {MILESTONES.map((m, idx) => {
+              const doneCount = Object.values(completedItems).filter(Boolean).length;
+              const isFilled = idx < doneCount;
+              return (
+                <div
+                  key={m.id}
+                  className={`flex-1 h-2.5 rounded-sm transition-colors ${
+                    isFilled ? "bg-[#007834]" : "bg-[#dce1e5]"
+                  }`}
+                />
+              );
+            })}
           </div>
           <div className="flex items-center justify-between text-[11px] text-slate-400">
             <span>

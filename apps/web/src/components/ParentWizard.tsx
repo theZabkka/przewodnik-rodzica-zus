@@ -132,11 +132,27 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
             }</span>
             <span className="text-[#007834] font-mono">{Math.round((step / totalSteps) * 100)}%</span>
           </div>
-          <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-[#dce1e5]">
-            <div
- className="bg-[#007834] h-full transition-all duration-300 rounded-full"
- style={{ width: `${(step / totalSteps) * 100}%` }}
-            />
+          <div className="grid grid-cols-4 gap-1.5" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={totalSteps}>
+            {Array.from({ length: totalSteps }).map((_, idx) => {
+              const stepNum = idx + 1;
+              const isCompleted = stepNum < step;
+              const isCurrent = stepNum === step;
+              return (
+                <button
+                  key={stepNum}
+                  type="button"
+                  onClick={() => setStep(stepNum)}
+                  title={`Przejdź do kroku ${stepNum}`}
+                  className={`h-2.5 rounded-sm transition-colors ${
+                    isCurrent
+                      ? "bg-[#007834] ring-1 ring-offset-1 ring-[#007834]"
+                      : isCompleted
+                      ? "bg-[#007834]/75 hover:bg-[#007834]"
+                      : "bg-[#dce1e5] hover:bg-slate-300"
+                  }`}
+                />
+              );
+            })}
           </div>
         </div>
       )}
