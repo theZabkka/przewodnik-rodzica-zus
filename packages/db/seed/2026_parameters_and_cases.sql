@@ -269,7 +269,7 @@ INSERT INTO public.zus_test_cases (
 (
     'KAZUS_06',
     'Sprawa 6: Dziecko z zaświadczeniem "Za życiem" (65 tyg.)',
-    '\'Za życiem\' 65 tyg.',
+    'Program Za życiem 65 tyg.',
     'Urodzenie dziecka z ciężkim i nieodwracalnym upośledzeniem albo nieuleczalną chorobą zagrażającą życiu (zaświadczenie z art. 4 ust. 3 ustawy "Za życiem"). Wymiar urlopu rodzicielskiego zostaje wydłużony z 41 do 65 tygodni (w tym 56 tygodni dla matki i 9 tygodni dla ojca). Wsparcie hospicjum perinatalnego i zasiłek pogrzebowy w razie zgonu.',
     '{
         "parentRole": "mother",
