@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Compass,
   Calculator,
@@ -24,7 +25,6 @@ import {
 } from "lucide-react";
 import { ParentWizard } from "@/components/ParentWizard";
 import { useParentProfile } from "@/context/ParentProfileContext";
-import { FamilyHeroIllustration } from "@/components/ZusIllustrations";
 
 export default function HomePage() {
   const { openGlossary } = useParentProfile();
@@ -99,8 +99,15 @@ export default function HomePage() {
           </div>
         </div>
 
-          <div className="hidden md:block shrink-0 w-72 lg:w-80">
-            <FamilyHeroIllustration className="w-full h-auto" />
+          <div className="hidden md:block shrink-0 w-72 lg:w-96">
+            <Image
+              src="/images/family-hero.jpg"
+              alt="Uśmiechnięci rodzice na spacerze z wózkiem dziecięcym w parku"
+              width={640}
+              height={480}
+              priority
+              className="w-full h-auto rounded border border-[#dce1e5] object-cover"
+            />
           </div>
         </div>
       </section>
