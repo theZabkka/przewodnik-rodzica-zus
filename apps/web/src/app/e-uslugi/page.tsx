@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { calculateBenefits, DEFAULT_LEGISLATIVE_2026 } from "@hacknation/shared";
 import { ZusLogo } from "../../components/ZusLogo";
+import { DocumentZamIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
 
 function validatePesel(value: string): boolean {
@@ -391,7 +392,11 @@ export default function EUslugiPage() {
 
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-5">
-        <div>
+        <div className="flex items-center gap-5">
+          <div className="hidden lg:block w-36 shrink-0">
+            <DocumentZamIllustration className="w-full h-auto" />
+          </div>
+          <div>
           <div className="flex items-center gap-2">
             <span className="zus-badge">
               <FileText className="w-3.5 h-3.5 mr-1 text-[#007834]" />
@@ -406,6 +411,7 @@ export default function EUslugiPage() {
           <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl">
  Wypełnij zunifikowany wniosek o zasiłek macierzyński (druk ZAM) krok po kroku. Poniżej formularza na bieżąco generowany jest autentyczny podgląd urzędowego dokumentu ZUS.
           </p>
+        </div>
         </div>
 
         {/* Węzeł krajowy & status tożsamości */}

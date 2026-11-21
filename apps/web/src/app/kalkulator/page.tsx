@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { CalculatorIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import {
  calculateParentalBenefits,
@@ -385,7 +386,11 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
 
       {/* Nagłówek Sekcji Kalkulatora */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-5">
-        <div>
+        <div className="flex items-center gap-5">
+          <div className="hidden lg:block w-36 shrink-0">
+            <CalculatorIllustration className="w-full h-auto" />
+          </div>
+          <div>
           <div className="flex items-center gap-2">
             <span className="zus-badge">
               <Calculator className="w-3.5 h-3.5 mr-1 text-[#007834]" />
@@ -400,6 +405,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
           <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
  Odpowiedz na kilka prostych pytań jedno po drugim. Formularz automatycznie dopasuje przepisy Kodeksu Pracy i wyliczy Twoje miesięczne świadczenie.
           </p>
+        </div>
         </div>
 
         {/* Przełącznik trybu oraz presety */}

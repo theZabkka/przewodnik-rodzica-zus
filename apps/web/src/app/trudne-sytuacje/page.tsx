@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { SupportHeartIllustration } from "@/components/ZusIllustrations";
 import {
  HeartHandshake,
  Heart,
@@ -69,7 +70,11 @@ export default function TrudneSytuacjePage() {
       </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-6">
-        <div>
+        <div className="flex items-center gap-5">
+          <div className="hidden lg:block w-36 shrink-0">
+            <SupportHeartIllustration className="w-full h-auto" />
+          </div>
+          <div>
           <div className="inline-flex items-center gap-2 text-rose-700 font-semibold text-xs tracking-wider uppercase mb-1">
             <HeartHandshake className="w-4 h-4 text-rose-600" />
             <span>Moduł 4 &bull; Empatyczne centrum wsparcia rodziców</span>
@@ -80,6 +85,7 @@ export default function TrudneSytuacjePage() {
           <p className="text-sm text-slate-600 mt-1 max-w-3xl">
  Prawa rodzicielskie, świadczenia i procedury urzędowe w obliczu utraty dziecka, przedwczesnego porodu lub diagnozy ciężkiej choroby noworodka. Jesteśmy tu, by pomóc przejść przez formalności z empatią i zrozumieniem.
           </p>
+        </div>
         </div>
 
         {/* Całodobowa Infolinia Wsparcia */}

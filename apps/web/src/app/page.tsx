@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { ParentWizard } from "@/components/ParentWizard";
 import { useParentProfile } from "@/context/ParentProfileContext";
+import { FamilyHeroIllustration } from "@/components/ZusIllustrations";
 
 export default function HomePage() {
   const { openGlossary } = useParentProfile();
@@ -42,7 +43,8 @@ export default function HomePage() {
 
       {/* Oficjalny Hero Banner w czystym, płaskim stylu zus.pl */}
       <section className="bg-[#f4f6f7] border border-[#dce1e5] rounded p-6 sm:p-10">
-        <div className="max-w-4xl space-y-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="max-w-3xl space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="zus-badge">
               <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#007834]" />
@@ -94,6 +96,11 @@ export default function HomePage() {
               <BookOpen className="w-4 h-4 text-[#007834]" />
               <span>Trudne słowa</span>
             </button>
+          </div>
+        </div>
+
+          <div className="hidden md:block shrink-0 w-72 lg:w-80">
+            <FamilyHeroIllustration className="w-full h-auto" />
           </div>
         </div>
       </section>
