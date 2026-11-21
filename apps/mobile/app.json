@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Przewodnik Rodzica ZUS",
+    "slug": "przewodnik-rodzica",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "przewodnikrodzica",
+    "userInterfaceStyle": "light",
+    "primaryColor": "#00823C",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "pl.zus.przewodnikrodzica"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#00823C"
+      },
+      "package": "pl.zus.przewodnikrodzica"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

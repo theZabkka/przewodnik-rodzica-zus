@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #005A9C;
+    --primary-dark: #004274;
+    --secondary: #00823C;
+    --accent: #DC143C;
+    --bg-page: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --text-main: #1A1A1A;
+    --text-muted: #555555;
+    --border-color: #DDE2E8;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Accessible focus indicators for keyboard navigation */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid #005A9C;
+    outline-offset: 2px;
+  }
+}
+
+/* Tryb Wysokiego Kontrastu (WCAG AAA - gov.pl standard) */
+body.high-contrast {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+}
+
+body.high-contrast * {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  border-color: #FFFF00 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+body.high-contrast a,
+body.high-contrast button {
+  color: #00FFFF !important;
+  text-decoration: underline !important;
+  border: 1px solid #00FFFF !important;
+}
+
+body.high-contrast a:hover,
+body.high-contrast button:hover {
+  background-color: #00FFFF !important;
+  color: #000000 !important;
+}
+
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+  border: 2px solid #FFFF00 !important;
+  background: #111111 !important;
+  color: #FFFF00 !important;
+}
+
+/* Skalowanie czcionek a11y */
+body.font-large {
+  font-size: 115%;
+}
+
+body.font-xlarge {
+  font-size: 130%;
+}
+
+/* Pomocnicze klasy stylów urzędowych */
+.gov-card {
+  background: #FFFFFF;
+  border: 1px solid #DDE2E8;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.gov-card:hover {
+  border-color: #005A9C;
+  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.1);
+}
+
+.badge-zus {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #eaf3fa;
+  color: #005A9C;
+  border: 1px solid #a3cbee;
+}
+
+.badge-wlb {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #edfcf2;
+  color: #00823C;
+  border: 1px solid #abefc3;
+}

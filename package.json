@@ -1,0 +1,22 @@
+{
+  "name": "hacknation-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zasiłkowy Przewodnik Przyszłego Rodzica - HackNation ZUS Monorepo",
+  "scripts": {
+    "dev": "turbo run dev",
+    "mobile:start": "pnpm --filter @hacknation/mobile start",
+    "mobile:tunnel": "pnpm --filter @hacknation/mobile start --tunnel",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:types": "pnpm --filter @hacknation/db run types"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.2",
+    "turbo": "^2.4.4",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@9.15.4"
+}
