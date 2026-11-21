@@ -38,10 +38,13 @@ export function Header() {
   }, [highContrast]);
 
   useEffect(() => {
+    document.documentElement.classList.remove("font-large", "font-xlarge");
     document.body.classList.remove("font-large", "font-xlarge");
     if (fontSizeLevel === 1) {
+      document.documentElement.classList.add("font-large");
       document.body.classList.add("font-large");
     } else if (fontSizeLevel === 2) {
+      document.documentElement.classList.add("font-xlarge");
       document.body.classList.add("font-xlarge");
     }
   }, [fontSizeLevel]);

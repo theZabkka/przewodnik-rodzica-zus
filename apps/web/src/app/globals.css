@@ -68,13 +68,13 @@ body.high-contrast textarea {
   color: #ffff00 !important;
 }
 
-/* Skalowanie czcionek a11y */
-body.font-large {
-  font-size: 115%;
+/* Skalowanie czcionek a11y (na <html>, aby skalować wszystkie jednostki rem w Tailwind CSS) */
+html.font-large {
+  font-size: 115% !important;
 }
 
-body.font-xlarge {
-  font-size: 130%;
+html.font-xlarge {
+  font-size: 130% !important;
 }
 
 /* Karty i elementy wizualne w oficjalnym stylu ZUS.pl */
