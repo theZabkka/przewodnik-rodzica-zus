@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ParentProfileProvider } from "@/context/ParentProfileContext";
 
 export const metadata: Metadata = {
   title: "Przewodnik Rodzica | Zakład Ubezpieczeń Społecznych",
@@ -27,11 +28,13 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-900 antialiased selection:bg-[#00823C] selection:text-white">
-        <Header />
-        <main id="main-content" className="flex-1 flex flex-col focus:outline-none">
-          {children}
-        </main>
-        <Footer />
+        <ParentProfileProvider>
+          <Header />
+          <main id="main-content" className="flex-1 flex flex-col focus:outline-none">
+            {children}
+          </main>
+          <Footer />
+        </ParentProfileProvider>
       </body>
     </html>
   );

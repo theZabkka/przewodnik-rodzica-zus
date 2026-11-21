@@ -22,9 +22,11 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
+  BookOpen,
 } from "lucide-react";
 import { calculateBenefits, DEFAULT_LEGISLATIVE_2026 } from "@hacknation/shared";
 import { ZusLogo } from "../../components/ZusLogo";
+import { useParentProfile } from "@/context/ParentProfileContext";
 
 function validatePesel(value: string): boolean {
   const digits = value.replace(/\D/g, "");
@@ -96,6 +98,7 @@ function ZamQrCode({ seed }: { seed: string }) {
 }
 
 export default function EUslugiPage() {
+  const { profile, openGlossary } = useParentProfile();
   const [activeTab, setActiveTab] = useState<"zam" | "mobywatel" | "pue" | "ezla">("zam");
 
   // Stan widoku kreatora wniosku ZAM
@@ -135,9 +138,26 @@ export default function EUslugiPage() {
   const [debtPaymentSuccess, setDebtPaymentSuccess] = useState<boolean>(false);
   const [prefilledFromCalc, setPrefilledFromCalc] = useState<boolean>(false);
 
-  // Automatyczne wczytanie danych przeniesionych z Kalkulatora Świadczeń
+  // Automatyczne wczytanie danych z Profilu Rodziny lub Kalkulatora Świadczeń
   useEffect(() => {
     try {
+      if (profile) {
+        if (profile.contractType) setContractType(profile.contractType);
+        if (typeof profile.monthlySalaryGross === "number")
+          setMonthlySalaryGross(profile.monthlySalaryGross);
+        if (typeof profile.childrenCount === "number")
+          setChildrenCount(profile.childrenCount);
+        if (typeof profile.submittedIn21Days === "boolean")
+          setChosenRate(profile.submittedIn21Days ? "815" : "100_70");
+        if (typeof profile.isPretermOrHospitalized === "boolean")
+          setIsPremature(profile.isPretermOrHospitalized);
+        if (typeof profile.hospitalDays === "number")
+          setHospitalDays(profile.hospitalDays);
+        if (typeof profile.hasLifeCertificate === "boolean")
+          setHasLifeCert(profile.hasLifeCertificate);
+        setPrefilledFromCalc(true);
+      }
+
       const params = new URLSearchParams(window.location.search);
       if (params.get("prefill") === "1") {
         const raw = window.localStorage.getItem("zus_zam_prefill");
@@ -170,7 +190,7 @@ export default function EUslugiPage() {
     } catch {
       // Ignoruj błędy parsowania localStorage
     }
-  }, []);
+  }, [profile]);
 
   // Walidacja formalna pól ZUS
   const peselValid = useMemo(() => validatePesel(pesel), [pesel]);
@@ -465,6 +485,15 @@ export default function EUslugiPage() {
         >
           <Clock className="w-4 h-4" />
           <span>e-ZLA (Zwolnienia lekarskie w ciąży kod B)</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => openGlossary()}
+          className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold text-[#00416E] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors shadow-2xs"
+        >
+          <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+          <span>Trudne słowa (Słownik)</span>
         </button>
       </div>
 

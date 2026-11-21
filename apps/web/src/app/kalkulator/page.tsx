@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useParentProfile } from "@/context/ParentProfileContext";
 import {
   calculateParentalBenefits,
   BenefitCalculationInput,
@@ -28,10 +29,13 @@ import {
   ListFilter,
   FileText,
   SlidersHorizontal,
+  BookOpen,
+  Sparkles,
 } from "lucide-react";
 
 export default function KalkulatorPage() {
   const router = useRouter();
+  const { profile, openGlossary } = useParentProfile();
   // Tryb wyświetlania: wizard (krok po kroku) vs compact (wszystko na jednym ekranie)
   const [viewMode, setViewMode] = useState<"wizard" | "full">("wizard");
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -56,6 +60,26 @@ export default function KalkulatorPage() {
   const [worksPartTime, setWorksPartTime] = useState<boolean>(false);
   const [workFteRatio, setWorkFteRatio] = useState<number>(0.5);
   const [workWeeks, setWorkWeeks] = useState<number>(16);
+
+  // Wczytaj dane z Centralnego Profilu Rodziny, jeśli użytkownik przeszedł wcześniej kreator
+  useEffect(() => {
+    if (profile) {
+      if (profile.whoOnLeave === "father") setParentRole("father");
+      else setParentRole("mother");
+      if (profile.contractType) setContractType(profile.contractType);
+      if (profile.monthlySalaryGross) setGrossSalary(profile.monthlySalaryGross);
+      if (profile.childrenCount) setChildrenCount(profile.childrenCount);
+      if (typeof profile.submittedIn21Days === "boolean") setSubmittedIn21Days(profile.submittedIn21Days);
+      if (typeof profile.isPretermOrHospitalized === "boolean") {
+        setIsPretermOrHospitalized(profile.isPretermOrHospitalized);
+        if (profile.hospitalDays) setHospitalDaysTotal(profile.hospitalDays);
+      }
+      if (typeof profile.worksPartTime === "boolean") {
+        setWorksPartTime(profile.worksPartTime);
+        if (profile.workFteRatio) setWorkFteRatio(profile.workFteRatio);
+      }
+    }
+  }, [profile]);
 
   // Presety scenariuszy
   const loadPreset = (preset: "standard" | "preterm" | "parttime" | "father" | "jdg") => {
@@ -382,6 +406,15 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
+            onClick={() => openGlossary()}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[#00416E] bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors shadow-2xs"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+            <span>Trudne słowa (Słownik)</span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => setViewMode(viewMode === "wizard" ? "full" : "wizard")}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[#007834] bg-emerald-50 hover:bg-emerald-100 border border-[#c2e4cc] rounded transition-colors"
           >
@@ -400,6 +433,20 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
           </button>
         </div>
       </div>
+
+      {profile && (
+        <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-xl text-xs text-emerald-950 flex flex-wrap items-center justify-between gap-3 animate-in fade-in">
+          <div className="flex items-center gap-2.5">
+            <Sparkles className="w-4 h-4 text-[#007834] shrink-0" />
+            <span>
+              Wczytano Twój profil: <strong>{profile.whoOnLeave === "both" ? "Oboje rodzice" : profile.whoOnLeave === "father" ? "Tata" : "Mama"}</strong>, pensja <strong>{profile.monthlySalaryGross.toLocaleString("pl-PL")} zł brutto</strong> ({profile.contractType === "employment" ? "Umowa o pracę" : profile.contractType === "b2b" ? "JDG" : "Zlecenie"}).
+            </span>
+          </div>
+          <span className="text-[11px] font-bold bg-[#007834] text-white px-2.5 py-1 rounded-md shrink-0">
+            Kalkulator zsynchronizowany
+          </span>
+        </div>
+      )}
 
       {/* GŁÓWNA CZĘŚĆ: INTERAKTYWNY KREATOR PYTANIE PO PYTANIU */}
       {viewMode === "wizard" && (

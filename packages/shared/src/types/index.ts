@@ -303,3 +303,37 @@ export interface WorkSharingSchedule {
   weeklyBenefitAmount: number;
   totalWeeklyCombinedIncome: number;
 }
+
+/**
+ * Centralny Profil Rodziny (Onboarding / Szybki Start Rodzica)
+ * Uniwersalny stan zasilający kalkulator, przewodnik, e-usługi i asystenta AI
+ */
+export interface ParentProfile {
+  whoOnLeave: 'mother' | 'father' | 'both';
+  childrenCount: 1 | 2 | 3; // 1, 2 (bliźnięta), 3+ (trojaczki+)
+  contractType: ContractType;
+  monthlySalaryGross: number; // np. 7500
+  isPretermOrHospitalized?: boolean; // wcześniak / hospitalizacja
+  hospitalDays?: number;
+  birthWeek?: number;
+  birthWeightGrams?: number;
+  worksPartTime?: boolean; // łączenie urlopu z pracą (1/2 etatu)
+  workFteRatio?: number; // domyślnie 0.5
+  submittedIn21Days?: boolean; // wariant 81.5%
+  hasLifeCertificate?: boolean; // Ustawa "Za życiem"
+  updatedAt?: string;
+}
+
+/**
+ * Słowniczek Trudnych Słów ZUS (Standard Prostej Polszczyzny)
+ */
+export interface GlossaryTerm {
+  id: string;
+  term: string; // Urzędowa nazwa (np. "Podstawa wymiaru zasiłku")
+  plainTitle: string; // Tytuł po ludzku (np. "Twoja średnia pensja do wyliczenia zasiłku")
+  shortExplanation: string; // Proste wyjaśnienie w 1-2 zdaniach
+  detailedExplanation: string; // Rozwinięcie z przykładem
+  legalCitation?: string; // Podstawa prawna (np. "Art. 36 ustawy zasiłkowej")
+  category: 'finanse' | 'urlopy' | 'formalnosci' | 'szczegolne';
+  tags: string[];
+}

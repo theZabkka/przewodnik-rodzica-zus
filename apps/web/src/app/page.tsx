@@ -19,9 +19,14 @@ import {
   ExternalLink,
   Mail,
   Video,
+  BookOpen,
+  Sparkles,
 } from "lucide-react";
+import { ParentWizard } from "@/components/ParentWizard";
+import { useParentProfile } from "@/context/ParentProfileContext";
 
 export default function HomePage() {
+  const { openGlossary } = useParentProfile();
   return (
     <div className="flex flex-col gap-10 py-6 px-4 sm:px-8 max-w-7xl mx-auto w-full">
       {/* Pasek Okruszków (Breadcrumbs) charakterystyczny dla portalu zus.pl */}
@@ -80,8 +85,46 @@ export default function HomePage() {
               <FileText className="w-4 h-4" />
               <span>Wniosek ZAM i eZUS</span>
             </Link>
+
+            <button
+              type="button"
+              onClick={() => openGlossary()}
+              className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-[#00416E] font-bold text-sm px-4 py-3 rounded border border-blue-200 transition-colors focus:outline-none"
+            >
+              <BookOpen className="w-4 h-4 text-[#00416E]" />
+              <span>Trudne słowa (Słownik)</span>
+            </button>
           </div>
         </div>
+      </section>
+
+      {/* Interaktywny Kreator: Szybki Start Rodzica */}
+      <section className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-2 bg-emerald-100 text-[#007834] rounded-xl">
+              <Sparkles className="w-5 h-5" />
+            </span>
+            <div>
+              <h2 className="text-base sm:text-lg font-black text-slate-900">
+                Szybki Start Rodzica: Sprawdź swój zasiłek w 60 sekund
+              </h2>
+              <p className="text-xs text-slate-500">
+                Wypełnij 3 proste pytania. Te dane automatycznie zasilą kalkulator, wniosek ZAM i asystenta AI!
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => openGlossary()}
+            className="text-xs text-[#00416E] hover:underline font-bold flex items-center gap-1"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Wyjaśnij trudne pojęcia ZUS</span>
+          </button>
+        </div>
+
+        <ParentWizard />
       </section>
 
       {/* Ważny Komunikat Urzędowy ZUS (Alert Box) */}

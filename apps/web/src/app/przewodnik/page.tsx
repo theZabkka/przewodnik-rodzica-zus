@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useParentProfile } from "@/context/ParentProfileContext";
 import {
   Compass,
   Calendar,
@@ -16,6 +17,8 @@ import {
   Briefcase,
   FileText,
   Download,
+  BookOpen,
+  Sparkles,
 } from "lucide-react";
 
 interface Milestone {
@@ -179,6 +182,7 @@ const MILESTONES: Milestone[] = [
 ];
 
 export default function PrzewodnikPage() {
+  const { profile, openGlossary } = useParentProfile();
   const [selectedStage, setSelectedStage] = useState<0 | 1 | 2 | 3 | 4>(0);
   const [institutionFilter, setInstitutionFilter] = useState<"all" | "hospital" | "usc" | "employer" | "zus">("all");
   const [roleFilter, setRoleFilter] = useState<"all" | "mother" | "father" | "preterm" | "jdg">("all");
@@ -186,6 +190,19 @@ export default function PrzewodnikPage() {
   const [completedItems, setCompletedItems] = useState<Record<string, boolean>>({
     m1: true,
   });
+
+  // Automatyczne dopasowanie na podstawie profilu rodziny
+  useEffect(() => {
+    if (profile) {
+      if (profile.isPretermOrHospitalized) {
+        setRoleFilter("preterm");
+      } else if (profile.contractType === "b2b") {
+        setRoleFilter("jdg");
+      } else if (profile.whoOnLeave === "father") {
+        setRoleFilter("father");
+      }
+    }
+  }, [profile]);
 
   // Obliczenia terminów na podstawie daty porodu
   const calculatedDates = useMemo(() => {
@@ -324,6 +341,28 @@ export default function PrzewodnikPage() {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Przycisk słowniczka i informacja o profilu */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-slate-200 rounded-2xl shadow-xs">
+        <div className="flex items-center gap-2 text-xs text-slate-700">
+          <Sparkles className="w-4 h-4 text-[#007834]" />
+          <span>
+            {profile ? (
+              <span>Dopasowano harmonogram do profilu: <strong>{profile.whoOnLeave === "both" ? "Oboje rodzice" : profile.whoOnLeave === "father" ? "Tata" : "Mama"} ({profile.childrenCount} dziecko)</strong></span>
+            ) : (
+              <span>Skorzystaj z profilu rodziny, aby automatycznie spersonalizować terminy.</span>
+            )}
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => openGlossary()}
+          className="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 rounded-xl text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+        >
+          <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+          <span>Słowniczek Trudnych Słów ZUS</span>
+        </button>
       </div>
 
       {/* Kalkulator Kluczowych Dat i Terminów Urzędowych */}

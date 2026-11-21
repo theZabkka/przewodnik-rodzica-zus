@@ -16,12 +16,18 @@ import {
   Bot,
   Smartphone,
   LogIn,
+  BookOpen,
+  Sparkles,
 } from "lucide-react";
 import { ZusLogo, PolishEmblem } from "./ZusLogo";
 import { MobileSimulatorModal } from "./MobileSimulatorModal";
+import { useParentProfile } from "@/context/ParentProfileContext";
+import { TrudneSlowaModal } from "./TrudneSlowaModal";
+import { ParentWizard } from "./ParentWizard";
 
 export function Header() {
   const pathname = usePathname();
+  const { profile, hasProfile, isWizardOpen, openWizard, closeWizard, openGlossary } = useParentProfile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [fontSizeLevel, setFontSizeLevel] = useState<0 | 1 | 2>(0);
@@ -172,17 +178,51 @@ export function Header() {
           </div>
         </div>
 
-        {/* Prawy róg: Narzędzia, Symulator Mobilny, Hamburger */}
-        <div className="flex items-center gap-3">
+        {/* Prawy róg: Trudne Słowa, Profil Rodzica, Symulator Mobilny, Hamburger */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Przycisk Słowniczka Trudnych Słów */}
+          <button
+            type="button"
+            onClick={() => openGlossary()}
+            className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none shadow-2xs"
+            title="Otwórz słowniczek trudnych pojęć ZUS"
+          >
+            <BookOpen className="w-4 h-4 text-[#00416E]" />
+            <span className="hidden sm:inline">Trudne słowa</span>
+            <span className="sm:hidden">Słownik</span>
+          </button>
+
+          {/* Przycisk Profilu Rodzica */}
+          <button
+            type="button"
+            onClick={openWizard}
+            className={`inline-flex items-center gap-1.5 font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none shadow-2xs border ${
+              hasProfile
+                ? "bg-emerald-50 hover:bg-emerald-100 text-[#007834] border-emerald-300"
+                : "bg-[#007834] hover:bg-[#00622a] text-white border-[#007834]"
+            }`}
+            title="Otwórz konfigurator profilu rodziny"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            {hasProfile ? (
+              <span className="hidden md:inline">
+                Profil: {profile?.whoOnLeave === "both" ? "Oboje" : profile?.whoOnLeave === "father" ? "Tata" : "Mama"} ({profile?.monthlySalaryGross.toLocaleString("pl-PL")} zł)
+              </span>
+            ) : null}
+            <span className={hasProfile ? "md:hidden" : ""}>
+              {hasProfile ? "Profil" : "Szybki start"}
+            </span>
+          </button>
+
           <button
             type="button"
             onClick={() => setIsSimulatorOpen(true)}
-            className="inline-flex items-center gap-2 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs sm:text-sm px-3.5 py-2 rounded-lg transition-all focus:outline-none"
+            className="inline-flex items-center gap-1.5 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none"
             title="Otwórz symulator smartfona z aplikacją mobilną"
           >
             <Smartphone className="w-4 h-4 text-[#007834]" />
-            <span className="hidden sm:inline">Widok aplikacji mobilnej</span>
-            <span className="sm:hidden">Mobilna</span>
+            <span className="hidden xl:inline">Aplikacja mobilna</span>
+            <span className="xl:hidden">Mobilna</span>
           </button>
 
           <button
@@ -287,6 +327,14 @@ export function Header() {
         isOpen={isSimulatorOpen}
         onClose={() => setIsSimulatorOpen(false)}
       />
+
+      {/* Słowniczek Trudnych Słów ZUS */}
+      <TrudneSlowaModal />
+
+      {/* Modal Szybkiego Startu Rodzica */}
+      {isWizardOpen && (
+        <ParentWizard isModal onClose={closeWizard} />
+      )}
     </header>
   );
 }

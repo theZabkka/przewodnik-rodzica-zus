@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParentProfile } from "@/context/ParentProfileContext";
 import {
   Bot,
   Send,
@@ -11,6 +12,7 @@ import {
   Check,
   RotateCcw,
   SlidersHorizontal,
+  BookOpen,
 } from "lucide-react";
 import { ContractType, ParentRole } from "@hacknation/shared";
 
@@ -163,6 +165,7 @@ const KNOWLEDGE_BASE: KnowledgeBaseItem[] = [
 ];
 
 export default function AsystentAiPage() {
+  const { profile, openGlossary } = useParentProfile();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "msg-welcome",
@@ -194,6 +197,18 @@ export default function AsystentAiPage() {
     stage: "pregnancy",
     salaryGross: 6500,
   });
+
+  // Wczytaj dane z Profilu Rodziny, jeśli użytkownik wypełnił kreator
+  useEffect(() => {
+    if (profile) {
+      setUserContext((prev) => ({
+        ...prev,
+        role: profile.whoOnLeave === "father" ? "father" : "mother",
+        contract: profile.contractType,
+        salaryGross: profile.monthlySalaryGross,
+      }));
+    }
+  }, [profile]);
 
   const handleCopyMessage = (id: string, text: string) => {
     if (typeof navigator !== "undefined") {
@@ -314,6 +329,16 @@ export default function AsystentAiPage() {
 
         {/* Kontrolki: Tryb Humanizer oraz Przycisk Kontekstu */}
         <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => openGlossary()}
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 rounded-xl text-xs font-bold transition-all shadow-2xs"
+            title="Otwórz słowniczek pojęć prawnych ZUS"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+            <span>Trudne słowa (Słownik)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setShowContextDrawer(!showContextDrawer)}
