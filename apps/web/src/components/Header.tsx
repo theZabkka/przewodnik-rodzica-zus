@@ -234,10 +234,10 @@ export function Header() {
           <button
             type="button"
             onClick={() => openGlossary()}
-            className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 font-bold text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all focus:outline-none shadow-2xs whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 bg-white hover:bg-[#f4f6f7] text-[#222222] hover:text-[#007834] border border-[#dce1e5] hover:border-[#007834] font-semibold text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded transition-colors focus:outline-none whitespace-nowrap"
             title="Otwórz słowniczek trudnych pojęć ZUS"
           >
-            <BookOpen className="w-3.5 h-3.5 text-[#00416E] shrink-0" />
+            <BookOpen className="w-3.5 h-3.5 text-[#007834] shrink-0" />
             <span className="hidden sm:inline">Trudne słowa</span>
             <span className="sm:hidden">Słownik</span>
           </button>
@@ -246,10 +246,10 @@ export function Header() {
           <button
             type="button"
             onClick={openWizard}
-            className={`inline-flex items-center gap-1 font-bold text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all focus:outline-none shadow-2xs border whitespace-nowrap ${
+            className={`inline-flex items-center gap-1.5 font-semibold text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded transition-colors focus:outline-none border whitespace-nowrap ${
               hasProfile
-                ? "bg-emerald-50 hover:bg-emerald-100 text-[#007834] border-emerald-300"
-                : "bg-[#007834] hover:bg-[#00622a] text-white border-[#007834]"
+                ? "bg-[#eef6f1] hover:bg-[#e1f0e7] text-[#007834] border-[#007834]"
+                : "bg-[#007834] hover:bg-[#005f29] text-white border-[#007834]"
             }`}
             title="Otwórz konfigurator profilu rodziny"
           >
@@ -268,7 +268,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setIsSimulatorOpen(true)}
-              className="inline-flex items-center gap-1.5 bg-[#f0f8f3] hover:bg-[#e2f2e6] text-[#007834] border border-[#c2e4cc] font-bold text-xs px-2.5 sm:px-3 py-2 rounded-lg transition-all focus:outline-none whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 bg-white hover:bg-[#f4f6f7] text-[#222222] hover:text-[#007834] border border-[#dce1e5] hover:border-[#007834] font-semibold text-xs px-2.5 sm:px-3 py-2 rounded transition-colors focus:outline-none whitespace-nowrap"
               title="Otwórz symulator smartfona z aplikacją mobilną"
             >
               <Smartphone className="w-4 h-4 text-[#007834]" />
@@ -289,46 +289,43 @@ export function Header() {
         </div>
       </div>
 
-      {/* Rząd 3: Główny Pasek Menu w stylu ZUS.pl (ZUS Green Bar) */}
-      <nav className="hidden lg:block bg-[#007834] text-white shadow-sm">
+      {/* Rząd 3: Czysta, płaska nawigacja w stylu zus.pl (białe tło + zielone podkreślenie) */}
+      <nav className="hidden lg:block bg-white border-t border-[#edf0f2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
-          <div className="flex items-center space-x-0.5 py-1">
+          <div className="flex items-center gap-1">
             <Link
               href="/"
-              className={`flex items-center gap-1.5 px-3 py-2 rounded text-xs font-bold transition-colors ${
+              className={`px-3.5 py-3 text-[13px] font-semibold border-b-[3px] transition-colors ${
                 pathname === "/"
-                  ? "bg-[#00622a] text-white shadow-inner"
-                  : "text-emerald-50 hover:bg-[#00622a] hover:text-white"
+                  ? "border-[#007834] text-[#007834]"
+                  : "border-transparent text-[#222222] hover:text-[#007834] hover:border-[#c2e4cc]"
               }`}
             >
-              <span>Strona główna</span>
+              Strona główna
             </Link>
 
             {navItems.map((item) => {
               const isActive =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
-              const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded text-xs font-bold transition-colors ${
+                  className={`px-3.5 py-3 text-[13px] font-semibold border-b-[3px] transition-colors ${
                     isActive
-                      ? "bg-[#00622a] text-white shadow-inner"
-                      : "text-emerald-50 hover:bg-[#00622a] hover:text-white"
+                      ? "border-[#007834] text-[#007834]"
+                      : "border-transparent text-[#222222] hover:text-[#007834] hover:border-[#c2e4cc]"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-emerald-200" />
-                  <span>{item.label}</span>
+                  {item.label}
                 </Link>
               );
             })}
           </div>
 
-          <div className="text-[11px] text-emerald-100 font-semibold flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-300"></span>
-            <span>Stan prawny: 2026 (WLB & art. 180 KP)</span>
-          </div>
+          <span className="text-xs text-[#59636e]">
+            Stan prawny: <strong className="text-[#222222]">2026</strong>
+          </span>
         </div>
       </nav>
 

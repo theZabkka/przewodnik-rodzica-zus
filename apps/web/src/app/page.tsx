@@ -40,69 +40,69 @@ export default function HomePage() {
         </span>
       </nav>
 
-      {/* Oficjalny Hero Banner ZUS */}
-      <section className="bg-white border border-[#dee2e6] border-l-4 border-l-[#007834] rounded-lg p-6 sm:p-10 shadow-xs relative overflow-hidden">
+      {/* Oficjalny Hero Banner w czystym, płaskim stylu zus.pl */}
+      <section className="bg-[#f4f6f7] border border-[#dce1e5] rounded p-6 sm:p-10">
         <div className="max-w-4xl space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="zus-badge">
               <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#007834]" />
-              ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH &bull; SERWIS OFICJALNY
+              ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH
             </span>
-            <span className="zus-badge-navy">STAN PRAWNY: 2026</span>
+            <span className="text-xs font-semibold text-[#59636e]">Stan prawny: 2026</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#00416E] tracking-tight leading-snug">
+          <h1 className="text-2xl sm:text-4xl font-bold text-[#222222] tracking-tight leading-snug">
             Zasiłkowy Przewodnik Rodzica
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
-            Spodziewasz się dziecka lub niedawno zostałeś rodzicem? W jednym miejscu sprawdzisz przysługujące Ci uprawnienia, bezbłędnie obliczysz wysokość zasiłku macierzyńskiego oraz wygenerujesz wniosek ZAM do złożenia przez portal <strong>PUE/eZUS</strong>.
+          <p className="text-base text-[#333333] leading-relaxed">
+            Spodziewasz się dziecka lub niedawno zostałeś rodzicem? W jednym miejscu sprawdzisz przysługujące Ci uprawnienia, obliczysz wysokość zasiłku macierzyńskiego oraz wygenerujesz wniosek ZAM do złożenia przez portal <strong>PUE/eZUS</strong>.
           </p>
 
-          {/* Przyciski akcji w stylu ZUS */}
-          <div className="flex flex-wrap items-center gap-3 pt-3">
+          {/* Przyciski akcji w płaskim stylu zus.pl */}
+          <div className="flex flex-wrap items-center gap-2.5 pt-2">
             <Link
               href="/kalkulator"
-              className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-sm px-6 py-3 rounded transition-colors shadow-2xs focus:outline-none"
+              className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#005f29] text-white font-semibold text-sm px-5 py-2.5 rounded transition-colors focus:outline-none"
             >
               <Calculator className="w-4 h-4" />
-              <span>Oblicz wysokość zasiłku (Kalkulator)</span>
+              <span>Oblicz wysokość zasiłku</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
-              href="/przewodnik"
-              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-[#007834] font-bold text-sm px-5 py-3 rounded border border-[#007834] transition-colors focus:outline-none"
-            >
-              <Compass className="w-4 h-4" />
-              <span>Przewodnik krok po kroku</span>
-            </Link>
-
-            <Link
               href="/e-uslugi"
-              className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#003457] text-white font-bold text-sm px-5 py-3 rounded transition-colors shadow-2xs focus:outline-none"
+              className="inline-flex items-center gap-2 bg-white hover:bg-[#eef6f1] text-[#007834] font-semibold text-sm px-4 py-2.5 rounded border border-[#007834] transition-colors focus:outline-none"
             >
               <FileText className="w-4 h-4" />
               <span>Wniosek ZAM i eZUS</span>
             </Link>
 
+            <Link
+              href="/przewodnik"
+              className="inline-flex items-center gap-2 bg-white hover:bg-[#f4f6f7] text-[#222222] hover:text-[#007834] font-semibold text-sm px-4 py-2.5 rounded border border-[#dce1e5] hover:border-[#007834] transition-colors focus:outline-none"
+            >
+              <Compass className="w-4 h-4 text-[#007834]" />
+              <span>Przewodnik krok po kroku</span>
+            </Link>
+
             <button
               type="button"
               onClick={() => openGlossary()}
-              className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-[#00416E] font-bold text-sm px-4 py-3 rounded border border-blue-200 transition-colors focus:outline-none"
+              className="inline-flex items-center gap-2 bg-white hover:bg-[#f4f6f7] text-[#222222] hover:text-[#007834] font-semibold text-sm px-4 py-2.5 rounded border border-[#dce1e5] hover:border-[#007834] transition-colors focus:outline-none"
             >
-              <BookOpen className="w-4 h-4 text-[#00416E]" />
-              <span>Trudne słowa (Słownik)</span>
+              <BookOpen className="w-4 h-4 text-[#007834]" />
+              <span>Trudne słowa</span>
             </button>
           </div>
         </div>
       </section>
 
       {/* Interaktywny Kreator: Szybki Start Rodzica */}
-      <section className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+      <section className="bg-white border border-[#dce1e5] rounded p-6 sm:p-8 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#edf0f2] pb-3">
           <div className="flex items-center gap-2">
-            <span className="p-2 bg-emerald-100 text-[#007834] rounded-xl">
+            <span className="p-2 bg-[#eef6f1] text-[#007834] rounded">
               <Sparkles className="w-5 h-5" />
             </span>
             <div>
@@ -127,12 +127,12 @@ export default function HomePage() {
         <ParentWizard />
       </section>
 
-      {/* Ważny Komunikat Urzędowy ZUS (Alert Box) */}
-      <section className="bg-[#fffbeb] border border-[#fef3c7] border-l-4 border-l-[#f39200] rounded-lg p-5">
+      {/* Ważny Komunikat Urzędowy ZUS (stonowany styl zus.pl) */}
+      <section className="bg-white border border-[#dce1e5] border-l-4 border-l-[#007834] rounded p-5">
         <div className="flex items-start gap-3.5">
-          <AlertCircle className="w-5 h-5 text-[#b45309] shrink-0 mt-0.5" />
-          <div className="space-y-1.5 text-xs sm:text-sm text-slate-800">
-            <p className="font-bold text-[#b45309] uppercase tracking-wider text-xs">
+          <AlertCircle className="w-5 h-5 text-[#007834] shrink-0 mt-0.5" />
+          <div className="space-y-1.5 text-xs sm:text-sm text-[#333333]">
+            <p className="font-bold text-[#222222] uppercase tracking-wider text-xs">
               Ważne terminy i zasady wypłaty zasiłków w 2026 r.:
             </p>
             <ul className="list-disc list-inside space-y-1 text-slate-700">

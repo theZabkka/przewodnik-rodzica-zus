@@ -5,14 +5,15 @@
 @layer base {
   :root {
     --primary: #007834;
-    --primary-dark: #00622a;
+    --primary-dark: #005f29;
     --secondary: #00416E;
     --accent: #f39200;
-    --bg-page: #f8f9fa;
+    --bg-page: #ffffff;
     --bg-surface: #ffffff;
-    --text-main: #212529;
-    --text-muted: #555555;
-    --border-color: #dee2e6;
+    --bg-subtle: #f4f6f7;
+    --text-main: #222222;
+    --text-muted: #59636e;
+    --border-color: #dce1e5;
   }
 
   body {
@@ -77,58 +78,56 @@ html.font-xlarge {
   font-size: 130% !important;
 }
 
-/* Karty i elementy wizualne w oficjalnym stylu ZUS.pl */
+/* Karty i elementy wizualne w czystym, płaskim stylu zus.pl */
 .zus-card {
   background: #ffffff;
-  border: 1px solid #dee2e6;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
+  border: 1px solid #dce1e5;
+  border-radius: 4px;
+  transition: border-color 0.15s ease;
 }
 
 .zus-card:hover {
   border-color: #007834;
-  box-shadow: 0 4px 14px rgba(0, 120, 52, 0.08);
 }
 
 .zus-card-accent {
-  border-left: 4px solid #007834;
+  border-top: 3px solid #007834;
 }
 
 .zus-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
   font-weight: 700;
-  background-color: #f0f8f3;
+  letter-spacing: 0.02em;
+  background-color: #eef6f1;
   color: #007834;
-  border: 1px solid #c2e4cc;
 }
 
 .zus-badge-navy {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
   font-weight: 700;
-  background-color: #f0f6fa;
+  letter-spacing: 0.02em;
+  background-color: #f0f4f8;
   color: #00416E;
-  border: 1px solid #bad5e8;
 }
 
 .zus-badge-amber {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
   font-weight: 700;
-  background-color: #fffbeb;
-  color: #b45309;
-  border: 1px solid #fef3c7;
+  letter-spacing: 0.02em;
+  background-color: #fef6e7;
+  color: #9a5b00;
 }
 
 /* Stylizowany pasek okruszków (breadcrumbs) ZUS */
