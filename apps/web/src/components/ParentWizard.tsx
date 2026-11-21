@@ -5,6 +5,9 @@ import Link from "next/link";
 import {
  Baby,
  Users,
+ User,
+ UserCheck,
+ HeartPulse,
  Building2,
  Briefcase,
  FileText,
@@ -186,7 +189,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-2xl">👩‍👧‍👦</span>
+                <Users className="w-6 h-6 text-[#007834]" />
                 <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
  Najpopularniejsze
                 </span>
@@ -208,7 +211,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
                   : "border-[#dce1e5] bg-white hover:border-slate-300"
               }`}
             >
-              <span className="text-2xl">👩</span>
+              <User className="w-6 h-6 text-[#007834]" />
               <div>
                 <div className="font-extrabold text-slate-900 text-sm">Głównie mama</div>
                 <div className="text-xs text-slate-500 mt-1">
@@ -226,7 +229,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
                   : "border-[#dce1e5] bg-white hover:border-slate-300"
               }`}
             >
-              <span className="text-2xl">👨</span>
+              <UserCheck className="w-6 h-6 text-[#007834]" />
               <div>
                 <div className="font-extrabold text-slate-900 text-sm">Tata na urlopie</div>
                 <div className="text-xs text-slate-500 mt-1">
@@ -277,7 +280,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
                   : "border-[#dce1e5] bg-white hover:border-slate-300"
               }`}
             >
-              <span className="text-2xl">👶</span>
+              <Baby className="w-6 h-6 text-[#007834]" />
               <div>
                 <div className="font-extrabold text-slate-900 text-sm">Jedno dziecko</div>
                 <div className="text-xs text-slate-500 mt-1">
@@ -295,7 +298,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
                   : "border-[#dce1e5] bg-white hover:border-slate-300"
               }`}
             >
-              <span className="text-2xl">👶👶</span>
+              <div className="inline-flex items-center gap-0.5 text-[#007834]"><Baby className="w-5 h-5" /><Baby className="w-5 h-5" /></div>
               <div>
                 <div className="font-extrabold text-slate-900 text-sm">Bliźnięta</div>
                 <div className="text-xs text-slate-500 mt-1">
@@ -313,7 +316,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
                   : "border-[#dce1e5] bg-white hover:border-slate-300"
               }`}
             >
-              <span className="text-2xl">👶👶👶</span>
+              <div className="inline-flex items-center gap-0.5 text-[#007834]"><Baby className="w-4 h-4" /><Baby className="w-4 h-4" /><Baby className="w-4 h-4" /></div>
               <div>
                 <div className="font-extrabold text-slate-900 text-sm">Trojaczki lub więcej</div>
                 <div className="text-xs text-slate-500 mt-1">
@@ -537,7 +540,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  Standardowy urlop macierzyński i rodzicielski bez łączenia z pracą.
                 </div>
               </div>
-              <span className="text-xl">✅</span>
+              <CheckCircle2 className="w-5 h-5 text-[#007834] shrink-0" />
             </button>
 
             <button
@@ -561,7 +564,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  Przysługuje do 8 lub do 15 dodatkowych tygodni pełnego urlopu 100%!
                   </div>
                 </div>
-                <span className="text-xl">🏥</span>
+                <HeartPulse className="w-5 h-5 text-[#007834] shrink-0" />
               </div>
 
               {specialSituation === "preterm" && (
@@ -603,7 +606,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  Pensja z pracy + połowa zasiłku, a urlop ulega proporcjonalnemu wydłużeniu.
                 </div>
               </div>
-              <span className="text-xl">💼</span>
+              <Briefcase className="w-5 h-5 text-[#007834] shrink-0" />
             </button>
           </div>
 

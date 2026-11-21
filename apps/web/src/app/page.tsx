@@ -43,8 +43,8 @@ export default function HomePage() {
 
       {/* Oficjalny Hero Banner w czystym, płaskim stylu zus.pl — tło identyczne jak tło strony */}
       <section className="bg-white border-b border-[#dce1e5] py-4 sm:py-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-          <div className="max-w-3xl space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8">
+          <div className="lg:col-span-7 space-y-4 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="zus-badge">
               <ShieldCheck className="w-3.5 h-3.5 mr-1 text-[#007834]" />
@@ -99,14 +99,14 @@ export default function HomePage() {
           </div>
         </div>
 
-          <div className="hidden md:block shrink-0 w-72 lg:w-96">
+          <div className="hidden lg:flex lg:col-span-5 justify-end">
             <Image
               src="/images/family-hero.png"
               alt="Uśmiechnięci rodzice na spacerze z wózkiem dziecięcym w parku"
               width={640}
               height={480}
               priority
-              className="w-full h-auto object-contain"
+              className="w-full max-w-[360px] h-auto object-contain"
             />
           </div>
         </div>
