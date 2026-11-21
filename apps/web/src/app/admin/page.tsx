@@ -187,7 +187,7 @@ export default function AdminPage() {
         <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
           <Link href="/">Strona główna</Link>
           <span className="text-slate-400">/</span>
-          <span className="text-slate-800 font-semibold">Panel Legislacyjny ZUS (Admin)</span>
+          <span className="text-[#1D4029] font-semibold">Panel Legislacyjny ZUS (Admin)</span>
         </nav>
         <Link
  href="/panel-pracownika"
@@ -197,32 +197,32 @@ export default function AdminPage() {
         </Link>
       </div>
       {/* Nagłówek Modułu */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-slate-700 font-semibold text-xs tracking-wider uppercase mb-1">
-            <Sliders className="w-4 h-4 text-[#00416E]" />
+          <div className="inline-flex items-center gap-2 text-[#2E4B38] font-semibold text-xs tracking-wider uppercase mb-1">
+            <Sliders className="w-4 h-4 text-[#10371E]" />
             <span>Moduł 5 &bull; Panel Konfiguracji Legislacyjnej ZUS</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#10371E]">
  Dynamiczne parametry legislacyjne i stawki prawne
           </h1>
-          <p className="text-sm text-slate-600 mt-1 max-w-3xl">
+          <p className="text-sm text-[#425B4A] mt-1 max-w-3xl">
  Moduł umożliwia urzędnikom ZUS i Departamentowi Zasiłków natychmiastową aktualizację wskaźników prawnych, stawek procentowych i progów bez konieczności modyfikowania kodu źródłowego aplikacji.
           </p>
         </div>
 
         {/* Status Środowiska */}
-        <div className="bg-slate-100 border border-slate-300 p-3.5 rounded flex items-center gap-3 shrink-0">
+        <div className="bg-[#EFF3EA] border border-[#B9CCB6] p-3.5 rounded flex items-center gap-3 shrink-0">
           <ShieldCheck className="w-5 h-5 text-emerald-600" />
           <div className="text-xs">
-            <span className="font-bold text-slate-900 block">Środowisko: Produkcyjne</span>
-            <span className="text-slate-600 font-medium">Aktywna wersja: {activeVersionName}</span>
+            <span className="font-bold text-[#10371E] block">Środowisko: Produkcyjne</span>
+            <span className="text-[#425B4A] font-medium">Aktywna wersja: {activeVersionName}</span>
           </div>
         </div>
       </div>
 
       {saveSuccess && (
-        <div className="p-4 bg-emerald-50 border border-emerald-300 rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-emerald-900 animate-in fade-in">
+        <div className="p-4 bg-[#EFF3EA] border border-[#8CA68E] rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-emerald-900 ">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
             <div className="text-xs">
@@ -241,9 +241,9 @@ export default function AdminPage() {
       )}
 
       {/* Szybkie presety scenariuszy legislacyjnych */}
-      <div className="bg-blue-50/70 border border-blue-200 rounded p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5 text-xs text-blue-900">
-          <Sparkles className="w-4 h-4 text-[#00416E] shrink-0" />
+      <div className="bg-[#EFF3EA]/70 border border-[#B9CCB6] rounded p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5 text-xs text-[#10371E]">
+          <Sparkles className="w-4 h-4 text-[#10371E] shrink-0" />
           <span>
             <strong>Narzędzie symulacji dla jurorów:</strong> Przetestuj wpływ projektu nowelizacji ustawy (np. podniesienie stawki do 85% i 12 tyg. dla taty).
           </span>
@@ -252,14 +252,14 @@ export default function AdminPage() {
           <button
  type="button"
  onClick={loadPresetNovela2027}
- className="text-xs font-bold bg-[#00416E] hover:bg-[#00477d] text-white px-3.5 py-1.5 rounded transition-colors"
+ className="text-xs font-bold bg-[#10371E] hover:bg-[#00477d] text-white px-3.5 py-1.5 rounded transition-colors"
           >
  Załaduj projekt nowelizacji 2027
           </button>
           <button
  type="button"
  onClick={handleResetDefaults}
- className="text-xs font-medium text-slate-600 hover:text-slate-900 bg-white border border-slate-300 px-3 py-1.5 rounded"
+ className="text-xs font-medium text-[#425B4A] hover:text-[#10371E] bg-white border border-[#B9CCB6] px-3 py-1.5 rounded"
           >
  Przywróć 2026
           </button>
@@ -268,16 +268,16 @@ export default function AdminPage() {
 
       {/* Główny Formularz Edycji Wskaźników */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <div className="lg:col-span-8 bg-white p-6 rounded border border-[#dce1e5] space-y-6">
-          <div className="flex items-center justify-between border-b border-[#edf0f2] pb-3">
-            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-[#00416E]" />
+        <div className="lg:col-span-8 bg-white p-6 rounded border border-[#C6D6C3] space-y-6">
+          <div className="flex items-center justify-between border-b border-[#DCE8D3] pb-3">
+            <h2 className="text-base font-bold text-[#10371E] flex items-center gap-2">
+              <FileCode className="w-4 h-4 text-[#10371E]" />
               <span>Edytor wskaźników finansowych i stawek procentowych</span>
             </h2>
             <button
  type="button"
  onClick={handleResetDefaults}
- className="text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1"
+ className="text-xs text-slate-500 hover:text-[#10371E] flex items-center gap-1"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Przywróć domyślne 2026</span>
@@ -287,7 +287,7 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Płaca minimalna */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Minimalne wynagrodzenie (PLN brutto):
               </label>
               <input
@@ -298,14 +298,14 @@ export default function AdminPage() {
  setMinWage(val);
  setJdgDebtThreshold(Number((val * 0.01).toFixed(2)));
                 }}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">Podstawa dla 100% płacy minimalnej</span>
             </div>
 
             {/* Potrącenie składek społecznych */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Wskaźnik potrącenia składek społecznych (%):
               </label>
               <input
@@ -313,14 +313,14 @@ export default function AdminPage() {
  step="0.01"
  value={socialContributionRate}
  onChange={(e) => setSocialContributionRate(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">Ustawowe 13,71% (emerytalne, rentowe, chorobowe)</span>
             </div>
 
             {/* Próg zadłużenia składkowego JDG */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Próg zadłużenia JDG wstrzymujący zasiłek (PLN):
               </label>
               <input
@@ -328,14 +328,14 @@ export default function AdminPage() {
  step="0.01"
  value={jdgDebtThreshold}
  onChange={(e) => setJdgDebtThreshold(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">Równe 1% minimalnego wynagrodzenia (art. 2a ustawy)</span>
             </div>
 
             {/* Stawka uśredniona 81,5% */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Stawka uśredniona zasiłku ZAM 21 dni (%):
               </label>
               <input
@@ -343,14 +343,14 @@ export default function AdminPage() {
  step="0.1"
  value={averageRate815}
  onChange={(e) => setAverageRate815(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">Art. 30a ustawy zasiłkowej (długi wniosek)</span>
             </div>
 
             {/* Stawka macierzyńskiego standard */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Podstawowa stawka macierzyńskiego (%):
               </label>
               <input
@@ -358,14 +358,14 @@ export default function AdminPage() {
  step="0.1"
  value={standardMaternityRate}
  onChange={(e) => setStandardMaternityRate(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">100% przy wniosku poza 21 dniami</span>
             </div>
 
             {/* Stawka rodzicielskiego standard */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Podstawowa stawka rodzicielskiego matki (%):
               </label>
               <input
@@ -373,14 +373,14 @@ export default function AdminPage() {
  step="0.1"
  value={standardParentalRate}
  onChange={(e) => setStandardParentalRate(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">70% w wariancie etapowym</span>
             </div>
 
             {/* Stawka 9 tyg. ojca */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Stawka za 9 tyg. nieprzenoszalnych ojca (%):
               </label>
               <input
@@ -388,14 +388,14 @@ export default function AdminPage() {
  step="0.1"
  value={dadReservedParentalRate}
  onChange={(e) => setDadReservedParentalRate(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">Art. 31 ust. 3 pkt 2 ustawy (domyślnie 70%)</span>
             </div>
 
             {/* Zasiłek pogrzebowy */}
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700 block">
+              <label className="text-xs font-bold text-[#2E4B38] block">
  Zasiłek pogrzebowy (PLN):
               </label>
               <input
@@ -403,61 +403,61 @@ export default function AdminPage() {
  step="100"
  value={funeralBenefitAmount}
  onChange={(e) => setFuneralBenefitAmount(Number(e.target.value))}
- className="w-full px-3 py-2 bg-[#f4f6f7] border border-slate-300 rounded text-xs font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-[#00416E]"
+ className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:bg-white focus:ring-2 focus:ring-[#10371E]"
               />
               <span className="text-[10px] text-slate-500">Kwota podwyższona w 2026 r. (7 000 zł)</span>
             </div>
           </div>
 
           {/* Sekcja Limitów Tygodniowych */}
-          <div className="pt-4 border-t border-[#edf0f2] space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600">
+          <div className="pt-4 border-t border-[#DCE8D3] space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#425B4A]">
  Ustawowe limity tygodniowe urlopów
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="space-y-1">
-                <label className="text-[11px] font-semibold text-slate-600 block">Macierzyński (1 dz.):</label>
+                <label className="text-[11px] font-semibold text-[#425B4A] block">Macierzyński (1 dz.):</label>
                 <input
  type="number"
  value={maternityWeeksSingle}
  onChange={(e) => setMaternityWeeksSingle(Number(e.target.value))}
- className="w-full px-2.5 py-1.5 bg-[#f4f6f7] border border-slate-300 rounded-md text-xs font-bold text-slate-900"
+ className="w-full px-2.5 py-1.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-md text-xs font-bold text-[#10371E]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-semibold text-slate-600 block">Rodzicielski łącznie:</label>
+                <label className="text-[11px] font-semibold text-[#425B4A] block">Rodzicielski łącznie:</label>
                 <input
  type="number"
  value={parentalWeeksSingle}
  onChange={(e) => setParentalWeeksSingle(Number(e.target.value))}
- className="w-full px-2.5 py-1.5 bg-[#f4f6f7] border border-slate-300 rounded-md text-xs font-bold text-slate-900"
+ className="w-full px-2.5 py-1.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-md text-xs font-bold text-[#10371E]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-semibold text-slate-600 block">Rezerwa ojca:</label>
+                <label className="text-[11px] font-semibold text-[#425B4A] block">Rezerwa ojca:</label>
                 <input
  type="number"
  value={dadReservedWeeks}
  onChange={(e) => setDadReservedWeeks(Number(e.target.value))}
- className="w-full px-2.5 py-1.5 bg-[#f4f6f7] border border-slate-300 rounded-md text-xs font-bold text-slate-900"
+ className="w-full px-2.5 py-1.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-md text-xs font-bold text-[#10371E]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-semibold text-slate-600 block">„Za życiem” max:</label>
+                <label className="text-[11px] font-semibold text-[#425B4A] block">„Za życiem” max:</label>
                 <input
  type="number"
  value={parentalWeeksLife}
  onChange={(e) => setParentalWeeksLife(Number(e.target.value))}
- className="w-full px-2.5 py-1.5 bg-[#f4f6f7] border border-slate-300 rounded-md text-xs font-bold text-slate-900"
+ className="w-full px-2.5 py-1.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-md text-xs font-bold text-[#10371E]"
                 />
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#edf0f2] flex items-center justify-between gap-3">
+          <div className="pt-4 border-t border-[#DCE8D3] flex items-center justify-between gap-3">
             <span className="text-xs text-slate-500">
  Zmiany wchodzą w życie natychmiast po kliknięciu publikacji.
             </span>
@@ -465,7 +465,7 @@ export default function AdminPage() {
  type="button"
  onClick={handleSaveAndPublish}
  disabled={isSaving}
- className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded transition-all disabled:opacity-50"
+ className="inline-flex items-center gap-2 bg-[#10371E] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded transition-all disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               <span>{isSaving ? "Zapisywanie parametrów..." : "Opublikuj wersję legislacyjną"}</span>
@@ -529,9 +529,9 @@ export default function AdminPage() {
           </div>
 
           {/* Karta: Rejestr Zmian (Audit Trail) */}
-          <div className="bg-white p-6 rounded border border-[#dce1e5] space-y-4">
-            <div className="flex items-center gap-2 text-slate-900 font-bold text-sm border-b border-[#edf0f2] pb-3">
-              <History className="w-4 h-4 text-[#00416E]" />
+          <div className="bg-white p-6 rounded border border-[#C6D6C3] space-y-4">
+            <div className="flex items-center gap-2 text-[#10371E] font-bold text-sm border-b border-[#DCE8D3] pb-3">
+              <History className="w-4 h-4 text-[#10371E]" />
               <span>Rejestr audytu zmian (Audit Log)</span>
             </div>
 
@@ -539,14 +539,14 @@ export default function AdminPage() {
               {auditLog.map((log) => (
                 <div
  key={log.id}
- className="p-3 bg-[#f4f6f7] border border-[#dce1e5] rounded space-y-1 text-xs"
+ className="p-3 bg-[#EFF3EA] border border-[#C6D6C3] rounded space-y-1 text-xs"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-[#00416E]">{log.version}</span>
+                    <span className="font-mono font-bold text-[#10371E]">{log.version}</span>
                     <span className="text-[10px] text-slate-400">{log.timestamp}</span>
                   </div>
-                  <div className="text-slate-700 font-medium leading-relaxed">{log.changesSummary}</div>
-                  <div className="text-[10px] text-slate-500 pt-1 border-t border-[#dce1e5] flex items-center justify-between">
+                  <div className="text-[#2E4B38] font-medium leading-relaxed">{log.changesSummary}</div>
+                  <div className="text-[10px] text-slate-500 pt-1 border-t border-[#C6D6C3] flex items-center justify-between">
                     <span>Autor: {log.author}</span>
                     <span className="text-emerald-600 font-semibold uppercase">Opublikowano</span>
                   </div>

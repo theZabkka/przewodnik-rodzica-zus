@@ -45,10 +45,10 @@ export function TrudneSlowaModal() {
  if (!isGlossaryOpen) return null;
 
  return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in">
-      <div className="bg-white rounded max-w-3xl w-full shadow-2xl border border-[#dce1e5] overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto ">
+      <div className="bg-white rounded max-w-3xl w-full shadow-2xl border border-[#C6D6C3] overflow-hidden flex flex-col max-h-[90vh]">
         {/* Górny pasek modala */}
-        <div className="bg-[#00416E] text-white p-5 sm:p-6 flex items-start justify-between gap-4">
+        <div className="bg-[#10371E] text-white p-5 sm:p-6 flex items-start justify-between gap-4">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-xs">
               <Sparkles className="w-3.5 h-3.5" />
@@ -74,7 +74,7 @@ export function TrudneSlowaModal() {
         </div>
 
         {/* Wyszukiwarka i filtry kategorii */}
-        <div className="p-4 sm:p-6 bg-[#f4f6f7] border-b border-[#dce1e5] space-y-3">
+        <div className="p-4 sm:p-6 bg-[#EFF3EA] border-b border-[#C6D6C3] space-y-3">
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -82,7 +82,7 @@ export function TrudneSlowaModal() {
  placeholder="Szukaj pojęcia (np. 81,5%, L4 w ciąży, podstawa, 9 tygodni taty)..."
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
- className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007834] "
+ className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#B9CCB6] rounded text-xs sm:text-sm text-[#10371E] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007834] "
             />
           </div>
 
@@ -93,7 +93,7 @@ export function TrudneSlowaModal() {
  className={`px-3 py-1.5 rounded font-bold transition-all ${
  activeCategory === "all"
                   ? "bg-[#007834] text-white "
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
+                  : "bg-white text-[#425B4A] hover:bg-slate-200 border border-[#C6D6C3]"
               }`}
             >
  Wszystkie ({ZUS_GLOSSARY_TERMS.length})
@@ -104,7 +104,7 @@ export function TrudneSlowaModal() {
  className={`px-3 py-1.5 rounded font-bold transition-all ${
  activeCategory === "finanse"
                   ? "bg-[#007834] text-white "
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
+                  : "bg-white text-[#425B4A] hover:bg-slate-200 border border-[#C6D6C3]"
               }`}
             >
               💰 Pieniądze & Zasiłki
@@ -115,7 +115,7 @@ export function TrudneSlowaModal() {
  className={`px-3 py-1.5 rounded font-bold transition-all ${
  activeCategory === "urlopy"
                   ? "bg-[#007834] text-white "
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
+                  : "bg-white text-[#425B4A] hover:bg-slate-200 border border-[#C6D6C3]"
               }`}
             >
               🗓️ Urlopy & Tygodnie
@@ -126,7 +126,7 @@ export function TrudneSlowaModal() {
  className={`px-3 py-1.5 rounded font-bold transition-all ${
  activeCategory === "formalnosci"
                   ? "bg-[#007834] text-white "
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
+                  : "bg-white text-[#425B4A] hover:bg-slate-200 border border-[#C6D6C3]"
               }`}
             >
               📑 Wnioski & Druki
@@ -137,7 +137,7 @@ export function TrudneSlowaModal() {
  className={`px-3 py-1.5 rounded font-bold transition-all ${
  activeCategory === "szczegolne"
                   ? "bg-[#007834] text-white "
-                  : "bg-white text-slate-600 hover:bg-slate-200 border border-[#dce1e5]"
+                  : "bg-white text-[#425B4A] hover:bg-slate-200 border border-[#C6D6C3]"
               }`}
             >
               ⚠️ Sytuacje szczególne
@@ -150,7 +150,7 @@ export function TrudneSlowaModal() {
           {filteredTerms.length === 0 ? (
             <div className="text-center py-10 space-y-2">
               <HelpCircle className="w-10 h-10 text-slate-400 mx-auto" />
-              <p className="text-sm font-bold text-slate-700">Nie znaleziono takiego hasła</p>
+              <p className="text-sm font-bold text-[#2E4B38]">Nie znaleziono takiego hasła</p>
               <p className="text-xs text-slate-500">
  Spróbuj wpisać inne słowo kluczowe lub zapytać naszego Asystenta AI.
               </p>
@@ -163,8 +163,8 @@ export function TrudneSlowaModal() {
  key={item.id}
  className={`rounded border transition-all pt-3 ${
  isExpanded
-                      ? "bg-emerald-50/40 border-[#007834]/40 "
-                      : "bg-white border-[#dce1e5] hover:border-slate-300"
+                      ? "bg-[#EFF3EA]/40 border-[#007834]/40 "
+                      : "bg-white border-[#C6D6C3] hover:border-[#B9CCB6]"
                   }`}
                 >
                   <button
@@ -174,7 +174,7 @@ export function TrudneSlowaModal() {
                   >
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
+                        <span className="text-[11px] font-mono font-bold bg-[#EFF3EA] text-[#2E4B38] px-2 py-0.5 rounded">
                           {item.term}
                         </span>
                         {item.legalCitation && (
@@ -183,17 +183,17 @@ export function TrudneSlowaModal() {
                           </span>
                         )}
                       </div>
-                      <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                      <h3 className="text-sm sm:text-base font-bold text-[#10371E] leading-snug">
                         {item.plainTitle}
                       </h3>
-                      <p className="text-xs text-slate-600 leading-relaxed">
+                      <p className="text-xs text-[#425B4A] leading-relaxed">
                         {item.shortExplanation}
                       </p>
                     </div>
 
                     <div
  className={`p-1.5 rounded text-slate-500 transition-transform ${
- isExpanded ? "rotate-180 text-[#007834] bg-emerald-100" : "bg-slate-100"
+ isExpanded ? "rotate-180 text-[#007834] bg-[#DCE8D3]" : "bg-[#EFF3EA]"
                       }`}
                     >
                       <ChevronDown className="w-4 h-4" />
@@ -202,13 +202,13 @@ export function TrudneSlowaModal() {
 
                   {/* Rozwinięcie ze szczegółowym przykładem */}
                   {isExpanded && (
-                    <div className="px-4 pb-4 pt-1 space-y-3 text-xs border-t border-[#dce1e5]/60 mt-1 animate-in fade-in">
-                      <div className="p-3 bg-white rounded border border-emerald-200 space-y-1.5">
+                    <div className="px-4 pb-4 pt-1 space-y-3 text-xs border-t border-[#C6D6C3]/60 mt-1 ">
+                      <div className="p-3 bg-white rounded border border-[#B9CCB6] space-y-1.5">
                         <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-xs">
                           <Lightbulb className="w-4 h-4 text-amber-500 shrink-0" />
                           <span>Szczegóły i przykład z życia:</span>
                         </div>
-                        <p className="text-slate-700 leading-relaxed">
+                        <p className="text-[#2E4B38] leading-relaxed">
                           {item.detailedExplanation}
                         </p>
                       </div>
@@ -225,7 +225,7 @@ export function TrudneSlowaModal() {
                         {item.tags.map((tag) => (
                           <span
  key={tag}
- className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md"
+ className="text-[10px] bg-[#EFF3EA] text-[#425B4A] px-2 py-0.5 rounded-md"
                           >
                             #{tag}
                           </span>
@@ -240,7 +240,7 @@ export function TrudneSlowaModal() {
         </div>
 
         {/* Dolna belka modala */}
-        <div className="p-4 bg-[#f4f6f7] border-t border-[#dce1e5] flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="p-4 bg-[#EFF3EA] border-t border-[#C6D6C3] flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="text-slate-500 flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-[#007834]" />
             <span>Zgodne z Ustawą Zasiłkową i Kodeksem Pracy 2026</span>

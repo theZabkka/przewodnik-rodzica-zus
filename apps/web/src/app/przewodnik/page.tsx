@@ -298,44 +298,44 @@ export default function PrzewodnikPage() {
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
         <span className="text-slate-400">/</span>
-        <span className="text-slate-800 font-semibold">Przewodnik i terminarz 21 dni</span>
+        <span className="text-[#1D4029] font-semibold">Przewodnik i terminarz 21 dni</span>
       </nav>
       {/* Nagłówek Modułu */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-6">
         <div>
           <div className="inline-flex items-center gap-2 text-[#007834] font-semibold text-xs tracking-wider uppercase mb-1">
             <Compass className="w-4 h-4" />
             <span>Plan formalności i uprawnień rodzica</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
  Co przysługuje Ci krok po kroku
           </h1>
-          <p className="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+          <p className="text-sm text-[#425B4A] mt-1 max-w-3xl leading-relaxed">
  Spokojny przewodnik przez 4 etapy: od ciąży i przygotowań, przez poród i kluczowy termin 21 dni, po urlop dla taty i powrót do pracy.
           </p>
         </div>
 
         {/* Pasek postępu checklisty */}
-        <div className="bg-white p-4 rounded border border-[#dce1e5] flex flex-col gap-2 min-w-[220px]">
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+        <div className="bg-white p-4 rounded border border-[#C6D6C3] flex flex-col gap-2 min-w-[220px]">
+          <div className="flex items-center justify-between text-xs font-semibold text-[#2E4B38]">
             <span>Twój postęp checklisty:</span>
-            <span className="text-[#00416E] font-bold">{progressPct}%</span>
+            <span className="text-[#10371E] font-bold">{progressPct}%</span>
           </div>
           <div
-            className="flex items-center gap-1"
-            role="progressbar"
-            aria-valuenow={Object.values(completedItems).filter(Boolean).length}
-            aria-valuemin={0}
-            aria-valuemax={MILESTONES.length}
+ className="flex items-center gap-1"
+ role="progressbar"
+ aria-valuenow={Object.values(completedItems).filter(Boolean).length}
+ aria-valuemin={0}
+ aria-valuemax={MILESTONES.length}
           >
             {MILESTONES.map((m, idx) => {
-              const doneCount = Object.values(completedItems).filter(Boolean).length;
-              const isFilled = idx < doneCount;
-              return (
+ const doneCount = Object.values(completedItems).filter(Boolean).length;
+ const isFilled = idx < doneCount;
+ return (
                 <div
-                  key={m.id}
-                  className={`flex-1 h-2.5 rounded-sm transition-colors ${
-                    isFilled ? "bg-[#007834]" : "bg-[#dce1e5]"
+ key={m.id}
+ className={`flex-1 h-2.5 rounded-sm transition-colors ${
+ isFilled ? "bg-[#007834]" : "bg-[#C6D6C3]"
                   }`}
                 />
               );
@@ -348,7 +348,7 @@ export default function PrzewodnikPage() {
             <button
  type="button"
  onClick={handleDownloadChecklist}
- className="text-[#00416E] font-semibold hover:underline flex items-center gap-1"
+ className="text-[#10371E] font-semibold hover:underline flex items-center gap-1"
             >
               <Download className="w-3 h-3" />
               <span>Pobierz</span>
@@ -358,8 +358,8 @@ export default function PrzewodnikPage() {
       </div>
 
       {/* Przycisk słowniczka i informacja o profilu */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-[#dce1e5] rounded ">
-        <div className="flex items-center gap-2 text-xs text-slate-700">
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-[#C6D6C3] rounded ">
+        <div className="flex items-center gap-2 text-xs text-[#2E4B38]">
           <Sparkles className="w-4 h-4 text-[#007834]" />
           <span>
             {profile ? (
@@ -372,28 +372,28 @@ export default function PrzewodnikPage() {
         <button
  type="button"
  onClick={() => openGlossary()}
- className="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 rounded text-xs font-bold transition-colors inline-flex items-center gap-1.5 "
+ className="px-3.5 py-1.5 bg-[#EFF3EA] hover:bg-[#DCE8D3] text-[#10371E] border border-[#B9CCB6] rounded text-xs font-bold transition-colors inline-flex items-center gap-1.5 "
         >
-          <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+          <BookOpen className="w-3.5 h-3.5 text-[#10371E]" />
           <span>Słowniczek Trudnych Słów ZUS</span>
         </button>
       </div>
 
       {/* Kalkulator Kluczowych Dat i Terminów Urzędowych */}
-      <div className="bg-blue-50/70 border border-blue-200 rounded p-5 sm:p-6 ">
+      <div className="bg-[#EFF3EA]/70 border border-[#B9CCB6] rounded p-5 sm:p-6 ">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2 text-[#00416E] font-bold text-sm">
+            <div className="flex items-center gap-2 text-[#10371E] font-bold text-sm">
               <Calendar className="w-4 h-4" />
               <span>Personalizuj harmonogram wg daty porodu:</span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-[#425B4A]">
  Wprowadź przewidywaną lub rzeczywistą datę porodu, a system automatycznie przeliczy nieprzekraczalne terminy składania wniosków i długość urlopów.
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <label htmlFor="birth-date-input" className="text-xs font-bold text-slate-700">
+            <label htmlFor="birth-date-input" className="text-xs font-bold text-[#2E4B38]">
  Data porodu:
             </label>
             <input
@@ -401,14 +401,14 @@ export default function PrzewodnikPage() {
  type="date"
  value={birthDate}
  onChange={(e) => setBirthDate(e.target.value)}
- className="px-3 py-2 bg-white border border-slate-300 rounded text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00416E]"
+ className="px-3 py-2 bg-white border border-[#B9CCB6] rounded text-sm font-semibold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#10371E]"
             />
           </div>
         </div>
 
         {/* Dynamicznie wyliczone daty */}
         {calculatedDates && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5 pt-4 border-t border-blue-200/80">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5 pt-4 border-t border-[#B9CCB6]/80">
             <div className="bg-white p-3.5 rounded border border-blue-100 space-y-1">
               <div className="text-[11px] font-semibold text-rose-600 uppercase flex items-center justify-between">
                 <span>Termin 21 dni (ZAM 81,5%):</span>
@@ -418,7 +418,7 @@ export default function PrzewodnikPage() {
                   </span>
                 )}
               </div>
-              <div className="text-base font-bold text-slate-900">
+              <div className="text-base font-bold text-[#10371E]">
                 {calculatedDates.deadline21Days}
               </div>
               <div className="text-[11px] text-slate-500">
@@ -427,10 +427,10 @@ export default function PrzewodnikPage() {
             </div>
 
             <div className="bg-white p-3.5 rounded border border-blue-100 space-y-1">
-              <div className="text-[11px] font-semibold text-[#00416E] uppercase">
+              <div className="text-[11px] font-semibold text-[#10371E] uppercase">
  Koniec macierzyńskiego (20 tyg):
               </div>
-              <div className="text-base font-bold text-slate-900">
+              <div className="text-base font-bold text-[#10371E]">
                 {calculatedDates.endMaternity20Weeks}
               </div>
               <div className="text-[11px] text-slate-500">
@@ -442,7 +442,7 @@ export default function PrzewodnikPage() {
               <div className="text-[11px] font-semibold text-emerald-700 uppercase">
  Koniec rodzicielskiego:
               </div>
-              <div className="text-base font-bold text-slate-900">
+              <div className="text-base font-bold text-[#10371E]">
                 {calculatedDates.endParentalTotal}
               </div>
               <div className="text-[11px] text-slate-500">
@@ -454,7 +454,7 @@ export default function PrzewodnikPage() {
               <div className="text-[11px] font-semibold text-amber-700 uppercase">
  Urlop ojcowski (14 dni):
               </div>
-              <div className="text-base font-bold text-slate-900">
+              <div className="text-base font-bold text-[#10371E]">
  Do {calculatedDates.endPaternity12Months}
               </div>
               <div className="text-[11px] text-slate-500">
@@ -469,14 +469,14 @@ export default function PrzewodnikPage() {
       <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Przyciski Etapów */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded">
+          <div className="flex flex-wrap items-center gap-1.5 bg-[#EFF3EA] p-1 rounded">
             <button
  type="button"
  onClick={() => setSelectedStage(0)}
  className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
  selectedStage === 0
-                  ? "bg-white text-slate-900 "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-white text-[#10371E] "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Wszystkie etapy
@@ -486,8 +486,8 @@ export default function PrzewodnikPage() {
  onClick={() => setSelectedStage(1)}
  className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
  selectedStage === 1
-                  ? "bg-[#00416E] text-white "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-[#10371E] text-white "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Etap 1: Ciąża
@@ -497,8 +497,8 @@ export default function PrzewodnikPage() {
  onClick={() => setSelectedStage(2)}
  className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
  selectedStage === 2
-                  ? "bg-[#00416E] text-white "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-[#10371E] text-white "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Etap 2: Narodziny (21 dni)
@@ -508,8 +508,8 @@ export default function PrzewodnikPage() {
  onClick={() => setSelectedStage(3)}
  className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
  selectedStage === 3
-                  ? "bg-[#00416E] text-white "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-[#10371E] text-white "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Etap 3: Urlopy
@@ -519,8 +519,8 @@ export default function PrzewodnikPage() {
  onClick={() => setSelectedStage(4)}
  className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
  selectedStage === 4
-                  ? "bg-[#00416E] text-white "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-[#10371E] text-white "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Etap 4: Powrót do pracy
@@ -530,12 +530,12 @@ export default function PrzewodnikPage() {
           {/* Filtry Instytucji i Roli */}
           <div className="flex flex-wrap items-center gap-3">
             {/* Filtr Instytucji */}
-            <div className="flex items-center gap-1.5 bg-white border border-slate-300 rounded px-2 py-1">
+            <div className="flex items-center gap-1.5 bg-white border border-[#B9CCB6] rounded px-2 py-1">
               <span className="text-[11px] text-slate-500 font-semibold">Gdzie:</span>
               <select
  value={institutionFilter}
  onChange={(e) => setInstitutionFilter(e.target.value as any)}
- className="bg-transparent text-xs font-bold text-slate-800 focus:outline-none"
+ className="bg-transparent text-xs font-bold text-[#1D4029] focus:outline-none"
               >
                 <option value="all">Wszystkie instytucje</option>
                 <option value="hospital">Szpital</option>
@@ -546,13 +546,13 @@ export default function PrzewodnikPage() {
             </div>
 
             {/* Filtr Roli */}
-            <div className="flex items-center gap-1.5 bg-white border border-slate-300 rounded px-2 py-1">
+            <div className="flex items-center gap-1.5 bg-white border border-[#B9CCB6] rounded px-2 py-1">
               <Filter className="w-3 h-3 text-slate-500" />
               <span className="text-[11px] text-slate-500 font-semibold">Dla kogo:</span>
               <select
  value={roleFilter}
  onChange={(e) => setRoleFilter(e.target.value as any)}
- className="bg-transparent text-xs font-bold text-slate-800 focus:outline-none"
+ className="bg-transparent text-xs font-bold text-[#1D4029] focus:outline-none"
               >
                 <option value="all">Wszyscy</option>
                 <option value="mother">Matka</option>
@@ -568,9 +568,9 @@ export default function PrzewodnikPage() {
       {/* Lista Zadań Osi Czasu z Podziałem na Instytucje */}
       <div className="space-y-4">
         {filteredMilestones.length === 0 ? (
-          <div className="p-8 text-center bg-white rounded border border-[#dce1e5] space-y-3">
+          <div className="p-8 text-center bg-white rounded border border-[#C6D6C3] space-y-3">
             <Info className="w-8 h-8 text-slate-400 mx-auto" />
-            <h3 className="text-base font-bold text-slate-800">
+            <h3 className="text-base font-bold text-[#1D4029]">
  Brak zadań dla wybranych filtrów
             </h3>
             <p className="text-xs text-slate-500">
@@ -583,7 +583,7 @@ export default function PrzewodnikPage() {
  setInstitutionFilter("all");
  setRoleFilter("all");
               }}
- className="inline-flex items-center gap-1.5 text-xs text-[#00416E] font-semibold hover:underline"
+ className="inline-flex items-center gap-1.5 text-xs text-[#10371E] font-semibold hover:underline"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Resetuj filtry</span>
@@ -605,12 +605,12 @@ export default function PrzewodnikPage() {
                   <span>Urząd Stanu Cywilnego</span>
                 </span>
               ) : item.institution === "employer" ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#10371E] bg-[#EFF3EA] px-2 py-0.5 rounded-full border border-[#B9CCB6]">
                   <Briefcase className="w-3 h-3" />
                   <span>Pracodawca</span>
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 bg-[#EFF3EA] px-2 py-0.5 rounded-full border border-[#B9CCB6]">
                   <FileText className="w-3 h-3" />
                   <span>ZUS</span>
                 </span>
@@ -620,7 +620,7 @@ export default function PrzewodnikPage() {
               <div
  key={item.id}
  className={`gov-card p-5 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
- isDone ? "bg-[#f4f6f7]/80 border-[#dce1e5] opacity-80" : "bg-white"
+ isDone ? "bg-[#EFF3EA]/80 border-[#C6D6C3] opacity-80" : "bg-white"
                 }`}
               >
                 <div className="flex items-start gap-4 flex-1">
@@ -631,7 +631,7 @@ export default function PrzewodnikPage() {
  className={`mt-0.5 w-6 h-6 rounded-md border flex items-center justify-center transition-colors shrink-0 focus:outline-none ${
  isDone
                         ? "bg-emerald-600 border-emerald-600 text-white"
-                        : "border-slate-300 hover:border-[#00416E] bg-white text-transparent"
+                        : "border-[#B9CCB6] hover:border-[#10371E] bg-white text-transparent"
                     }`}
  aria-label={`Oznacz zadanie ${item.title} jako zrealizowane`}
                   >
@@ -640,7 +640,7 @@ export default function PrzewodnikPage() {
 
                   <div className="space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#EFF3EA] text-[#2E4B38]">
  Etap {item.stage}
                       </span>
                       {instBadge}
@@ -650,14 +650,14 @@ export default function PrzewodnikPage() {
                     </div>
 
                     <h3
- className={`text-base font-bold text-slate-900 ${
+ className={`text-base font-bold text-[#10371E] ${
  isDone ? "line-through text-slate-500" : ""
                       }`}
                     >
                       {item.title}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#425B4A] leading-relaxed">
                       {item.description}
                     </p>
 
@@ -671,7 +671,7 @@ export default function PrzewodnikPage() {
                 <div className="shrink-0 flex items-center gap-2">
                   <Link
  href="/kalkulator"
- className="inline-flex items-center gap-1.5 text-xs text-[#00416E] font-semibold hover:bg-blue-50 px-3 py-2 rounded border border-blue-200 transition-colors"
+ className="inline-flex items-center gap-1.5 text-xs text-[#10371E] font-semibold hover:bg-[#EFF3EA] px-3 py-2 rounded border border-[#B9CCB6] transition-colors"
                   >
                     <span>Przelicz w kalkulatorze</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -695,7 +695,7 @@ export default function PrzewodnikPage() {
         </div>
         <Link
  href="/kalkulator"
- className="inline-flex items-center gap-2 bg-[#00416E] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded transition-colors shrink-0"
+ className="inline-flex items-center gap-2 bg-[#10371E] hover:bg-[#00477d] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded transition-colors shrink-0"
         >
           <span>Otwórz kalkulator zasiłków</span>
           <ArrowRight className="w-4 h-4" />

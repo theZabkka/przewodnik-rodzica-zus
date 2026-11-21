@@ -136,21 +136,21 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
           </div>
           <div className="grid grid-cols-4 gap-1.5" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={totalSteps}>
             {Array.from({ length: totalSteps }).map((_, idx) => {
-              const stepNum = idx + 1;
-              const isCompleted = stepNum < step;
-              const isCurrent = stepNum === step;
-              return (
+ const stepNum = idx + 1;
+ const isCompleted = stepNum < step;
+ const isCurrent = stepNum === step;
+ return (
                 <button
-                  key={stepNum}
-                  type="button"
-                  onClick={() => setStep(stepNum)}
-                  title={`Przejdź do kroku ${stepNum}`}
-                  className={`h-2.5 rounded-sm transition-colors ${
-                    isCurrent
+ key={stepNum}
+ type="button"
+ onClick={() => setStep(stepNum)}
+ title={`Przejdź do kroku ${stepNum}`}
+ className={`h-2.5 rounded-sm transition-colors ${
+ isCurrent
                       ? "bg-[#007834] ring-1 ring-offset-1 ring-[#007834]"
                       : isCompleted
                       ? "bg-[#007834]/75 hover:bg-[#007834]"
-                      : "bg-[#dce1e5] hover:bg-slate-300"
+                      : "bg-[#C6D6C3] hover:bg-slate-300"
                   }`}
                 />
               );
@@ -163,16 +163,16 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
       {/* KROK 1: KTO BĘDZIE NA URLOPIE                                       */}
       {/* =================================================================== */}
       {step === 1 && (
-        <div className="space-y-5 animate-in fade-in">
+        <div className="space-y-5 ">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#007834]">
               <Users className="w-4 h-4" />
               <span>KROK 1 &bull; PODZIAŁ OPIEKI</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-black text-slate-900">
+            <h3 className="text-lg sm:text-xl font-black text-[#10371E]">
  Kto z Was planuje skorzystać z urlopu i zasiłku?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-[#425B4A]">
  Wybierz, jak zamierzacie podzielić się czasem z maluchem. Możecie dzielić się urlopem elastycznie!
             </p>
           </div>
@@ -183,18 +183,18 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setWhoOnLeave("both")}
  className={`p-4 rounded border-2 text-left transition-all flex flex-col justify-between gap-3 ${
  whoOnLeave === "both"
-                  ? "border-[#007834] bg-emerald-50/70 ring-2 ring-[#007834]/20"
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] ring-2 ring-[#007834]/20"
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <div className="flex items-center justify-between">
                 <Users className="w-6 h-6 text-[#007834]" />
-                <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold uppercase bg-[#DCE8D3] text-emerald-800 px-2 py-0.5 rounded-full">
  Najpopularniejsze
                 </span>
               </div>
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">Oboje rodzice</div>
+                <div className="font-extrabold text-[#10371E] text-sm">Oboje rodzice</div>
                 <div className="text-xs text-slate-500 mt-1">
  Mama i tata dzielą się opieką. Tata korzysta z 9 tygodni niezbywalnych z dyrektywy WLB.
                 </div>
@@ -206,13 +206,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setWhoOnLeave("mother")}
  className={`p-4 rounded border-2 text-left transition-all flex flex-col justify-between gap-3 ${
  whoOnLeave === "mother"
-                  ? "border-[#007834] bg-emerald-50/70 ring-2 ring-[#007834]/20"
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] ring-2 ring-[#007834]/20"
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <User className="w-6 h-6 text-[#007834]" />
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">Głównie mama</div>
+                <div className="font-extrabold text-[#10371E] text-sm">Głównie mama</div>
                 <div className="text-xs text-slate-500 mt-1">
  Mama wykorzystuje 20 tyg. macierzyńskiego oraz do 32 tyg. rodzicielskiego.
                 </div>
@@ -224,13 +224,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setWhoOnLeave("father")}
  className={`p-4 rounded border-2 text-left transition-all flex flex-col justify-between gap-3 ${
  whoOnLeave === "father"
-                  ? "border-[#007834] bg-emerald-50/70 ring-2 ring-[#007834]/20"
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] ring-2 ring-[#007834]/20"
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <UserCheck className="w-6 h-6 text-[#007834]" />
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">Tata na urlopie</div>
+                <div className="font-extrabold text-[#10371E] text-sm">Tata na urlopie</div>
                 <div className="text-xs text-slate-500 mt-1">
  Tata przejmuje część urlopu po 14 tyg. mamy lub bierze urlop ojcowski (14 dni).
                 </div>
@@ -255,16 +255,16 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
       {/* KROK 2: LICZBA DZIECI                                               */}
       {/* =================================================================== */}
       {step === 2 && (
-        <div className="space-y-5 animate-in fade-in">
+        <div className="space-y-5 ">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#007834]">
               <Baby className="w-4 h-4" />
               <span>KROK 2 &bull; TWOJE DZIECI</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-black text-slate-900">
+            <h3 className="text-lg sm:text-xl font-black text-[#10371E]">
  Ile maluszków przyjdzie na świat?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-[#425B4A]">
  Przy ciąży mnogiej (bliźnięta, trojaczki) ZUS przyznaje znacznie dłuższy płatny urlop macierzyński i rodzicielski.
             </p>
           </div>
@@ -275,13 +275,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setChildrenCount(1)}
  className={`p-4 rounded border-2 text-left transition-all flex flex-col justify-between gap-3 ${
  childrenCount === 1
-                  ? "border-[#007834] bg-emerald-50/70 ring-2 ring-[#007834]/20"
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] ring-2 ring-[#007834]/20"
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <Baby className="w-6 h-6 text-[#007834]" />
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">Jedno dziecko</div>
+                <div className="font-extrabold text-[#10371E] text-sm">Jedno dziecko</div>
                 <div className="text-xs text-slate-500 mt-1">
  20 tyg. macierzyńskiego + 41 tyg. rodzicielskiego (łącznie 61 tygodni opieki).
                 </div>
@@ -293,13 +293,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setChildrenCount(2)}
  className={`p-4 rounded border-2 text-left transition-all flex flex-col justify-between gap-3 ${
  childrenCount === 2
-                  ? "border-[#007834] bg-emerald-50/70 ring-2 ring-[#007834]/20"
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] ring-2 ring-[#007834]/20"
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <div className="inline-flex items-center gap-0.5 text-[#007834]"><Baby className="w-5 h-5" /><Baby className="w-5 h-5" /></div>
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">Bliźnięta</div>
+                <div className="font-extrabold text-[#10371E] text-sm">Bliźnięta</div>
                 <div className="text-xs text-slate-500 mt-1">
  31 tyg. macierzyńskiego + 43 tyg. rodzicielskiego (łącznie 74 tygodnie opieki).
                 </div>
@@ -311,13 +311,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setChildrenCount(3)}
  className={`p-4 rounded border-2 text-left transition-all flex flex-col justify-between gap-3 ${
  childrenCount === 3
-                  ? "border-[#007834] bg-emerald-50/70 ring-2 ring-[#007834]/20"
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] ring-2 ring-[#007834]/20"
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <div className="inline-flex items-center gap-0.5 text-[#007834]"><Baby className="w-4 h-4" /><Baby className="w-4 h-4" /><Baby className="w-4 h-4" /></div>
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">Trojaczki lub więcej</div>
+                <div className="font-extrabold text-[#10371E] text-sm">Trojaczki lub więcej</div>
                 <div className="text-xs text-slate-500 mt-1">
  Do 37 tyg. macierzyńskiego + 43 tyg. rodzicielskiego (nawet do 80 tygodni).
                 </div>
@@ -329,7 +329,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
             <button
  type="button"
  onClick={() => setStep(1)}
- className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors"
+ className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#425B4A] hover:text-[#10371E] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Wstecz</span>
@@ -350,16 +350,16 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
       {/* KROK 3: FORMA PRACY I ZAROBKI                                       */}
       {/* =================================================================== */}
       {step === 3 && (
-        <div className="space-y-5 animate-in fade-in">
+        <div className="space-y-5 ">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#007834]">
               <Briefcase className="w-4 h-4" />
               <span>KROK 3 &bull; TWOJE DOCHODY</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-black text-slate-900">
+            <h3 className="text-lg sm:text-xl font-black text-[#10371E]">
  Jak pracujesz i ile zarabiasz co miesiąc?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-[#425B4A]">
  Podaj swoje wynagrodzenie brutto (z umowy). Wyliczymy od razu, ile otrzymasz na rękę każdego miesiąca.
             </p>
           </div>
@@ -371,8 +371,8 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setContractType("employment")}
  className={`p-3 rounded border text-left text-xs font-bold flex items-center gap-2.5 transition-all ${
  contractType === "employment"
-                  ? "border-[#007834] bg-emerald-50 text-emerald-900 ring-1 ring-[#007834]"
-                  : "border-[#dce1e5] bg-white text-slate-700 hover:bg-[#f4f6f7]"
+                  ? "border-[#007834] bg-[#EFF3EA] text-emerald-900 ring-1 ring-[#007834]"
+                  : "border-[#C6D6C3] bg-white text-[#2E4B38] hover:bg-[#EFF3EA]"
               }`}
             >
               <Building2 className="w-4 h-4 text-[#007834]" />
@@ -384,8 +384,8 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setContractType("b2b")}
  className={`p-3 rounded border text-left text-xs font-bold flex items-center gap-2.5 transition-all ${
  contractType === "b2b"
-                  ? "border-[#007834] bg-emerald-50 text-emerald-900 ring-1 ring-[#007834]"
-                  : "border-[#dce1e5] bg-white text-slate-700 hover:bg-[#f4f6f7]"
+                  ? "border-[#007834] bg-[#EFF3EA] text-emerald-900 ring-1 ring-[#007834]"
+                  : "border-[#C6D6C3] bg-white text-[#2E4B38] hover:bg-[#EFF3EA]"
               }`}
             >
               <Briefcase className="w-4 h-4 text-[#007834]" />
@@ -397,8 +397,8 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setContractType("mandate")}
  className={`p-3 rounded border text-left text-xs font-bold flex items-center gap-2.5 transition-all ${
  contractType === "mandate"
-                  ? "border-[#007834] bg-emerald-50 text-emerald-900 ring-1 ring-[#007834]"
-                  : "border-[#dce1e5] bg-white text-slate-700 hover:bg-[#f4f6f7]"
+                  ? "border-[#007834] bg-[#EFF3EA] text-emerald-900 ring-1 ring-[#007834]"
+                  : "border-[#C6D6C3] bg-white text-[#2E4B38] hover:bg-[#EFF3EA]"
               }`}
             >
               <FileText className="w-4 h-4 text-sky-600" />
@@ -407,13 +407,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
           </div>
 
           {/* Kwota brutto i suwak */}
-          <div className="bg-[#f4f6f7] p-4 rounded border border-[#dce1e5] space-y-3">
+          <div className="bg-[#EFF3EA] p-4 rounded border border-[#C6D6C3] space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <label className="text-xs font-bold text-slate-700">
+              <label className="text-xs font-bold text-[#2E4B38]">
                 Średnia pensja brutto z umowy:
               </label>
               <div className="text-right">
-                <span className="text-lg font-black text-slate-900">
+                <span className="text-lg font-black text-[#10371E]">
                   {monthlySalaryGross.toLocaleString("pl-PL")} zł brutto
                 </span>
                 <span className="text-xs text-slate-500 block font-normal">
@@ -441,7 +441,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  className={`px-2.5 py-1 rounded text-xs font-bold border transition-colors ${
  monthlySalaryGross === 4806
                     ? "bg-[#007834] text-white border-[#007834]"
-                    : "bg-white text-slate-700 border-[#dce1e5] hover:bg-slate-100"
+                    : "bg-white text-[#2E4B38] border-[#C6D6C3] hover:bg-[#EFF3EA]"
                 }`}
               >
  4 806 zł (Min. 2026)
@@ -452,7 +452,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  className={`px-2.5 py-1 rounded text-xs font-bold border transition-colors ${
  monthlySalaryGross === 6500
                     ? "bg-[#007834] text-white border-[#007834]"
-                    : "bg-white text-slate-700 border-[#dce1e5] hover:bg-slate-100"
+                    : "bg-white text-[#2E4B38] border-[#C6D6C3] hover:bg-[#EFF3EA]"
                 }`}
               >
  6 500 zł
@@ -463,7 +463,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  className={`px-2.5 py-1 rounded text-xs font-bold border transition-colors ${
  monthlySalaryGross === 8500
                     ? "bg-[#007834] text-white border-[#007834]"
-                    : "bg-white text-slate-700 border-[#dce1e5] hover:bg-slate-100"
+                    : "bg-white text-[#2E4B38] border-[#C6D6C3] hover:bg-[#EFF3EA]"
                 }`}
               >
  8 500 zł
@@ -474,7 +474,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  className={`px-2.5 py-1 rounded text-xs font-bold border transition-colors ${
  monthlySalaryGross === 12000
                     ? "bg-[#007834] text-white border-[#007834]"
-                    : "bg-white text-slate-700 border-[#dce1e5] hover:bg-slate-100"
+                    : "bg-white text-[#2E4B38] border-[#C6D6C3] hover:bg-[#EFF3EA]"
                 }`}
               >
  12 000 zł
@@ -486,7 +486,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
             <button
  type="button"
  onClick={() => setStep(2)}
- className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors"
+ className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#425B4A] hover:text-[#10371E] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Wstecz</span>
@@ -507,16 +507,16 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
       {/* KROK 4: SYTUACJE SZCZEGÓLNE (OPCJONALNIE)                           */}
       {/* =================================================================== */}
       {step === 4 && (
-        <div className="space-y-5 animate-in fade-in">
+        <div className="space-y-5 ">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#007834]">
               <HeartPulse className="w-4 h-4" />
               <span>KROK 4 &bull; TWOJE PLANY I SYTUACJA</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-black text-slate-900">
+            <h3 className="text-lg sm:text-xl font-black text-[#10371E]">
  Czy dotyczy Was któraś z poniższych sytuacji?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-[#425B4A]">
  Większość porodów przebiega standardowo, ale jeśli maluch urodzi się wcześniej lub zechcesz dorabiać – ZUS daje specjalne przywileje!
             </p>
           </div>
@@ -527,12 +527,12 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setSpecialSituation("none")}
  className={`w-full p-3.5 rounded border-2 text-left transition-all flex items-center justify-between ${
  specialSituation === "none"
-                  ? "border-[#007834] bg-emerald-50/70 "
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] "
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <div>
-                <div className="font-extrabold text-slate-900 text-sm">
+                <div className="font-extrabold text-[#10371E] text-sm">
  Wszystko w normie (poród o czasie, pełna opieka)
                 </div>
                 <div className="text-xs text-slate-500">
@@ -547,13 +547,13 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setSpecialSituation("preterm")}
  className={`w-full p-3.5 rounded border-2 text-left transition-all flex flex-col gap-2 ${
  specialSituation === "preterm"
-                  ? "border-[#007834] bg-emerald-50/70 "
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] "
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="font-extrabold text-slate-900 text-sm flex items-center gap-1.5">
+                  <div className="font-extrabold text-[#10371E] text-sm flex items-center gap-1.5">
                     <span>Wcześniak lub pobyt malucha w szpitalu</span>
                     <span className="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold">
  Art. 180² KP
@@ -567,8 +567,8 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
               </div>
 
               {specialSituation === "preterm" && (
-                <div className="pt-2 border-t border-emerald-200 space-y-2 text-xs">
-                  <div className="flex justify-between font-semibold text-slate-700">
+                <div className="pt-2 border-t border-[#B9CCB6] space-y-2 text-xs">
+                  <div className="flex justify-between font-semibold text-[#2E4B38]">
                     <span>Liczba dni pobytu dziecka w szpitalu:</span>
                     <span className="font-bold text-[#007834]">{hospitalDays} dni</span>
                   </div>
@@ -590,14 +590,14 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
  onClick={() => setSpecialSituation("parttime")}
  className={`w-full p-3.5 rounded border-2 text-left transition-all flex items-center justify-between ${
  specialSituation === "parttime"
-                  ? "border-[#007834] bg-emerald-50/70 "
-                  : "border-[#dce1e5] bg-white hover:border-slate-300"
+                  ? "border-[#007834] bg-[#EFF3EA] "
+                  : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
               }`}
             >
               <div>
-                <div className="font-extrabold text-slate-900 text-sm flex items-center gap-1.5">
+                <div className="font-extrabold text-[#10371E] text-sm flex items-center gap-1.5">
                   <span>Chcę dorabiać na pół etatu na rodzicielskim</span>
-                  <span className="bg-[#eef6f1] text-[#00416E] text-[10px] px-2 py-0.5 rounded-full font-bold">
+                  <span className="bg-[#DCE8D3] text-[#10371E] text-[10px] px-2 py-0.5 rounded-full font-bold">
  Art. 182¹ᶠ KP
                   </span>
                 </div>
@@ -613,7 +613,7 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
             <button
  type="button"
  onClick={() => setStep(3)}
- className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors"
+ className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#425B4A] hover:text-[#10371E] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Wstecz</span>
@@ -634,9 +634,9 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
       {/* KROK 5: KARTA WYNIKÓW I CENTRALNY PROFIL RODZICA                    */}
       {/* =================================================================== */}
       {step === 5 && (
-        <div className="space-y-6 animate-in fade-in zoom-in-95">
+        <div className="space-y-6 zoom-in-95">
           {/* Główny baner wyniku */}
-          <div className="bg-gradient-to-br from-[#00416E] to-[#072442] text-white p-5 sm:p-7 rounded space-y-4">
+          <div className="bg-gradient-to-br from-[#10371E] to-[#072442] text-white p-5 sm:p-7 rounded space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-xs">
                 <CheckCircle2 className="w-3.5 h-3.5" />
@@ -699,14 +699,14 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
               <Link
  href="/kalkulator"
  onClick={onClose}
- className="p-4 bg-white border border-[#dce1e5] hover:border-[#007834] rounded transition-all flex items-center justify-between group"
+ className="p-4 bg-white border border-[#C6D6C3] hover:border-[#007834] rounded transition-all flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 bg-emerald-50 text-[#007834] rounded group-hover:bg-[#007834] group-hover:text-white transition-colors">
+                  <div className="p-2.5 bg-[#EFF3EA] text-[#007834] rounded group-hover:bg-[#007834] group-hover:text-white transition-colors">
                     <Calculator className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-slate-900">
+                    <div className="text-sm font-bold text-[#10371E]">
  Pełny kalkulator świadczeń
                     </div>
                     <div className="text-xs text-slate-500">
@@ -720,14 +720,14 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
               <Link
  href="/e-uslugi?prefill=1"
  onClick={onClose}
- className="p-4 bg-white border border-[#dce1e5] hover:border-[#00416E] rounded transition-all flex items-center justify-between group"
+ className="p-4 bg-white border border-[#C6D6C3] hover:border-[#10371E] rounded transition-all flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 bg-blue-50 text-[#00416E] rounded group-hover:bg-[#00416E] group-hover:text-white transition-colors">
+                  <div className="p-2.5 bg-[#EFF3EA] text-[#10371E] rounded group-hover:bg-[#10371E] group-hover:text-white transition-colors">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-slate-900">
+                    <div className="text-sm font-bold text-[#10371E]">
  Generator Wniosku ZAM
                     </div>
                     <div className="text-xs text-slate-500">
@@ -735,20 +735,20 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
                     </div>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-[#00416E] transition-colors" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-[#10371E] transition-colors" />
               </Link>
 
               <Link
  href="/przewodnik"
  onClick={onClose}
- className="p-4 bg-white border border-[#dce1e5] hover:border-[#007834] rounded transition-all flex items-center justify-between group"
+ className="p-4 bg-white border border-[#C6D6C3] hover:border-[#007834] rounded transition-all flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 bg-emerald-50 text-[#007834] rounded group-hover:bg-[#007834] group-hover:text-white transition-colors">
+                  <div className="p-2.5 bg-[#EFF3EA] text-[#007834] rounded group-hover:bg-[#007834] group-hover:text-white transition-colors">
                     <Compass className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-slate-900">
+                    <div className="text-sm font-bold text-[#10371E]">
  Twój terminarz i harmonogram
                     </div>
                     <div className="text-xs text-slate-500">
@@ -762,14 +762,14 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
               <Link
  href="/asystent-ai"
  onClick={onClose}
- className="p-4 bg-white border border-[#dce1e5] hover:border-[#007834] rounded transition-all flex items-center justify-between group"
+ className="p-4 bg-white border border-[#C6D6C3] hover:border-[#007834] rounded transition-all flex items-center justify-between group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 bg-[#f4f6f7] text-[#007834] rounded group-hover:bg-[#007834] group-hover:text-white transition-colors">
+                  <div className="p-2.5 bg-[#EFF3EA] text-[#007834] rounded group-hover:bg-[#007834] group-hover:text-white transition-colors">
                     <Bot className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-slate-900">
+                    <div className="text-sm font-bold text-[#10371E]">
  Asystent AI (zna Twoje dane)
                     </div>
                     <div className="text-xs text-slate-500">
@@ -783,8 +783,8 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
           </div>
 
           {/* Szybki skrót do słowniczka trudnych słów */}
-          <div className="p-3.5 bg-[#f4f6f7] border border-[#dce1e5] rounded flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2 text-slate-700">
+          <div className="p-3.5 bg-[#EFF3EA] border border-[#C6D6C3] rounded flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-[#2E4B38]">
               <BookOpen className="w-4 h-4 text-[#007834]" />
               <span>Nie rozumiesz któregoś pojęcia z decyzji lub wniosku?</span>
             </div>
@@ -804,20 +804,20 @@ export function ParentWizard({ isModal = false, onClose }: ParentWizardProps) {
   // Jeśli modal
  if (isModal) {
  return (
-      <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in">
-        <div className="bg-white rounded max-w-2xl w-full border border-[#dce1e5] p-5 sm:p-8 space-y-4 max-h-[90vh] overflow-y-auto">
-          <div className="flex items-center justify-between border-b border-[#edf0f2] pb-3">
+      <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto ">
+        <div className="bg-white rounded max-w-2xl w-full border border-[#C6D6C3] p-5 sm:p-8 space-y-4 max-h-[90vh] overflow-y-auto">
+          <div className="flex items-center justify-between border-b border-[#DCE8D3] pb-3">
             <div className="flex items-center gap-2">
-              <div className="p-2 bg-emerald-100 text-[#007834] rounded">
+              <div className="p-2 bg-[#DCE8D3] text-[#007834] rounded">
                 <Baby className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Mój Profil Rodzica ZUS 2026</h3>
+              <h3 className="text-base font-bold text-[#10371E]">Mój Profil Rodzica ZUS 2026</h3>
             </div>
             {onClose && (
               <button
  type="button"
  onClick={onClose}
- className="text-slate-400 hover:text-slate-700 p-1.5 rounded"
+ className="text-slate-400 hover:text-[#2E4B38] p-1.5 rounded"
               >
                 ✕
               </button>

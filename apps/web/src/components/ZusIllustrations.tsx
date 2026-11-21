@@ -16,28 +16,28 @@ export const FamilyHeroIllustration: React.FC<IllustrationProps> = ({ className 
     aria-hidden="true"
   >
     {/* Miękkie tło geometryczne w kolorach ZUS */}
-    <rect x="16" y="20" width="288" height="180" rx="8" fill="#ffffff" stroke="#dce1e5" strokeWidth="1.5" />
-    <circle cx="248" cy="74" r="38" fill="#eef6f1" />
+    <rect x="16" y="20" width="288" height="180" rx="8" fill="#ffffff" stroke="#B9CCB6" strokeWidth="1.5" />
+    <circle cx="248" cy="74" r="38" fill="#DCE8D3" />
     <circle cx="82" cy="146" r="28" fill="#f0f4f8" />
 
     {/* Linia horyzontu / ścieżki spacerowej */}
-    <line x1="36" y1="172" x2="284" y2="172" stroke="#dce1e5" strokeWidth="2" strokeLinecap="round" />
+    <line x1="36" y1="172" x2="284" y2="172" stroke="#B9CCB6" strokeWidth="2" strokeLinecap="round" />
 
     {/* Stylizowane drzewko w parku */}
     <rect x="261" y="142" width="5" height="30" rx="2" fill="#8b959e" />
-    <circle cx="263.5" cy="128" r="18" fill="#c2e4cc" />
+    <circle cx="263.5" cy="128" r="18" fill="#B9CCB6" />
     <circle cx="255" cy="134" r="11" fill="#007834" fillOpacity="0.22" />
 
     {/* Sylwetka rodzica 1 (Mama) */}
-    <circle cx="96" cy="78" r="13" fill="#00416E" />
+    <circle cx="96" cy="78" r="13" fill="#10371E" />
     <path
       d="M78 134C78 110 84 96 96 96C108 96 114 110 114 134V172H78V134Z"
-      fill="#00416E"
+      fill="#10371E"
     />
     {/* Ramię trzymające rączkę wózka */}
     <path
       d="M110 108L142 122"
-      stroke="#00416E"
+      stroke="#10371E"
       strokeWidth="7"
       strokeLinecap="round"
     />
@@ -103,30 +103,30 @@ export const CalculatorIllustration: React.FC<IllustrationProps> = ({ className 
     className={className}
     aria-hidden="true"
   >
-    <rect x="8" y="10" width="164" height="100" rx="6" fill="#f4f6f7" stroke="#dce1e5" strokeWidth="1.5" />
+    <rect x="8" y="10" width="164" height="100" rx="6" fill="#EFF3EA" stroke="#B9CCB6" strokeWidth="1.5" />
 
     {/* Kalkulator */}
-    <rect x="24" y="22" width="58" height="76" rx="4" fill="#ffffff" stroke="#00416E" strokeWidth="2" />
-    <rect x="31" y="30" width="44" height="14" rx="2" fill="#eef6f1" stroke="#c2e4cc" strokeWidth="1" />
+    <rect x="24" y="22" width="58" height="76" rx="4" fill="#ffffff" stroke="#10371E" strokeWidth="2" />
+    <rect x="31" y="30" width="44" height="14" rx="2" fill="#DCE8D3" stroke="#B9CCB6" strokeWidth="1" />
     <text x="53" y="40" textAnchor="middle" fill="#007834" fontSize="9" fontWeight="700" fontFamily="monospace">
       81,5%
     </text>
     {/* Klawisze */}
-    <rect x="31" y="51" width="11" height="9" rx="1.5" fill="#dce1e5" />
-    <rect x="47" y="51" width="11" height="9" rx="1.5" fill="#dce1e5" />
-    <rect x="63" y="51" width="11" height="9" rx="1.5" fill="#dce1e5" />
-    <rect x="31" y="65" width="11" height="9" rx="1.5" fill="#dce1e5" />
-    <rect x="47" y="65" width="11" height="9" rx="1.5" fill="#dce1e5" />
+    <rect x="31" y="51" width="11" height="9" rx="1.5" fill="#B9CCB6" />
+    <rect x="47" y="51" width="11" height="9" rx="1.5" fill="#B9CCB6" />
+    <rect x="63" y="51" width="11" height="9" rx="1.5" fill="#B9CCB6" />
+    <rect x="31" y="65" width="11" height="9" rx="1.5" fill="#B9CCB6" />
+    <rect x="47" y="65" width="11" height="9" rx="1.5" fill="#B9CCB6" />
     <rect x="63" y="65" width="11" height="23" rx="1.5" fill="#007834" />
-    <rect x="31" y="79" width="27" height="9" rx="1.5" fill="#dce1e5" />
+    <rect x="31" y="79" width="27" height="9" rx="1.5" fill="#B9CCB6" />
 
     {/* Kartka kalendarza 21 dni */}
-    <rect x="98" y="26" width="58" height="62" rx="4" fill="#ffffff" stroke="#dce1e5" strokeWidth="2" />
+    <rect x="98" y="26" width="58" height="62" rx="4" fill="#ffffff" stroke="#B9CCB6" strokeWidth="2" />
     <rect x="98" y="26" width="58" height="16" rx="3" fill="#007834" />
     <text x="127" y="37" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="sans-serif">
       TERMIN
     </text>
-    <text x="127" y="64" textAnchor="middle" fill="#00416E" fontSize="20" fontWeight="800" fontFamily="sans-serif">
+    <text x="127" y="64" textAnchor="middle" fill="#10371E" fontSize="20" fontWeight="800" fontFamily="sans-serif">
       21
     </text>
     <text x="127" y="78" textAnchor="middle" fill="#59636e" fontSize="8" fontWeight="600" fontFamily="sans-serif">
@@ -146,18 +146,18 @@ export const DocumentZamIllustration: React.FC<IllustrationProps> = ({ className
     className={className}
     aria-hidden="true"
   >
-    <rect x="8" y="10" width="164" height="100" rx="6" fill="#f4f6f7" stroke="#dce1e5" strokeWidth="1.5" />
+    <rect x="8" y="10" width="164" height="100" rx="6" fill="#EFF3EA" stroke="#B9CCB6" strokeWidth="1.5" />
 
     {/* Kartka A4 */}
-    <rect x="44" y="18" width="76" height="86" rx="3" fill="#ffffff" stroke="#00416E" strokeWidth="2" />
+    <rect x="44" y="18" width="76" height="86" rx="3" fill="#ffffff" stroke="#10371E" strokeWidth="2" />
     <rect x="52" y="26" width="26" height="6" rx="1" fill="#007834" />
-    <rect x="84" y="26" width="28" height="6" rx="1" fill="#dce1e5" />
+    <rect x="84" y="26" width="28" height="6" rx="1" fill="#B9CCB6" />
 
     {/* Wiersze formularza */}
-    <rect x="52" y="40" width="60" height="4" rx="1" fill="#dce1e5" />
-    <rect x="52" y="49" width="48" height="4" rx="1" fill="#dce1e5" />
-    <rect x="52" y="58" width="54" height="4" rx="1" fill="#dce1e5" />
-    <rect x="52" y="70" width="60" height="10" rx="1.5" fill="#eef6f1" stroke="#c2e4cc" strokeWidth="1" />
+    <rect x="52" y="40" width="60" height="4" rx="1" fill="#B9CCB6" />
+    <rect x="52" y="49" width="48" height="4" rx="1" fill="#B9CCB6" />
+    <rect x="52" y="58" width="54" height="4" rx="1" fill="#B9CCB6" />
+    <rect x="52" y="70" width="60" height="10" rx="1.5" fill="#DCE8D3" stroke="#B9CCB6" strokeWidth="1" />
     <rect x="52" y="88" width="26" height="3" rx="1" fill="#94a3b8" />
 
     {/* Zielona pieczęć zatwierdzenia */}
@@ -183,8 +183,8 @@ export const SupportHeartIllustration: React.FC<IllustrationProps> = ({ classNam
     className={className}
     aria-hidden="true"
   >
-    <rect x="8" y="10" width="164" height="100" rx="6" fill="#f4f6f7" stroke="#dce1e5" strokeWidth="1.5" />
-    <circle cx="90" cy="60" r="34" fill="#eef6f1" />
+    <rect x="8" y="10" width="164" height="100" rx="6" fill="#EFF3EA" stroke="#B9CCB6" strokeWidth="1.5" />
+    <circle cx="90" cy="60" r="34" fill="#DCE8D3" />
     {/* Symbol ochronnego parasola / opieki */}
     <path
       d="M58 58C58 40 72 28 90 28C108 28 122 40 122 58H58Z"
@@ -192,7 +192,7 @@ export const SupportHeartIllustration: React.FC<IllustrationProps> = ({ classNam
     />
     <path
       d="M90 58V84C90 88 87 91 83 91C79 91 77 89 77 86"
-      stroke="#00416E"
+      stroke="#10371E"
       strokeWidth="3"
       strokeLinecap="round"
     />

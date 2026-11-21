@@ -86,7 +86,7 @@ function ZamQrCode({ seed }: { seed: string }) {
  return (
     <svg
  viewBox={`0 0 ${size} ${size}`}
- className="w-14 h-14 shrink-0 border border-slate-300 bg-white p-0.5"
+ className="w-14 h-14 shrink-0 border border-[#B9CCB6] bg-white p-0.5"
  aria-label="Kod QR weryfikacji dokumentu ZUS ZAM"
     >
       {cells.map((row, r) =>
@@ -385,13 +385,13 @@ export default function EUslugiPage() {
         <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
         <Link href="/e-uslugi">E-usługi</Link>
         <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-        <span className="text-slate-800 font-semibold">
+        <span className="text-[#1D4029] font-semibold">
  Generator wniosku ZAM i portal eZUS
         </span>
       </nav>
 
       {/* Nagłówek Modułu */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-5">
         <div className="flex items-center gap-5">
           <div className="hidden lg:block w-36 shrink-0">
             <DocumentZamIllustration className="w-full h-auto" />
@@ -405,10 +405,10 @@ export default function EUslugiPage() {
             <span className="zus-badge-navy">DRUK ZAM 2026</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#00416E] tracking-tight mt-1.5">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight mt-1.5">
  Wniosek ZAM i usługi elektroniczne ZUS
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl">
+          <p className="text-xs sm:text-sm text-[#425B4A] mt-1 max-w-3xl">
  Wypełnij zunifikowany wniosek o zasiłek macierzyński (druk ZAM) krok po kroku. Poniżej formularza na bieżąco generowany jest autentyczny podgląd urzędowego dokumentu ZUS.
           </p>
         </div>
@@ -416,8 +416,8 @@ export default function EUslugiPage() {
 
         {/* Węzeł krajowy & status tożsamości */}
         <div className="flex items-center gap-3">
-          <div className="bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded flex items-center gap-2.5 shrink-0">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#007834] animate-pulse"></div>
+          <div className="bg-[#EFF3EA] border border-[#B9CCB6] px-3 py-1.5 rounded flex items-center gap-2.5 shrink-0">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#007834] "></div>
             <div className="text-xs">
               <span className="font-bold text-[#007834] block leading-none">Węzeł krajowy gov.pl</span>
               <span className="text-[10px] text-emerald-800">KSI ZUS &bull; Połączono</span>
@@ -429,7 +429,7 @@ export default function EUslugiPage() {
  onClick={() => setIsLoggedIn(!isLoggedIn)}
  className={`px-3 py-1.5 rounded text-xs font-bold border transition-colors flex items-center gap-1.5 ${
  isLoggedIn
-                ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300"
+                ? "bg-[#EFF3EA] hover:bg-slate-200 text-[#2E4B38] border-[#B9CCB6]"
                 : "bg-[#007834] hover:bg-[#00622a] text-white border-[#007834]"
             }`}
           >
@@ -440,14 +440,14 @@ export default function EUslugiPage() {
       </div>
 
       {/* Nawigacja Zakładkowa ZUS */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[#dce1e5] pb-2">
+      <div className="flex flex-wrap items-center gap-2 border-b border-[#C6D6C3] pb-2">
         <button
  type="button"
  onClick={() => setActiveTab("zam")}
  className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
  activeTab === "zam"
               ? "bg-[#007834] text-white "
-              : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
           }`}
         >
           <FileCheck className="w-4 h-4" />
@@ -460,7 +460,7 @@ export default function EUslugiPage() {
  className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
  activeTab === "mobywatel"
               ? "bg-[#007834] text-white "
-              : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
           }`}
         >
           <Smartphone className="w-4 h-4" />
@@ -473,7 +473,7 @@ export default function EUslugiPage() {
  className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
  activeTab === "pue"
               ? "bg-[#007834] text-white "
-              : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
           }`}
         >
           <Building2 className="w-4 h-4" />
@@ -486,7 +486,7 @@ export default function EUslugiPage() {
  className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
  activeTab === "ezla"
               ? "bg-[#007834] text-white "
-              : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
           }`}
         >
           <Clock className="w-4 h-4" />
@@ -496,9 +496,9 @@ export default function EUslugiPage() {
         <button
  type="button"
  onClick={() => openGlossary()}
- className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold text-[#00416E] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors "
+ className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold text-[#10371E] bg-[#EFF3EA] hover:bg-[#DCE8D3] border border-[#B9CCB6] transition-colors "
         >
-          <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+          <BookOpen className="w-3.5 h-3.5 text-[#10371E]" />
           <span>Trudne słowa (Słownik)</span>
         </button>
       </div>
@@ -507,7 +507,7 @@ export default function EUslugiPage() {
       {activeTab === "zam" && (
         <div className="flex flex-col gap-8 w-full">
           {prefilledFromCalc && (
-            <div className="p-3.5 bg-emerald-50 border border-[#007834] rounded flex items-center justify-between gap-3 text-xs text-emerald-950 print:hidden">
+            <div className="p-3.5 bg-[#EFF3EA] border border-[#007834] rounded flex items-center justify-between gap-3 text-xs text-emerald-950 print:hidden">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
                 <span>
@@ -524,7 +524,7 @@ export default function EUslugiPage() {
             </div>
           )}
           {/* GÓRNY BLOK: FORMULARZ KROK PO KROKU */}
-          <div className="bg-white border border-[#dee2e6] rounded p-6 sm:p-8 space-y-6">
+          <div className="bg-white border border-[#C6D6C3] rounded p-6 sm:p-8 space-y-6">
             {/* Pasek postępu kroków wniosku */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
@@ -543,21 +543,21 @@ export default function EUslugiPage() {
               </div>
               <div className="grid grid-cols-6 gap-1.5" role="progressbar" aria-valuenow={zamStep} aria-valuemin={1} aria-valuemax={totalZamSteps}>
                 {Array.from({ length: totalZamSteps }).map((_, idx) => {
-                  const stepNum = idx + 1;
-                  const isCompleted = stepNum < zamStep;
-                  const isCurrent = stepNum === zamStep;
-                  return (
+ const stepNum = idx + 1;
+ const isCompleted = stepNum < zamStep;
+ const isCurrent = stepNum === zamStep;
+ return (
                     <button
-                      key={stepNum}
-                      type="button"
-                      onClick={() => setZamStep(stepNum)}
-                      title={`Przejdź do kroku ${stepNum}`}
-                      className={`h-2.5 rounded-sm transition-colors ${
-                        isCurrent
+ key={stepNum}
+ type="button"
+ onClick={() => setZamStep(stepNum)}
+ title={`Przejdź do kroku ${stepNum}`}
+ className={`h-2.5 rounded-sm transition-colors ${
+ isCurrent
                           ? "bg-[#007834] ring-1 ring-offset-1 ring-[#007834]"
                           : isCompleted
                           ? "bg-[#007834]/75 hover:bg-[#007834]"
-                          : "bg-[#dce1e5] hover:bg-slate-300"
+                          : "bg-[#C6D6C3] hover:bg-slate-300"
                       }`}
                     />
                   );
@@ -582,8 +582,8 @@ export default function EUslugiPage() {
  zamStep === s.step
                         ? "bg-[#007834] text-white border-[#007834]"
                         : zamStep > s.step
-                        ? "bg-emerald-50 text-[#007834] border-[#c2e4cc]"
-                        : "bg-[#f4f6f7] text-slate-500 border-[#dce1e5] hover:bg-slate-100"
+                        ? "bg-[#EFF3EA] text-[#007834] border-[#B9CCB6]"
+                        : "bg-[#EFF3EA] text-slate-500 border-[#C6D6C3] hover:bg-[#EFF3EA]"
                     }`}
                   >
                     {s.label}
@@ -596,34 +596,34 @@ export default function EUslugiPage() {
             <div className="min-h-[220px] flex flex-col justify-between pt-2">
               {/* KROK 1: Dane wnioskodawcy */}
               {zamStep === 1 && (
-                <div className="space-y-4 animate-in fade-in duration-200">
+                <div className="space-y-4 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
  Część I wniosku
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#00416E]">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#10371E]">
  Dane osobowe wnioskodawcy (rodzica ubiegającego się o zasiłek)
                     </h3>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-[#425B4A]">
  Podaj imię, nazwisko, PESEL oraz numer konta, na który ZUS ma przekazywać środki.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Imię i nazwisko:
                       </label>
                       <input
  type="text"
  value={parentName}
  onChange={(e) => setParentName(e.target.value)}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#007834]"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-sm font-semibold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Numer PESEL:
                       </label>
                       <input
@@ -631,7 +631,7 @@ export default function EUslugiPage() {
  maxLength={11}
  value={pesel}
  onChange={(e) => setPesel(e.target.value)}
- className={`w-full px-3 py-2 bg-white border rounded text-sm font-mono font-semibold text-slate-900 focus:outline-none focus:ring-2 ${
+ className={`w-full px-3 py-2 bg-white border rounded text-sm font-mono font-semibold text-[#10371E] focus:outline-none focus:ring-2 ${
  peselValid
                             ? "border-[#007834] focus:ring-[#007834]"
                             : "border-amber-500 focus:ring-amber-500"
@@ -657,14 +657,14 @@ export default function EUslugiPage() {
                     </div>
 
                     <div className="sm:col-span-2">
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Numer rachunku bankowego (IBAN) do wypłaty świadczeń:
                       </label>
                       <input
  type="text"
  value={bankAccount}
  onChange={(e) => setBankAccount(e.target.value)}
- className={`w-full px-3 py-2 bg-white border rounded text-sm font-mono font-semibold text-slate-900 focus:outline-none focus:ring-2 ${
+ className={`w-full px-3 py-2 bg-white border rounded text-sm font-mono font-semibold text-[#10371E] focus:outline-none focus:ring-2 ${
  nrbValid
                             ? "border-[#007834] focus:ring-[#007834]"
                             : "border-amber-500 focus:ring-amber-500"
@@ -694,22 +694,22 @@ export default function EUslugiPage() {
 
               {/* KROK 2: Forma zatrudnienia i płatnik */}
               {zamStep === 2 && (
-                <div className="space-y-4 animate-in fade-in duration-200">
+                <div className="space-y-4 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
  Część II wniosku
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#00416E]">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#10371E]">
  Tytuł ubezpieczenia i dane płatnika składek
                     </h3>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-[#425B4A]">
  Wybierz formę zatrudnienia oraz podaj NIP pracodawcy lub zleceniodawcy.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Tytuł ubezpieczenia:
                       </label>
                       <select
@@ -717,7 +717,7 @@ export default function EUslugiPage() {
  onChange={(e) =>
  setContractType(e.target.value as "employment" | "mandate" | "b2b")
                         }
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#007834]"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
                       >
                         <option value="employment">Umowa o pracę (UoP)</option>
                         <option value="mandate">Umowa zlecenie</option>
@@ -726,7 +726,7 @@ export default function EUslugiPage() {
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  NIP płatnika składek / pracodawcy:
                       </label>
                       <input
@@ -734,7 +734,7 @@ export default function EUslugiPage() {
  maxLength={10}
  value={employerNip}
  onChange={(e) => setEmployerNip(e.target.value)}
- className={`w-full px-3 py-2 bg-white border rounded text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 ${
+ className={`w-full px-3 py-2 bg-white border rounded text-xs font-mono font-bold text-[#10371E] focus:outline-none focus:ring-2 ${
  nipValid
                             ? "border-[#007834] focus:ring-[#007834]"
                             : "border-amber-500 focus:ring-amber-500"
@@ -760,7 +760,7 @@ export default function EUslugiPage() {
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
                         Średnie wynagrodzenie brutto (PLN):
                       </label>
                       <input
@@ -769,7 +769,7 @@ export default function EUslugiPage() {
  step="100"
  value={monthlySalaryGross}
  onChange={(e) => setMonthlySalaryGross(Number(e.target.value))}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#007834]"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
                       />
                     </div>
                   </div>
@@ -802,52 +802,52 @@ export default function EUslugiPage() {
 
               {/* KROK 3: Dane dziecka */}
               {zamStep === 3 && (
-                <div className="space-y-4 animate-in fade-in duration-200">
+                <div className="space-y-4 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
  Część III wniosku
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#00416E]">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#10371E]">
  Dane nowonarodzonego dziecka / dzieci
                     </h3>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-[#425B4A]">
  Wpisz imię, datę urodzenia oraz określ liczbę dzieci przy tym porodzie.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Imię i nazwisko dziecka:
                       </label>
                       <input
  type="text"
  value={childName}
  onChange={(e) => setChildName(e.target.value)}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#007834]"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Data urodzenia dziecka:
                       </label>
                       <input
  type="date"
  value={childBirthDate}
  onChange={(e) => setChildBirthDate(e.target.value)}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#007834]"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">
+                      <label className="text-xs font-bold text-[#2E4B38] block mb-1">
  Liczba dzieci przy porodzie:
                       </label>
                       <select
  value={childrenCount}
  onChange={(e) => setChildrenCount(Number(e.target.value))}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#007834]"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
                       >
                         <option value={1}>1 dziecko (20 tyg. macierzyńskiego)</option>
                         <option value={2}>2 dzieci - bliźnięta (31 tyg.)</option>
@@ -863,7 +863,7 @@ export default function EUslugiPage() {
  className={`p-3 rounded border text-xs flex items-start gap-2 ${
  deadline21Info.isExpired
                           ? "bg-amber-50 border-amber-300 text-amber-950"
-                          : "bg-emerald-50 border-emerald-200 text-emerald-950"
+                          : "bg-[#EFF3EA] border-[#B9CCB6] text-emerald-950"
                       }`}
                     >
                       <Clock
@@ -891,15 +891,15 @@ export default function EUslugiPage() {
 
               {/* KROK 4: Okoliczności szczególne porodu (wcześniak / Za życiem) */}
               {zamStep === 4 && (
-                <div className="space-y-4 animate-in fade-in duration-200">
+                <div className="space-y-4 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
  Część IV wniosku
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#00416E]">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#10371E]">
  Okoliczności szczególne porodu i stan zdrowia dziecka
                     </h3>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-[#425B4A]">
  Sprawdź, czy przysługuje Ci dodatkowy uzupełniający urlop macierzyński (art. 180² KP 2026).
                     </p>
                   </div>
@@ -909,8 +909,8 @@ export default function EUslugiPage() {
                     <div
  className={`p-4 rounded border-2 transition-all ${
  isPremature
-                          ? "border-[#007834] bg-emerald-50/50"
-                          : "border-[#dce1e5] bg-[#f4f6f7]"
+                          ? "border-[#007834] bg-[#EFF3EA]"
+                          : "border-[#C6D6C3] bg-[#EFF3EA]"
                       }`}
                     >
                       <label className="flex items-start gap-3 cursor-pointer">
@@ -921,25 +921,25 @@ export default function EUslugiPage() {
  className="mt-1 w-4 h-4 rounded text-[#007834] focus:ring-[#007834]"
                         />
                         <div className="text-xs space-y-1">
-                          <span className="font-bold text-slate-900 block text-sm">
+                          <span className="font-bold text-[#10371E] block text-sm">
  Dziecko przedwcześnie urodzone lub hospitalizowane po porodzie (art. 180² KP)
                           </span>
-                          <p className="text-slate-600 leading-relaxed">
+                          <p className="text-[#425B4A] leading-relaxed">
  Przysługuje do 15 dodatkowych tygodni 100% płatnego urlopu macierzyńskiego na czas pobytu noworodka w szpitalu.
                           </p>
                         </div>
                       </label>
 
                       {isPremature && (
-                        <div className="pl-7 pt-3 mt-2 border-t border-[#c2e4cc] flex flex-wrap items-center gap-3 text-xs">
-                          <span className="font-bold text-slate-700">Liczba dni pobytu dziecka w szpitalu:</span>
+                        <div className="pl-7 pt-3 mt-2 border-t border-[#B9CCB6] flex flex-wrap items-center gap-3 text-xs">
+                          <span className="font-bold text-[#2E4B38]">Liczba dni pobytu dziecka w szpitalu:</span>
                           <input
  type="number"
  min={1}
  max={120}
  value={hospitalDays}
  onChange={(e) => setHospitalDays(Number(e.target.value))}
- className="w-20 px-2.5 py-1.5 bg-white border border-slate-300 rounded text-center font-bold"
+ className="w-20 px-2.5 py-1.5 bg-white border border-[#B9CCB6] rounded text-center font-bold"
                           />
                           <span className="text-xs text-[#007834] font-bold">
                             + {liveCalculation.supplementaryWeeks} tyg. dodatkowego urlopu w 100%
@@ -952,8 +952,8 @@ export default function EUslugiPage() {
                     <div
  className={`p-4 rounded border-2 transition-all ${
  hasLifeCert
-                          ? "border-[#007834] bg-emerald-50/50"
-                          : "border-[#dce1e5] bg-[#f4f6f7]"
+                          ? "border-[#007834] bg-[#EFF3EA]"
+                          : "border-[#C6D6C3] bg-[#EFF3EA]"
                       }`}
                     >
                       <label className="flex items-start gap-3 cursor-pointer">
@@ -964,10 +964,10 @@ export default function EUslugiPage() {
  className="mt-1 w-4 h-4 rounded text-[#007834] focus:ring-[#007834]"
                         />
                         <div className="text-xs space-y-1">
-                          <span className="font-bold text-slate-900 block text-sm">
+                          <span className="font-bold text-[#10371E] block text-sm">
  Zaświadczenie z ustawy „Za życiem” (art. 4 ust. 3)
                           </span>
-                          <p className="text-slate-600 leading-relaxed">
+                          <p className="text-[#425B4A] leading-relaxed">
  Ciężkie i nieodwracalne upośledzenie albo nieuleczalna choroba zagrażająca życiu, powstała w okresie prenatalnym. Wydłuża urlop rodzicielski do 65/67 tygodni.
                           </p>
                         </div>
@@ -979,15 +979,15 @@ export default function EUslugiPage() {
 
               {/* KROK 5: Wybór wariantu stawki */}
               {zamStep === 5 && (
-                <div className="space-y-4 animate-in fade-in duration-200">
+                <div className="space-y-4 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
  Część V wniosku
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#00416E]">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#10371E]">
  Wybór wariantu stawki zasiłku macierzyńskiego
                     </h3>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-[#425B4A]">
  Wybierz sposób wypłaty świadczenia zgodnie z art. 30a ustawy zasiłkowej.
                     </p>
                   </div>
@@ -998,22 +998,22 @@ export default function EUslugiPage() {
  onClick={() => setChosenRate("815")}
  className={`p-4 rounded border-2 text-left space-y-2 transition-all ${
  chosenRate === "815"
-                          ? "border-[#007834] bg-emerald-50/50 "
-                          : "border-[#dce1e5] hover:border-slate-300 bg-white"
+                          ? "border-[#007834] bg-[#EFF3EA] "
+                          : "border-[#C6D6C3] hover:border-[#B9CCB6] bg-white"
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#007834] bg-emerald-100/70 px-2 py-0.5 rounded">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#007834] bg-[#DCE8D3] px-2 py-0.5 rounded">
  Rekomendowane
                         </span>
                         {chosenRate === "815" && (
                           <Check className="w-5 h-5 text-[#007834]" />
                         )}
                       </div>
-                      <div className="font-bold text-sm text-slate-900">
+                      <div className="font-bold text-sm text-[#10371E]">
  Wariant A: Równa stawka uśredniona 81,5%
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed">
+                      <p className="text-xs text-[#425B4A] leading-relaxed">
  Wniosek składany w terminie 21 dni po porodzie. Stała kwota przez cały rok bez spadku budżetu domowego po 20 tygodniach.
                       </p>
                     </button>
@@ -1023,22 +1023,22 @@ export default function EUslugiPage() {
  onClick={() => setChosenRate("100_70")}
  className={`p-4 rounded border-2 text-left space-y-2 transition-all ${
  chosenRate === "100_70"
-                          ? "border-[#00416E] bg-blue-50/50 "
-                          : "border-[#dce1e5] hover:border-slate-300 bg-white"
+                          ? "border-[#10371E] bg-[#EFF3EA] "
+                          : "border-[#C6D6C3] hover:border-[#B9CCB6] bg-white"
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-600 bg-slate-100 px-2 py-0.5 rounded">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#425B4A] bg-[#EFF3EA] px-2 py-0.5 rounded">
  Wariant B
                         </span>
                         {chosenRate === "100_70" && (
-                          <Check className="w-5 h-5 text-[#00416E]" />
+                          <Check className="w-5 h-5 text-[#10371E]" />
                         )}
                       </div>
-                      <div className="font-bold text-sm text-slate-900">
+                      <div className="font-bold text-sm text-[#10371E]">
  Wariant B: 100% (macierzyński) + 70% (rodzicielski)
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed">
+                      <p className="text-xs text-[#425B4A] leading-relaxed">
  Wyższa kwota przez pierwsze 20 tygodni, a następnie spadek do 70%. Stosowany także w przypadku złożenia wniosku po 21 dniach.
                       </p>
                     </button>
@@ -1048,15 +1048,15 @@ export default function EUslugiPage() {
 
               {/* KROK 6: Weryfikacja i wysyłka do ZUS */}
               {zamStep === 6 && (
-                <div className="space-y-4 animate-in fade-in duration-200">
+                <div className="space-y-4 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
  Część VI wniosku
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-[#00416E]">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#10371E]">
  Weryfikacja kompletu danych i cyfrowa autoryzacja
                     </h3>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-[#425B4A]">
  Wszystkie sekcje zostały wypełnione. Sprawdź podsumowanie poniżej, a następnie podpisz wniosek Profilem Zaufanym.
                     </p>
                   </div>
@@ -1066,7 +1066,7 @@ export default function EUslugiPage() {
                     <div
  className={`p-2.5 rounded border flex items-center gap-2 font-semibold ${
  peselValid
-                          ? "bg-emerald-50/70 border-emerald-200 text-[#007834]"
+                          ? "bg-[#EFF3EA] border-[#B9CCB6] text-[#007834]"
                           : "bg-amber-50 border-amber-300 text-amber-800"
                       }`}
                     >
@@ -1076,7 +1076,7 @@ export default function EUslugiPage() {
                     <div
  className={`p-2.5 rounded border flex items-center gap-2 font-semibold ${
  nipValid
-                          ? "bg-emerald-50/70 border-emerald-200 text-[#007834]"
+                          ? "bg-[#EFF3EA] border-[#B9CCB6] text-[#007834]"
                           : "bg-amber-50 border-amber-300 text-amber-800"
                       }`}
                     >
@@ -1086,7 +1086,7 @@ export default function EUslugiPage() {
                     <div
  className={`p-2.5 rounded border flex items-center gap-2 font-semibold ${
  nrbValid
-                          ? "bg-emerald-50/70 border-emerald-200 text-[#007834]"
+                          ? "bg-[#EFF3EA] border-[#B9CCB6] text-[#007834]"
                           : "bg-amber-50 border-amber-300 text-amber-800"
                       }`}
                     >
@@ -1119,7 +1119,7 @@ export default function EUslugiPage() {
                     </div>
                   )}
 
-                  <div className="p-4 bg-emerald-50 border border-emerald-200 rounded flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="p-4 bg-[#EFF3EA] border border-[#B9CCB6] rounded flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="space-y-1 text-xs text-emerald-950">
                       <div className="font-bold text-sm flex items-center gap-2">
                         <ShieldCheck className="w-4 h-4 text-[#007834]" />
@@ -1153,7 +1153,7 @@ export default function EUslugiPage() {
                       <button
  type="button"
  onClick={handleDownloadZamJson}
- className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-white border border-slate-300 hover:bg-[#f4f6f7] text-slate-800 rounded text-xs font-bold transition-colors"
+ className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-white border border-[#B9CCB6] hover:bg-[#EFF3EA] text-[#1D4029] rounded text-xs font-bold transition-colors"
                       >
                         <Download className="w-3.5 h-3.5 text-[#007834]" />
                         <span>Pobierz (JSON)</span>
@@ -1165,15 +1165,15 @@ export default function EUslugiPage() {
             </div>
 
             {/* Dolne przyciski nawigacji kreatora */}
-            <div className="pt-4 border-t border-[#dce1e5] flex items-center justify-between gap-3">
+            <div className="pt-4 border-t border-[#C6D6C3] flex items-center justify-between gap-3">
               <button
  type="button"
  disabled={zamStep === 1}
  onClick={() => setZamStep((prev) => Math.max(1, prev - 1))}
  className={`inline-flex items-center gap-1.5 px-4 py-2 rounded text-xs font-bold transition-colors ${
  zamStep === 1
-                    ? "text-slate-300 cursor-not-allowed bg-[#f4f6f7]"
-                    : "text-slate-700 hover:bg-slate-100 bg-white border border-slate-300"
+                    ? "text-slate-300 cursor-not-allowed bg-[#EFF3EA]"
+                    : "text-[#2E4B38] hover:bg-[#EFF3EA] bg-white border border-[#B9CCB6]"
                 }`}
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -1196,7 +1196,7 @@ export default function EUslugiPage() {
  const el = document.getElementById("zam-preview-section");
  el?.scrollIntoView({ behavior: "smooth" });
                   }}
- className="inline-flex items-center gap-1.5 bg-[#00416E] hover:bg-[#003457] text-white font-bold text-xs px-5 py-2 rounded transition-colors "
+ className="inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#0A2714] text-white font-bold text-xs px-5 py-2 rounded transition-colors "
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Zobacz pełny druk urzędowy poniżej</span>
@@ -1208,13 +1208,13 @@ export default function EUslugiPage() {
           {/* DOLNY BLOK: PODGLĄD URZĘDOWEGO DOKUMENTU ZAM W FORMIE KARTKI A4 GOTOWEJ DO WYDRUKU */}
           <div id="zam-preview-section" className="space-y-4 w-full">
             {/* Pasek narzędzi nad kartką A4 */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded border border-[#dce1e5] print:hidden">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded border border-[#C6D6C3] print:hidden">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded bg-[#f0f8f3] border border-[#c2e4cc] flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded bg-[#EFF3EA] border border-[#B9CCB6] flex items-center justify-center shrink-0">
                   <FileText className="w-5 h-5 text-[#007834]" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#00416E]">
+                  <h3 className="text-sm sm:text-base font-bold text-[#10371E]">
  Podgląd wydruku A4 — Urzędowy Wniosek ZUS ZAM
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -1235,7 +1235,7 @@ export default function EUslugiPage() {
                 <button
  type="button"
  onClick={handleDownloadZamJson}
- className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-[#f4f6f7] rounded text-xs font-bold transition-colors"
+ className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-[#B9CCB6] text-[#2E4B38] hover:bg-[#EFF3EA] rounded text-xs font-bold transition-colors"
                 >
                   <Download className="w-4 h-4 text-[#007834]" />
                   <span>Pobierz JSON</span>
@@ -1245,16 +1245,16 @@ export default function EUslugiPage() {
 
             {/* Komunikat o sukcesie i UPO (jeśli wysłano) */}
             {submissionSuccess && (
-              <div className="p-5 bg-emerald-50 border-2 border-emerald-400 rounded flex flex-col gap-3 text-emerald-950 animate-in fade-in print:hidden">
+              <div className="p-5 bg-[#EFF3EA] border-2 border-emerald-400 rounded flex flex-col gap-3 text-emerald-950 print:hidden">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 text-[#007834] shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <h4 className="text-sm font-extrabold text-[#007834]">
  Wniosek ZAM został skutecznie doręczony do Zakładu Ubezpieczeń Społecznych!
                     </h4>
-                    <p className="text-xs text-slate-700">
+                    <p className="text-xs text-[#2E4B38]">
  Urzędowe Poświadczenie Odbioru (UPO):{" "}
-                      <strong className="font-mono text-slate-900">{upoNumber}</strong>
+                      <strong className="font-mono text-[#10371E]">{upoNumber}</strong>
                     </p>
                     <p className="text-[11px] text-slate-500 font-mono">
  Data i czas wpływu: {submissionTimestamp} &bull; {upoHash}
@@ -1265,18 +1265,18 @@ export default function EUslugiPage() {
             )}
 
             {/* Podkładka "biurka" pod kartkę A4 */}
-            <div className="bg-slate-200/80 p-3 sm:p-8 rounded border border-slate-300 overflow-x-auto">
+            <div className="bg-slate-200/80 p-3 sm:p-8 rounded border border-[#B9CCB6] overflow-x-auto">
               {/* REALISTYCZNA KARTKA A4 (210mm x 297mm) */}
               <div
  id="zam-a4-sheet"
- className="w-full max-w-[210mm] min-h-[297mm] mx-auto bg-white text-slate-900 shadow-[0_12px_36px_rgba(15,23,42,0.18)] border border-slate-300 p-6 sm:p-[15mm] flex flex-col justify-between font-sans text-[11px] leading-snug"
+ className="w-full max-w-[210mm] min-h-[297mm] mx-auto bg-white text-[#10371E] shadow-[0_12px_36px_rgba(15,23,42,0.18)] border border-[#B9CCB6] p-6 sm:p-[15mm] flex flex-col justify-between font-sans text-[11px] leading-snug"
               >
                 <div className="space-y-4">
                   {/* GÓRNY NAGŁÓWEK DRUKU ZUS ZAM */}
                   <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-3 border-b-2 border-slate-900">
                     <div className="sm:col-span-7 flex flex-col justify-between gap-2">
                       <ZusLogo size="sm" />
-                      <div className="text-[9px] uppercase tracking-wider text-slate-600 font-semibold">
+                      <div className="text-[9px] uppercase tracking-wider text-[#425B4A] font-semibold">
  Zakład Ubezpieczeń Społecznych &bull; Wzór obowiązujący od 24.10.2026 r.
                       </div>
                     </div>
@@ -1292,16 +1292,16 @@ export default function EUslugiPage() {
                       </div>
 
                       {/* Ramka na pieczęć wpływu ZUS / UPO */}
-                      <div className="w-full border border-dashed border-slate-400 bg-[#f4f6f7]/70 p-2 text-center min-h-[44px] flex flex-col items-center justify-center">
+                      <div className="w-full border border-dashed border-slate-400 bg-[#EFF3EA]/70 p-2 text-center min-h-[44px] flex flex-col items-center justify-center">
                         {submissionSuccess ? (
                           <>
                             <span className="text-[9px] font-black uppercase text-[#007834] tracking-wider">
  WPŁYNĘŁO ELEKTRONICZNIE &bull; UPO
                             </span>
-                            <span className="font-mono text-[10px] font-bold text-slate-900">
+                            <span className="font-mono text-[10px] font-bold text-[#10371E]">
                               {upoNumber}
                             </span>
-                            <span className="font-mono text-[8.5px] text-slate-600">
+                            <span className="font-mono text-[8.5px] text-[#425B4A]">
                               {submissionTimestamp}
                             </span>
                           </>
@@ -1320,11 +1320,11 @@ export default function EUslugiPage() {
                   </div>
 
                   {/* TYTUŁ FORMULARZA */}
-                  <div className="text-center py-2 border-b border-slate-300 space-y-1">
+                  <div className="text-center py-2 border-b border-[#B9CCB6] space-y-1">
                     <h2 className="text-base sm:text-lg font-black uppercase tracking-wide text-slate-950">
  WNIOSEK O ZASIŁEK MACIERZYŃSKI
                     </h2>
-                    <p className="text-[10.5px] font-semibold text-slate-700">
+                    <p className="text-[10.5px] font-semibold text-[#2E4B38]">
  za okres urlopu macierzyńskiego, uzupełniającego urlopu macierzyńskiego oraz urlopu rodzicielskiego
                     </p>
                     <p className="text-[8.5px] text-slate-500">
@@ -1334,8 +1334,8 @@ export default function EUslugiPage() {
 
                   {/* SEKCJA I: DANE OSOBY SKŁADAJĄCEJ WNIOSEK */}
                   <div className="border border-slate-800">
-                    <div className="bg-slate-100 border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
-                      <span className="font-black text-[10.5px] uppercase tracking-wide text-slate-900">
+                    <div className="bg-[#EFF3EA] border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
+                      <span className="font-black text-[10.5px] uppercase tracking-wide text-[#10371E]">
  SEKCJA I. DANE OSOBY SKŁADAJĄCEJ WNIOSEK (UBEZPIECZONEGO)
                       </span>
                       <button
@@ -1350,7 +1350,7 @@ export default function EUslugiPage() {
                     <div className="p-3 space-y-2.5">
                       {/* Kratki na PESEL */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <span className="text-[9.5px] font-bold uppercase text-slate-600">
+                        <span className="text-[9.5px] font-bold uppercase text-[#425B4A]">
  1. Numer PESEL:
                         </span>
                         <div className="flex items-center gap-0.5">
@@ -1429,8 +1429,8 @@ export default function EUslugiPage() {
 
                   {/* SEKCJA II: DANE PŁATNIKA SKŁADEK */}
                   <div className="border border-slate-800">
-                    <div className="bg-slate-100 border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
-                      <span className="font-black text-[10.5px] uppercase tracking-wide text-slate-900">
+                    <div className="bg-[#EFF3EA] border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
+                      <span className="font-black text-[10.5px] uppercase tracking-wide text-[#10371E]">
  SEKCJA II. DANE PŁATNIKA SKŁADEK (PRACODAWCY / ZLECENIODAWCY)
                       </span>
                       <button
@@ -1443,7 +1443,7 @@ export default function EUslugiPage() {
                     </div>
                     <div className="p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div>
-                        <span className="text-[9.5px] font-bold uppercase text-slate-600 block">
+                        <span className="text-[9.5px] font-bold uppercase text-[#425B4A] block">
  6. Numer NIP płatnika składek:
                         </span>
                         <span className="text-[8.5px] text-slate-500">
@@ -1468,8 +1468,8 @@ export default function EUslugiPage() {
 
                   {/* SEKCJA III: DANE DZIECKA ORAZ OKOLICZNOŚCI PORODU */}
                   <div className="border border-slate-800">
-                    <div className="bg-slate-100 border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
-                      <span className="font-black text-[10.5px] uppercase tracking-wide text-slate-900">
+                    <div className="bg-[#EFF3EA] border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
+                      <span className="font-black text-[10.5px] uppercase tracking-wide text-[#10371E]">
  SEKCJA III. DANE DZIECKA / DZIECI ORAZ OKOLICZNOŚCI SZCZEGÓLNE
                       </span>
                       <button
@@ -1514,10 +1514,10 @@ export default function EUslugiPage() {
                             {isPremature ? "X" : ""}
                           </span>
                           <div>
-                            <span className="font-bold text-slate-900 block">
+                            <span className="font-bold text-[#10371E] block">
  Wcześniak / Hospitalizacja (art. 180² KP)
                             </span>
-                            <span className="text-[9px] text-slate-600">
+                            <span className="text-[9px] text-[#425B4A]">
                               {isPremature
                                 ? `Zadeklarowany okres hospitalizacji: ${hospitalDays} dni`
                                 : "Nie dotyczy / brak zaświadczenia szpitalnego"}
@@ -1530,10 +1530,10 @@ export default function EUslugiPage() {
                             {hasLifeCert ? "X" : ""}
                           </span>
                           <div>
-                            <span className="font-bold text-slate-900 block">
+                            <span className="font-bold text-[#10371E] block">
  Zaświadczenie z ustawy „Za życiem” (art. 4 ust. 3)
                             </span>
-                            <span className="text-[9px] text-slate-600">
+                            <span className="text-[9px] text-[#425B4A]">
                               {hasLifeCert
                                 ? "Wydłużony wymiar urlopu rodzicielskiego (65/67 tyg.)"
                                 : "Nie dotyczy"}
@@ -1546,8 +1546,8 @@ export default function EUslugiPage() {
 
                   {/* SEKCJA IV: OŚWIADCZENIE W SPRAWIE STAWKI I WYLICZONY WYMIAR KSI ZUS */}
                   <div className="border border-slate-800">
-                    <div className="bg-slate-100 border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
-                      <span className="font-black text-[10.5px] uppercase tracking-wide text-slate-900">
+                    <div className="bg-[#EFF3EA] border-b border-slate-800 px-3 py-1.5 flex items-center justify-between">
+                      <span className="font-black text-[10.5px] uppercase tracking-wide text-[#10371E]">
  SEKCJA IV. WYBÓR STAWKI I PODSUMOWANIE WYMIARU ŚWIADCZEŃ (KSI ZUS)
                       </span>
                       <button
@@ -1581,7 +1581,7 @@ export default function EUslugiPage() {
                       {/* Tabela urzędowa wymiaru */}
                       <table className="w-full border-collapse border border-slate-700 text-[10px]">
                         <thead>
-                          <tr className="bg-slate-100 text-slate-800">
+                          <tr className="bg-[#EFF3EA] text-[#1D4029]">
                             <th className="border border-slate-600 px-2 py-1 text-left font-bold">
  Rodzaj świadczenia / urlopu
                             </th>
@@ -1634,15 +1634,15 @@ export default function EUslugiPage() {
                             <td className="border border-slate-500 px-2 py-1 text-center font-mono font-bold">
                               {liveCalculation.parentalDadReservedWeeks} tyg.
                             </td>
-                            <td className="border border-slate-500 px-2 py-1 text-center font-mono font-bold text-[#00416E]">
+                            <td className="border border-slate-500 px-2 py-1 text-center font-mono font-bold text-[#10371E]">
  70% (stała)
                             </td>
                           </tr>
                         </tbody>
                       </table>
 
-                      <div className="flex items-center justify-between bg-[#f0f8f3] border border-[#007834] px-3 py-2">
-                        <span className="text-[10px] font-bold uppercase text-slate-800">
+                      <div className="flex items-center justify-between bg-[#EFF3EA] border border-[#007834] px-3 py-2">
+                        <span className="text-[10px] font-bold uppercase text-[#1D4029]">
  Szacowana miesięczna kwota zasiłku (pierwszy okres):
                         </span>
                         <span className="font-mono text-sm font-black text-[#007834]">
@@ -1657,19 +1657,19 @@ export default function EUslugiPage() {
 
                   {/* SEKCJA V: OŚWIADCZENIE I PODPIS */}
                   <div className="border border-slate-800">
-                    <div className="bg-slate-100 border-b border-slate-800 px-3 py-1.5">
-                      <span className="font-black text-[10.5px] uppercase tracking-wide text-slate-900">
+                    <div className="bg-[#EFF3EA] border-b border-slate-800 px-3 py-1.5">
+                      <span className="font-black text-[10.5px] uppercase tracking-wide text-[#10371E]">
  SEKCJA V. OŚWIADCZENIE WNIOSKODAWCY I PODPIS
                       </span>
                     </div>
                     <div className="p-3 space-y-4">
-                      <p className="text-[9px] text-slate-700 leading-relaxed text-justify">
+                      <p className="text-[9px] text-[#2E4B38] leading-relaxed text-justify">
  Oświadczam, że dane zawarte we wniosku podałem/am zgodnie z prawdą. Jestem świadomy/a odpowiedzialności karnej za złożenie fałszywego oświadczenia (art. 233 § 1 Kodeksu karnego). Zobowiązuję się niezwłocznie poinformować Zakład Ubezpieczeń Społecznych o wszelkich zmianach mających wpływ na prawo do zasiłku lub jego wysokość.
                       </p>
 
                       <div className="grid grid-cols-2 gap-8 pt-3">
                         <div className="flex flex-col justify-end">
-                          <div className="border-b border-dotted border-slate-600 pb-1 text-center font-mono text-[10.5px] font-semibold text-slate-900">
+                          <div className="border-b border-dotted border-slate-600 pb-1 text-center font-mono text-[10.5px] font-semibold text-[#10371E]">
                             {new Date().toLocaleDateString("pl-PL")} r.
                           </div>
                           <span className="text-[8.5px] text-slate-500 text-center mt-1">
@@ -1679,12 +1679,12 @@ export default function EUslugiPage() {
 
                         <div className="flex flex-col justify-end">
                           {submissionSuccess ? (
-                            <div className="border border-[#007834] bg-[#f0f8f3] px-2 py-1 text-center">
+                            <div className="border border-[#007834] bg-[#EFF3EA] px-2 py-1 text-center">
                               <div className="text-[9px] font-black text-[#007834] uppercase flex items-center justify-center gap-1">
                                 <ShieldCheck className="w-3 h-3" />
                                 <span>PODPISANO PROFILEM ZAUFANYM</span>
                               </div>
-                              <div className="font-mono text-[8.5px] text-slate-700 truncate">
+                              <div className="font-mono text-[8.5px] text-[#2E4B38] truncate">
                                 {parentName} &bull; {upoHash}
                               </div>
                             </div>
@@ -1702,13 +1702,13 @@ export default function EUslugiPage() {
                   </div>
                   {/* SEKCJA VI: WYKAZ WYMAGANYCH ZAŁĄCZNIKÓW */}
                   <div className="border border-slate-800">
-                    <div className="bg-slate-100 border-b border-slate-800 px-3 py-1.5">
-                      <span className="font-black text-[10.5px] uppercase tracking-wide text-slate-900">
+                    <div className="bg-[#EFF3EA] border-b border-slate-800 px-3 py-1.5">
+                      <span className="font-black text-[10.5px] uppercase tracking-wide text-[#10371E]">
  SEKCJA VI. WYKAZ WYMAGANYCH ZAŁĄCZNIKÓW DO WNIOSKU
                       </span>
                     </div>
                     <div className="p-2.5">
-                      <ul className="space-y-1 text-[9.5px] text-slate-800">
+                      <ul className="space-y-1 text-[9.5px] text-[#1D4029]">
                         {requiredAttachments.map((att, idx) => (
                           <li key={idx} className="flex items-start gap-2">
                             <span className="w-3.5 h-3.5 border border-slate-700 inline-flex items-center justify-center font-mono font-black text-[9px] shrink-0 mt-0.5">
@@ -1723,23 +1723,23 @@ export default function EUslugiPage() {
                 </div>
 
                 {/* STOPKA KARTKI A4 Z KODEM QR WERYFIKACJI */}
-                <div className="pt-3 mt-4 border-t border-slate-300 flex items-center justify-between gap-4 text-[8.5px] text-slate-500 font-mono">
+                <div className="pt-3 mt-4 border-t border-[#B9CCB6] flex items-center justify-between gap-4 text-[8.5px] text-slate-500 font-mono">
                   <div className="flex items-center gap-3">
                     <ZamQrCode seed={`${upoNumber || "DRAFT"}-${pesel}-${childBirthDate}-${chosenRate}`} />
                     <div className="space-y-0.5">
-                      <div className="font-bold text-slate-800">
+                      <div className="font-bold text-[#1D4029]">
  ZUS ZAM (wersja 2026.10) &bull; Zgodny z rozporządzeniem MRPiPS
                       </div>
                       <div>
  Kod kontrolny dokumentu:{" "}
-                        <span className="text-slate-800 font-semibold">
+                        <span className="text-[#1D4029] font-semibold">
                           {upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`}
                         </span>
                       </div>
                       <div>Wygenerowano w systemie Przewodnik Rodzica ZUS (eZUS)</div>
                     </div>
                   </div>
-                  <span className="shrink-0 font-bold text-slate-700">Strona 1 z 1</span>
+                  <span className="shrink-0 font-bold text-[#2E4B38]">Strona 1 z 1</span>
                 </div>
               </div>
             </div>
@@ -1750,12 +1750,12 @@ export default function EUslugiPage() {
       {/* ZAKŁADKA 2: mObywatel */}
       {activeTab === "mobywatel" && (
         <div className="zus-card p-6 sm:p-8 space-y-6">
-          <div className="flex items-center gap-3 border-b border-[#edf0f2] pb-4">
+          <div className="flex items-center gap-3 border-b border-[#DCE8D3] pb-4">
             <div className="w-10 h-10 rounded bg-red-600 text-white flex items-center justify-center font-bold text-lg ">
  mO
             </div>
             <div>
-              <h2 className="text-lg font-bold text-[#00416E]">
+              <h2 className="text-lg font-bold text-[#10371E]">
  Symulacja portfela mObywatel 2.0 & centrum powiadomień rodzica
               </h2>
               <p className="text-xs text-slate-500">
@@ -1800,19 +1800,19 @@ export default function EUslugiPage() {
                 </div>
               </div>
 
-              <div className="p-3.5 bg-blue-50 border border-blue-200 rounded flex items-start gap-3">
-                <Info className="w-5 h-5 text-[#00416E] shrink-0 mt-0.5" />
+              <div className="p-3.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded flex items-start gap-3">
+                <Info className="w-5 h-5 text-[#10371E] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
-                  <span className="text-xs font-bold text-[#00416E] block">
+                  <span className="text-xs font-bold text-[#10371E] block">
  Nowe zwolnienie lekarskie e-ZLA (kod literowy „B”)
                   </span>
-                  <p className="text-xs text-slate-600">
+                  <p className="text-xs text-[#425B4A]">
  Lekarz ginekolog wystawił zwolnienie lekarskie w okresie ciąży na 28 dni. Przysługuje 100% zasiłku chorobowego bez okresu wyczekiwania.
                   </p>
                 </div>
               </div>
 
-              <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded flex items-start gap-3">
+              <div className="p-3.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-[#007834] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[#007834] block">
@@ -1831,24 +1831,24 @@ export default function EUslugiPage() {
       {/* ZAKŁADKA 3: PUE / eZUS & Monitor Zadłużenia JDG */}
       {activeTab === "pue" && (
         <div className="zus-card p-6 sm:p-8 space-y-6">
-          <div className="border-b border-[#edf0f2] pb-4 flex items-center justify-between">
+          <div className="border-b border-[#DCE8D3] pb-4 flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-[#00416E]">
+              <h2 className="text-lg font-bold text-[#10371E]">
  Pulpit ubezpieczonego w portalu eZUS / PUE ZUS
               </h2>
               <p className="text-xs text-slate-500">
  Historia składek, tytuły ubezpieczeniowe i kontrola zadłużenia płatnika w działalności gospodarczej.
               </p>
             </div>
-            <span className="text-xs px-2.5 py-1 rounded bg-emerald-50 text-[#007834] font-bold border border-emerald-200">
+            <span className="text-xs px-2.5 py-1 rounded bg-[#EFF3EA] text-[#007834] font-bold border border-[#B9CCB6]">
  Konto zweryfikowane
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-4 bg-[#f4f6f7] rounded border border-[#dce1e5] space-y-1">
+            <div className="p-4 bg-[#EFF3EA] rounded border border-[#C6D6C3] space-y-1">
               <span className="text-xs text-slate-500">Tytuł do ubezpieczeń:</span>
-              <div className="text-sm font-bold text-slate-900">
+              <div className="text-sm font-bold text-[#10371E]">
                 {contractType === "b2b" ? "05 10 (Działalność gospodarcza)" : "01 10 (Umowa o pracę)"}
               </div>
               <div className="text-xs text-emerald-700 font-bold">
@@ -1856,9 +1856,9 @@ export default function EUslugiPage() {
               </div>
             </div>
 
-            <div className="p-4 bg-[#f4f6f7] rounded border border-[#dce1e5] space-y-1">
+            <div className="p-4 bg-[#EFF3EA] rounded border border-[#C6D6C3] space-y-1">
               <span className="text-xs text-slate-500">Średnia podstawa składek:</span>
-              <div className="text-sm font-bold text-slate-900">
+              <div className="text-sm font-bold text-[#10371E]">
                 {monthlySalaryGross.toLocaleString("pl-PL")} PLN
               </div>
               <div className="text-xs text-slate-500">
@@ -1871,11 +1871,11 @@ export default function EUslugiPage() {
  className={`p-4 rounded border space-y-1 ${
  jdgDebtAmount > DEFAULT_LEGISLATIVE_2026.jdgDebtThresholdGross
                   ? "bg-red-50 border-red-300"
-                  : "bg-emerald-50 border-emerald-300"
+                  : "bg-[#EFF3EA] border-[#8CA68E]"
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700">Stan zadłużenia płatnika:</span>
+                <span className="text-xs font-bold text-[#2E4B38]">Stan zadłużenia płatnika:</span>
                 <span
  className={`text-xs font-bold ${
  jdgDebtAmount > 0 ? "text-red-700" : "text-[#007834]"
@@ -1918,8 +1918,8 @@ export default function EUslugiPage() {
       {/* ZAKŁADKA 4: e-ZLA */}
       {activeTab === "ezla" && (
         <div className="zus-card p-6 sm:p-8 space-y-6">
-          <div className="border-b border-[#edf0f2] pb-4">
-            <h2 className="text-lg font-bold text-[#00416E]">
+          <div className="border-b border-[#DCE8D3] pb-4">
+            <h2 className="text-lg font-bold text-[#10371E]">
  Rejestr elektronicznych zwolnień lekarskich (e-ZLA)
             </h2>
             <p className="text-xs text-slate-500">
@@ -1928,18 +1928,18 @@ export default function EUslugiPage() {
           </div>
 
           <div className="space-y-3">
-            <div className="p-4 bg-[#f4f6f7] rounded border border-[#dce1e5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="p-4 bg-[#EFF3EA] rounded border border-[#C6D6C3] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-slate-900 text-sm">Zwolnienie ZUS ZLA / 2026 / 884912</span>
-                  <span className="bg-emerald-100 text-[#007834] font-bold px-2 py-0.5 rounded text-[10px]">
+                  <span className="font-bold text-[#10371E] text-sm">Zwolnienie ZUS ZLA / 2026 / 884912</span>
+                  <span className="bg-[#DCE8D3] text-[#007834] font-bold px-2 py-0.5 rounded text-[10px]">
  KOD B &bull; 100% PŁATNE
                   </span>
                 </div>
                 <div className="text-slate-500">
  Wystawione przez: lek. med. Ewa Wiśniewska (Specjalista Ginekologii i Położnictwa)
                 </div>
-                <div className="text-slate-600">
+                <div className="text-[#425B4A]">
  Okres zwolnienia: <strong>2026-02-01 &ndash; 2026-02-28 (28 dni)</strong> &bull; Wykorzystano: 84 / 270 dni limitu ciążowego
                 </div>
               </div>

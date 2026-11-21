@@ -310,19 +310,19 @@ export default function AsystentAiPage() {
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
         <span className="text-slate-400">/</span>
-        <span className="text-slate-800 font-semibold">Asystent AI ZUS (Doradca prawny)</span>
+        <span className="text-[#1D4029] font-semibold">Asystent AI ZUS (Doradca prawny)</span>
       </nav>
       {/* Nagłówek Modułu */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#dce1e5] pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-4">
         <div>
-          <div className="inline-flex items-center gap-2 text-[#00416E] font-semibold text-xs tracking-wider uppercase mb-1">
+          <div className="inline-flex items-center gap-2 text-[#10371E] font-semibold text-xs tracking-wider uppercase mb-1">
             <Bot className="w-4 h-4" />
             <span>Moduł 6 &bull; Inteligentny doradca prawny ZUS AI</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#10371E]">
  Asystent praw rodzicielskich i zasiłków
           </h1>
-          <p className="text-sm text-slate-600 mt-1">
+          <p className="text-sm text-[#425B4A] mt-1">
  Zadawaj pytania o Kodeks pracy, terminy urzędowe i optymalizację świadczeń. Asystent analizuje przepisy w trybie prostego języka lub z pełną wykładnią prawną.
           </p>
         </div>
@@ -332,10 +332,10 @@ export default function AsystentAiPage() {
           <button
  type="button"
  onClick={() => openGlossary()}
- className="inline-flex items-center gap-1.5 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-[#00416E] border border-blue-200 rounded text-xs font-bold transition-all "
+ className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#EFF3EA] hover:bg-[#DCE8D3] text-[#10371E] border border-[#B9CCB6] rounded text-xs font-bold transition-all "
  title="Otwórz słowniczek pojęć prawnych ZUS"
           >
-            <BookOpen className="w-3.5 h-3.5 text-[#00416E]" />
+            <BookOpen className="w-3.5 h-3.5 text-[#10371E]" />
             <span>Trudne słowa (Słownik)</span>
           </button>
 
@@ -345,21 +345,21 @@ export default function AsystentAiPage() {
  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded text-xs font-bold border transition-all ${
  showContextDrawer
                 ? "bg-slate-900 text-white border-slate-900 "
-                : "bg-white text-slate-700 border-slate-300 hover:bg-[#f4f6f7]"
+                : "bg-white text-[#2E4B38] border-[#B9CCB6] hover:bg-[#EFF3EA]"
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Dostosuj do mojej sytuacji</span>
           </button>
 
-          <div className="bg-slate-100 p-1 rounded border border-[#dce1e5] flex items-center gap-1">
+          <div className="bg-[#EFF3EA] p-1 rounded border border-[#C6D6C3] flex items-center gap-1">
             <button
  type="button"
  onClick={() => setIsSimpleMode(true)}
  className={`px-3 py-1.5 rounded text-xs font-bold transition-all ${
  isSimpleMode
-                  ? "bg-[#00416E] text-white "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-[#10371E] text-white "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Język prosty (Humanizer)
@@ -369,8 +369,8 @@ export default function AsystentAiPage() {
  onClick={() => setIsSimpleMode(false)}
  className={`px-3 py-1.5 rounded text-xs font-bold transition-all ${
                 !isSimpleMode
-                  ? "bg-[#00416E] text-white "
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-[#10371E] text-white "
+                  : "text-[#425B4A] hover:text-[#10371E]"
               }`}
             >
  Wykładnia prawna
@@ -381,13 +381,13 @@ export default function AsystentAiPage() {
 
       {/* Szuflada Kontekstu Rodzica (Personalizacja odpowiedzi) */}
       {showContextDrawer && (
-        <div className="bg-[#f4f6f7] p-4 rounded border border-[#dce1e5] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in fade-in text-xs">
+        <div className="bg-[#EFF3EA] p-4 rounded border border-[#C6D6C3] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
           <div>
-            <label className="font-bold text-slate-700 block mb-1">Rola rodzica:</label>
+            <label className="font-bold text-[#2E4B38] block mb-1">Rola rodzica:</label>
             <select
  value={userContext.role}
  onChange={(e) => setUserContext({ ...userContext, role: e.target.value as ParentRole })}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded font-medium text-slate-900"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded font-medium text-[#10371E]"
             >
               <option value="mother">Matka dziecka</option>
               <option value="father">Ojciec dziecka</option>
@@ -395,11 +395,11 @@ export default function AsystentAiPage() {
           </div>
 
           <div>
-            <label className="font-bold text-slate-700 block mb-1">Forma zatrudnienia:</label>
+            <label className="font-bold text-[#2E4B38] block mb-1">Forma zatrudnienia:</label>
             <select
  value={userContext.contract}
  onChange={(e) => setUserContext({ ...userContext, contract: e.target.value as ContractType })}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded font-medium text-slate-900"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded font-medium text-[#10371E]"
             >
               <option value="employment">Umowa o pracę (UoP)</option>
               <option value="mandate">Umowa zlecenie</option>
@@ -408,7 +408,7 @@ export default function AsystentAiPage() {
           </div>
 
           <div>
-            <label className="font-bold text-slate-700 block mb-1">Etap życiowy:</label>
+            <label className="font-bold text-[#2E4B38] block mb-1">Etap życiowy:</label>
             <select
  value={userContext.stage}
  onChange={(e) =>
@@ -417,7 +417,7 @@ export default function AsystentAiPage() {
  stage: e.target.value as "pregnancy" | "after_birth" | "parental" | "return_work",
                 })
               }
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded font-medium text-slate-900"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded font-medium text-[#10371E]"
             >
               <option value="pregnancy">W trakcie ciąży</option>
               <option value="after_birth">Tuż po porodzie (w oknie 21 dni)</option>
@@ -427,12 +427,12 @@ export default function AsystentAiPage() {
           </div>
 
           <div>
-            <label className="font-bold text-slate-700 block mb-1">Wynagrodzenie brutto (PLN):</label>
+            <label className="font-bold text-[#2E4B38] block mb-1">Wynagrodzenie brutto (PLN):</label>
             <input
  type="number"
  value={userContext.salaryGross}
  onChange={(e) => setUserContext({ ...userContext, salaryGross: Number(e.target.value) })}
- className="w-full px-3 py-2 bg-white border border-slate-300 rounded font-bold text-slate-900"
+ className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded font-bold text-[#10371E]"
             />
           </div>
         </div>
@@ -449,7 +449,7 @@ export default function AsystentAiPage() {
  key={idx}
  type="button"
  onClick={() => sendMessage(prompt)}
- className="px-3 py-2 bg-white hover:bg-blue-50 border border-[#dce1e5] hover:border-[#00416E] rounded text-xs font-medium text-slate-700 hover:text-[#00416E] transition-all text-left "
+ className="px-3 py-2 bg-white hover:bg-[#EFF3EA] border border-[#C6D6C3] hover:border-[#10371E] rounded text-xs font-medium text-[#2E4B38] hover:text-[#10371E] transition-all text-left "
             >
               {prompt}
             </button>
@@ -458,15 +458,15 @@ export default function AsystentAiPage() {
       </div>
 
       {/* Okno Rozmowy (Czat) */}
-      <div className="bg-white rounded border border-[#dce1e5] flex-1 flex flex-col min-h-[460px] max-h-[640px] overflow-hidden">
+      <div className="bg-white rounded border border-[#C6D6C3] flex-1 flex flex-col min-h-[460px] max-h-[640px] overflow-hidden">
         {/* Pasek Górny Czatu */}
-        <div className="bg-[#f4f6f7] border-b border-[#dce1e5] px-5 py-3 flex items-center justify-between">
+        <div className="bg-[#EFF3EA] border-b border-[#C6D6C3] px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#00416E] text-white flex items-center justify-center font-bold text-xs ">
+            <div className="w-8 h-8 rounded-full bg-[#10371E] text-white flex items-center justify-center font-bold text-xs ">
               <Bot className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-bold text-slate-900 block">
+              <span className="text-xs font-bold text-[#10371E] block">
  Doradca ZUS AI &bull; Baza Wiedzy 2026
               </span>
               <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
@@ -480,7 +480,7 @@ export default function AsystentAiPage() {
             <button
  type="button"
  onClick={handleResetChat}
- className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 px-2.5 py-1 rounded hover:bg-slate-200 transition-colors"
+ className="text-xs text-slate-500 hover:text-[#1D4029] flex items-center gap-1 px-2.5 py-1 rounded hover:bg-slate-200 transition-colors"
  title="Wyczyść historię rozmowy"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -508,7 +508,7 @@ export default function AsystentAiPage() {
                 <div
  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
  isAi
-                      ? "bg-[#00416E] text-white"
+                      ? "bg-[#10371E] text-white"
                       : "bg-slate-800 text-white"
                   }`}
                 >
@@ -518,20 +518,20 @@ export default function AsystentAiPage() {
                 <div
  className={`p-4 rounded text-xs sm:text-sm leading-relaxed space-y-3 relative group ${
  isAi
-                      ? "bg-[#f4f6f7] text-slate-800 border border-[#dce1e5]"
-                      : "bg-[#00416E] text-white"
+                      ? "bg-[#EFF3EA] text-[#1D4029] border border-[#C6D6C3]"
+                      : "bg-[#10371E] text-white"
                   }`}
                 >
                   <p>{displayText}</p>
 
                   {/* Wskazówki rekomendacyjne */}
                   {isAi && msg.recommendationTips && msg.recommendationTips.length > 0 && (
-                    <div className="p-3 bg-blue-50/70 border border-blue-200 rounded space-y-1 text-xs text-blue-900">
-                      <span className="font-bold flex items-center gap-1.5 text-[#00416E]">
+                    <div className="p-3 bg-[#EFF3EA]/70 border border-[#B9CCB6] rounded space-y-1 text-xs text-[#10371E]">
+                      <span className="font-bold flex items-center gap-1.5 text-[#10371E]">
                         <Sparkles className="w-3.5 h-3.5" />
                         <span>Kluczowe wskazówki dla Ciebie:</span>
                       </span>
-                      <ul className="list-disc list-inside space-y-0.5 text-blue-800">
+                      <ul className="list-disc list-inside space-y-0.5 text-[#10371E]">
                         {msg.recommendationTips.map((tip, i) => (
                           <li key={i}>{tip}</li>
                         ))}
@@ -541,13 +541,13 @@ export default function AsystentAiPage() {
 
                   {/* Artykuły prawne */}
                   {isAi && msg.legalReferences && msg.legalReferences.length > 0 && (
-                    <div className="pt-2 border-t border-[#dce1e5]/80 text-[11px] text-slate-500 space-y-1">
-                      <span className="font-semibold block text-slate-700">Podstawa prawna:</span>
+                    <div className="pt-2 border-t border-[#C6D6C3]/80 text-[11px] text-slate-500 space-y-1">
+                      <span className="font-semibold block text-[#2E4B38]">Podstawa prawna:</span>
                       <div className="flex flex-wrap gap-1.5">
                         {msg.legalReferences.map((ref, i) => (
                           <span
  key={i}
- className="bg-white px-2 py-0.5 rounded border border-slate-300 font-mono text-[10px] text-slate-800"
+ className="bg-white px-2 py-0.5 rounded border border-[#B9CCB6] font-mono text-[10px] text-[#1D4029]"
                           >
                             {ref}
                           </span>
@@ -562,7 +562,7 @@ export default function AsystentAiPage() {
                       <button
  type="button"
  onClick={() => handleCopyMessage(msg.id, displayText)}
- className="text-[10px] text-slate-400 hover:text-slate-700 flex items-center gap-1 transition-colors"
+ className="text-[10px] text-slate-400 hover:text-[#2E4B38] flex items-center gap-1 transition-colors"
                       >
                         {copiedId === msg.id ? (
                           <>
@@ -584,15 +584,15 @@ export default function AsystentAiPage() {
           })}
 
           {isTyping && (
-            <div className="flex items-center gap-2 text-xs text-slate-500 animate-pulse">
-              <Bot className="w-4 h-4 text-[#00416E]" />
+            <div className="flex items-center gap-2 text-xs text-slate-500 ">
+              <Bot className="w-4 h-4 text-[#10371E]" />
               <span>Asystent ZUS analizuje przepisy i przygotowuje odpowiedź...</span>
             </div>
           )}
         </div>
 
         {/* Pole Wprowadzania Wiadomości */}
-        <div className="p-3 bg-[#f4f6f7] border-t border-[#dce1e5] flex items-center gap-2">
+        <div className="p-3 bg-[#EFF3EA] border-t border-[#C6D6C3] flex items-center gap-2">
           <input
  type="text"
  placeholder="Zadaj pytanie dotyczące urlopów, zasiłków lub terminów ZUS..."
@@ -603,13 +603,13 @@ export default function AsystentAiPage() {
  sendMessage(inputText);
               }
             }}
- className="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00416E]"
+ className="flex-1 px-4 py-2.5 bg-white border border-[#B9CCB6] rounded text-xs sm:text-sm text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#10371E]"
           />
           <button
  type="button"
  onClick={() => sendMessage(inputText)}
  disabled={!inputText.trim() || isTyping}
- className="p-2.5 bg-[#00416E] hover:bg-[#00477d] text-white rounded transition-colors disabled:opacity-40"
+ className="p-2.5 bg-[#10371E] hover:bg-[#00477d] text-white rounded transition-colors disabled:opacity-40"
  aria-label="Wyślij wiadomość"
           >
             <Send className="w-4 h-4" />
@@ -618,7 +618,7 @@ export default function AsystentAiPage() {
       </div>
 
       {/* Zastrzeżenie Prawne */}
-      <div className="p-3.5 bg-slate-100 border border-[#dce1e5] rounded text-[11px] text-slate-500 text-center">
+      <div className="p-3.5 bg-[#EFF3EA] border border-[#C6D6C3] rounded text-[11px] text-slate-500 text-center">
  Informacje dostarczane przez asystenta AI mają charakter edukacyjny i pomocniczy. Oficjalne decyzje ustalające prawo do świadczeń wydaje Zakład Ubezpieczeń Społecznych na podstawie dokumentów wnioskodawcy.
       </div>
     </div>
