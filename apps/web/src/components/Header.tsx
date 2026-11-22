@@ -13,9 +13,12 @@ import {
   VolumeX,
   Lock,
   LogIn,
+  LogOut,
+  UserCheck,
 } from "lucide-react";
 import { ZusLogo } from "./ZusLogo";
 import { MobileSimulatorModal } from "./MobileSimulatorModal";
+import { ZusLoginModal, LoggedInCitizen } from "./ZusLoginModal";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import { TrudneSlowaModal } from "./TrudneSlowaModal";
 import { ParentWizard } from "./ParentWizard";
@@ -27,8 +30,37 @@ export function Header() {
   const [highContrast, setHighContrast] = useState(false);
   const [fontSizeLevel, setFontSizeLevel] = useState<0 | 1 | 2>(0);
   const [isSimulatorOpen, setIsSimulatorOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [citizenUser, setCitizenUser] = useState<LoggedInCitizen | null>(null);
   const [isInMobileFrame, setIsInMobileFrame] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem("zus_citizen_auth");
+      if (saved) setCitizenUser(JSON.parse(saved) as LoggedInCitizen);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleCitizenLogin = (user: LoggedInCitizen) => {
+    setCitizenUser(user);
+    try {
+      sessionStorage.setItem("zus_citizen_auth", JSON.stringify(user));
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleCitizenLogout = () => {
+    setCitizenUser(null);
+    try {
+      sessionStorage.removeItem("zus_citizen_auth");
+    } catch {
+      // ignore
+    }
+  };
 
   const handleToggleSpeech = () => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -114,15 +146,15 @@ export function Header() {
         Przejdź do treści głównej
       </a>
 
-      {/* RZĄD 1: Logo ZUS, tytuł, infolinia i narzędzia dostępności (bez Rzeczpospolita Polska i godła) */}
+      {/* RZĄD 1: Logo ZUS, tytuł, infolinia i narzędzia dostępności */}
       <div
-        className={`max-w-6xl mx-auto flex items-center justify-between gap-3 ${
-          isInMobileFrame ? "px-3 py-2.5" : "px-4 sm:px-6 py-3"
+        className={`max-w-6xl mx-auto flex items-center justify-between gap-2 sm:gap-3 ${
+          isInMobileFrame ? "px-2.5 py-2" : "px-4 sm:px-6 py-3"
         }`}
       >
-        {/* Lewa strona: Logo ZUS + tytuł + infolinia */}
-        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 focus:outline-none">
+        {/* Lewa strona: Logo ZUS + tytuł + infolinia (w podglądzie telefonu kompaktowe logo, żeby ikony nie nachodziły na siebie) */}
+        <div className="flex items-center gap-2 sm:gap-5 min-w-0">
+          <Link href="/" className="flex items-center gap-2 shrink-0 focus:outline-none">
             <span className={isInMobileFrame ? "block" : "sm:hidden"}>
               <ZusLogo size="sm" showText={false} />
             </span>
@@ -131,9 +163,11 @@ export function Header() {
                 <ZusLogo size="sm" />
               </span>
             )}
-            <span className="text-base sm:text-lg font-extrabold text-[#10371E] tracking-tight whitespace-nowrap">
-              Przewodnik Rodzica
-            </span>
+            {!isInMobileFrame && (
+              <span className="text-base sm:text-lg font-extrabold text-[#10371E] tracking-tight whitespace-nowrap">
+                Przewodnik Rodzica
+              </span>
+            )}
           </Link>
 
           {!isInMobileFrame && (
@@ -149,12 +183,14 @@ export function Header() {
           )}
         </div>
 
-        {/* Prawa strona: Posłuchaj, Aa Wielkość liter, Kontrast, eZUS, Mobilna, Intranet */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Prawa strona: Posłuchaj, Aa Wielkość liter, Kontrast, Zaloguj eZUS/mObywatel, Mobilna, Intranet */}
+        <div className={`flex items-center shrink-0 ${isInMobileFrame ? "gap-1" : "gap-1.5 sm:gap-2"}`}>
           <button
             type="button"
             onClick={handleToggleSpeech}
-            className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border-[1.5px] text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`inline-flex items-center justify-center gap-1.5 rounded-xl border-[1.5px] text-xs font-bold transition-colors whitespace-nowrap ${
+              isInMobileFrame ? "p-1.5" : "px-2.5 sm:px-3 py-1.5"
+            } ${
               isSpeaking
                 ? "bg-[#10371E] text-white border-[#10371E]"
                 : "bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[#10371E]"
@@ -162,16 +198,20 @@ export function Header() {
             aria-pressed={isSpeaking}
             title="Odsłuchaj treść strony"
           >
-            {isSpeaking ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-            <span className={isInMobileFrame ? "hidden" : "hidden sm:inline"}>
-              {isSpeaking ? "Zatrzymaj" : "Posłuchaj"}
-            </span>
+            {isSpeaking ? <VolumeX className="w-3.5 h-3.5 shrink-0" /> : <Volume2 className="w-3.5 h-3.5 shrink-0" />}
+            {!isInMobileFrame && (
+              <span className="hidden sm:inline">
+                {isSpeaking ? "Zatrzymaj" : "Posłuchaj"}
+              </span>
+            )}
           </button>
 
           <button
             type="button"
             onClick={() => setFontSizeLevel((prev) => ((prev + 1) % 3) as 0 | 1 | 2)}
-            className={`inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl border-[1.5px] text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`inline-flex items-center justify-center gap-1 rounded-xl border-[1.5px] text-xs font-bold transition-colors whitespace-nowrap ${
+              isInMobileFrame ? "px-2 py-1.5" : "px-2.5 sm:px-3 py-1.5"
+            } ${
               fontSizeLevel > 0
                 ? "bg-[#10371E] text-white border-[#10371E]"
                 : "bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[#10371E]"
@@ -179,15 +219,19 @@ export function Header() {
             title="Zmień wielkość liter"
           >
             <span>Aa</span>
-            <span className={isInMobileFrame ? "hidden" : "hidden lg:inline"}>
-              Wielkość liter{fontSizeLevel === 1 ? " (+)" : fontSizeLevel === 2 ? " (++)" : ""}
-            </span>
+            {!isInMobileFrame && (
+              <span className="hidden lg:inline">
+                Wielkość liter{fontSizeLevel === 1 ? " (+)" : fontSizeLevel === 2 ? " (++)" : ""}
+              </span>
+            )}
           </button>
 
           <button
             type="button"
             onClick={() => setHighContrast(!highContrast)}
-            className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border-[1.5px] text-xs font-bold transition-colors ${
+            className={`rounded-xl border-[1.5px] text-xs font-bold transition-colors ${
+              isInMobileFrame ? "p-1.5" : "p-1.5 sm:px-2.5 sm:py-1.5"
+            } ${
               highContrast
                 ? "bg-black text-yellow-300 border-black"
                 : "bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[#B9CCB6]"
@@ -196,20 +240,42 @@ export function Header() {
             title="Wysoki kontrast"
             aria-label="Wysoki kontrast"
           >
-            <Eye className="w-4 h-4" />
+            <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
+
+          {/* Przycisk logowania PUE/eZUS + mObywatel */}
+          {citizenUser ? (
+            <div className="inline-flex items-center gap-1 bg-[#DCE8D3] border border-[#8CA68E] rounded-xl px-2 py-1 text-xs font-bold text-[#10371E]">
+              <Link href="/e-uslugi" className="inline-flex items-center gap-1 hover:text-[#007834] whitespace-nowrap">
+                <UserCheck className="w-3.5 h-3.5 text-[#007834] shrink-0" />
+                {!isInMobileFrame && <span className="hidden sm:inline">{citizenUser.name}</span>}
+              </Link>
+              <button
+                type="button"
+                onClick={handleCitizenLogout}
+                className="p-0.5 text-[#425B4A] hover:text-[#10371E]"
+                title="Wyloguj z eZUS"
+                aria-label="Wyloguj z eZUS"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsLoginOpen(true)}
+              className={`inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-xs rounded-xl transition-colors whitespace-nowrap ${
+                isInMobileFrame ? "px-2 py-1.5" : "px-3 py-1.5"
+              }`}
+              title="Zaloguj się przez PUE/eZUS, mObywatel lub Profil Zaufany"
+            >
+              <LogIn className="w-3.5 h-3.5 shrink-0" />
+              <span>{isInMobileFrame ? "Zaloguj" : "Zaloguj (eZUS)"}</span>
+            </button>
+          )}
 
           {!isInMobileFrame && (
             <>
-              <Link
-                href="/e-uslugi"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap"
-                title="Przejdź do wniosku ZAM i PUE/eZUS"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>PUE/eZUS</span>
-              </Link>
-
               <button
                 type="button"
                 onClick={() => setIsSimulatorOpen(true)}
@@ -234,7 +300,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 text-[#10371E] hover:bg-[#DCE8D3] rounded-xl lg:hidden focus:outline-none"
+            className="p-1.5 text-[#10371E] hover:bg-[#DCE8D3] rounded-xl lg:hidden focus:outline-none shrink-0"
             aria-expanded={mobileMenuOpen}
             aria-label="Otwórz menu"
           >
@@ -304,6 +370,12 @@ export function Header() {
       <MobileSimulatorModal
         isOpen={isSimulatorOpen}
         onClose={() => setIsSimulatorOpen(false)}
+      />
+
+      <ZusLoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={handleCitizenLogin}
       />
 
       <TrudneSlowaModal />

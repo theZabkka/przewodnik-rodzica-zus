@@ -106,8 +106,8 @@ export const MobileSimulatorModal: React.FC<MobileSimulatorModalProps> = ({
               />
             </div>
 
-            {/* Dolny pasek natywnej nawigacji smartfona */}
-            <div className="bg-white border-t border-slate-200 px-2 py-2 flex items-center justify-around shrink-0">
+            {/* Dolny pasek natywnej nawigacji smartfona — równa siatka 5 kolumn bez nachodzenia ikon */}
+            <div className="bg-white border-t border-slate-200 px-1.5 py-2 grid grid-cols-5 gap-0.5 shrink-0">
               {bottomTabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeRoute === tab.route;
@@ -116,14 +116,14 @@ export const MobileSimulatorModal: React.FC<MobileSimulatorModalProps> = ({
                     key={tab.route}
                     type="button"
                     onClick={() => navigateTo(tab.route)}
-                    className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-[10px] font-bold transition-colors ${
+                    className={`flex flex-col items-center justify-center gap-0.5 px-1 py-1 rounded-lg text-[9.5px] leading-tight font-bold transition-colors min-w-0 ${
                       isActive
-                        ? "text-[#007834] bg-[#f0f8f3]"
-                        : "text-slate-500 hover:text-slate-800"
+                        ? "text-[#10371E] bg-[#DCE8D3]"
+                        : "text-slate-500 hover:text-[#10371E]"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span>{tab.label}</span>
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span className="truncate w-full text-center">{tab.label}</span>
                   </button>
                 );
               })}
