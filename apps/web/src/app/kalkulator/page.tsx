@@ -811,7 +811,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
                           <input
  id="wizard-salary-input"
  type="number"
- min="4666"
+ min="4806"
  step="100"
  value={grossSalary}
  onChange={(e) =>

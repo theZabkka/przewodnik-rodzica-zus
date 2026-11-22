@@ -61,7 +61,7 @@ const MILESTONES: Milestone[] = [
  stage: 1,
  institution: "zus",
  title: "Weryfikacja terminowości składek i długu w JDG",
- description: "Przedsiębiorca musi upewnić się, że nie posiada zaległości składkowych przekraczających 48,06 zł (1% minimalnego wynagrodzenia) oraz że upłynął 90-dniowy okres karencji ubezpieczenia chorobowego.",
+ description: "Przedsiębiorca musi upewnić się, że nie posiada zaległości składkowych przekraczających 48,06 zł (1% płacy minimalnej). Uwaga: 90-dniowy okres wyczekiwania dotyczy wyłącznie zasiłku chorobowego (L4) — zasiłek macierzyński przysługuje od 1. dnia dobrowolnego ubezpieczenia chorobowego bez okresu karencji.",
  deadlineDescription: "Przed przejściem na zasiłek lub urlop",
  legalReference: "Art. 2a ustawy zasiłkowej (próg zadłużenia)",
  category: "formal",

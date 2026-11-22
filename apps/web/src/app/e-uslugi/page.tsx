@@ -882,7 +882,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                       </label>
                       <input
  type="number"
- min="4666"
+ min="4806"
  step="100"
  value={monthlySalaryGross}
  onChange={(e) => setMonthlySalaryGross(Number(e.target.value))}
