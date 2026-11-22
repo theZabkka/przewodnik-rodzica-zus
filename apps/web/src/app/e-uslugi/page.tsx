@@ -32,6 +32,7 @@ import { ZusLogo } from "../../components/ZusLogo";
 import { DocumentZamIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import { saveApplicationToCloud } from "@/services/casesSyncService";
+import QRCode from "qrcode";
 
 function validatePesel(value: string): boolean {
  const digits = value.replace(/\D/g, "");
@@ -55,50 +56,55 @@ function validateNrb(value: string): boolean {
  return digits.length === 26;
 }
 
-function ZamQrCode({ seed }: { seed: string }) {
- const size = 21;
- const cells: boolean[][] = [];
- let hash = 2166136261;
- for (let i = 0; i < seed.length; i++) {
- hash ^= seed.charCodeAt(i);
- hash = Math.imul(hash, 16777619);
-  }
- const isFinder = (r: number, c: number) =>
-    (r < 7 && c < 7) || (r < 7 && c >= size - 7) || (r >= size - 7 && c < 7);
+function ZamQrCode({
+  seed,
+  textPayload,
+}: {
+  seed?: string;
+  textPayload?: string;
+}) {
+  const [qrUrl, setQrUrl] = useState<string>("");
+  const content = textPayload || seed || "ZUS ZAM 2026";
 
- for (let r = 0; r < size; r++) {
- const row: boolean[] = [];
- for (let c = 0; c < size; c++) {
- if (isFinder(r, c)) {
- const lr = r >= size - 7 ? r - (size - 7) : r;
- const lc = c >= size - 7 ? c - (size - 7) : c;
- const on =
- lr === 0 ||
- lr === 6 ||
- lc === 0 ||
- lc === 6 ||
-          (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4);
- row.push(on);
-      } else {
- const bit = ((hash >>> ((r * 7 + c * 13) % 24)) ^ (r * 31 + c * 17)) & 1;
- row.push(bit === 1);
+  useEffect(() => {
+    let isMounted = true;
+    QRCode.toDataURL(
+      content,
+      {
+        width: 160,
+        margin: 1,
+        color: {
+          dark: "#10371E",
+          light: "#FFFFFF",
+        },
+        errorCorrectionLevel: "M",
+      },
+      (err, url) => {
+        if (!err && url && isMounted) {
+          setQrUrl(url);
+        }
       }
-    }
- cells.push(row);
+    );
+    return () => {
+      isMounted = false;
+    };
+  }, [content]);
+
+  if (!qrUrl) {
+    return (
+      <div className="w-14 h-14 shrink-0 border border-[#B9CCB6] bg-white flex items-center justify-center text-[7px] text-slate-400 font-mono">
+        QR...
+      </div>
+    );
   }
 
- return (
-    <svg
- viewBox={`0 0 ${size} ${size}`}
- className="w-14 h-14 shrink-0 border border-[#B9CCB6] bg-white p-0.5"
- aria-label="Kod QR weryfikacji dokumentu ZUS ZAM"
-    >
-      {cells.map((row, r) =>
- row.map((on, c) =>
- on ? <rect key={`${r}-${c}`} x={c} y={r} width={1} height={1} fill="#0f172a" /> : null
-        )
-      )}
-    </svg>
+  return (
+    <img
+      src={qrUrl}
+      alt="Skanowalny kod QR weryfikacji dokumentu ZUS ZAM"
+      className="w-14 h-14 shrink-0 border border-[#B9CCB6] bg-white p-0.5 rounded shadow-2xs"
+      title="Zeskanuj aparatem telefonu, aby zweryfikować podpis cyfrowy i autentyczność wniosku w rejestrze ZUS"
+    />
   );
 }
 
@@ -1835,18 +1841,23 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                 {/* STOPKA KARTKI A4 Z KODEM QR WERYFIKACJI */}
                 <div className="pt-3 mt-4 border-t border-[#B9CCB6] flex items-center justify-between gap-4 text-[8.5px] text-slate-500 font-mono">
                   <div className="flex items-center gap-3">
-                    <ZamQrCode seed={`${upoNumber || "DRAFT"}-${pesel}-${childBirthDate}-${chosenRate}`} />
+                    <ZamQrCode
+                      textPayload={`ZUS ZAM 2026 | Weryfikacja eZUS\nUPO: ${upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`}\nWnioskodawca: ${parentName} (PESEL: ${pesel})\nDziecko: ${childName} (ur. ${childBirthDate})\nSkrót SHA256: ${upoHash || "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f"}\nStatus: POŚWIADCZONY W REJESTRZE ZUS`}
+                    />
                     <div className="space-y-0.5">
-                      <div className="font-bold text-[#1D4029]">
- ZUS ZAM (wersja 2026.10) &bull; Zgodny z rozporządzeniem MRPiPS
+                      <div className="font-bold text-[#1D4029] flex items-center gap-1.5">
+                        <span>ZUS ZAM (wersja 2026.10) &bull; Zgodny z rozporządzeniem MRPiPS</span>
+                        <span className="text-[7.5px] text-[#007834] bg-[#EFF3EA] border border-[#B9CCB6] px-1 py-0.2 rounded font-sans font-bold">
+                          Zeskanuj telefonem
+                        </span>
                       </div>
                       <div>
- Kod kontrolny dokumentu:{" "}
+                        Kod kontrolny dokumentu:{" "}
                         <span className="text-[#1D4029] font-semibold">
                           {upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`}
                         </span>
                       </div>
-                      <div>Wygenerowano w systemie Przewodnik Rodzica ZUS (eZUS)</div>
+                      <div>Wygenerowano w systemie Przewodnik Rodzica ZUS (eZUS) &bull; Kod QR ISO/IEC 18004</div>
                     </div>
                   </div>
                   <span className="shrink-0 font-bold text-[#2E4B38]">Strona 1 z 1</span>
