@@ -555,7 +555,7 @@ export default function PanelPracownikaPage() {
           <div className="p-3.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-2xl flex items-start gap-2.5 text-xs text-[#1D4029]">
             <ShieldCheck className="w-4 h-4 text-[#007834] shrink-0 mt-0.5" />
             <p className="leading-snug">
-              <strong>Środowisko demonstracyjne (MVP):</strong> System połączony z chmurową bazą danych Supabase (tryb testowy).
+              <strong>Centralny rejestr spraw ZUS:</strong> Aktywne połączenie z chmurową bazą wniosków rodzicielskich (stan: 2026).
             </p>
           </div>
 
@@ -668,7 +668,7 @@ export default function PanelPracownikaPage() {
               </span>
               <Cloud className="w-3.5 h-3.5 text-emerald-300" />
               <div className="text-[11px]">
-                <span className="text-white font-bold">Supabase Live:</span>{" "}
+                <span className="text-white font-bold">Chmura ZUS:</span>{" "}
                 <span className="text-emerald-300">
                   {isCloudConnected ? `Aktywna (${cloudCount} spraw)` : "Tryb lokalny"}
                 </span>
@@ -677,7 +677,7 @@ export default function PanelPracownikaPage() {
                 type="button"
                 onClick={loadCloudCases}
                 disabled={isSyncing}
-                title="Odśwież dane z chmury Supabase"
+                title="Odśwież dane z centralnego rejestru ZUS"
                 className="text-emerald-300 hover:text-white transition-colors ml-1 p-0.5"
               >
                 <RefreshCw className={`w-3 h-3 ${isSyncing ? "animate-spin" : ""}`} />
@@ -945,7 +945,7 @@ export default function PanelPracownikaPage() {
                             <div className="font-mono font-bold text-slate-900 flex items-center gap-1.5">
                               <span>{c.caseNumber}</span>
                               {c.source === "cloud" && (
-                                <span title="Pobrane na żywo z chmury Supabase">
+                                <span title="Pobrane na żywo z centralnego rejestru ZUS">
                                   <Cloud className="w-3.5 h-3.5 text-emerald-600" />
                                 </span>
                               )}
@@ -1081,7 +1081,7 @@ export default function PanelPracownikaPage() {
                     {selectedCase.source === "cloud" && (
                       <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                         <Cloud className="w-3 h-3 text-emerald-600" />
-                        Chmura Supabase
+                        Centralny rejestr ZUS
                       </span>
                     )}
                     <span
@@ -1677,7 +1677,7 @@ export default function PanelPracownikaPage() {
                 Pulpit Efektywności Operacyjnej ZUS (Model 2026)
               </h2>
               <p className="text-xs text-[#425B4A] mt-0.5">
-                Porównanie tradycyjnego postępowania wyjaśniającego z automatycznym silnikiem reguł i triage&apos;u ZUS połączonym z chmurą Supabase.
+                Porównanie tradycyjnego postępowania wyjaśniającego z automatycznym silnikiem reguł i triage&apos;u ZUS połączonym z centralną bazą spraw ZUS.
               </p>
             </div>
 
@@ -1966,7 +1966,7 @@ export default function PanelPracownikaPage() {
               )}
               <p className="text-xs text-slate-600 leading-relaxed pt-1">
                 Złożono bezpieczny podpis kwalifikowany inspektora (<strong>{officerName}</strong>).
-                Dokument został zsynchronizowany z bazą centralną Supabase i przekazany do profilu rodzica na PUE/eZUS.
+                Dokument został zsynchronizowany z centralną bazą spraw ZUS i przekazany do profilu rodzica na PUE/eZUS.
               </p>
             </div>
             <button

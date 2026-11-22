@@ -134,7 +134,7 @@ export function Header() {
     { href: "/kalkulator", label: "Kalkulator zasiłku" },
     { href: "/e-uslugi", label: "Wniosek ZAM, eZUS & USC" },
     { href: "/trudne-sytuacje", label: "Wsparcie szczególne" },
-    { href: "/asystent-ai", label: "Zapytaj AI" },
+    { href: "/asystent-ai", label: "Konsultant ZUS" },
   ];
 
   return (

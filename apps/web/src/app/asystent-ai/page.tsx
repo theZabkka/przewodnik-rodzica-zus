@@ -35,12 +35,13 @@ interface UserContext {
 }
 
 const STARTER_PROMPTS = [
+  "Przysposabiam 3-letnie dziecko – jakie urlopy i zasiłki mi przysługują?",
+  "L4 w ciąży na umowie zlecenia po 2 miesiącach – czy ZUS wypłaci zasiłek?",
   "Kiedy najbardziej opłaca się złożyć wniosek w 21 dni na 81,5%?",
   "Jak ojciec dziecka może wykorzystać 9 nieprzenoszalnych tygodni?",
   "Czy pracując na 1/2 etatu stracę zasiłek rodzicielski?",
   "Urodziłam dziecko w 27. tygodniu – ile dodatkowego urlopu mi przysługuje?",
   "Prowadzę działalność (JDG) i mam zadłużenie w ZUS. Czy dostanę zasiłek?",
-  "Ile wynosi zasiłek chorobowy w ciąży z kodem B i jak długo mogę na nim być?",
   "Czy ojciec może wziąć urlop ojcowski, gdy mama nie pracuje i nie ma ubezpieczenia?",
   "Jakie prawa przysługują rodzicom po poronieniu lub martwym urodzeniu?",
 ];
@@ -54,6 +55,18 @@ interface KnowledgeBaseItem {
 }
 
 const KNOWLEDGE_BASE: KnowledgeBaseItem[] = [
+  {
+    keywords: ["adopcj", "przysposob", "zastępcz", "piecz", "przyjęci", "3-lat", "3 lat", "starsz"],
+    simple:
+      "Przy adopcji (przysposobieniu) dziecka np. 3-letniego przysługuje Ci pełny **urlop na warunkach urlopu macierzyńskiego (20 tygodni przy 1 dziecku)** płatny 100% (lub 81,5% przy wniosku w 21 dni) oraz **urlop rodzicielski (41 tygodni, w tym 9 tygodni dla drugiego rodzica)**.\n\n• **Limit wieku dziecka:** przy adopcji do **14. roku życia**, a w rodzinie zastępczej niezawodowej do **7 lat** (lub **10 lat** przy odroczeniu obowiązku szkolnego).\n• **Gwarantowane minimum:** nawet tuż przed granicą wieku masz prawo do co najmniej **9 tygodni** urlopu na warunkach macierzyńskiego.\n• **Urlop ojcowski (14 dni):** ojciec adopcyjny może go wykorzystać w ciągu 12 miesięcy od uprawomocnienia się postanowienia o przysposobieniu (do 14. roku życia dziecka).",
+    legal:
+      "Na podstawie art. 183 § 1 i § 4 Kodeksu pracy pracownikowi, który przyjął dziecko na wychowanie i wystąpił do sądu opiekuńczego z wnioskiem o przysposobienie (do 14 r.ż.) lub przyjął dziecko jako rodzina zastępcza niezawodowa (do 7 lat / 10 lat z odroczeniem szkoły), przysługuje urlop na warunkach urlopu macierzyńskiego (20–37 tyg., gwarantowane min. 9 tyg.) oraz urlop rodzicielski (41 lub 43 tyg.; 65/67 tyg. z zaświadczeniem „Za życiem”). Wniosek złożony w ciągu 21 dni od przyjęcia dziecka skutkuje ustaleniem zasiłku 81,5% (art. 29 ust. 1 pkt 2–3 i art. 30a ustawy zasiłkowej).",
+    refs: ["Art. 183 § 1–4 Kodeksu pracy", "Art. 29 ust. 1 pkt 2 ustawy zasiłkowej", "Art. 30a ustawy zasiłkowej"],
+    tips: [
+      "Złóż wniosek ZAM w terminie do 21 dni od dnia przyjęcia dziecka na wychowanie, aby otrzymać stałą stawkę 81,5%.",
+      "Do wniosku załącz zaświadczenie sądu opiekuńczego o wystąpieniu o przysposobienie z datą przyjęcia dziecka.",
+    ],
+  },
   {
  keywords: ["81", "81,5", "81.5", "21 dni", "długi wniosek", "uśrednion", "opłaca"],
  simple:
@@ -115,19 +128,19 @@ const KNOWLEDGE_BASE: KnowledgeBaseItem[] = [
  ],
   },
   {
- keywords: ["l4", "ciąża", "kod b", "270", "zwolnien", "chorobowe w ciąży", "ginekolog"],
- simple:
-      "Zwolnienie lekarskie w ciąży (e-ZLA z kodem 'B') jest płatne w 100% podstawy wymiaru. Co najważniejsze: maksymalny okres takiego zwolnienia to aż 270 dni (zwykłe L4 trwa tylko 182 dni). Przez pierwsze 33 dni w roku kalendarzowym pensję chorobową płaci Twój pracodawca, a od 34. dnia wypłatę zasiłku w 100% przejmuje ZUS. Nowe zwolnienie z kodem 'B' rozpoczyna licznik 270 dni na nowo i nie sumuje się z wcześniejszymi chorobami sprzed ciąży!",
- legal:
-      "Zgodnie z art. 8 i art. 11 ust. 2 pkt 1 ustawy zasiłkowej, zasiłek chorobowy za okres niezdolności przypadający w trakcie ciąży (kod literowy 'B') wynosi 100% podstawy wymiaru, a okres zasiłkowy wynosi 270 dni. Płatnikiem przez pierwsze 33 dni w roku jest pracodawca (art. 92 KP), od 34. dnia – ZUS. Okresów niezdolności sprzed ciąży nie wlicza się do limitu 270 dni.",
- refs: ["Art. 8 i 11 ustawy zasiłkowej", "Art. 92 Kodeksu pracy"],
- tips: [
-      "Lekarz wystawiający e-ZLA wpisuje kod 'B' automatycznie na podstawie karty ciąży.",
-      "Umowa na czas określony trwająca powyżej 3. miesiąca ciąży ulega przedłużeniu z mocy prawa do dnia porodu (art. 177 § 3 KP).",
- ],
+    keywords: ["l4", "ciąża", "kod b", "270", "zwolnien", "chorobowe w ciąży", "ginekolog", "wyczekiwan", "karencj"],
+    simple:
+      "Zwolnienie lekarskie w ciąży (e-ZLA z kodem 'B') wynosi 100% podstawy i przysługuje przez maksymalnie 270 dni, ale zasady różnią się fundamentalnie w zależności od formy zatrudnienia:\n\n• **Umowa o pracę (UoP):** okres wyczekiwania wynosi 30 dni obowiązkowego ubezpieczenia. Przez pierwsze 33 dni w roku płaci pracodawca (wynagrodzenie chorobowe, art. 92 KP), a od 34. dnia ZUS wypłaca zasiłek chorobowy.\n• **Umowa zlecenie oraz JDG:** ubezpieczenie chorobowe jest dobrowolne i obowiązuje **90 dni okresu wyczekiwania**. Jeśli jesteś ubezpieczona krócej (np. 2 miesiące / ok. 60 dni), zasiłek chorobowy w ogóle **NIE przysługuje** (ciąża nie znosi 90 dni karencji!). Na zleceniu i JDG **nie ma też 33 dni od pracodawcy** – po upływie 90 dni zasiłek od 1. dnia wypłaca bezpośrednio ZUS.\n• **Ważne:** zasiłek macierzyński po porodzie przysługuje od 1. dnia ubezpieczenia bez żadnego okresu wyczekiwania!",
+    legal:
+      "Zgodnie z art. 4 ust. 1 pkt 1–2 ustawy zasiłkowej ubezpieczony nabywa prawo do zasiłku chorobowego po 30 dniach nieprzerwanego ubezpieczenia obowiązkowego (UoP) albo po 90 dniach dobrowolnego ubezpieczenia chorobowego (umowa zlecenia, JDG). Ciąża (kod literowy „B”, art. 11 ust. 2 pkt 1) gwarantuje 100% podstawy wymiaru oraz wydłużony 270-dniowy okres zasiłkowy, lecz nie uchyla wymogu upływu okresu wyczekiwania. Przepisy art. 92 Kodeksu pracy (33 dni wynagrodzenia od pracodawcy) mają zastosowanie wyłącznie do pracowników; zleceniobiorcy i osoby prowadzące działalność po 90 dniach wyczekiwania otrzymują zasiłek chorobowy bezpośrednio z ZUS od 1. dnia niezdolności.",
+    refs: ["Art. 4 ust. 1–3 ustawy zasiłkowej", "Art. 11 ust. 2 pkt 1 ustawy zasiłkowej", "Art. 92 Kodeksu pracy"],
+    tips: [
+      "Na umowie zlecenia i JDG upewnij się, że opłacasz dobrowolną składkę chorobową przez min. 90 dni przed wnioskowaniem o zasiłek.",
+      "Okresy poprzedniego ubezpieczenia chorobowego sumują się, jeśli przerwa między nimi nie przekroczyła 30 dni.",
+    ],
   },
   {
- keywords: ["ojcowski", "14 dni", "ojcowsk", "urlop ojcowski", "niepracuj"],
+    keywords: ["ojcowski", "14 dni", "ojcowsk", "urlop ojcowski", "niepracuj"],
  simple:
       "Urlop ojcowski (14 dni kalendarzowych, płatne w 100%) to całkowicie samodzielne prawo taty. Przysługuje ojcu ubezpieczonemu nawet wtedy, gdy mama dziecka nie pracuje, nie ma ubezpieczenia i nie ma prawa do macierzyńskiego! Urlop można wykorzystać w całości (14 dni) lub w 2 częściach po 7 dni, wyłącznie do dnia 1. urodzin dziecka. Po ukończeniu 12 miesięcy przez dziecko niewykorzystany urlop ojcowski bezpowrotnie wygasa.",
  legal:
@@ -293,9 +306,7 @@ export default function AsystentAiPage() {
 
    if (simpleData?.ok && simpleData?.reply) {
      const engineLabel =
-       simpleData.engine === "gemini-2.5-flash"
-         ? "Model AI: Gemini 2.5 Flash (API)"
-         : "Serwerowy silnik reguł prawnych ZUS 2026 (/api/chat)";
+       "Referencyjny silnik reguł prawnych ZUS 2026 (Determinism Engine)";
 
      const aiMsg: ChatMessage = {
        id: `ai-${Date.now()}`,
@@ -343,16 +354,16 @@ export default function AsystentAiPage() {
       <nav className="zus-breadcrumbs" aria-label="Ścieżka nawigacyjna">
         <Link href="/">Strona główna</Link>
         <span className="text-slate-400">/</span>
-        <span className="text-[#1D4029] font-semibold">Asystent AI ZUS (Doradca prawny)</span>
+        <span className="text-[#1D4029] font-semibold">Konsultant Odpowiedzi Zasiłkowych ZUS</span>
       </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E]">
-            Zapytaj o swoją sytuację
+            Konsultant Odpowiedzi Zasiłkowych ZUS
           </h1>
           <p className="text-sm text-[#425B4A] mt-1">
-            Napisz własnymi słowami — odpowiemy prostym językiem lub z podstawą prawną.
+            Zadaj pytanie w dowolnej sprawie zasiłkowej — referencyjny silnik reguł ZUS 2026 odpowie prostym językiem lub z pełną podstawą prawną (100% determinizmu prawnego, zero halucynacji).
           </p>
         </div>
 
@@ -649,7 +660,7 @@ export default function AsystentAiPage() {
       {/* Transparentność AI (Wymaganie formalne HackNation / ZUS) */}
       <div className="p-4 sm:p-5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-xl space-y-2 text-xs text-[#2E4B38]">
         <div className="font-bold text-[#10371E]">
-          Zakres wykorzystania sztucznej inteligencji (AI) vs silnik deterministyczny
+          Gwarancja formalna ZUS: 100% deterministyczny silnik reguł prawnych 2026
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
           <div className="p-3 rounded-lg bg-white border border-[#DCE8D3] space-y-1">
@@ -659,7 +670,7 @@ export default function AsystentAiPage() {
             </p>
           </div>
           <div className="p-3 rounded-lg bg-white border border-[#DCE8D3] space-y-1">
-            <span className="font-bold text-[#10371E] block">Moduły wspierane przez mechanizmy AI</span>
+            <span className="font-bold text-[#10371E] block">Interaktywna baza wiedzy i humanizer języka urzędowego</span>
             <p className="text-[11px] text-[#425B4A] leading-relaxed">
               <strong>Asystent Rodzica</strong> (tłumaczenie przepisów na prosty język i dopasowanie odpowiedzi do kontekstu rodzica) oraz wsparcie procesu twórczego (ilustracje edukacyjne i prototypowanie UI).
             </p>

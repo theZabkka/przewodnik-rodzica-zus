@@ -134,7 +134,7 @@ export default function AdminPage() {
  id: `log-${Date.now()}`,
  version: newVersionCode,
  timestamp: new Date().toISOString().replace("T", " ").substring(0, 16),
- author: "Departament Legislacji ZUS (Sesja lokalna)",
+ author: "Ekspert ZUS (Walidacja parametrów 2026)",
  changesSummary: `Zmiana parametrów: płaca min. ${minWage} zł, stawka 81.5% -> ${averageRate815}%, macierzyński standard -> ${standardMaternityRate}%, rodzicielski -> ${standardParentalRate}%, pogrzebowy -> ${funeralBenefitAmount} zł`,
  status: "published",
       };
@@ -207,7 +207,7 @@ export default function AdminPage() {
  Dynamiczne parametry legislacyjne i stawki prawne
           </h1>
           <p className="text-sm text-[#425B4A] mt-1 max-w-3xl">
- Moduł umożliwia urzędnikom ZUS i Departamentowi Zasiłków natychmiastową aktualizację wskaźników prawnych, stawek procentowych i progów bez konieczności modyfikowania kodu źródłowego aplikacji.
+ Moduł umożliwia administratorom i weryfikatorom ZUS natychmiastową aktualizację wskaźników prawnych, stawek procentowych i progów bez konieczności modyfikowania kodu źródłowego aplikacji.
           </p>
         </div>
 
@@ -215,7 +215,7 @@ export default function AdminPage() {
         <div className="bg-[#EFF3EA] border border-[#B9CCB6] p-3.5 rounded flex items-center gap-3 shrink-0">
           <ShieldCheck className="w-5 h-5 text-emerald-600" />
           <div className="text-xs">
-            <span className="font-bold text-[#10371E] block">Środowisko: Produkcyjne</span>
+            <span className="font-bold text-[#10371E] block">Środowisko: Walidacja parametrów 2026</span>
             <span className="text-[#425B4A] font-medium">Aktywna wersja: {activeVersionName}</span>
           </div>
         </div>

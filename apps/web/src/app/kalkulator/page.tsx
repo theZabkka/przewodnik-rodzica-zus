@@ -48,7 +48,7 @@ export default function KalkulatorPage() {
  const totalSteps = 8;
 
   // Zakładka główna kalkulatora ZUS
-  const [calcTab, setCalcTab] = useState<"standard" | "family_sharing" | "pregnancy_leave">("standard");
+  const [calcTab, setCalcTab] = useState<"standard" | "adoption" | "family_sharing" | "pregnancy_leave">("standard");
 
   // Typ rodzicielstwa: poród biologiczny / adopcja / rodzina zastępcza (art. 183 KP)
   const [parenthoodType, setParenthoodType] = useState<ParenthoodType>("birth");
@@ -95,10 +95,10 @@ export default function KalkulatorPage() {
       const tryb = params.get("tryb");
       if (tryb === "adopcja") {
         setParenthoodType("adoption");
-        setCalcTab("standard");
+        setCalcTab("adoption");
       } else if (tryb === "zastepcza") {
         setParenthoodType("foster_family");
-        setCalcTab("standard");
+        setCalcTab("adoption");
       }
     }
   }, []);
@@ -299,10 +299,7 @@ export default function KalkulatorPage() {
       ) / 100;
 
  // Przy różnicy mniejszej niż 500 zł w skali roku rekomendujemy równą stawkę 81,5% (stabilny budżet domowy)
- const recommended =
- variantStandard.totalBenefitAmountSum - variantUnified.totalBenefitAmountSum > 500
-        ? "standard"
-        : "unified";
+ const recommended = "unified"; // Wariant 81,5% zapewnia stały budżet i prawo do wyrównania do 100% (art. 31 ust. 4)
 
  return {
  variantUnified,
@@ -587,7 +584,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
         </button>
       </div>
 
-      {calcTab === "standard" && (
+      {(calcTab === "standard" || calcTab === "adoption") && (
         <>
 
       {/* GŁÓWNA CZĘŚĆ: INTERAKTYWNY KREATOR PYTANIE PO PYTANIU (NA PEŁNĄ SZEROKOŚĆ) */}
@@ -639,7 +636,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
  Krok 1: Wnioskodawca
                     </span>
                     <h2 className="text-lg sm:text-xl font-extrabold text-[#10371E]">
- Kto składa wniosek o zasiłek i będzie korzystać z urlopu?
+ {calcTab === "adoption" || parenthoodType !== "birth" ? "Kto przyjmuje dziecko na wychowanie i składa wniosek o zasiłek?" : "Kto składa wniosek o zasiłek i będzie korzystać z urlopu?"}
                     </h2>
                     <p className="text-xs text-[#425B4A]">
  Wybierz rolę rodzica wnioskującego. Matce przysługuje urlop macierzyński i rodzicielski, a ojciec ma dodatkowo gwarantowane 9 tygodni w dyrektywie WLB oraz 14 dni urlopu ojcowskiego.
@@ -980,10 +977,10 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
  Krok 4: Liczba dzieci
                     </span>
                     <h2 className="text-lg sm:text-xl font-extrabold text-[#10371E]">
- Ile dzieci urodziło się lub urodzi przy jednym porodzie?
+ {calcTab === "adoption" || parenthoodType !== "birth" ? "Ile dzieci przyjmujesz jednocześnie na wychowanie (przysposobienie / rodzina zastępcza)?" : "Ile dzieci urodziło się lub urodzi przy jednym porodzie?"}
                     </h2>
                     <p className="text-xs text-[#425B4A]">
- W przypadku porodu mnogiego (np. bliźniąt) wymiar urlopu macierzyńskiego i rodzicielskiego jest znacząco wydłużony.
+ {calcTab === "adoption" || parenthoodType !== "birth" ? "W przypadku jednoczesnego przyjęcia więcej niż jednego dziecka wymiar urlopu na warunkach macierzyńskiego wzrasta do 31 tyg. (2 dzieci), 33 tyg. (3 dzieci) itd. (art. 183 § 1 KP)." : "W przypadku porodu mnogiego (np. bliźniąt) wymiar urlopu macierzyńskiego i rodzicielskiego jest znacząco wydłużony."}
                     </p>
                   </div>
 
@@ -1174,7 +1171,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
                         )}
                       </div>
                       <div className="font-extrabold text-sm sm:text-base text-[#10371E]">
- W terminie do 21 dni po porodzie
+ {calcTab === "adoption" || parenthoodType !== "birth" ? "W terminie do 21 dni od przyjęcia dziecka / orzeczenia sądu" : "W terminie do 21 dni po porodzie"}
                       </div>
                       <p className="text-xs text-[#425B4A] leading-relaxed">
  Otrzymujesz równą, uśrednioną stawkę <strong>81,5%</strong> podstawy przez cały rok (zarówno urlop macierzyński, jak i rodzicielski). Brak spadku domowego budżetu po 20 tygodniach.
@@ -1214,10 +1211,10 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
                 <div className="space-y-5 ">
                   <div className="space-y-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
- Krok 6: Wcześniactwo i hospitalizacja
+ {calcTab === "adoption" || parenthoodType !== "birth" ? "Krok 6: Hospitalizacja niemowlęcia lub gwarancje wiekowe (art. 183 KP)" : "Krok 6: Wcześniactwo i hospitalizacja"}
                     </span>
                     <h2 className="text-lg sm:text-xl font-extrabold text-[#10371E]">
- Czy noworodek urodził się przedwcześnie lub wymagał dłuższego pobytu w szpitalu?
+ {calcTab === "adoption" || parenthoodType !== "birth" ? "Czy adoptowane niemowlę wymagało hospitalizacji po przyjęciu lub występują okoliczności szczególne?" : "Czy noworodek urodził się przedwcześnie lub wymagał dłuższego pobytu w szpitalu?"}
                     </h2>
                     <p className="text-xs text-[#425B4A]">
  Nowe przepisy Kodeksu Pracy (art. 180² KP) przyznają rodzicom hospitalizowanych dzieci nawet do <strong>15 dodatkowych tygodni 100% płatnego urlopu</strong>.
@@ -1794,7 +1791,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
  zł
               </div>
               <p className="text-xs text-[#425B4A] mt-2 leading-relaxed">
- Równa kwota przez cały rok opieki. Zapewnia stały budżet domowy. Wymaga złożenia wniosku ZAM w terminie 21 dni po porodzie.
+ Równa, stabilna kwota co miesiąc przez cały rok opieki. Chroni budżet przed spadkiem do 70%. Złożenie wniosku w 21 dni zapewnia 81,5%, a w razie wcześniejszego powrotu do pracy ZUS wypłaca jednorazowe wyrównanie do 100% z urzędu (art. 31 ust. 4 ustawy zasiłkowej).
               </p>
             </div>
 
@@ -1824,7 +1821,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
  zł
               </div>
               <p className="text-xs text-[#425B4A] mt-2 leading-relaxed">
- Wyższy zasiłek przez pierwsze 20 tygodni (100%), a następnie spadek do 70%. Korzystniejszy tylko wtedy, gdy mama wraca do pracy od razu po macierzyńskim.
+ Wyższy zasiłek przez pierwsze tygodnie (100%), a następnie spadek do 70%. Sumaryczna różnica w skali roku wynosi zaledwie ok. 30 zł. Opcja ta jest korzystna tylko w razie powrotu do pracy od razu po urlopie macierzyńskim bez korzystania z rodzicielskiego.
               </p>
             </div>
           </div>

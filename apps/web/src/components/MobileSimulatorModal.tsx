@@ -44,7 +44,7 @@ export const MobileSimulatorModal: React.FC<MobileSimulatorModalProps> = ({
     { route: "/przewodnik", label: "Przewodnik", icon: Compass },
     { route: "/kalkulator", label: "Kalkulator", icon: Calculator },
     { route: "/e-uslugi", label: "Wniosek", icon: FileText },
-    { route: "/asystent-ai", label: "Pomoc AI", icon: Bot },
+    { route: "/asystent-ai", label: "Konsultant", icon: Bot },
   ];
 
   return (

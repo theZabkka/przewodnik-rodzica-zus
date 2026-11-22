@@ -245,7 +245,7 @@ export default function JurySandboxPage() {
             <span>Moduł 6 &bull; Strefa testowa dla jurorów (Jury Sandbox)</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-[#10371E]">
-            Środowisko audytu kazusów ZUS & parser formularzy PDF
+            Audyt Scenariuszy Testowych ZUS & Parser Formularzy PDF
           </h1>
           <p className="text-sm text-[#425B4A] mt-1 max-w-3xl">
  Narzędzie testowe dla komisji oceniającej: przetestuj 6 przykładowych scenariuszy lub wgraj własny formularz PDF (Z-3, ZAM, e-ZLA), aby sprawdzić poprawność wyliczeń silnika obliczeniowego.
@@ -440,6 +440,13 @@ export default function JurySandboxPage() {
               <strong className="text-[#10371E] text-base font-bold">{isCaseBlockedByDebt ? 0 : liveResult.parentalDadReservedWeeks} tyg.</strong>
               <span className="text-[10px] text-emerald-700 block font-semibold">{isCaseBlockedByDebt ? "—" : `${liveResult.dadParentalReservedRatePercent}% podstawy`}</span>
             </div>
+          </div>
+
+          <div className="p-3 bg-white rounded border border-[#B9CCB6] flex items-center justify-between text-xs font-bold text-[#10371E]">
+            <span>Łączny wymiar wyliczony przez silnik dla obojga rodziców (z 9 tyg. taty):</span>
+            <span className="text-sm font-extrabold text-[#007834]">
+              {isCaseBlockedByDebt ? "0 tygodni (wypłata wstrzymana z art. 2a)" : `${(liveResult.maternityWeeks) + (liveResult.supplementaryWeeks) + (liveResult.totalExtendedParentalWeeks) + (liveResult.parentalDadReservedWeeks)} tygodni`}
+            </span>
           </div>
 
           <div className="bg-white p-4 rounded border border-[#C6D6C3] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
