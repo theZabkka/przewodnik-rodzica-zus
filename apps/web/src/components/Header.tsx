@@ -164,7 +164,7 @@ export function Header() {
               </span>
             )}
             {!isInMobileFrame && (
-              <span className="text-base sm:text-lg font-extrabold text-[#10371E] tracking-tight whitespace-nowrap">
+              <span className="hidden sm:inline text-base sm:text-lg font-extrabold text-[#10371E] tracking-tight whitespace-nowrap">
                 Przewodnik Rodzica
               </span>
             )}
