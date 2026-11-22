@@ -3,7 +3,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CalculatorIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import {
  calculateParentalBenefits,
@@ -471,10 +470,7 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
 
       {/* Nagłówek Sekcji Kalkulatora */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-5">
-        <div className="flex items-center gap-5">
-          <div className="hidden lg:block w-36 shrink-0">
-            <CalculatorIllustration className="w-full h-auto" />
-          </div>
+        <div>
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
               Kalkulator zasiłku

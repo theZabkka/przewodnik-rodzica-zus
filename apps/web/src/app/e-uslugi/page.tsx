@@ -29,7 +29,6 @@ import {
 } from "lucide-react";
 import { calculateBenefits, DEFAULT_LEGISLATIVE_2026, InspectorCase } from "@hacknation/shared";
 import { ZusLogo } from "../../components/ZusLogo";
-import { DocumentZamIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import { saveApplicationToCloud } from "@/services/casesSyncService";
 import QRCode from "qrcode";
@@ -501,10 +500,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
 
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-5">
-        <div className="flex items-center gap-5">
-          <div className="hidden lg:block w-36 shrink-0">
-            <DocumentZamIllustration className="w-full h-auto" />
-          </div>
+        <div>
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
               Wniosek ZAM
@@ -565,7 +561,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
           }`}
         >
           <Smartphone className="w-4 h-4" />
-          <span>mObywatel 2.0 (Alerty & mDowód)</span>
+          <span>mObywatel</span>
         </button>
 
         <button
@@ -578,7 +574,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
           }`}
         >
           <Building2 className="w-4 h-4" />
-          <span>PUE / eZUS (Konto płatnika & zadłużenie JDG)</span>
+          <span>Konto eZUS (JDG)</span>
         </button>
 
         <button
@@ -591,7 +587,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
           }`}
         >
           <Clock className="w-4 h-4" />
-          <span>e-ZLA (Zwolnienia lekarskie w ciąży kod B)</span>
+          <span>Zwolnienia e-ZLA</span>
         </button>
 
         <button
@@ -599,15 +595,12 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
  onClick={() => setActiveTab("usc")}
  className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
  activeTab === "usc"
-              ? "bg-[#007834] text-white shadow-xs"
+              ? "bg-[#007834] text-white"
               : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
           }`}
         >
           <Landmark className="w-4 h-4" />
-          <span>Urząd Stanu Cywilnego (USC / gov.pl)</span>
-          <span className="bg-[#10371E] text-white text-[10px] px-1.5 py-0.5 rounded font-mono">
-            Akt urodzenia
-          </span>
+          <span>Akt urodzenia (USC)</span>
         </button>
 
         <button

@@ -315,15 +315,11 @@ export default function AsystentAiPage() {
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-4">
         <div>
-          <div className="inline-flex items-center gap-2 text-[#10371E] font-semibold text-xs tracking-wider uppercase mb-1">
-            <Bot className="w-4 h-4" />
-            <span>Moduł 6 &bull; Inteligentny doradca prawny ZUS AI</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#10371E]">
- Asystent praw rodzicielskich i zasiłków
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E]">
+            Zapytaj o swoją sytuację
           </h1>
           <p className="text-sm text-[#425B4A] mt-1">
- Zadawaj pytania o Kodeks pracy, terminy urzędowe i optymalizację świadczeń. Asystent analizuje przepisy w trybie prostego języka lub z pełną wykładnią prawną.
+            Napisz własnymi słowami — odpowiemy prostym językiem lub z podstawą prawną.
           </p>
         </div>
 
