@@ -58,20 +58,20 @@ function validateNrb(value: string): boolean {
 
 function ZamQrCode({
   seed,
-  textPayload,
+  urlPayload,
 }: {
   seed?: string;
-  textPayload?: string;
+  urlPayload?: string;
 }) {
   const [qrUrl, setQrUrl] = useState<string>("");
-  const content = textPayload || seed || "ZUS ZAM 2026";
+  const content = urlPayload || seed || "https://przewodnik-rodzica-zus.vercel.app";
 
   useEffect(() => {
     let isMounted = true;
     QRCode.toDataURL(
       content,
       {
-        width: 160,
+        width: 180,
         margin: 1,
         color: {
           dark: "#10371E",
@@ -99,12 +99,19 @@ function ZamQrCode({
   }
 
   return (
-    <img
-      src={qrUrl}
-      alt="Skanowalny kod QR weryfikacji dokumentu ZUS ZAM"
-      className="w-14 h-14 shrink-0 border border-[#B9CCB6] bg-white p-0.5 rounded shadow-2xs"
-      title="Zeskanuj aparatem telefonu, aby zweryfikować podpis cyfrowy i autentyczność wniosku w rejestrze ZUS"
-    />
+    <a
+      href={urlPayload || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block group"
+      title="Kliknij lub zeskanuj telefonem, aby otworzyć poświadczenie i pobrać dokument PDF"
+    >
+      <img
+        src={qrUrl}
+        alt="Skanowalny kod QR weryfikacji dokumentu ZUS ZAM"
+        className="w-14 h-14 shrink-0 border border-[#B9CCB6] group-hover:border-[#007834] bg-white p-0.5 rounded shadow-2xs transition-colors cursor-pointer"
+      />
+    </a>
   );
 }
 
@@ -1842,14 +1849,24 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                 <div className="pt-3 mt-4 border-t border-[#B9CCB6] flex items-center justify-between gap-4 text-[8.5px] text-slate-500 font-mono">
                   <div className="flex items-center gap-3">
                     <ZamQrCode
-                      textPayload={`ZUS ZAM 2026 | Weryfikacja eZUS\nUPO: ${upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`}\nWnioskodawca: ${parentName} (PESEL: ${pesel})\nDziecko: ${childName} (ur. ${childBirthDate})\nSkrót SHA256: ${upoHash || "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f"}\nStatus: POŚWIADCZONY W REJESTRZE ZUS`}
+                      urlPayload={
+                        typeof window !== "undefined"
+                          ? `${window.location.hostname === "localhost" ? "http://10.250.195.147:3000" : window.location.origin}/weryfikacja?upo=${encodeURIComponent(upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`)}&pesel=${encodeURIComponent(pesel)}&name=${encodeURIComponent(parentName)}&child=${encodeURIComponent(childName)}&date=${encodeURIComponent(childBirthDate)}&rate=${encodeURIComponent(chosenRate)}&hash=${encodeURIComponent(upoHash || "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f4912")}`
+                          : "https://przewodnik-rodzica-zus.vercel.app/weryfikacja"
+                      }
                     />
                     <div className="space-y-0.5">
                       <div className="font-bold text-[#1D4029] flex items-center gap-1.5">
                         <span>ZUS ZAM (wersja 2026.10) &bull; Zgodny z rozporządzeniem MRPiPS</span>
-                        <span className="text-[7.5px] text-[#007834] bg-[#EFF3EA] border border-[#B9CCB6] px-1 py-0.2 rounded font-sans font-bold">
-                          Zeskanuj telefonem
-                        </span>
+                        <a
+                          href={typeof window !== "undefined" ? `${window.location.hostname === "localhost" ? "http://10.250.195.147:3000" : window.location.origin}/weryfikacja?upo=${encodeURIComponent(upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`)}&pesel=${encodeURIComponent(pesel)}&name=${encodeURIComponent(parentName)}&child=${encodeURIComponent(childName)}&date=${encodeURIComponent(childBirthDate)}&rate=${encodeURIComponent(chosenRate)}&hash=${encodeURIComponent(upoHash || "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f4912")}` : "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[7.5px] text-[#007834] bg-[#EFF3EA] hover:bg-[#DCE8D3] border border-[#B9CCB6] px-1.5 py-0.5 rounded font-sans font-bold inline-flex items-center gap-1"
+                        >
+                          <span>Otwórz weryfikację & PDF</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
                       </div>
                       <div>
                         Kod kontrolny dokumentu:{" "}
@@ -1857,7 +1874,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                           {upoNumber || `ZAM-DRAFT-${pesel.slice(-4) || "0000"}`}
                         </span>
                       </div>
-                      <div>Wygenerowano w systemie Przewodnik Rodzica ZUS (eZUS) &bull; Kod QR ISO/IEC 18004</div>
+                      <div>Wygenerowano w systemie Przewodnik Rodzica ZUS (eZUS) &bull; Zeskanuj aparatem telefonu</div>
                     </div>
                   </div>
                   <span className="shrink-0 font-bold text-[#2E4B38]">Strona 1 z 1</span>
