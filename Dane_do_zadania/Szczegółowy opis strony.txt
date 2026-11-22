@@ -1,0 +1,90 @@
+Zasiłkowy Przewodnik Przyszłego Rodzica — szczegółowy opis projektu
+1. Cel projektu i rozwiązywany problem
+
+Zasiłkowy Przewodnik Przyszłego Rodzica to aplikacja webowa (RWD) stworzona na wyzwanie Zakładu Ubezpieczeń Społecznych (HackNation 2026). Jej celem jest przeprowadzenie przyszłych i obecnych rodziców — zarówno pracujących na etacie (UoP), umowie zlecenia, jak i prowadzących działalność gospodarczą (JDG), a także rodziców adopcyjnych i rodzin zastępczych niezawodowych — przez cały proces uzyskiwania świadczeń z ubezpieczenia chorobowego i macierzyńskiego.
+
+System eliminuje główną barierę po stronie obywatela: rodzic nie myśli nazwami formularzy i artykułami ustaw, lecz swoją sytuacją życiową („rodzę w kwietniu, ile dostanę?”, „czy 9 tygodni taty przepadnie?”, „mam dług w JDG — co robić?”). Wcześniejsza, rzetelna informacja pozwala złożyć kompletny wniosek w terminie (m.in. kluczowe 21 dni po porodzie), ograniczając liczbę błędów formalnych i postępowań wyjaśniających po stronie ZUS.
+
+2. Architektura i przegląd wszystkich modułów strony
+A. Nawigacja, dostępność (WCAG) i symulacja logowania (Header & Footer)
+Spójny, dwuwierszowy nagłówek (max-w-6xl): logo ZUS, szybki dostęp do infolinii (22 560 16 00) oraz zestaw narzędzi dostępności:
+Lektor głosowy („Posłuchaj” / „Zatrzymaj”) — synteza mowy w języku polskim (Web Speech API) odczytująca treść bieżącej strony.
+Skalowanie czcionki (Aa Wielkość liter) — 3-stopniowe powiększanie tekstu (normal / large / xlarge) działające globalnie na document.documentElement.
+Tryb wysokiego kontrastu — zwiększona czytelność dla osób słabowidzących.
+Symulacja logowania ZUS (Zaloguj (eZUS)) — okno modalne (ZusLoginModal.tsx) odwzorowujące 3 ścieżki logowania: Aplikacja mObywatel 2.0 (kod QR z 2-minutowym licznikiem ważności), Profil Zaufany (login.gov.pl) (kod SMS) oraz Login i hasło PUE/eZUS. Sesja obywatela zapisuje się w sessionStorage.
+Podgląd aplikacji mobilnej — wbudowany symulator smartfona (MobileSimulatorModal.tsx) z 5-zakładkowym dolnym paskiem nawigacji, osadzający responsywną wersję portalu obywatelskiego.
+Stopka (Footer.tsx): szybkie skróty oraz bezpośrednie przekierowania do oficjalnych źródeł państwowych: ZUS (zus.pl), MRPiPS (gov.pl/web/rodzina/urlop-rodzicielski), Państwowej Inspekcji Pracy (pip.gov.pl) oraz Rejestru Stanu Cywilnego (gov.pl/web/cyfryzacja/rejestr-stanu-cywilnego).
+Słownik „Trudne słowa”: kontekstowy modal tłumaczący pojęcia urzędowe (płatnik składek, ubezpieczony, okres wyczekiwania, podstawa wymiaru, 13,71%) na prosty język.
+B. Strona główna (/)
+Sekcja Hero: jasny komunikat i jeden główny przycisk CTA („Oblicz wysokość zasiłku”) z autorską ilustracją.
+4 ścieżki sytuacji życiowej („Jaka jest Twoja sytuacja?”):
+Planuję dziecko → /przewodnik (okres wyczekiwania, składki, planowanie),
+Oczekuję dziecka → /kalkulator (wyliczenie wysokości zasiłku i L4 kod „B”),
+Dziecko już się urodziło → /e-uslugi (wniosek ZAM i termin 21 dni),
+Przyjmuję dziecko pod opiekę → /kalkulator?tryb=adopcja (automatycznie uruchamia kalkulator w trybie adopcji / rodziny zastępczej niezawodowej).
+Wyróżniony baner „Potrzebujesz wsparcia?”: spokojne, bezpośrednie przejście do modułu /trudne-sytuacje (poronienie, martwe urodzenie, wcześniak, ciężka diagnoza).
+Trzy kluczowe zasady na start: skrótowe karty o terminie 21 dni (81,5%), 9 nieprzenoszalnych tygodniach dla drugiego rodzica (70%) oraz urlopie uzupełniającym dla wcześniaków i pracy na ½ etatu.
+C. Zintegrowany Kalkulator Świadczeń (/kalkulator)
+
+Serce aplikacji oparte na 100% deterministycznym silniku obliczeniowym (packages/shared, stan prawny: kwiecień 2026). Obsługuje tryb krokowy (8 pytań z paskiem postępu) oraz tryb pełnego formularza:
+
+Zakładka 1 — Urodzenie, Adopcja i Rodzina Zastępcza:
+Wybór roli (Matka / Ojciec), formy umowy (Umowa o pracę, Umowa zlecenia, Działalność gospodarcza JDG) oraz indywidualnej podstawy wymiaru (z weryfikacją płacy minimalnej 2026: 4 806 zł).
+Adopcja (przysposobienie) i rodzina zastępcza niezawodowa (art. 183 KP): wybór wieku przyjmowanego dziecka z automatycznymi limitami (do 14 lat przy adopcji, do 7 lat lub 10 lat przy odroczeniu obowiązku szkolnego dla rodziny zastępczej niezawodowej) oraz gwarantowanym minimum 9 tygodni.
+Liczba dzieci (1–5+), zaświadczenie „Za życiem” (wydłużenie rodzicielskiego do 65/67 tyg.), wcześniaki i hospitalizacja (art. 180² KP) (do 15 lub 8 tygodni uzupełniającego urlopu płatnego 100%) oraz łączenie urlopu rodzicielskiego z pracą do ½ etatu (art. 182¹ᶠ KP) z proporcjonalnym wydłużeniem.
+Porównanie wariantów 81,5% vs 100%/70% oraz harmonogram wypłat miesiąc po miesiącu.
+Przycisk 1-klik „Przenieś dane do wniosku ZAM”: zapisuje konfigurację i automatycznie wypełnia formularz w /e-uslugi.
+Zakładka 2 — Planer podziału opieki (Mama & Tata): symulacja korzystania z urlopu przez oboje rodziców (naprzemiennie lub jednocześnie), uwzględniająca 9 nieprzenoszalnych tygodni drugiego rodzica (70%) oraz 14 dni urlopu ojcowskiego (100%).
+Zakładka 3 — Świadczenia w czasie ciąży: kalkulator zasiłku chorobowego (kod „B”, 100%, max 270 dni) z kontrolą okresu wyczekiwania (30 dni UoP / 90 dni zlecenie i JDG) oraz informacje o świadczeniu rehabilitacyjnym (100%), przedłużeniu umowy do dnia porodu (art. 177 § 3 KP) i zasiłku w wysokości zasiłku macierzyńskiego (art. 30 ust. 3 ustawy zasiłkowej) w razie upadłości/likwidacji/śmierci pracodawcy lub wyroku sądu.
+D. Przewodnik krok po kroku (/przewodnik)
+
+Interaktywna baza wiedzy z osią czasu od ciąży po powrót do pracy:
+
+Rozróżnienie kto wypłaca świadczenie (płatnik składek > 20 ubezpieczonych vs ZUS) i jakie dokumenty są wymagane (e-ZLA, ZAM, Z-3, Z-3a, ZAS-53).
+Jasne wyjaśnienie różnicy w okresie wyczekiwania: chorobowy (30/90 dni) vs macierzyński (od 1. dnia bez wyczekiwania).
+Sekcja zagrożeń i ryzyk utraty/obniżenia świadczeń: pozorność umowy lub JDG, sztuczne podwyższenie podstawy w ciąży, brak ubezpieczenia na dzień porodu, zaległości składkowe w JDG (> 48,06 zł).
+E. Wnioski i e-Usługi (/e-uslugi)
+
+Centrum symulacji procedur urzędowych podzielone na 6 zakładek:
+
+Wniosek ZAM (ZUS) — 6-krokowy kreator skonsolidowanego wniosku o zasiłek macierzyński (zastępującego ZUR i ZAO) z walidacją na żywo PESEL, NIP i NRB, licznikiem terminu 21 dni, dynamiczną listą załączników, podglądem urzędowego wydruku A4 (@media print) z kodem QR oraz symulacją wysyłki i generowania UPO.
+Wniosek o urlop (Pracodawca) — zaprojektowany generator wniosku pracowniczego do działu kadr/HR (łączny macierzyński + rodzicielski 81,5%, rodzicielski z opcją ½ etatu, ojcowski, uzupełniający) z podglądem gotowego pisma na żywo, pobraniem .txt i symulacją przekazania pracodawcy.
+mObywatel — symulacja powiadomień obywatela (rejestracja dziecka w USC, przypomnienie o 21 dniach, nowe e-ZLA z kodem „B” i informacją o okresie wyczekiwania 30/90 dni, 9 tygodni dla ojca).
+Konto eZUS (JDG + POG) — symulacja pobrania danych z ZUS, monitor zadłużenia składek JDG (alert przy przekroczeniu progu 1% płacy minimalnej = 48,06 zł, symulacja spłaty i pobrania zaświadczenia ZUS RWN) oraz formularz zapytania ogólnego do ZUS (POG) z potwierdzeniem referencyjnym.
+Zwolnienia e-ZLA — symulacja podglądu wystawionych zaświadczeń lekarskich.
+Akt urodzenia (USC / gov.pl) — 2-etapowa symulacja: wybór rodzaju odpisu (skrócony lub zupełny), złożenie wniosku (art. 44–45 ustawy Prawo o aktach stanu cywilnego), a po złożeniu — podgląd, pobranie i transfer numeru aktu do wniosku ZAM.
+F. Wsparcie szczególne (/trudne-sytuacje)
+
+Dedykowany moduł pisany spokojnym, empatycznym językiem dla rodziców w sytuacjach kryzysowych:
+
+Poronienie i martwe urodzenie: prawo do 8 tygodni zasiłku macierzyńskiego (min. 7 dni od zgonu), interaktywna checklista kroków w szpitalu i USC.
+Wcześniaki i hospitalizacja (art. 180² KP) oraz Ustawa „Za życiem” (65/67 tyg. urlopu rodzicielskiego).
+Utrata pracy w ciąży: zasiłek w wysokości zasiłku macierzyńskiego (100% do dnia porodu, art. 30 ust. 3).
+Zweryfikowane podmioty wyłącznie charytatywne (Fundacja Wcześniak, Fundacja Ernesta, Fundacja Gajusz) oraz bezpłatna infolinia Rzecznika Praw Pacjenta (800 190 590 — prawa pacjenta i procedury szpitalne).
+G. Asystent Rodzica (/asystent-ai)
+
+Konwersacyjny doradca prawny połączony z backendowym endpointem POST /api/chat:
+
+Obsługuje przełącznik „Język prosty” vs „Wykładnia prawna” oraz szufladę kontekstu rodzica (rola, umowa, etap życiowy).
+Poprawnie rozróżnia m.in. L4 w ciąży na zleceniu/JDG (90 dni wyczekiwania, brak 33 dni od pracodawcy) oraz adopcję / rodzinę zastępczą (art. 183 KP).
+Zawiera jawną informację o zakresie użycia AI vs silnik deterministyczny.
+H. Strefa Jurora (/jury-sandbox) i Panel Administracyjny (/admin)
+Strefa Jurora (/jury-sandbox): środowisko testowe z 6 spójnymi scenariuszami (UoP 81,5%, wcześniak 10 tyg., praca ½ etatu, JDG z długiem blokującym wypłatę do 0 zł wg art. 2a, podział mama/tata, ustawa „Za życiem”) oraz modułem uploadu plików PDF z analizą zawartości i automatycznym przeliczeniem w silniku.
+Panel Administracyjny (/admin): konfiguracja parametrów legislacyjnych 2026 (płaca minimalna, próg zadłużenia JDG, stawki procentowe, wymiary urlopów) zapisywana w bazie Supabase (legislative_parameters + audit_config_logs) — pozwala dostosować aplikację do zmian w prawie bez modyfikacji kodu.
+Pulpit pracownika (/panel-pracownika): dodatkowy, odizolowany widok demonstracyjny podglądu złożonych wniosków ZAM zintegrowany z bazą Supabase.
+3. Warstwa REST API i stos technologiczny
+Frontend: Next.js 15 (App Router), React, TypeScript, Tailwind CSS (pełne RWD + aplikacja towarzysząca Expo/React Native w apps/mobile).
+Silnik domenowy (packages/shared): współdzielona biblioteka TypeScript z walidacją Zod i 40 testami jednostkowymi Vitest (40/40 passed).
+Backend REST API:
+GET / POST /api/calculate — deterministyczne obliczanie wymiarów urlopów, kwot świadczeń i ryzyk prawnych,
+GET /api/parameters — odczyt aktualnych parametrów ustawowych 2026,
+POST /api/chat — doradca prawny (Gemini 2.5 Flash przy skonfigurowanym GEMINI_API_KEY z serwerowym fallbackiem regułowym ZUS 2026).
+Baza danych: Supabase (PostgreSQL z Row Level Security — tabele parametrów legislacyjnych, historii kalkulacji, spraw testowych i logów audytu).
+4. Zakres wykorzystania sztucznej inteligencji (AI)
+
+Zgodnie z wymogiem formalnym konkursu projekt ściśle rozdziela warstwę obliczeniową od wsparcia AI:
+
+Moduły 100% deterministyczne (bez AI): Kalkulator świadczeń (/kalkulator i POST /api/calculate), walidacja PESEL/NIP/NRB i generatory wniosków (/e-uslugi), Panel Administracyjny (/admin) oraz Strefa Jurora (/jury-sandbox). Wszystkie kwoty i wymiary tygodni wynikają wyłącznie z jawnych, przetestowanych reguł Kodeksu pracy i ustawy zasiłkowej (brak ryzyka halucynacji).
+Moduły i procesy wspierane przez AI:
+Asystent Rodzica (/asystent-ai + /api/chat) — wsparcie konwersacyjne i tłumaczenie przepisów na prosty język (opcjonalny model Gemini 2.5 Flash z deterministycznym fallbackiem serwerowym).
+Proces twórczy — wsparcie w generowaniu spójnych ilustracji edukacyjnych, projektowaniu interfejsu oraz przygotowaniu materiału wideo w HyperFrames.
