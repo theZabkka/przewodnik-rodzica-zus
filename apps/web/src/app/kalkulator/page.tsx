@@ -2431,6 +2431,15 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
 
               <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1.5">
                 <span className="font-bold text-[#10371E] text-sm block">
+                  Zasiłek w wysokości zasiłku macierzyńskiego (art. 30 ust. 3)
+                </span>
+                <p>
+                  Szczególne świadczenie (100% podstawy wymiaru) wypłacane <strong>do dnia porodu po ustaniu ubezpieczenia</strong>, gdy pracownica w ciąży straciła pracę z powodu upadłości, likwidacji lub śmierci pracodawcy (i nie zapewniono jej innego zatrudnienia) albo gdy umowę rozwiązano z naruszeniem prawa (potwierdzonym prawomocnym wyrokiem sądu).
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1.5">
+                <span className="font-bold text-[#10371E] text-sm block">
                   Zakaz pracy w godzinach nadliczbowych i w nocy (art. 178 KP)
                 </span>
                 <p>

@@ -613,9 +613,28 @@ export default function AsystentAiPage() {
         </div>
       </div>
 
-      {/* Zastrzeżenie Prawne */}
-      <div className="p-3.5 bg-[#EFF3EA] border border-[#C6D6C3] rounded text-[11px] text-slate-500 text-center">
- Informacje dostarczane przez asystenta AI mają charakter edukacyjny i pomocniczy. Oficjalne decyzje ustalające prawo do świadczeń wydaje Zakład Ubezpieczeń Społecznych na podstawie dokumentów wnioskodawcy.
+      {/* Transparentność AI (Wymaganie formalne HackNation / ZUS) */}
+      <div className="p-4 sm:p-5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-xl space-y-2 text-xs text-[#2E4B38]">
+        <div className="font-bold text-[#10371E]">
+          Zakres wykorzystania sztucznej inteligencji (AI) vs silnik deterministyczny
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div className="p-3 rounded-lg bg-white border border-[#DCE8D3] space-y-1">
+            <span className="font-bold text-[#007834] block">100% Deterministyczny silnik prawny (bez AI)</span>
+            <p className="text-[11px] text-[#425B4A] leading-relaxed">
+              Wszystkie wyliczenia kwot i wymiarów urlopów w <strong>Kalkulatorze</strong>, walidacja PESEL/NIP/NRB w <strong>Kreatorze ZAM</strong>, <strong>Panelu Administracyjnym</strong> oraz weryfikacja spraw w <strong>Jury Sandbox</strong> działają na ścisłych, testowanych regułach Kodeksu pracy i ustawy zasiłkowej (zero halucynacji).
+            </p>
+          </div>
+          <div className="p-3 rounded-lg bg-white border border-[#DCE8D3] space-y-1">
+            <span className="font-bold text-[#10371E] block">Moduły wspierane przez mechanizmy AI</span>
+            <p className="text-[11px] text-[#425B4A] leading-relaxed">
+              <strong>Asystent Rodzica</strong> (tłumaczenie przepisów na prosty język i dopasowanie odpowiedzi do kontekstu rodzica) oraz wsparcie procesu twórczego (ilustracje edukacyjne i prototypowanie UI).
+            </p>
+          </div>
+        </div>
+        <p className="text-[11px] text-[#425B4A] pt-1">
+          Informacje dostarczane przez asystenta mają charakter edukacyjny i pomocniczy. Oficjalne decyzje ustalające prawo do świadczeń wydaje Zakład Ubezpieczeń Społecznych na podstawie dokumentów wnioskodawcy.
+        </p>
       </div>
     </div>
   );

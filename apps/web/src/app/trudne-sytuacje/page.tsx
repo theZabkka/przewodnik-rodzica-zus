@@ -505,6 +505,35 @@ export default function TrudneSytuacjePage() {
         </div>
       )}
 
+      {/* Szczególna sytuacja: Zasiłek w wysokości zasiłku macierzyńskiego (utrata pracy w ciąży) */}
+      <div className="zus-card p-6 sm:p-8 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#DCE8D3] pb-3">
+          <h2 className="text-lg font-bold text-[#10371E]">
+            Utrata pracy w ciąży — zasiłek w wysokości zasiłku macierzyńskiego
+          </h2>
+          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#DCE8D3] text-[#10371E]">
+            100% podstawy · art. 30 ust. 3 ustawy zasiłkowej
+          </span>
+        </div>
+        <p className="text-sm text-[#425B4A] leading-relaxed">
+          Jeżeli straciłaś zatrudnienie w trakcie ciąży, nie zostajesz bez środków do życia. Do dnia porodu (również po ustaniu ubezpieczenia) przysługuje Ci <strong>zasiłek w wysokości zasiłku macierzyńskiego (100% podstawy wymiaru)</strong>, a po porodzie — pełny zasiłek macierzyński.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1">
+            <span className="font-bold text-[#10371E] block">1. Upadłość, likwidacja lub śmierć pracodawcy</span>
+            <p className="text-[#425B4A] leading-relaxed">
+              Przysługuje, gdy umowę o pracę rozwiązano w okresie ciąży z powodu ogłoszenia upadłości, likwidacji albo śmierci pracodawcy i nie zapewniono Ci innego zatrudnienia.
+            </p>
+          </div>
+          <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1">
+            <span className="font-bold text-[#10371E] block">2. Rozwiązanie umowy z naruszeniem prawa</span>
+            <p className="text-[#425B4A] leading-relaxed">
+              Przysługuje, gdy pracodawca rozwiązał umowę z kobietą w ciąży z naruszeniem przepisów prawa pracy — fakt ten musi być potwierdzony prawomocnym wyrokiem sądu.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Ważne kontakty i organizacje pomocowe */}
       <div className="bg-slate-900 text-white rounded p-6 sm:p-8 space-y-4">
         <h3 className="text-lg font-bold flex items-center gap-2">

@@ -116,7 +116,20 @@ function ZamQrCode({
 
 export default function EUslugiPage() {
  const { profile, openGlossary } = useParentProfile();
- const [activeTab, setActiveTab] = useState<"zam" | "mobywatel" | "pue" | "ezla" | "usc">("zam");
+ const [activeTab, setActiveTab] = useState<"zam" | "urlop" | "mobywatel" | "pue" | "ezla" | "usc">("zam");
+
+  // Stan zapytania ogólnego (POG) w PUE/eZUS
+ const [pueTopic, setPueTopic] = useState<string>("Ustalenie prawa i wysokości zasiłku macierzyńskiego");
+ const [pueMessage, setPueMessage] = useState<string>("");
+ const [pueSentRef, setPueSentRef] = useState<string | null>(null);
+
+  // Stan zaprojektowanego Wniosku o urlop do pracodawcy
+ const [leaveType, setLeaveType] = useState<"macierzynski_rodzicielski" | "rodzicielski" | "ojcowski" | "uzupelniajacy">("macierzynski_rodzicielski");
+ const [employerName, setEmployerName] = useState<string>("Przykładowa Firma Sp. z o.o.");
+ const [leaveStartDate, setLeaveStartDate] = useState<string>("2026-03-15");
+ const [leaveWeeks, setLeaveWeeks] = useState<number>(52);
+ const [leavePartTime, setLeavePartTime] = useState<boolean>(false);
+ const [leaveSubmittedRef, setLeaveSubmittedRef] = useState<string | null>(null);
 
   // Stan widoku kreatora wniosku ZAM
  const [zamStep, setZamStep] = useState<number>(1);
@@ -548,7 +561,20 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
           }`}
         >
           <FileCheck className="w-4 h-4" />
-          <span>Wniosek ZAM (krok po kroku)</span>
+          <span>Wniosek ZAM (ZUS)</span>
+        </button>
+
+        <button
+ type="button"
+ onClick={() => setActiveTab("urlop")}
+ className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
+ activeTab === "urlop"
+              ? "bg-[#007834] text-white "
+              : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
+          }`}
+        >
+          <FileText className="w-4 h-4" />
+          <span>Wniosek o urlop (Pracodawca)</span>
         </button>
 
         <button
@@ -2063,6 +2089,79 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
               <span>Pobierz zaświadczenie ZUS RWN (.txt)</span>
             </button>
           </div>
+
+          {/* Formularz zapytania ogólnego POG do PUE/eZUS */}
+          <div className="pt-5 border-t border-[#DCE8D3] space-y-3">
+            <div>
+              <h3 className="text-sm font-bold text-[#10371E]">
+                Wyślij zapytanie do ZUS przez PUE / eZUS (formularz POG)
+              </h3>
+              <p className="text-[11px] text-[#425B4A]">
+                Masz wątpliwości dotyczące okresu wyczekiwania, podstawy wymiaru lub dokumentów? Wyślij symulowane pismo ogólne bezpośrednio na swoje konto eZUS.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#2E4B38] block">Temat zapytania</label>
+                <select
+                  value={pueTopic}
+                  onChange={(e) => setPueTopic(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-white border border-[#B9CCB6] rounded text-[#10371E]"
+                >
+                  <option value="Ustalenie prawa i wysokości zasiłku macierzyńskiego">
+                    Ustalenie prawa i wysokości zasiłku macierzyńskiego
+                  </option>
+                  <option value="Weryfikacja podstawy wymiaru składek i okresu wyczekiwania">
+                    Weryfikacja podstawy wymiaru składek i okresu wyczekiwania
+                  </option>
+                  <option value="Wyjaśnienie salda składek na koncie JDG">
+                    Wyjaśnienie salda składek na koncie JDG
+                  </option>
+                  <option value="Pytanie o status zaświadczenia e-ZLA / Z-3">
+                    Pytanie o status zaświadczenia e-ZLA / Z-3
+                  </option>
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#2E4B38] block">Treść pytania do pracownika ZUS</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={pueMessage}
+                    onChange={(e) => setPueMessage(e.target.value)}
+                    placeholder="Np. Czy moje dobrowolne ubezpieczenie chorobowe obejmuje okres porodu?"
+                    className="flex-1 px-3 py-2 text-xs bg-white border border-[#B9CCB6] rounded text-[#10371E]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const ref = `POG/2026/${Math.floor(100000 + Math.random() * 900000)}`;
+                      setPueSentRef(ref);
+                      setPueMessage("");
+                    }}
+                    className="px-4 py-2 bg-[#007834] hover:bg-[#005f29] text-white text-xs font-bold rounded transition-colors shrink-0"
+                  >
+                    Wyślij POG
+                  </button>
+                </div>
+              </div>
+            </div>
+            {pueSentRef && (
+              <div className="p-3 rounded-lg bg-[#EFF3EA] border border-[#007834] text-xs text-[#10371E] flex items-center justify-between gap-2">
+                <span>
+                  <strong>Zapytanie wysłane (symulacja PUE/eZUS)!</strong> Numer referencyjny UPO:{" "}
+                  <span className="font-mono font-bold">{pueSentRef}</span> · Temat: {pueTopic}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setPueSentRef(null)}
+                  className="text-[11px] underline text-[#425B4A]"
+                >
+                  Zamknij
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -2292,6 +2391,212 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                   <span>Pieczęć</span>
                   <span>Cyfrowa</span>
                   <span>RSC / GOV</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ZAKŁADKA 6: ZAPROJEKTOWANY WNIOSEK O URLOP DO PRACODAWCY */}
+      {activeTab === "urlop" && (
+        <div className="zus-card p-6 sm:p-8 space-y-6">
+          <div className="border-b border-[#DCE8D3] pb-4 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-bold text-[#10371E]">
+                Generator wniosku o urlop związany z rodzicielstwem (do pracodawcy)
+              </h2>
+              <p className="text-xs text-[#425B4A]">
+                Zaprojektowany wzór wniosku pracowniczego (Rozporządzenie MRPiPS z 11 marca 2025 r., Dz.U. poz. 322) — gotowy do przekazania działowi kadr / HR.
+              </p>
+            </div>
+            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#DCE8D3] text-[#10371E]">
+              Kodeks pracy · art. 179¹, 180², 182¹a, 182³
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Lewa kolumna: parametry wniosku */}
+            <div className="space-y-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-[#2E4B38] block">Rodzaj urlopu</label>
+                <select
+                  value={leaveType}
+                  onChange={(e) => {
+                    const val = e.target.value as typeof leaveType;
+                    setLeaveType(val);
+                    if (val === "macierzynski_rodzicielski") setLeaveWeeks(52);
+                    if (val === "rodzicielski") setLeaveWeeks(32);
+                    if (val === "ojcowski") setLeaveWeeks(2);
+                    if (val === "uzupelniajacy") setLeaveWeeks(8);
+                  }}
+                  className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-[#10371E] font-medium"
+                >
+                  <option value="macierzynski_rodzicielski">
+                    Wniosek łączny: urlop macierzyński + rodzicielski (81,5%, do 21 dni po porodzie)
+                  </option>
+                  <option value="rodzicielski">
+                    Urlop rodzicielski (część wspólna lub 9 tyg. nieprzenoszalne — 70%)
+                  </option>
+                  <option value="ojcowski">
+                    Urlop ojcowski (do 14 dni / 2 tyg. — 100%)
+                  </option>
+                  <option value="uzupelniajacy">
+                    Uzupełniający urlop macierzyński — wcześniak / hospitalizacja (100%)
+                  </option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="font-bold text-[#2E4B38] block">Imię i nazwisko pracownika</label>
+                  <input
+                    type="text"
+                    value={parentName}
+                    onChange={(e) => setParentName(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-[#10371E]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="font-bold text-[#2E4B38] block">Nazwa pracodawcy</label>
+                  <input
+                    type="text"
+                    value={employerName}
+                    onChange={(e) => setEmployerName(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-[#10371E]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="font-bold text-[#2E4B38] block">Data rozpoczęcia urlopu</label>
+                  <input
+                    type="date"
+                    value={leaveStartDate}
+                    onChange={(e) => setLeaveStartDate(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-[#10371E]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="font-bold text-[#2E4B38] block">Wymiar (tygodnie)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={67}
+                    value={leaveWeeks}
+                    onChange={(e) => setLeaveWeeks(Number(e.target.value) || 1)}
+                    className="w-full px-3 py-2 bg-white border border-[#B9CCB6] rounded text-[#10371E]"
+                  />
+                </div>
+              </div>
+
+              {leaveType === "rodzicielski" && (
+                <label className="flex items-center gap-2 p-3 rounded-lg bg-[#EFF3EA] border border-[#B9CCB6] cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={leavePartTime}
+                    onChange={(e) => setLeavePartTime(e.target.checked)}
+                    className="accent-[#007834]"
+                  />
+                  <span className="text-[#10371E] font-medium">
+                    Chcę łączyć urlop rodzicielski z pracą w wymiarze do ½ etatu (art. 182¹ᵉ KP)
+                  </span>
+                </label>
+              )}
+
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const ref = `HR/URLOP/2026/${Math.floor(1000 + Math.random() * 9000)}`;
+                    setLeaveSubmittedRef(ref);
+                  }}
+                  className="px-4 py-2.5 bg-[#007834] hover:bg-[#005f29] text-white font-bold rounded transition-colors"
+                >
+                  Wyślij elektronicznie do pracodawcy (symulacja)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const labelMap = {
+                      macierzynski_rodzicielski: "urlopu macierzyńskiego i bezpośrednio po nim urlopu rodzicielskiego w pełnym wymiarze",
+                      rodzicielski: "urlopu rodzicielskiego",
+                      ojcowski: "urlopu ojcowskiego",
+                      uzupelniajacy: "uzupełniającego urlopu macierzyńskiego",
+                    };
+                    const text = `Miejscowość, data: Warszawa, ${new Date().toLocaleDateString("pl-PL")}\n\nPracownik: ${parentName} (PESEL: ${pesel})\nPracodawca: ${employerName} (NIP: ${employerNip})\n\nWNIOSEK O UDZIELENIE URLOPU ZWIĄZANEGO Z RODZICIELSTWEM\n\nNa podstawie przepisów Kodeksu pracy wnoszę o udzielenie ${labelMap[leaveType]} na dziecko ${childName} (ur. ${childBirthDate}) od dnia ${leaveStartDate} w wymiarze ${leaveWeeks} tygodni.${leavePartTime ? "\nJednocześnie wnoszę o łączenie urlopu rodzicielskiego z wykonywaniem pracy w wymiarze 1/2 etatu (art. 182^1e KP)." : ""}\n\nZałączniki:\n1. Odpis skrócony aktu urodzenia dziecka (${uscActNumber})\n2. Oświadczenie o braku korzystania z urlopu przez drugiego rodzica w tym samym zakresie\n\nPodpis pracownika: ${parentName}\n`;
+                    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `wniosek-urlop-${leaveType}.txt`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-[#EFF3EA] text-[#10371E] border border-[#B9CCB6] font-bold rounded transition-colors"
+                >
+                  <Download className="w-4 h-4 text-[#007834]" />
+                  <span>Pobierz wniosek (.txt)</span>
+                </button>
+              </div>
+
+              {leaveSubmittedRef && (
+                <div className="p-3 rounded-lg bg-[#EFF3EA] border border-[#007834] text-[#10371E]">
+                  <strong>Wniosek przekazany do kadr pracodawcy!</strong> Nr potwierdzenia:{" "}
+                  <span className="font-mono font-bold">{leaveSubmittedRef}</span>. Jeśli pracodawca zgłasza do 20 ubezpieczonych, prześle teraz do ZUS druk Z-3.
+                </div>
+              )}
+            </div>
+
+            {/* Prawa kolumna: podgląd pisma */}
+            <div className="bg-white border border-[#B9CCB6] rounded-xl p-6 space-y-4 font-serif text-xs text-[#10371E] shadow-xs">
+              <div className="flex justify-between text-[11px] text-[#425B4A]">
+                <div>
+                  <p className="font-bold text-[#10371E]">{parentName}</p>
+                  <p>PESEL: {pesel}</p>
+                </div>
+                <div className="text-right">
+                  <p>Warszawa, {new Date().toLocaleDateString("pl-PL")}</p>
+                  <p className="font-bold text-[#10371E] mt-1">Do: {employerName}</p>
+                  <p>NIP: {employerNip}</p>
+                </div>
+              </div>
+
+              <div className="text-center py-2 border-y border-[#DCE8D3]">
+                <h3 className="font-bold uppercase tracking-wide text-sm">
+                  Wniosek o udzielenie urlopu związanego z rodzicielstwem
+                </h3>
+              </div>
+
+              <p className="leading-relaxed">
+                Na podstawie przepisów ustawy z dnia 26 czerwca 1974 r. &ndash; Kodeks pracy zwracam się z wnioskiem o udzielenie{" "}
+                <strong>
+                  {leaveType === "macierzynski_rodzicielski" &&
+                    "urlopu macierzyńskiego oraz bezpośrednio po nim urlopu rodzicielskiego w pełnym wymiarze (stawka 81,5%)"}
+                  {leaveType === "rodzicielski" && "urlopu rodzicielskiego"}
+                  {leaveType === "ojcowski" && "urlopu ojcowskiego"}
+                  {leaveType === "uzupelniajacy" && "uzupełniającego urlopu macierzyńskiego"}
+                </strong>{" "}
+                na dziecko <strong>{childName}</strong> (data urodzenia: <strong>{childBirthDate}</strong>), rozpoczynającego się w dniu{" "}
+                <strong>{leaveStartDate}</strong> w wymiarze <strong>{leaveWeeks} tygodni</strong>.
+              </p>
+
+              {leaveType === "rodzicielski" && leavePartTime && (
+                <p className="leading-relaxed bg-[#EFF3EA] p-2.5 rounded border border-[#B9CCB6] font-sans text-[11px]">
+                  Wnioskuję o łączenie urlopu rodzicielskiego z wykonywaniem pracy u pracodawcy w wymiarze do ½ etatu (art. 182¹ᵉ KP) wraz z proporcjonalnym wydłużeniem okresu urlopu.
+                </p>
+              )}
+
+              <div className="text-[11px] text-[#425B4A] space-y-1">
+                <p className="font-bold text-[#10371E]">Załączniki:</p>
+                <p>1. Odpis skrócony aktu urodzenia dziecka ({uscActNumber})</p>
+                <p>2. Oświadczenie o niekorzystaniu z urlopu przez drugiego rodzica w tym samym okresie</p>
+              </div>
+
+              <div className="pt-4 flex justify-end">
+                <div className="text-center border-t border-[#B9CCB6] pt-1 px-6 text-[11px] text-[#425B4A]">
+                  Podpis pracownika: <strong className="text-[#10371E]">{parentName}</strong>
                 </div>
               </div>
             </div>

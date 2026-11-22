@@ -68,3 +68,22 @@ pnpm test
 - 🏛️ [ARCHITECTURE.md](./ARCHITECTURE.md) — pełna specyfikacja architektury systemu
 - ⚖️ [ZUS_DOMAIN_RULES.md](./ZUS_DOMAIN_RULES.md) — reguły matematyczne i artykuły Kodeksu Pracy
 - 📋 [ZUS_CHALLENGE_SPEC.md](./ZUS_CHALLENGE_SPEC.md) — specyfikacja konkursowa i kryteria oceny
+
+---
+
+## 🔌 Interfejs REST API
+
+Aplikacja udostępnia warstwę REST API (Next.js App Router) opartą na wspólnym, deterministycznym silniku `@hacknation/shared`:
+
+- `GET /api/calculate` — dokumentacja i przykładowy payload JSON dla kalkulatora świadczeń
+- `POST /api/calculate` — deterministyczne obliczenie wymiaru urlopów, stawek procentowych (100% / 81,5% / 70%), kwot zasiłku i ostrzeżeń prawnych (2026)
+- `GET /api/parameters` — aktualne parametry legislacyjne 2026 (płaca minimalna 4806 zł, próg zadłużenia 1%, stawki procentowe, wymiary urlopów)
+
+---
+
+## 🤖 Zakres wykorzystania sztucznej inteligencji (AI)
+
+Zgodnie z wymogiem formalnym konkursu HackNation 2026 wyraźnie rozdzielamy warstwę deterministyczną od wsparcia AI:
+
+- **100% deterministyczny silnik prawny (bez AI):** Kalkulator zasiłków (`/kalkulator` oraz `POST /api/calculate`), walidacja PESEL/NIP/NRB i kreator wniosku ZAM oraz wniosku o urlop do pracodawcy (`/e-uslugi`), Panel Administracyjny (`/admin`) i weryfikacja spraw w Strefie Jurora (`/jury-sandbox`). Wszystkie obliczenia są powtarzalne i pokryte testami jednostkowymi Vitest.
+- **Funkcjonalności wspierane przez AI:** Asystent Rodzica (`/asystent-ai` — dopasowanie wyjaśnień do kontekstu rodzica i tłumaczenie przepisów na prosty język) oraz proces twórczy (generowanie spójnych ilustracji edukacyjnych, projektowanie interfejsu i prototypowanie wideo demo w HyperFrames).
