@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zasiłkowy Przewodnik Przyszłego Rodzica — Prezentacja HackNation 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #faf8f2;
+        --surface: #eff3ea;
+        --sage: #dce8d3;
+        --ink: #10371e;
+        --muted: #425c4b;
+        --border: #b9ccb6;
+        --green: #007834;
+        --warm-bg: #fdf1ec;
+        --warm-border: #e8c3b5;
+        --warm-ink: #6e2f20;
+        --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+
+      body {
+        font-family: var(--font);
+        background: #1a241e;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        padding: 28px 0 60px;
+      }
+
+      .slide {
+        width: 1280px;
+        height: 720px;
+        background: var(--bg);
+        position: relative;
+        overflow: hidden;
+        padding: 44px 56px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .slide.dark {
+        background: radial-gradient(circle at 18% 18%, #1c5731 0%, #0d2e19 60%, #081e10 100%);
+        color: #faf8f2;
+      }
+
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1.5px solid var(--border);
+        padding-bottom: 14px;
+        margin-bottom: 22px;
+      }
+
+      .slide.dark .top-bar {
+        border-color: rgba(220, 232, 211, 0.25);
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--sage);
+        color: var(--ink);
+        border: 1px solid var(--border);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 5px 14px;
+        border-radius: 999px;
+      }
+
+      .slide.dark .kicker {
+        background: rgba(82, 224, 130, 0.16);
+        border-color: rgba(82, 224, 130, 0.4);
+        color: #8ee5ac;
+      }
+
+      .slide-num {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .slide.dark .slide-num {
+        color: #b9ccb6;
+      }
+
+      h1 {
+        font-size: 54px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      h2 {
+        font-size: 34px;
+        line-height: 1.14;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: var(--ink);
+        margin-bottom: 12px;
+      }
+
+      .slide.dark h2 {
+        color: #faf8f2;
+      }
+
+      .lead {
+        font-size: 17px;
+        line-height: 1.48;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .slide.dark .lead {
+        color: #c7d9c3;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1.18fr;
+        gap: 32px;
+        align-items: center;
+        flex: 1;
+      }
+
+      .grid-2-eq {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        flex: 1;
+        align-items: stretch;
+      }
+
+      .card {
+        background: #ffffff;
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 18px 20px;
+      }
+
+      .card.sage {
+        background: var(--surface);
+      }
+
+      .card.warm {
+        background: var(--warm-bg);
+        border-color: var(--warm-border);
+      }
+
+      .card h3 {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--ink);
+        margin-bottom: 5px;
+      }
+
+      .card.warm h3 {
+        color: var(--warm-ink);
+      }
+
+      .card p {
+        font-size: 13.5px;
+        line-height: 1.44;
+        color: var(--muted);
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .shot-frame {
+        background: #ffffff;
+        border: 2px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 18px 40px rgba(16, 55, 30, 0.12);
+      }
+
+      .shot-bar {
+        height: 28px;
+        background: #eff3ea;
+        border-bottom: 1px solid #c6d6c3;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      .dot.r { background: #e38c7b; }
+      .dot.y { background: #e5c478; }
+      .dot.g { background: #74b887; }
+
+      .shot-frame img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .pill {
+        background: rgba(250, 248, 242, 0.12);
+        border: 1.5px solid rgba(220, 232, 211, 0.35);
+        color: #faf8f2;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 8px 16px;
+        border-radius: 12px;
+      }
+
+      .pill.light {
+        background: var(--sage);
+        border-color: var(--border);
+        color: var(--ink);
+      }
+
+      .kpi-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .kpi {
+        background: var(--ink);
+        color: #faf8f2;
+        border-radius: 14px;
+        padding: 14px 16px;
+      }
+
+      .kpi .v {
+        font-size: 24px;
+        font-weight: 800;
+        color: #7ee3a2;
+      }
+
+      .kpi .l {
+        font-size: 11.5px;
+        color: #c7d9c3;
+        margin-top: 2px;
+      }
+
+      .phones {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .phone {
+        width: 240px;
+        height: 500px;
+        background: #0d2316;
+        border-radius: 30px;
+        padding: 8px;
+        border: 2px solid #8ca68e;
+        box-shadow: 0 20px 44px rgba(16, 55, 30, 0.22);
+      }
+
+      .phone img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        border-radius: 22px;
+        display: block;
+      }
+
+      .lessons-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 11px;
+        flex: 1;
+      }
+
+      .lesson {
+        background: rgba(250, 248, 242, 0.96);
+        border: 1.5px solid rgba(220, 232, 211, 0.6);
+        border-radius: 14px;
+        padding: 12px 16px;
+        color: var(--ink);
+      }
+
+      .lesson strong {
+        display: block;
+        font-size: 13.5px;
+        font-weight: 800;
+        margin-bottom: 3px;
+        color: var(--ink);
+      }
+
+      .lesson span {
+        display: block;
+        font-size: 12px;
+        line-height: 1.38;
+        color: var(--muted);
+      }
+
+      .lesson.wide {
+        grid-column: span 2;
+      }
+
+      .footer-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+        border-top: 1px solid var(--sage);
+        padding-top: 10px;
+        margin-top: 14px;
+      }
+
+      .slide.dark .footer-bar {
+        color: #b9ccb6;
+        border-color: rgba(220, 232, 211, 0.2);
+      }
+
+      @media print {
+        body {
+          background: none;
+          padding: 0;
+          gap: 0;
+        }
+        .slide {
+          box-shadow: none;
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SLAJD 1: TYTUŁOWY -->
+    <section class="slide dark">
+      <div class="top-bar">
+        <div class="kicker">HackNation 2026 · Wyzwanie ZUS</div>
+        <div class="slide-num">01 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack" style="gap: 18px;">
+          <h1>Zasiłkowy Przewodnik Przyszłego Rodzica</h1>
+          <p class="lead">
+            Kompleksowa aplikacja webowa (RWD), która prowadzi rodziców od pytania „ile dostanę i jakie mam terminy?” aż po gotowy wniosek ZAM oraz wniosek o urlop do pracodawcy.
+          </p>
+          <div class="pill-row">
+            <div class="pill">Stan prawny 2026</div>
+            <div class="pill">Next.js 15 + TypeScript</div>
+            <div class="pill">REST API + Supabase</div>
+            <div class="pill">40/40 testów Vitest</div>
+          </div>
+        </div>
+
+        <div class="shot-frame" style="border-color: rgba(220,232,211,0.45);">
+          <div class="shot-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span style="margin-left: 8px;">Strona główna — Zasiłkowy Przewodnik Rodzica</span>
+          </div>
+          <img src="../video-demo/assets/story/01-home.png" alt="Strona główna" />
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Repozytorium: github.com/theZabkka/przewodnik-rodzica-zus</span>
+        <span>ZUS · HackNation 2026</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 2: PROBLEM I HISTORIA ANNY I TOMKA -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Problem i kontekst wyzwania</div>
+        <div class="slide-num">02 / 10</div>
+      </div>
+
+      <h2>Dlaczego przyszli rodzice potrzebują przewodnika?</h2>
+      <p class="lead" style="margin-bottom: 18px;">
+        ZUS dowiaduje się o narodzinach dopiero po porodzie. Rodzice często nie znają terminów ani różnic między etatem, zleceniem i JDG — co prowadzi do utraty świadczeń i pism wyjaśniających.
+      </p>
+
+      <div class="grid-2-eq">
+        <div class="stack">
+          <div class="card sage">
+            <h3>Historia użytkownika: Anna (UoP) i Tomek (JDG)</h3>
+            <p>
+              Anna rodzi za 4 miesiące i chce wiedzieć, czy złożyć wniosek w 21 dni na 81,5%, czy wybrać 100%/70%. Tomek prowadzi własną firmę i musi sprawdzić, czy nie ma długu w składkach (&gt; 48,06 zł) oraz jak wykorzystać 9 nieprzenoszalnych tygodni dla ojca.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Najczęstsze pułapki prawne</h3>
+            <p>
+              • Przegapienie 21 dni po porodzie (utrata równej stawki 81,5%)<br />
+              • Mylenie okresu wyczekiwania: 30 dni (UoP) vs 90 dni (zlecenie/JDG)<br />
+              • Brak wiedzy o urlopie uzupełniającym dla wcześniaków (art. 180² KP)<br />
+              • Zadłużenie w JDG wstrzymujące wypłatę zasiłku (art. 2a ustawy)
+            </p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card" style="border-color: var(--green); background: #f3faf5;">
+            <h3>Nasze rozwiązanie — jedna spójna ścieżka</h3>
+            <p>
+              1. <strong>Sytuacja życiowa zamiast paragrafów</strong> — 4 intuicyjne ścieżki na starcie.<br />
+              2. <strong>Zintegrowany kalkulator 2026</strong> — dokładne kwoty i porównanie wariantów.<br />
+              3. <strong>Gotowe wnioski 1 kliknięciem</strong> — ZAM (A4 + QR) oraz wniosek o urlop do HR.<br />
+              4. <strong>Wsparcie w kryzysie i dostępność</strong> — spokojny język, lektor, WCAG i mobile.
+            </p>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi"><div class="v">21 dni</div><div class="l">kluczowy termin na 81,5%</div></div>
+            <div class="kpi"><div class="v">9 tyg.</div><div class="l">wyłącznie dla 2. rodzica</div></div>
+            <div class="kpi"><div class="v">do 15 tyg.</div><div class="l">extra dla wcześniaków</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Zasiłkowy Przewodnik Przyszłego Rodzica</span>
+        <span>Problem &rarr; Rozwiązanie</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 3: STRONA GŁÓWNA I DOSTĘPNOŚĆ -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Start i nawigacja · /</div>
+        <div class="slide-num">03 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Strona główna zaprojektowana bez przeładowania</h2>
+          <div class="card sage">
+            <h3>4 ścieżki życiowe</h3>
+            <p>Planuję dziecko (/przewodnik), Oczekuję dziecka (/kalkulator), Dziecko już się urodziło (/e-uslugi) oraz Przyjmuję dziecko pod opiekę (/kalkulator?tryb=adopcja).</p>
+          </div>
+          <div class="card">
+            <h3>Dostępność WCAG i logowanie w nagłówku</h3>
+            <p>Lektor głosowy „Posłuchaj” (Web Speech API PL), 3-stopniowe powiększanie liter (Aa), wysoki kontrast, słownik „Trudne słowa” oraz symulacja logowania mObywatel 2.0 / Profil Zaufany / eZUS.</p>
+          </div>
+          <div class="card warm">
+            <h3>Wyróżnione wsparcie w trudnych chwilach</h3>
+            <p>Spokojny, widoczny baner prowadzący prosto do praw i pomocy przy stracie ciąży, wcześniactwie lub ciężkiej diagnozie.</p>
+          </div>
+        </div>
+
+        <div class="shot-frame">
+          <div class="shot-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span style="margin-left: 8px;">/ — Strona główna</span>
+          </div>
+          <img src="../video-demo/assets/story/01-home.png" alt="Strona główna" />
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Moduł: Strona główna + Header WCAG + ZusLoginModal</span>
+        <span>03 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 4: ZINTEGROWANY KALKULATOR -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Serce aplikacji · /kalkulator</div>
+        <div class="slide-num">04 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Zintegrowany Kalkulator Świadczeń 2026</h2>
+          <div class="card sage">
+            <h3>Wszystkie sytuacje w jednym silniku</h3>
+            <p>Umowa o pracę, zlecenie i JDG; <strong>adopcja (do 14 lat) i rodzina zastępcza niezawodowa (7/10 lat, art. 183 KP)</strong>; liczba dzieci (1–5+); wcześniaki (art. 180² KP); ustawa „Za życiem” (65/67 tyg.).</p>
+          </div>
+          <div class="card">
+            <h3>Podział opieki, ½ etatu i ciąża</h3>
+            <p>Planer Mama &amp; Tata (9 tyg. nieprzenoszalne + 14 dni ojcowskiego), łączenie urlopu z pracą do ½ etatu, kalkulator L4 w ciąży (30/90 dni wyczekiwania), świadczenie rehabilitacyjne i art. 30 ust. 3.</p>
+          </div>
+          <div class="card" style="border-color: var(--green);">
+            <h3>Przeniesienie danych 1 kliknięciem</h3>
+            <p>Wyliczone parametry trafiają bezpośrednio do kreatora wniosku ZAM w zakładce e-Usługi.</p>
+          </div>
+        </div>
+
+        <div class="shot-frame">
+          <div class="shot-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span style="margin-left: 8px;">/kalkulator — Wynik: 5 274 zł/m-c · 76 532 zł łącznie</span>
+          </div>
+          <img src="../video-demo/assets/story/03-calc-result.png" alt="Wynik kalkulatora" />
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Deterministyczny silnik @hacknation/shared · 0% halucynacji</span>
+        <span>04 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 5: WNIOSKI ZAM, URLOP HR, eZUS I USC -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Wnioski i symulacje · /e-uslugi</div>
+        <div class="slide-num">05 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Wnioski i symulacja portali państwowych</h2>
+          <div class="card sage">
+            <h3>Wniosek ZAM (6 kroków + wydruk A4 z QR)</h3>
+            <p>Walidacja na żywo PESEL, NIP i NRB, licznik 21 dni, lista załączników, podgląd kartki A4 do druku i symulacja wysyłki z UPO.</p>
+          </div>
+          <div class="card">
+            <h3>Zaprojektowany Wniosek o urlop (Pracodawca)</h3>
+            <p>Osobny generator pisma do działu HR (łączny 81,5%, rodzicielski z ½ etatu, ojcowski, uzupełniający) z podglądem i pobraniem .txt.</p>
+          </div>
+          <div class="card">
+            <h3>mObywatel, Konto eZUS (JDG + POG), e-ZLA i USC</h3>
+            <p>Monitor zadłużenia JDG (próg 48,06 zł), zaświadczenie ZUS RWN, zapytanie ogólne POG, podgląd e-ZLA oraz 2-etapowy wniosek o odpis aktu urodzenia (skrócony / zupełny, art. 44–45 PASC).</p>
+          </div>
+        </div>
+
+        <div class="stack" style="gap: 14px;">
+          <div class="shot-frame">
+            <div class="shot-bar">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span style="margin-left: 8px;">/e-uslugi — Wniosek ZAM (A4) i Wniosek o urlop do pracodawcy</span>
+            </div>
+            <img src="../video-demo/assets/story/05-urlop-hr.png" alt="Wniosek o urlop do pracodawcy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>6 zakładek: ZAM · Urlop HR · mObywatel · eZUS JDG/POG · e-ZLA · USC</span>
+        <span>05 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 6: PRZEWODNIK I TRUDNE SYTUACJE -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Baza wiedzy i empatia · /przewodnik &amp; /trudne-sytuacje</div>
+        <div class="slide-num">06 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Przewodnik prawny i wsparcie w kryzysie</h2>
+          <div class="card sage">
+            <h3>Przewodnik krok po kroku (/przewodnik)</h3>
+            <p>Kto wypłaca zasiłek (płatnik &gt;20 ubezpieczonych vs ZUS), jakie druki złożyć (Z-3, Z-3a, ZAM, ZAS-53) oraz ostrzeżenia przed ryzykami (pozorność umowy, dług JDG, brak ubezpieczenia w dniu porodu).</p>
+          </div>
+          <div class="card warm">
+            <h3>Poronienie, martwe urodzenie i wcześniaki</h3>
+            <p>Spokojny język bez tabeli paragrafów: 8 tygodni zasiłku + checklista formalna, do 15 tyg. urlopu dla wcześniaków oraz ustawa „Za życiem” (65/67 tyg.).</p>
+          </div>
+          <div class="card">
+            <h3>Utrata pracy w ciąży &amp; Fundacje charytatywne</h3>
+            <p>Zasiłek w wysokości zasiłku macierzyńskiego (100%, art. 30 ust. 3), zweryfikowane fundacje (Wcześniak, Ernesta, Gajusz) oraz infolinia Rzecznika Praw Pacjenta (prawa pacjenta i procedury szpitalne).</p>
+          </div>
+        </div>
+
+        <div class="shot-frame">
+          <div class="shot-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span style="margin-left: 8px;">/trudne-sytuacje — Empatyczna ścieżka pomocy</span>
+          </div>
+          <img src="../video-demo/assets/screens/trudne-sytuacje.png" alt="Trudne sytuacje" />
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Linki w stopce: zus.pl · MRPiPS (gov.pl) · PIP (pip.gov.pl) · USC (gov.pl)</span>
+        <span>06 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 7: ASYSTENT /api/chat I ZAKRES UŻYCIA AI -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Doradca prawny i transparentność AI · /asystent-ai</div>
+        <div class="slide-num">07 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Serwerowy doradca &amp; jasny zakres AI</h2>
+          <div class="card sage">
+            <h3>Prawdziwy endpoint POST /api/chat</h3>
+            <p>Odpowiada w trybie prostego języka lub wykładni prawnej z uwzględnieniem umowy i etapu rodzica. Poprawnie rozróżnia m.in. 90 dni wyczekiwania na zleceniu/JDG (brak 33 dni od pracodawcy) i adopcję (art. 183 KP).</p>
+          </div>
+          <div class="card" style="border-color: var(--green);">
+            <h3>100% deterministyczny silnik (bez AI)</h3>
+            <p>Wszystkie kwoty w Kalkulatorze, walidacja PESEL/NIP/NRB w ZAM, Panel Administracyjny i Strefa Jurora działają wyłącznie na ścisłych, testowanych regułach TypeScript.</p>
+          </div>
+          <div class="card">
+            <h3>Gdzie wspieramy się AI (wymóg formalny)</h3>
+            <p>Opcjonalny model Gemini 2.5 Flash w /api/chat (z serwerowym fallbackiem regułowym ZUS 2026) oraz proces twórczy (ilustracje edukacyjne i wideo demo w HyperFrames).</p>
+          </div>
+        </div>
+
+        <div class="shot-frame">
+          <div class="shot-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span style="margin-left: 8px;">/asystent-ai — Realna odpowiedź z POST /api/chat</span>
+          </div>
+          <img src="../video-demo/assets/story/06-ai-answer.png" alt="Asystent odpowiedzi" />
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Jawne rozdzielenie: obliczenia = deterministyczne · tłumaczenie = AI</span>
+        <span>07 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 8: STREFA JURORA, PANEL ADMINA I REST API -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Testowanie i wdrożenie · /jury-sandbox · /admin · /api/*</div>
+        <div class="slide-num">08 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Strefa Jurora, Panel Admina i REST API</h2>
+          <div class="card sage">
+            <h3>Strefa Jurora (/jury-sandbox)</h3>
+            <p>6 spójnych scenariuszy testowych (w tym dług JDG blokujący wypłatę do 0 zł wg art. 2a oraz praca na ½ etatu) i upload własnych plików PDF z automatycznym wyliczeniem (np. wcześniak = 10 tyg. extra).</p>
+          </div>
+          <div class="card">
+            <h3>Panel Administracyjny (/admin)</h3>
+            <p>Edycja stawek procentowych (100%, 81,5%, 70%), płacy minimalnej (4 806 zł) i wymiarów urlopów w bazie Supabase — bez ingerencji programisty w kod.</p>
+          </div>
+          <div class="card">
+            <h3>Architektura REST API + Testy</h3>
+            <p>Endpointy <strong>POST /api/calculate</strong>, <strong>GET /api/parameters</strong>, <strong>POST /api/chat</strong> oraz <strong>40/40 testów jednostkowych Vitest</strong> w pakiecie @hacknation/shared.</p>
+          </div>
+        </div>
+
+        <div class="shot-frame">
+          <div class="shot-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span style="margin-left: 8px;">/jury-sandbox — Wgrany PDF wcześniaka (+10 tyg. uzupełniającego)</span>
+          </div>
+          <img src="../video-demo/assets/story/07-jury-pdf.png" alt="Strefa Jurora PDF" />
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Next.js 15 App Router · Supabase (RLS) · Vitest 40/40</span>
+        <span>08 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 9: RESPONSIVE WEB DESIGN I APLIKACJA MOBILNA -->
+    <section class="slide">
+      <div class="top-bar">
+        <div class="kicker">Mobile-First &amp; RWD · Telefon + Symulator</div>
+        <div class="slide-num">09 / 10</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stack">
+          <h2>Pełna wygoda na telefonie</h2>
+          <div class="card sage">
+            <h3>Czysty układ mobilny (RWD)</h3>
+            <p>Jednowierszowy nagłówek bez kolizji ikon, duże przyciski dotykowe, czytelne karty i szybki dostęp do kalkulatora, wniosków oraz lektora głosowego jedną ręką.</p>
+          </div>
+          <div class="card">
+            <h3>Wbudowany symulator i aplikacja Expo</h3>
+            <p>Na desktopie dostępny jest interaktywny podgląd smartfona z 5-zakładkową nawigacją dolną, a w monorepo znajduje się towarzysząca aplikacja mobilna Expo (React Native).</p>
+          </div>
+          <div class="pill-row">
+            <div class="pill light">RWD 360px – 1920px+</div>
+            <div class="pill light">Lektor głosowy PL</div>
+            <div class="pill light">WCAG Aa + Kontrast</div>
+          </div>
+        </div>
+
+        <div class="phones">
+          <div class="phone">
+            <img src="../video-demo/assets/story/08-mobile-home.png" alt="Widok mobilny start" />
+          </div>
+          <div class="phone">
+            <img src="../video-demo/assets/story/09-mobile-calc.png" alt="Widok mobilny kalkulator" />
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Dostępność na każdym urządzeniu — desktop, tablet, smartfon</span>
+        <span>09 / 10</span>
+      </div>
+    </section>
+
+    <!-- SLAJD 10: WNIOSKI I PODSUMOWANIE -->
+    <section class="slide dark">
+      <div class="top-bar">
+        <div class="kicker">Wnioski · Czego się nauczyliśmy</div>
+        <div class="slide-num">10 / 10</div>
+      </div>
+
+      <h2 style="margin-bottom: 14px; font-size: 30px;">Czego nauczyliśmy się, tworząc Zasiłkowy Przewodnik Rodzica</h2>
+
+      <div class="lessons-grid">
+        <div class="lesson">
+          <strong>1. Rodzic nie szuka świadczenia, tylko odpowiedzi na swoją sytuację</strong>
+          <span>Nikt nie wpisuje „zasiłek macierzyński za okres urlopu rodzicielskiego”. Rodzic pyta: „rodzę w kwietniu, ile dostanę?”. Aplikacja zaczyna od sytuacji życiowej.</span>
+        </div>
+        <div class="lesson">
+          <strong>2. Najwięcej problemów bierze się z terminów, a nie z kwot</strong>
+          <span>21 dni na ZAM, 30/90 dni karencji, 9 tygodni taty. Rodzic traci pieniądze głównie wtedy, gdy nie zna terminu — dlatego dodaliśmy ostrzeżenia i przypomnienia.</span>
+        </div>
+        <div class="lesson">
+          <strong>3. Wcześniejsza informacja oszczędza czas obu stronom</strong>
+          <span>ZUS dowiaduje się o dziecku dopiero po porodzie. Świadomy rodzic składa poprawny wniosek, a urząd nie musi wysyłać pism o uzupełnienie.</span>
+        </div>
+        <div class="lesson">
+          <strong>4. Ten sam zasiłek wygląda inaczej dla etatu, zlecenia i JDG</strong>
+          <span>Inna karencja, inny płatnik, przy JDG ryzyko zaległości w składkach. Jedno narzędzie musi to rozróżniać zamiast podawać ogólną odpowiedź.</span>
+        </div>
+        <div class="lesson">
+          <strong>5. Przepisy się zmieniają — liczby nie mogą być na sztywno w kodzie</strong>
+          <span>Stawki, progi i limity tygodni są w panelu administracyjnym, który urzędnik aktualizuje bez udziału programisty.</span>
+        </div>
+        <div class="lesson">
+          <strong>6. Za zasiłkami stoją ludzie w trudnych chwilach</strong>
+          <span>Przy stracie dziecka czy wcześniaku w szpitalu ważny jest spokojny język i prosta ścieżka, a nie tabela paragrafów.</span>
+        </div>
+        <div class="lesson wide">
+          <strong>7. Dostępność to nie dodatek</strong>
+          <span>Lektor, duży tekst, wysoki kontrast i wygodny widok na telefonie to dla wielu rodziców jedyny komfortowy sposób korzystania z usług urzędu.</span>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span>Repozytorium: github.com/theZabkka/przewodnik-rodzica-zus · Dziękujemy!</span>
+        <span>HackNation 2026 · ZUS</span>
+      </div>
+    </section>
+  </body>
+</html>
