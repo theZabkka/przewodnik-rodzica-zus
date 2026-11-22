@@ -445,11 +445,11 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
         </div>
       )}
 
-      {/* GŁÓWNA CZĘŚĆ: INTERAKTYWNY KREATOR PYTANIE PO PYTANIU */}
+      {/* GŁÓWNA CZĘŚĆ: INTERAKTYWNY KREATOR PYTANIE PO PYTANIU (NA PEŁNĄ SZEROKOŚĆ) */}
       {viewMode === "wizard" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Kolumny 1-7: Aktywne pytanie formularza */}
-          <div className="lg:col-span-7 bg-white border border-[#C6D6C3] rounded p-6 sm:p-8 space-y-6">
+        <div className="space-y-6 w-full">
+          {/* Pełnoszerokościowy blok aktywnego pytania */}
+          <div className="w-full bg-white border border-[#C6D6C3] rounded-2xl p-6 sm:p-8 space-y-6">
             {/* Pasek postępu kroków */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
@@ -1172,63 +1172,47 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
  className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded transition-colors "
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Zobacz pełne wyliczenie wyników</span>
+                  <span>Potwierdź odpowiedzi i zobacz wyniki</span>
                 </button>
               )}
             </div>
           </div>
 
-          {/* Kolumny 8-12: Boczny panel podglądu Twoich odpowiedzi */}
-          <div className="lg:col-span-5 bg-[#FAF8F2] border border-[#C6D6C3] rounded p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#C6D6C3] pb-2.5">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#10371E] flex items-center gap-1.5">
-                <ListFilter className="w-4 h-4 text-[#007834]" />
-                <span>Twoje odpowiedzi:</span>
-              </h3>
-              <span className="text-[11px] text-slate-400">Kliknij, by zmienić</span>
-            </div>
+          {/* Podsumowanie odpowiedzi — pokazywane dopiero na ostatnim kroku przed wynikami */}
+          {currentStep === totalSteps && (
+            <div className="w-full bg-[#EFF3EA] border border-[#C6D6C3] rounded-2xl p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#C6D6C3] pb-3">
+                <h3 className="text-sm font-extrabold text-[#10371E] flex items-center gap-2">
+                  <ListFilter className="w-4 h-4 text-[#007834]" />
+                  <span>Twoje odpowiedzi — sprawdź, czy wszystko się zgadza</span>
+                </h3>
+                <span className="text-xs text-[#425B4A]">Kliknij dowolny kafelek, aby zmienić odpowiedź</span>
+              </div>
 
-            <div className="space-y-2 text-xs">
-              {[
-                { step: 1, label: "Wnioskodawca", val: parentRole === "mother" ? "Matka dziecka" : "Ojciec dziecka" },
-                { step: 2, label: "Umowa", val: contractType === "employment" ? "Umowa o pracę (UoP)" : contractType === "mandate" ? "Zlecenie" : "Działalność JDG" },
-                { step: 3, label: "Średnie brutto", val: `${grossSalary.toLocaleString("pl-PL")} PLN` },
-                { step: 4, label: "Liczba dzieci", val: childrenCount === 1 ? "1 dziecko (20 tyg.)" : childrenCount === 2 ? "Bliźnięta (31 tyg.)" : "Trojaczki+" },
-                { step: 5, label: "Termin 21 dni", val: submittedIn21Days ? "TAK (stawka 81,5%)" : "NIE (100% / 70%)" },
-                { step: 6, label: "Wcześniak / Szpital", val: isPretermOrHospitalized ? `TAK (+${activeResults.supplementaryWeeks} tyg.)` : "NIE" },
-                { step: 7, label: "Łączenie z pracą", val: worksPartTime ? `TAK (${workFteRatio} etatu)` : "NIE" },
-                { step: 8, label: "Urlop ojcowski", val: includePaternityLeave ? "TAK (14 dni)" : "NIE" },
- ].map((item) => (
-                <button
- key={item.step}
- type="button"
- onClick={() => setCurrentStep(item.step)}
- className={`w-full flex items-center justify-between p-2 rounded border text-left transition-colors ${
- currentStep === item.step
-                      ? "bg-white border-[#007834] font-bold text-[#007834] "
-                      : "bg-white/80 border-[#C6D6C3] text-[#2E4B38] hover:bg-white"
-                  }`}
-                >
-                  <span className="text-slate-500 font-medium">{item.label}:</span>
-                  <span className="font-bold">{item.val}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Szybki podgląd wyliczonej kwoty */}
-            <div className="pt-2 border-t border-[#C6D6C3]">
-              <div className="bg-white p-3.5 rounded border border-[#C6D6C3] space-y-1">
-                <span className="text-[11px] text-slate-500 font-medium">Aktualnie wyliczony zasiłek miesięczny:</span>
-                <div className="text-xl font-black text-[#007834]">
-                  {activeResults.maternityMonthlyBenefit.toLocaleString("pl-PL", { maximumFractionDigits: 0 })} zł
-                  <span className="text-xs font-normal text-slate-500"> / m-c</span>
-                </div>
-                <div className="text-[10px] text-slate-400">
-                  Łączna pula świadczeń: <strong>{activeResults.totalBenefitAmountSum.toLocaleString("pl-PL", { maximumFractionDigits: 0 })} zł</strong>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                {[
+                  { step: 1, label: "Wnioskodawca", val: parentRole === "mother" ? "Matka dziecka" : "Ojciec dziecka" },
+                  { step: 2, label: "Umowa", val: contractType === "employment" ? "Umowa o pracę (UoP)" : contractType === "mandate" ? "Zlecenie" : "Działalność JDG" },
+                  { step: 3, label: "Średnie brutto", val: `${grossSalary.toLocaleString("pl-PL")} PLN` },
+                  { step: 4, label: "Liczba dzieci", val: childrenCount === 1 ? "1 dziecko (20 tyg.)" : childrenCount === 2 ? "Bliźnięta (31 tyg.)" : "Trojaczki+" },
+                  { step: 5, label: "Termin 21 dni", val: submittedIn21Days ? "TAK (stawka 81,5%)" : "NIE (100% / 70%)" },
+                  { step: 6, label: "Wcześniak / Szpital", val: isPretermOrHospitalized ? `TAK (+${activeResults.supplementaryWeeks} tyg.)` : "NIE" },
+                  { step: 7, label: "Łączenie z pracą", val: worksPartTime ? `TAK (${workFteRatio} etatu)` : "NIE" },
+                  { step: 8, label: "Urlop ojcowski", val: includePaternityLeave ? "TAK (14 dni)" : "NIE" },
+                ].map((item) => (
+                  <button
+                    key={item.step}
+                    type="button"
+                    onClick={() => setCurrentStep(item.step)}
+                    className="bg-white hover:border-[#10371E] border border-[#C6D6C3] rounded-xl p-3 text-left transition-colors flex flex-col gap-1"
+                  >
+                    <span className="text-[11px] text-[#425B4A] font-medium">{item.step}. {item.label}</span>
+                    <span className="font-bold text-[#10371E]">{item.val}</span>
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 

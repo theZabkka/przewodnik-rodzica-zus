@@ -4,7 +4,6 @@ import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import {
- Compass,
  Calendar,
  Clock,
  CheckCircle2,
@@ -18,7 +17,6 @@ import {
  FileText,
  Download,
  BookOpen,
- Sparkles,
 } from "lucide-react";
 
 interface Milestone {
@@ -302,17 +300,21 @@ export default function PrzewodnikPage() {
       </nav>
       {/* Nagłówek Modułu */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#C6D6C3] pb-6">
-        <div>
-          <div className="inline-flex items-center gap-2 text-[#007834] font-semibold text-xs tracking-wider uppercase mb-1">
-            <Compass className="w-4 h-4" />
-            <span>Plan formalności i uprawnień rodzica</span>
-          </div>
+        <div className="space-y-1.5">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#10371E] tracking-tight">
             Co Ci przysługuje krok po kroku
           </h1>
-          <p className="text-sm text-[#425B4A] mt-1 max-w-2xl leading-relaxed">
+          <p className="text-sm text-[#425B4A] max-w-2xl leading-relaxed">
             Cztery etapy: ciąża, poród i termin 21 dni, urlop taty oraz powrót do pracy.
           </p>
+          <button
+            type="button"
+            onClick={() => openGlossary()}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#10371E] hover:text-[#007834] underline underline-offset-4 pt-1"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Trudne słowa — wyjaśniamy prosto</span>
+          </button>
         </div>
 
         {/* Pasek postępu checklisty */}
@@ -355,28 +357,6 @@ export default function PrzewodnikPage() {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Przycisk słowniczka i informacja o profilu */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-[#C6D6C3] rounded ">
-        <div className="flex items-center gap-2 text-xs text-[#2E4B38]">
-          <Sparkles className="w-4 h-4 text-[#007834]" />
-          <span>
-            {profile ? (
-              <span>Dopasowano harmonogram do profilu: <strong>{profile.whoOnLeave === "both" ? "Oboje rodzice" : profile.whoOnLeave === "father" ? "Tata" : "Mama"} ({profile.childrenCount} dziecko)</strong></span>
-            ) : (
-              <span>Skorzystaj z profilu rodziny, aby automatycznie spersonalizować terminy.</span>
-            )}
-          </span>
-        </div>
-        <button
- type="button"
- onClick={() => openGlossary()}
- className="px-3.5 py-1.5 bg-[#EFF3EA] hover:bg-[#DCE8D3] text-[#10371E] border border-[#B9CCB6] rounded text-xs font-bold transition-colors inline-flex items-center gap-1.5 "
-        >
-          <BookOpen className="w-3.5 h-3.5 text-[#10371E]" />
-          <span>Słowniczek Trudnych Słów ZUS</span>
-        </button>
       </div>
 
       {/* Kalkulator Kluczowych Dat i Terminów Urzędowych */}

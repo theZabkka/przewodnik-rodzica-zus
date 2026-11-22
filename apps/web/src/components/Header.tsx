@@ -7,10 +7,12 @@ import {
   Menu,
   X,
   Eye,
+  Phone,
   Smartphone,
   Volume2,
   VolumeX,
   Lock,
+  LogIn,
 } from "lucide-react";
 import { ZusLogo } from "./ZusLogo";
 import { MobileSimulatorModal } from "./MobileSimulatorModal";
@@ -90,17 +92,17 @@ export function Header() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  // Całkowite odseparowanie: ukrycie nagłówka klienta w panelu pracownika (intranet ZUS)
   if (pathname?.startsWith("/panel-pracownika")) {
     return null;
   }
 
   const navItems = [
+    { href: "/", label: "Strona główna" },
     { href: "/przewodnik", label: "Przewodnik" },
-    { href: "/kalkulator", label: "Kalkulator" },
-    { href: "/e-uslugi", label: "Wniosek ZAM" },
-    { href: "/trudne-sytuacje", label: "Wsparcie" },
-    { href: "/asystent-ai", label: "Zapytaj" },
+    { href: "/kalkulator", label: "Kalkulator zasiłku" },
+    { href: "/e-uslugi", label: "Wniosek ZAM i eZUS" },
+    { href: "/trudne-sytuacje", label: "Wsparcie szczególne" },
+    { href: "/asystent-ai", label: "Zapytaj AI" },
   ];
 
   return (
@@ -112,44 +114,42 @@ export function Header() {
         Przejdź do treści głównej
       </a>
 
-      {/* JEDEN czysty, spokojny nagłówek wyrównany dokładnie do max-w-6xl */}
+      {/* RZĄD 1: Logo ZUS, tytuł, infolinia i narzędzia dostępności (bez Rzeczpospolita Polska i godła) */}
       <div
         className={`max-w-6xl mx-auto flex items-center justify-between gap-3 ${
-          isInMobileFrame ? "px-3 py-2.5" : "px-4 sm:px-6 py-3.5"
+          isInMobileFrame ? "px-3 py-2.5" : "px-4 sm:px-6 py-3"
         }`}
       >
-        {/* Lewa strona: Logo ZUS + prosty tytuł */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 focus:outline-none">
-          <ZusLogo size="sm" showText={false} />
-          <span className="text-base sm:text-lg font-extrabold text-[#10371E] tracking-tight whitespace-nowrap">
-            Przewodnik Rodzica
-          </span>
-        </Link>
+        {/* Lewa strona: Logo ZUS + tytuł + infolinia */}
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 focus:outline-none">
+            <span className={isInMobileFrame ? "block" : "sm:hidden"}>
+              <ZusLogo size="sm" showText={false} />
+            </span>
+            {!isInMobileFrame && (
+              <span className="hidden sm:block">
+                <ZusLogo size="sm" />
+              </span>
+            )}
+            <span className="text-base sm:text-lg font-extrabold text-[#10371E] tracking-tight whitespace-nowrap">
+              Przewodnik Rodzica
+            </span>
+          </Link>
 
-        {/* Środek: Prosta nawigacja na desktopie */}
-        {!isInMobileFrame && (
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Menu główne">
-            {navItems.map((item) => {
-              const isActive =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap ${
-                    isActive
-                      ? "bg-[#DCE8D3] text-[#10371E]"
-                      : "text-[#355240] hover:text-[#10371E] hover:bg-[#EFF3EA]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-        )}
+          {!isInMobileFrame && (
+            <a
+              href="tel:225601600"
+              className="hidden md:inline-flex items-center gap-1.5 text-xs text-[#355240] hover:text-[#007834] border-l border-[#C6D6C3] pl-4 whitespace-nowrap transition-colors"
+              title="Infolinia ZUS (pn.–pt. 7:00–18:00)"
+            >
+              <Phone className="w-3.5 h-3.5 text-[#007834]" />
+              <span>Infolinia:</span>
+              <strong className="text-[#10371E]">22 560 16 00</strong>
+            </a>
+          )}
+        </div>
 
-        {/* Prawa strona: Posłuchaj, Aa Wielkość liter, Kontrast, (Mobilna na desktopie), Menu */}
+        {/* Prawa strona: Posłuchaj, Aa Wielkość liter, Kontrast, eZUS, Mobilna, Intranet */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             type="button"
@@ -179,7 +179,7 @@ export function Header() {
             title="Zmień wielkość liter"
           >
             <span>Aa</span>
-            <span className={isInMobileFrame ? "hidden" : "hidden md:inline"}>
+            <span className={isInMobileFrame ? "hidden" : "hidden lg:inline"}>
               Wielkość liter{fontSizeLevel === 1 ? " (+)" : fontSizeLevel === 2 ? " (++)" : ""}
             </span>
           </button>
@@ -201,12 +201,21 @@ export function Header() {
 
           {!isInMobileFrame && (
             <>
+              <Link
+                href="/e-uslugi"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#10371E] hover:bg-[#007834] text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-colors whitespace-nowrap"
+                title="Przejdź do wniosku ZAM i PUE/eZUS"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span>PUE/eZUS</span>
+              </Link>
+
               <button
                 type="button"
                 onClick={() => setIsSimulatorOpen(true)}
                 className="hidden sm:inline-flex items-center gap-1 p-1.5 sm:px-2.5 sm:py-1.5 bg-white hover:bg-[#DCE8D3] text-[#10371E] border-[1.5px] border-[#B9CCB6] rounded-xl text-xs font-bold transition-colors"
-                title="Podgląd wersji mobilnej"
-                aria-label="Podgląd wersji mobilnej"
+                title="Podgląd aplikacji mobilnej"
+                aria-label="Podgląd aplikacji mobilnej"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
@@ -234,22 +243,47 @@ export function Header() {
         </div>
       </div>
 
+      {/* RZĄD 2: Wyraźny, czytelny pasek nawigacji głównej */}
+      {!isInMobileFrame && (
+        <nav className="hidden lg:block bg-[#EFF3EA] border-t border-[#DCE8D3]" aria-label="Menu główne">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              {navItems.map((item) => {
+                const isActive =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`px-3.5 py-2.5 text-[13px] font-bold border-b-[3px] transition-colors whitespace-nowrap ${
+                      isActive
+                        ? "border-[#10371E] text-[#10371E] bg-[#DCE8D3]/50"
+                        : "border-transparent text-[#355240] hover:text-[#10371E] hover:border-[#B9CCB6]"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <span className="text-xs text-[#425B4A] whitespace-nowrap">
+              Stan prawny: <strong className="text-[#10371E]">2026</strong>
+            </span>
+          </div>
+        </nav>
+      )}
+
       {/* Mobilne menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#FAF8F2] border-t border-[#C6D6C3] px-4 py-3 space-y-1">
-          <Link
-            href="/"
-            className={`block px-3 py-2.5 rounded-xl text-sm font-bold ${
-              pathname === "/"
-                ? "bg-[#DCE8D3] text-[#10371E]"
-                : "text-[#10371E] hover:bg-[#EFF3EA]"
-            }`}
-          >
-            Strona główna
-          </Link>
           {navItems.map((item) => {
             const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`);
+              item.href === "/"
+                ? pathname === "/"
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
