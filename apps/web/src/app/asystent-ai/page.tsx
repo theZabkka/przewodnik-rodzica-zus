@@ -244,7 +244,7 @@ export default function AsystentAiPage() {
  return null;
   };
 
- const sendMessage = (textToSend: string) => {
+ const sendMessage = async (textToSend: string) => {
  if (!textToSend.trim()) return;
 
  const userMsg: ChatMessage = {
@@ -258,51 +258,84 @@ export default function AsystentAiPage() {
  setInputText("");
  setIsTyping(true);
 
- setTimeout(() => {
- setIsTyping(false);
+ try {
+   const [simpleRes, legalRes] = await Promise.all([
+     fetch("/api/chat", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({
+         message: textToSend,
+         simpleMode: true,
+         context: {
+           role: userContext.role,
+           contract: userContext.contract,
+           stage: userContext.stage,
+         },
+       }),
+     }),
+     fetch("/api/chat", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({
+         message: textToSend,
+         simpleMode: false,
+         context: {
+           role: userContext.role,
+           contract: userContext.contract,
+           stage: userContext.stage,
+         },
+       }),
+     }),
+   ]);
+
+   const simpleData = await simpleRes.json();
+   const legalData = await legalRes.json();
+
+   if (simpleData?.ok && simpleData?.reply) {
+     const engineLabel =
+       simpleData.engine === "gemini-2.5-flash"
+         ? "Model AI: Gemini 2.5 Flash (API)"
+         : "Serwerowy silnik reguł prawnych ZUS 2026 (/api/chat)";
+
+     const aiMsg: ChatMessage = {
+       id: `ai-${Date.now()}`,
+       sender: "ai",
+       text: isSimpleMode ? simpleData.reply : (legalData?.reply || simpleData.reply),
+       simpleText: simpleData.reply,
+       legalText: legalData?.reply || simpleData.reply,
+       legalReferences: [simpleData.legalBasis || "Ustawa zasiłkowa 2026", engineLabel],
+       recommendationTips: [
+         "Dokładne wyliczenie kwot i wymiaru urlopu sprawdzisz w zakładce Kalkulator zasiłku.",
+         "Gotowy wniosek ZAM oraz wniosek o urlop do pracodawcy wygenerujesz w zakładce Wnioski.",
+       ],
+       timestamp: "Teraz",
+     };
+     setMessages((prev) => [...prev, aiMsg]);
+     setIsTyping(false);
+     return;
+   }
+ } catch {
+   // Fallback offline jeśli serwer chwilowo niedostępny
+ }
 
  const matched = findBestAnswer(textToSend);
+ const fallbackSimple = matched?.simple || "Nie udało się połączyć z serwerem /api/chat. Spróbuj ponownie za chwilę lub skorzystaj z Kalkulatora zasiłku.";
+ const fallbackLegal = matched?.legal || fallbackSimple;
 
- let simpleResponse = "";
- let legalResponse = "";
- let refs: string[] = [];
- let tips: string[] = [];
-
- if (matched) {
- simpleResponse = matched.simple;
- legalResponse = matched.legal;
- refs = matched.refs;
- tips = matched.tips;
-      } else {
- simpleResponse = `Zgodnie ze stanem prawnym 2026, dla Twojej formy umowy (${
- userContext.contract === "employment"
-            ? "umowa o pracę"
-            : userContext.contract === "b2b"
-            ? "działalność JDG"
-            : "zlecenie"
-        }) oraz wynagrodzenia ${userContext.salaryGross} zł, przysługuje Ci ochrona zasiłkowa. Pamiętaj o kluczowym terminie 21 dni po porodzie na złożenie wniosku ZAM (stawka 81,5%), 9 nieprzenoszalnych tygodniach dla ojca oraz prawie do łączenia rodzicielskiego z pracą na 1/2 etatu z wydłużeniem urlopu.`;
- legalResponse =
-          "Kwestie prawa do zasiłku macierzyńskiego, urlopu rodzicielskiego i ojcowskiego reguluje art. 176–189¹ Kodeksu pracy oraz ustawa z 25 czerwca 1999 r. o świadczeniach pieniężnych z ubezpieczenia społecznego w razie choroby i macierzyństwa (Dz.U. z 2026 r. poz. 854). Wypłata następuje w terminie 30 dni od wyjaśnienia ostatniej okoliczności.";
- refs = ["Ustawa zasiłkowa 2026", "Kodeks pracy Dział VIII"];
- tips = [
-          "Sprawdź kalkulator na naszej stronie, by zobaczyć dokładny harmonogram wypłat miesiąc po miesiącu.",
-          "W portalu eZUS/PUE możesz złożyć wniosek ZAM z Urzędowym Poświadczeniem Odbioru (UPO).",
- ];
-      }
-
- const aiMsg: ChatMessage = {
- id: `ai-${Date.now()}`,
- sender: "ai",
- text: isSimpleMode ? simpleResponse : legalResponse,
- simpleText: simpleResponse,
- legalText: legalResponse,
- legalReferences: refs,
- recommendationTips: tips,
- timestamp: "Teraz",
-      };
-
- setMessages((prev) => [...prev, aiMsg]);
-    }, 700);
+ setMessages((prev) => [
+   ...prev,
+   {
+     id: `ai-${Date.now()}`,
+     sender: "ai",
+     text: isSimpleMode ? fallbackSimple : fallbackLegal,
+     simpleText: fallbackSimple,
+     legalText: fallbackLegal,
+     legalReferences: matched?.refs || ["Ustawa zasiłkowa 2026"],
+     recommendationTips: matched?.tips || [],
+     timestamp: "Teraz",
+   },
+ ]);
+ setIsTyping(false);
   };
 
  return (

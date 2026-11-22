@@ -176,6 +176,9 @@ export default function EUslugiPage() {
  const [uscActNumber, setUscActNumber] = useState<string>("USC/WAW/2026/04192");
  const [uscChildPesel, setUscChildPesel] = useState<string>("26231508912");
  const [uscIsDownloaded, setUscIsDownloaded] = useState<boolean>(false);
+ const [uscCopyType, setUscCopyType] = useState<"skrocony" | "zupelny">("skrocony");
+ const [uscRequestSubmitted, setUscRequestSubmitted] = useState<boolean>(false);
+ const [uscRequestRef, setUscRequestRef] = useState<string>("");
 
  const handleDownloadZusRwn = () => {
    const text = `ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH
@@ -1964,7 +1967,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
  Nowe zwolnienie lekarskie e-ZLA (kod literowy „B”)
                   </span>
                   <p className="text-xs text-[#425B4A]">
- Lekarz ginekolog wystawił zwolnienie lekarskie w okresie ciąży na 28 dni. Przysługuje 100% zasiłku chorobowego bez okresu wyczekiwania.
+ Lekarz ginekolog wystawił zwolnienie lekarskie w okresie ciąży na 28 dni (kod „B”). Przysługuje 100% podstawy zasiłku chorobowego po spełnieniu okresu wyczekiwania (30 dni na UoP lub 90 dni przy dobrowolnym ubezpieczeniu: zlecenie/JDG).
                   </p>
                 </div>
               </div>
@@ -2305,44 +2308,101 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                 </div>
               </div>
 
-              {/* Informacja o braku konieczności dostarczania papierowego odpisu */}
+              {/* Wybór rodzaju odpisu */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-[#2E4B38] block">
+                  Rodzaj wnioskowanego odpisu aktu urodzenia:
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setUscCopyType("skrocony")}
+                    className={`px-3 py-2 rounded text-xs font-bold border transition-colors ${
+                      uscCopyType === "skrocony"
+                        ? "bg-[#007834] text-white border-[#007834]"
+                        : "bg-white text-[#10371E] border-[#B9CCB6] hover:bg-[#EFF3EA]"
+                    }`}
+                  >
+                    Odpis skrócony (standardowy do ZUS)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setUscCopyType("zupelny")}
+                    className={`px-3 py-2 rounded text-xs font-bold border transition-colors ${
+                      uscCopyType === "zupelny"
+                        ? "bg-[#007834] text-white border-[#007834]"
+                        : "bg-white text-[#10371E] border-[#B9CCB6] hover:bg-[#EFF3EA]"
+                    }`}
+                  >
+                    Odpis zupełny
+                  </button>
+                </div>
+              </div>
+
+              {/* Informacja prawna o USC */}
               <div className="p-3.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-xl text-xs space-y-1.5 text-[#10371E]">
                 <div className="flex items-center gap-2 font-bold text-[#007834]">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
-                  <span>Elektroniczny obieg dokumentów z ZUS</span>
+                  <span>Podstawa prawna wydania odpisu z USC</span>
                 </div>
                 <p className="text-[11px] text-[#425B4A] leading-relaxed">
-                  ZUS weryfikuje fakt urodzenia dziecka bezpośrednio w Rejestrze Stanu Cywilnego (art. 61a KPA).
-                  Jeżeli akt urodzenia został sporządzony w Polsce, <strong>nie musisz dołączać papierowego zaświadczenia</strong> &ndash;
-                  wystarczy podać numer aktu we wniosku ZAM!
+                  Odpisy skrócone i zupełne aktów stanu cywilnego wydaje się na podstawie <strong>art. 44–45 ustawy z dnia 28 listopada 2014 r. &ndash; Prawo o aktach stanu cywilnego</strong>. Elektroniczny wniosek na gov.pl pozwala uzyskać odpis bez wizyty w urzędzie i podać numer aktu we wniosku ZAM.
                 </p>
               </div>
 
               {/* Przyciski Akcji */}
               <div className="flex flex-wrap gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={handleDownloadUscAct}
-                  className="inline-flex items-center gap-2 bg-white hover:bg-[#EFF3EA] text-[#10371E] border border-[#B9CCB6] font-bold text-xs px-4 py-2.5 rounded transition-colors shadow-xs"
-                >
-                  <Download className="w-4 h-4 text-[#007834]" />
-                  <span>{uscIsDownloaded ? "Pobrano odpis (.txt)" : "Pobierz odpis skrócony aktu"}</span>
-                </button>
+                {!uscRequestSubmitted ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUscRequestRef(`USC/GOV/2026/${Math.floor(100000 + Math.random() * 900000)}`);
+                      setUscRequestSubmitted(true);
+                    }}
+                    className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-5 py-2.5 rounded transition-colors shadow-xs"
+                  >
+                    <FileCheck className="w-4 h-4" />
+                    <span>Złóż wniosek o odpis {uscCopyType === "skrocony" ? "skrócony" : "zupełny"} (symulacja gov.pl)</span>
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleDownloadUscAct}
+                      className="inline-flex items-center gap-2 bg-white hover:bg-[#EFF3EA] text-[#10371E] border border-[#B9CCB6] font-bold text-xs px-4 py-2.5 rounded transition-colors shadow-xs"
+                    >
+                      <Download className="w-4 h-4 text-[#007834]" />
+                      <span>{uscIsDownloaded ? "Pobrano odpis (.txt)" : `Pobierz odpis ${uscCopyType === "skrocony" ? "skrócony" : "zupełny"}`}</span>
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={handleTransferUscToZam}
-                  className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-4 py-2.5 rounded transition-colors shadow-xs"
-                >
-                  <FileCheck className="w-4 h-4" />
-                  <span>Przenieś do wniosku ZAM</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                    <button
+                      type="button"
+                      onClick={handleTransferUscToZam}
+                      className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-4 py-2.5 rounded transition-colors shadow-xs"
+                    >
+                      <FileCheck className="w-4 h-4" />
+                      <span>Przenieś do wniosku ZAM</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
-            {/* Podgląd wizualny odpisu urzędowego */}
+            {/* Podgląd wizualny odpisu urzędowego — pojawia się dopiero po złożeniu wniosku */}
+            {!uscRequestSubmitted ? (
+              <div className="bg-[#FAF8F2] border-2 border-dashed border-[#B9CCB6] rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-3">
+                <Landmark className="w-10 h-10 text-[#007834]" />
+                <h4 className="text-sm font-bold text-[#10371E]">Wniosek o odpis nie został jeszcze złożony</h4>
+                <p className="text-xs text-[#425B4A] max-w-sm leading-relaxed">
+                  Uzupełnij dane dziecka po lewej stronie, wybierz rodzaj odpisu (skrócony lub zupełny) i kliknij <strong>„Złóż wniosek o odpis”</strong>, aby zasymulować pobranie dokumentu z Rejestru Stanu Cywilnego.
+                </p>
+              </div>
+            ) : (
             <div className="bg-[#FAF8F2] border-2 border-dashed border-[#B9CCB6] rounded-2xl p-6 relative font-serif text-[#10371E] space-y-4">
+              <div className="text-[11px] font-sans font-bold text-[#007834] bg-[#EFF3EA] border border-[#007834]/30 px-3 py-1.5 rounded-lg">
+                Wniosek złożony ({uscRequestRef}) · Wydano odpis {uscCopyType === "skrocony" ? "skrócony" : "zupełny"}
+              </div>
               <div className="text-center space-y-1 border-b border-[#DCE8D3] pb-3">
                 <div className="w-10 h-10 mx-auto rounded-full bg-[#10371E] text-white flex items-center justify-center font-bold text-xs">
                   RP
@@ -2394,6 +2454,7 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
                 </div>
               </div>
             </div>
+            )}
           </div>
         </div>
       )}

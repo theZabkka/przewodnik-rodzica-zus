@@ -555,7 +555,7 @@ export default function PanelPracownikaPage() {
           <div className="p-3.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-2xl flex items-start gap-2.5 text-xs text-[#1D4029]">
             <ShieldCheck className="w-4 h-4 text-[#007834] shrink-0 mt-0.5" />
             <p className="leading-snug">
-              <strong>Środowisko produkcyjne ZUS:</strong> System połączony z bazą centralną Supabase (ID: <code className="font-mono font-bold">uoxsgfxaimkwsasukkdh</code>).
+              <strong>Środowisko demonstracyjne (MVP):</strong> System połączony z chmurową bazą danych Supabase (tryb testowy).
             </p>
           </div>
 

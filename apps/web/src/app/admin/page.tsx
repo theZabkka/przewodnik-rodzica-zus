@@ -50,13 +50,13 @@ export default function AdminPage() {
   // Status publikacji i wersjonowanie
  const [isSaving, setIsSaving] = useState<boolean>(false);
  const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
- const [activeVersionName, setActiveVersionName] = useState<string>("2026.1-PROD (Stan oficjalny)");
+ const [activeVersionName, setActiveVersionName] = useState<string>("2026.1-MVP (Stan prawny 2026)");
  const [auditLog, setAuditLog] = useState<AuditEntry[]>([
     {
  id: "log-1",
- version: "2026.1-PROD",
+ version: "2026.1-MVP",
  timestamp: "2026-01-01 00:00",
- author: "Departament Zasiłków ZUS",
+ author: "Administrator systemu (MVP)",
  changesSummary: "Wdrożenie stawek 2026: płaca minimalna 4806 zł, zasiłek pogrzebowy 7000 zł, uzupełniający urlop dla wcześniaków art. 180² KP",
  status: "published",
     },
@@ -64,7 +64,7 @@ export default function AdminPage() {
  id: "log-2",
  version: "2025.2-ARCHIVE",
  timestamp: "2025-07-01 10:15",
- author: "Główny Inspektorat ZUS",
+ author: "Administrator systemu (MVP)",
  changesSummary: "Aktualizacja progu zadłużenia składkowego JDG (1% z płacy minimalnej = 48,06 zł)",
  status: "published",
     },

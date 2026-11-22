@@ -88,6 +88,21 @@ export default function KalkulatorPage() {
  const [workFteRatio, setWorkFteRatio] = useState<number>(0.5);
  const [workWeeks, setWorkWeeks] = useState<number>(16);
 
+  // Odczyt parametru URL ?tryb=adopcja z kafelka "Przyjmuję dziecko pod opiekę"
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tryb = params.get("tryb");
+      if (tryb === "adopcja") {
+        setParenthoodType("adoption");
+        setCalcTab("standard");
+      } else if (tryb === "zastepcza") {
+        setParenthoodType("foster_family");
+        setCalcTab("standard");
+      }
+    }
+  }, []);
+
   // Wczytaj dane z Centralnego Profilu Rodziny, jeśli użytkownik przeszedł wcześniej kreator
  useEffect(() => {
  if (profile) {
@@ -283,10 +298,11 @@ export default function KalkulatorPage() {
         ) * 100
       ) / 100;
 
+ // Przy różnicy mniejszej niż 500 zł w skali roku rekomendujemy równą stawkę 81,5% (stabilny budżet domowy)
  const recommended =
- variantUnified.totalBenefitAmountSum >= variantStandard.totalBenefitAmountSum
-        ? "unified"
-        : "standard";
+ variantStandard.totalBenefitAmountSum - variantUnified.totalBenefitAmountSum > 500
+        ? "standard"
+        : "unified";
 
  return {
  variantUnified,
@@ -696,6 +712,93 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
                         </p>
                       </div>
                     </button>
+                  </div>
+
+                  {/* Wybór rodzaju rodzicielstwa: Poród / Adopcja / Rodzina zastępcza niezawodowa (art. 183 KP) */}
+                  <div className="pt-4 border-t border-[#DCE8D3] space-y-3">
+                    <div>
+                      <span className="text-xs font-bold text-[#10371E] block">
+                        Sytuacja rodzinna (poród, adopcja czy rodzina zastępcza niezawodowa?):
+                      </span>
+                      <p className="text-[11px] text-[#425B4A]">
+                        Zgodnie z art. 183 Kodeksu pracy rodzicom adopcyjnym i rodzinie zastępczej niezawodowej przysługuje urlop na warunkach urlopu macierzyńskiego oraz urlop rodzicielski.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setParenthoodType("birth")}
+                        className={`p-3.5 rounded-lg border-2 text-left transition-all ${
+                          parenthoodType === "birth"
+                            ? "border-[#007834] bg-[#EFF3EA]"
+                            : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
+                        }`}
+                      >
+                        <div className="text-xs font-bold text-[#10371E]">Urodzenie dziecka (poród)</div>
+                        <div className="text-[11px] text-[#425B4A] mt-0.5">Standardowy urlop macierzyński i rodzicielski</div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setParenthoodType("adoption")}
+                        className={`p-3.5 rounded-lg border-2 text-left transition-all ${
+                          parenthoodType === "adoption"
+                            ? "border-[#007834] bg-[#EFF3EA]"
+                            : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
+                        }`}
+                      >
+                        <div className="text-xs font-bold text-[#10371E]">Adopcja (przysposobienie)</div>
+                        <div className="text-[11px] text-[#425B4A] mt-0.5">Do ukończenia przez dziecko 14 lat</div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setParenthoodType("foster_family")}
+                        className={`p-3.5 rounded-lg border-2 text-left transition-all ${
+                          parenthoodType === "foster_family"
+                            ? "border-[#007834] bg-[#EFF3EA]"
+                            : "border-[#C6D6C3] bg-white hover:border-[#B9CCB6]"
+                        }`}
+                      >
+                        <div className="text-xs font-bold text-[#10371E]">Rodzina zastępcza niezawodowa</div>
+                        <div className="text-[11px] text-[#425B4A] mt-0.5">Do 7 lat (lub 10 lat przy odroczeniu szkoły)</div>
+                      </button>
+                    </div>
+
+                    {parenthoodType !== "birth" && (
+                      <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-3 text-xs">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <label className="font-bold text-[#10371E]">
+                            Wiek przyjmowanego dziecka:{" "}
+                            <span className="text-[#007834]">
+                              {Math.floor(childAgeMonthsAtAdoption / 12)} lat {childAgeMonthsAtAdoption % 12} mies. ({childAgeMonthsAtAdoption} mies.)
+                            </span>
+                          </label>
+                          <span className="text-[11px] text-[#425B4A]">
+                            Limit: {parenthoodType === "adoption" ? "14 lat" : hasSchoolDeferral ? "10 lat (odroczenie)" : "7 lat"} · gwarantowane min. 9 tyg.
+                          </span>
+                        </div>
+                        <input
+                          type="range"
+                          min={0}
+                          max={parenthoodType === "adoption" ? 168 : hasSchoolDeferral ? 120 : 84}
+                          value={childAgeMonthsAtAdoption}
+                          onChange={(e) => setChildAgeMonthsAtAdoption(Number(e.target.value))}
+                          className="w-full accent-[#007834]"
+                        />
+                        {parenthoodType === "foster_family" && (
+                          <label className="flex items-center gap-2 cursor-pointer text-[#10371E] font-medium">
+                            <input
+                              type="checkbox"
+                              checked={hasSchoolDeferral}
+                              onChange={(e) => setHasSchoolDeferral(e.target.checked)}
+                              className="accent-[#007834]"
+                            />
+                            <span>Dziecko ma decyzję o odroczeniu obowiązku szkolnego (wydłuża limit wieku z 7 do 10 lat)</span>
+                          </label>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

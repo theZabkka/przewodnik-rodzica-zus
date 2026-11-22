@@ -70,9 +70,9 @@ export const OFFICIAL_ZUS_TEST_CASES: ZusTestCase[] = [
     hasDebtExceedingThreshold: false,
     expectedResult: {
       insuranceVerified: true,
-      totalWeeksGranted: 52, // 20 tyg. macierzyńskiego + 32 tyg. rodzicielskiego dla matki
-      benefitRateDescription: '81,5% podstawy wymiaru przez cały okres (plus 9 tyg. na 70% dla taty)',
-      keyVerdictNote: 'Zasiłek przyznany. Prawo do uśrednionej stawki 81,5% z uwagi na wniosek w 21 dni.'
+      totalWeeksGranted: 61, // 20 tyg. macierzyńskiego + 32 tyg. rodzicielskiego mamy + 9 tyg. taty
+      benefitRateDescription: '81,5% dla mamy (20 + 32 tyg.), 70% za 9 nieprzenoszalnych tyg. dla taty',
+      keyVerdictNote: 'Zasiłek przyznany. Prawo do uśrednionej stawki 81,5% z uwagi na wniosek w 21 dni (łącznie 61 tyg. dla rodziny).'
     }
   },
   {
@@ -95,9 +95,9 @@ export const OFFICIAL_ZUS_TEST_CASES: ZusTestCase[] = [
     hasDebtExceedingThreshold: false,
     expectedResult: {
       insuranceVerified: true,
-      totalWeeksGranted: 62, // 20 tyg. macierzyński + 10 tyg. uzupełniający + 32 tyg. rodzicielski
-      benefitRateDescription: '100% za uzupełniający urlop (10 tyg.), 81,5% za macierzyński i rodzicielski',
-      keyVerdictNote: 'Przyznano 10 tygodni uzupełniającego urlopu macierzyńskiego w stawce 100% na wniosek ze szpitala.'
+      totalWeeksGranted: 71, // 20 tyg. macierzyński + 10 tyg. uzupełniający + 32 tyg. rodzicielski mamy + 9 tyg. taty
+      benefitRateDescription: '100% za uzupełniający urlop (10 tyg.), 81,5% za macierzyński i rodzicielski mamy, 70% za 9 tyg. taty',
+      keyVerdictNote: 'Przyznano 10 tygodni uzupełniającego urlopu macierzyńskiego w stawce 100% na wniosek ze szpitala (łącznie 71 tyg. dla rodziny).'
     }
   },
   {
@@ -118,9 +118,9 @@ export const OFFICIAL_ZUS_TEST_CASES: ZusTestCase[] = [
     hasDebtExceedingThreshold: false,
     expectedResult: {
       insuranceVerified: true,
-      totalWeeksGranted: 68, // 20 macierzyński + (32 / (1 - 0.5)) = 64 tyg. rodzicielskiego
-      benefitRateDescription: '100% macierzyński, 35% zasiłek rodzicielski (+ 50% pensji z umowy o pracę)',
-      keyVerdictNote: 'Wydłużenie proporcjonalne do 64 tygodni rodzicielskiego. Zasiłek 35% + wynagrodzenie 50% pensji.'
+      totalWeeksGranted: 93, // 20 macierzyński + 64 wydłużony rodzicielski (1/2 etatu) + 9 tyg. taty
+      benefitRateDescription: '100% macierzyński, 35% zasiłek rodzicielski (+ 50% pensji), 70% za 9 tyg. taty',
+      keyVerdictNote: 'Wydłużenie proporcjonalne do 64 tygodni rodzicielskiego + 20 tyg. macierzyńskiego + 9 tyg. taty = 93 tyg. łącznie.'
     }
   },
   {

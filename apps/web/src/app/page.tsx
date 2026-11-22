@@ -45,7 +45,7 @@ export default function HomePage() {
       alt: "Dłoń noworodka trzymająca palec rodzica",
     },
     {
-      href: "/kalkulator",
+      href: "/kalkulator?tryb=adopcja",
       title: "Przyjmuję dziecko pod opiekę",
       subtitle: "Adopcja i rodzina zastępcza",
       image: "/images/card-care.jpg",

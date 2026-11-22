@@ -85,7 +85,7 @@ export default function TrudneSytuacjePage() {
           <div className="text-xs">
             <span className="font-bold text-rose-900 block">Infolinia Rzecznika Praw Pacjenta:</span>
             <span className="text-rose-700 font-bold text-sm">800 190 590</span>
-            <span className="text-[10px] text-rose-600 block">Bezpłatna całodobowa pomoc psychologiczna</span>
+            <span className="text-[10px] text-rose-600 block">Bezpłatna infolinia ds. praw pacjenta i procedur szpitalnych</span>
           </div>
         </div>
       </div>

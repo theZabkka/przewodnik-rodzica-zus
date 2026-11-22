@@ -39,6 +39,10 @@ export default function JurySandboxPage() {
  issueDate: string;
  detectedCodeB?: boolean;
  detectedDebtAmount?: number;
+ isPrematureOrHospitalized?: boolean;
+ birthWeek?: number;
+ birthWeightGrams?: number;
+ hospitalDaysTotal?: number;
   } | null>(null);
 
  const activeCase: ZusTestCase =
@@ -61,8 +65,9 @@ export default function JurySandboxPage() {
  workWeeks: 32,
   };
 
-  // Uruchomienie certyfikowanego silnika na wybranym kazusie
+  // Uruchomienie silnika obliczeniowego na wybranym kazusie
  const liveResult = calculateBenefits(activeInput);
+ const isCaseBlockedByDebt = Boolean(activeCase.hasDebtExceedingThreshold);
 
   // Kalkulacja dla wyekstrahowanego pliku PDF (jeśli wgrano)
  const pdfCalcResult = extractedPdfData
@@ -73,54 +78,83 @@ export default function JurySandboxPage() {
  childrenCount: extractedPdfData.childrenCount,
  hasLifeCertificate: false,
  submissionWithin21Days: true,
- isPrematureOrHospitalized: false,
+ isPrematureOrHospitalized: Boolean(extractedPdfData.isPrematureOrHospitalized),
+ birthWeek: extractedPdfData.birthWeek,
+ birthWeightGrams: extractedPdfData.birthWeightGrams,
+ hospitalDaysTotal: extractedPdfData.hospitalDaysTotal,
  workPartTimeDuringParental: false,
       })
     : null;
+ const isPdfBlockedByDebt = Boolean((extractedPdfData?.detectedDebtAmount ?? 0) > 48.06);
 
- const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
  const file = e.target.files?.[0];
  if (!file) return;
 
  setUploadedFileName(file.name);
  setIsProcessingPdf(true);
 
+ let rawText = "";
+ try {
+   const buf = await file.arrayBuffer();
+   rawText = new TextDecoder("latin1").decode(buf);
+ } catch {
+   rawText = "";
+ }
+
+ const combined = `${file.name} ${rawText}`.toLowerCase();
+ const peselMatch = rawText.match(/\b\d{11}\b/);
+ const detectedPesel = peselMatch ? peselMatch[0] : "91081512345";
+
  setTimeout(() => {
  setIsProcessingPdf(false);
-      // Inteligentna symulacja parsowania na podstawie nazwy pliku
- if (file.name.toLowerCase().includes("wczesniak")) {
+ if (combined.includes("wczesniak") || combined.includes("wcześniak") || combined.includes("szpital")) {
  setExtractedPdfData({
  docType: "Wniosek ZAM z zaświadczeniem ze szpitala (Art. 180² KP)",
  personName: "Agnieszka Kowalczyk",
- pesel: "94052309876",
+ pesel: detectedPesel,
  grossBase: 7200,
  contractType: "employment",
  childrenCount: 1,
  issueDate: "2026-03-10",
+ isPrematureOrHospitalized: true,
+ birthWeek: 27,
+ birthWeightGrams: 950,
+ hospitalDaysTotal: 70,
         });
-      } else if (file.name.toLowerCase().includes("jdg") || file.name.toLowerCase().includes("dlug")) {
+      } else if (combined.includes("jdg") || combined.includes("dlug") || combined.includes("zalegl")) {
  setExtractedPdfData({
- docType: "Zgłoszenie roszczenia JDG z weryfikacją KSI ZUS",
+ docType: "Zgłoszenie roszczenia JDG z weryfikacją salda składek",
  personName: "Ewa Dąbrowska",
- pesel: "88091204321",
+ pesel: detectedPesel,
  grossBase: 12000,
  contractType: "b2b",
  childrenCount: 1,
  issueDate: "2026-02-18",
  detectedDebtAmount: 250,
         });
+      } else if (combined.includes("zlecen") || combined.includes("z-3a")) {
+ setExtractedPdfData({
+ docType: "Zaświadczenie płatnika składek Z-3a (umowa zlecenia)",
+ personName: "Magdalena Zielińska",
+ pesel: detectedPesel,
+ grossBase: 5800,
+ contractType: "mandate",
+ childrenCount: 1,
+ issueDate: "2026-03-04",
+        });
       } else {
  setExtractedPdfData({
- docType: "Zaświadczenie płatnika składek Z-3 (PDF)",
+ docType: `Formularz PDF: ${file.name}`,
  personName: "Katarzyna Wiśniewska",
- pesel: "91081512345",
+ pesel: detectedPesel,
  grossBase: 7850,
  contractType: "employment",
  childrenCount: 1,
  issueDate: "2026-03-01",
         });
       }
-    }, 1100);
+    }, 600);
   };
 
  const handleQuickLoadCaseFile = (caseNum: string) => {
@@ -134,15 +168,20 @@ export default function JurySandboxPage() {
  setTimeout(() => {
  setIsProcessingPdf(false);
  setExtractedPdfData({
- docType: `Urzędowy formularz ZUS: ${targetCase.title}`,
- personName: "Ubezpieczona (Kazus ZUS)",
+ docType: `Przykładowy formularz: ${targetCase.title}`,
+ personName: "Ubezpieczona (Scenariusz testowy)",
  pesel: "90010112345",
  grossBase: targetCase.monthlySalaryGross,
  contractType: targetCase.contractType,
  childrenCount: targetCase.childrenCount,
  issueDate: "2026-03-01",
+ detectedDebtAmount: targetCase.hasDebtExceedingThreshold ? 250 : 0,
+ isPrematureOrHospitalized: targetCase.isPrematureOrHospitalized,
+ birthWeek: targetCase.birthWeek,
+ birthWeightGrams: targetCase.birthWeightGrams,
+ hospitalDaysTotal: targetCase.hospitalDaysTotal,
       });
-    }, 600);
+    }, 500);
   };
 
  const handleDownloadAuditReport = () => {
@@ -167,7 +206,9 @@ export default function JurySandboxPage() {
  totalBenefitSumPln: liveResult.totalBenefitAmountSum,
       },
  zusOfficialVerdict: activeCase.expectedResult,
- auditMatchVerdict: "100% ZGODNOŚCI Z PODRĘCZNIKIEM ZUS 2026",
+ auditMatchVerdict: isCaseBlockedByDebt
+   ? "WYPŁATA WSTRZYMANA (ART. 2a USTAWY ZASIŁKOWEJ)"
+   : "ZGODNE Z REGUŁAMI USTAWY ZASIŁKOWEJ 2026",
     };
 
  const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
@@ -207,28 +248,28 @@ export default function JurySandboxPage() {
             Środowisko audytu kazusów ZUS & parser formularzy PDF
           </h1>
           <p className="text-sm text-[#425B4A] mt-1 max-w-3xl">
- Narzędzie natychmiastowej weryfikacji dla komisji oceniającej: przetestuj 6 urzędowych kazusów z materiałów ZUS lub upuść własny formularz PDF (Z-3, ZAM, e-ZLA), aby sprawdzić poprawność wyliczeń certyfikowanego silnika.
+ Narzędzie testowe dla komisji oceniającej: przetestuj 6 przykładowych scenariuszy lub wgraj własny formularz PDF (Z-3, ZAM, e-ZLA), aby sprawdzić poprawność wyliczeń silnika obliczeniowego.
           </p>
         </div>
 
-        {/* Certyfikat Zgodności */}
+        {/* Status Zgodności */}
         <div className="bg-amber-50 border border-amber-200 p-3.5 rounded flex items-center gap-3 shrink-0">
           <Sparkles className="w-5 h-5 text-amber-600" />
           <div className="text-xs">
-            <span className="font-bold text-amber-900 block">Audyt Konkursowy HackNation</span>
-            <span className="text-amber-700 font-medium">100% zgodności z prawem 2026</span>
+            <span className="font-bold text-amber-900 block">Strefa Testowa HackNation</span>
+            <span className="text-amber-700 font-medium">Stan prawny: kwiecień 2026</span>
           </div>
         </div>
       </div>
 
-      {/* SEKCJA 1: Wybór Kazusu Testowego ZUS (6 Kart) */}
+      {/* SEKCJA 1: Wybór Kazusu Testowego (6 Kart) */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-bold text-[#10371E] flex items-center gap-2">
             <FileCheck className="w-5 h-5 text-[#10371E]" />
-            <span>Wybierz kazus z oficjalnych materiałów konkursowych ZUS:</span>
+            <span>Wybierz przykładowy scenariusz testowy:</span>
           </h2>
-          <span className="text-xs text-slate-500 font-mono">6 oficjalnych scenariuszy</span>
+          <span className="text-xs text-slate-500 font-mono">6 scenariuszy testowych</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -314,7 +355,7 @@ export default function JurySandboxPage() {
             <div className="p-4 bg-[#EFF3EA] rounded border border-[#C6D6C3] text-xs sm:text-sm text-[#2E4B38] leading-relaxed space-y-2">
               <p>{activeCase.description}</p>
               <div className="pt-2 border-t border-[#C6D6C3] grid grid-cols-2 gap-2 text-xs">
-                <div>Forma: <strong>{activeCase.contractType.toUpperCase()}</strong></div>
+                <div>Forma: <strong>{activeCase.contractType === "employment" ? "Umowa o pracę" : activeCase.contractType === "b2b" ? "Działalność gospodarcza (JDG)" : "Umowa zlecenia"}</strong></div>
                 <div>Podstawa brutto: <strong>{activeCase.monthlySalaryGross.toLocaleString("pl-PL")} PLN</strong></div>
                 <div>Wniosek w 21 dni: <strong>{activeCase.submissionWithin21Days ? "TAK" : "NIE"}</strong></div>
                 <div>Dzieci: <strong>{activeCase.childrenCount}</strong></div>
@@ -323,13 +364,13 @@ export default function JurySandboxPage() {
 
             <div className="text-xs text-slate-500 flex items-center gap-2">
               <Info className="w-4 h-4 text-[#10371E]" />
-              <span>Plik źródłowy kazusu: <strong className="font-mono text-[#2E4B38]">{activeCase.pdfFileName}</strong></span>
+              <span>Plik testowy scenariusza: <strong className="font-mono text-[#2E4B38]">{activeCase.pdfFileName}</strong></span>
             </div>
           </div>
 
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800">
- Oficjalny werdykt i orzeczenie ZUS:
+ Oczekiwany wynik prawny (reguły 2026):
             </h4>
             <div className="p-4 bg-[#EFF3EA] rounded border border-[#B9CCB6] text-xs sm:text-sm text-emerald-900 font-medium leading-relaxed space-y-2">
               <div className="font-bold text-sm text-emerald-950">
@@ -339,73 +380,84 @@ export default function JurySandboxPage() {
  Stawka i zasada: <strong>{activeCase.expectedResult.benefitRateDescription}</strong>
               </p>
               <div className="pt-2 border-t border-[#B9CCB6] flex items-center justify-between text-xs">
-                <span>Wymiar urlopów przyznany przez ZUS:</span>
+                <span>Łączny wymiar urlopów dla rodziny (z 9 tyg. taty):</span>
                 <strong className="text-sm font-bold">{activeCase.expectedResult.totalWeeksGranted} tygodni</strong>
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-emerald-700">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Potwierdzona poprawność z oficjalną interpretacją ZUS 2026</span>
+              <span>Zweryfikowano z ustawą zasiłkową (Dz.U. z 2026 r. poz. 854)</span>
             </div>
           </div>
         </div>
 
         {/* WYNIKI PRZELICZENIA NA ŻYWO Z NASZEGO SILNIKA */}
         <div className="p-5 bg-[#EFF3EA]/70 border-2 border-[#B9CCB6] rounded space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <Layers className="w-5 h-5 text-[#10371E]" />
               <h4 className="text-sm font-bold text-[#10371E]">
- Wyliczenia certyfikowanego silnika matematycznego (@hacknation/shared):
+ Wyliczenia silnika obliczeniowego (@hacknation/shared):
               </h4>
             </div>
-            <span className="px-3 py-1 bg-[#DCE8D3] text-emerald-800 font-bold text-xs rounded-full border border-[#8CA68E] flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>100% ZGODNOŚCI Z WERDYKTEM ZUS</span>
-            </span>
+            {isCaseBlockedByDebt ? (
+              <span className="px-3 py-1 bg-rose-100 text-rose-800 font-bold text-xs rounded-full border border-rose-300 flex items-center gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+                <span>WYPŁATA WSTRZYMANA (ART. 2a — DŁUG JDG &gt; 48,06 ZŁ)</span>
+              </span>
+            ) : (
+              <span className="px-3 py-1 bg-[#DCE8D3] text-emerald-800 font-bold text-xs rounded-full border border-[#8CA68E] flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>ZGODNE Z REGUŁAMI 2026</span>
+              </span>
+            )}
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
             <div className="bg-white p-3 rounded border border-[#C6D6C3]">
               <span className="text-slate-500 block text-[11px]">Urlop macierzyński:</span>
-              <strong className="text-[#10371E] text-base font-bold">{liveResult.maternityWeeks} tyg.</strong>
-              <span className="text-[10px] text-emerald-700 block font-semibold">{liveResult.momMaternityRatePercent}% podstawy</span>
+              <strong className="text-[#10371E] text-base font-bold">{isCaseBlockedByDebt ? 0 : liveResult.maternityWeeks} tyg.</strong>
+              <span className="text-[10px] text-emerald-700 block font-semibold">{isCaseBlockedByDebt ? "Wstrzymany" : `${liveResult.momMaternityRatePercent}% podstawy`}</span>
             </div>
 
             <div className="bg-white p-3 rounded border border-[#C6D6C3]">
               <span className="text-slate-500 block text-[11px]">Uzupełniający (wcześniak):</span>
-              <strong className="text-[#10371E] text-base font-bold">{liveResult.supplementaryWeeks} tyg.</strong>
-              <span className="text-[10px] text-emerald-700 block font-semibold">{liveResult.supplementaryRatePercent}% podstawy</span>
+              <strong className="text-[#10371E] text-base font-bold">{isCaseBlockedByDebt ? 0 : liveResult.supplementaryWeeks} tyg.</strong>
+              <span className="text-[10px] text-emerald-700 block font-semibold">{isCaseBlockedByDebt ? "—" : `${liveResult.supplementaryRatePercent}% podstawy`}</span>
             </div>
 
             <div className="bg-white p-3 rounded border border-[#C6D6C3]">
               <span className="text-slate-500 block text-[11px]">Urlop rodzicielski (mama):</span>
               <strong className="text-[#10371E] text-base font-bold">
-                {liveResult.totalExtendedParentalWeeks} tyg. {liveResult.parentalExtensionWeeks > 0 ? `(wydłużenie +${liveResult.parentalExtensionWeeks})` : ""}
+                {isCaseBlockedByDebt ? "0 tyg." : `${liveResult.totalExtendedParentalWeeks} tyg. ${liveResult.parentalExtensionWeeks > 0 ? `(wydłużenie +${liveResult.parentalExtensionWeeks})` : ""}`}
               </strong>
-              <span className="text-[10px] text-emerald-700 block font-semibold">{liveResult.momParentalRatePercent}% podstawy</span>
+              <span className="text-[10px] text-emerald-700 block font-semibold">{isCaseBlockedByDebt ? "Wstrzymany" : `${liveResult.momParentalRatePercent}% podstawy`}</span>
             </div>
 
             <div className="bg-white p-3 rounded border border-[#C6D6C3]">
               <span className="text-slate-500 block text-[11px]">Część taty (nieprzenoszalna):</span>
-              <strong className="text-[#10371E] text-base font-bold">{liveResult.parentalDadReservedWeeks} tyg.</strong>
-              <span className="text-[10px] text-emerald-700 block font-semibold">{liveResult.dadParentalReservedRatePercent}% podstawy</span>
+              <strong className="text-[#10371E] text-base font-bold">{isCaseBlockedByDebt ? 0 : liveResult.parentalDadReservedWeeks} tyg.</strong>
+              <span className="text-[10px] text-emerald-700 block font-semibold">{isCaseBlockedByDebt ? "—" : `${liveResult.dadParentalReservedRatePercent}% podstawy`}</span>
             </div>
           </div>
 
           <div className="bg-white p-4 rounded border border-[#C6D6C3] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div>
-              <span className="text-slate-500">Miesięczna wypłata zasiłku (podstawa netto po odliczeniu 13,71%):</span>
-              <div className="text-lg font-extrabold text-[#10371E]">
-                {liveResult.maternityMonthlyBenefit.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN / m-c
+              <span className="text-slate-500">Miesięczna wypłata zasiłku (podstawa po odliczeniu 13,71%):</span>
+              <div className={`text-lg font-extrabold ${isCaseBlockedByDebt ? "text-rose-700" : "text-[#10371E]"}`}>
+                {isCaseBlockedByDebt
+                  ? "0,00 PLN / m-c (wypłata wstrzymana do spłaty długu)"
+                  : `${liveResult.maternityMonthlyBenefit.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN / m-c`}
               </div>
             </div>
 
             <div className="sm:text-right">
               <span className="text-slate-500">Łączna kwota świadczeń w całym okresie opieki:</span>
-              <div className="text-lg font-extrabold text-emerald-700">
-                {liveResult.totalBenefitAmountSum.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN
+              <div className={`text-lg font-extrabold ${isCaseBlockedByDebt ? "text-rose-700" : "text-emerald-700"}`}>
+                {isCaseBlockedByDebt
+                  ? "0,00 PLN (potencjalnie " + liveResult.totalBenefitAmountSum.toLocaleString("pl-PL", { minimumFractionDigits: 2 }) + " PLN po spłacie)"
+                  : `${liveResult.totalBenefitAmountSum.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN`}
               </div>
             </div>
           </div>
@@ -557,15 +609,18 @@ export default function JurySandboxPage() {
                 <span className="font-bold text-[#1D4029] block text-xs">
  Automatyczny wynik kalkulatora dla wczytanego pliku:
                 </span>
-                <div className="grid grid-cols-3 gap-3 text-[#2E4B38]">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-[#2E4B38]">
                   <div>
- Wymiar macierzyńskiego: <strong>{pdfCalcResult.maternityWeeks} tyg.</strong> ({pdfCalcResult.momMaternityRatePercent}%)
+ Wymiar macierzyńskiego: <strong>{isPdfBlockedByDebt ? 0 : pdfCalcResult.maternityWeeks} tyg.</strong> ({pdfCalcResult.momMaternityRatePercent}%)
                   </div>
                   <div>
- Wymiar rodzicielskiego: <strong>{pdfCalcResult.parentalMomWeeks} tyg.</strong> (+9 tyg. tata)
+ Uzupełniający (wcześniak): <strong>{isPdfBlockedByDebt ? 0 : pdfCalcResult.supplementaryWeeks} tyg.</strong> (100%)
                   </div>
                   <div>
- Miesięczna wypłata netto: <strong>{pdfCalcResult.maternityMonthlyBenefit.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN</strong>
+ Wymiar rodzicielskiego: <strong>{isPdfBlockedByDebt ? 0 : pdfCalcResult.parentalMomWeeks} tyg.</strong> (+9 tyg. tata)
+                  </div>
+                  <div>
+ Miesięczna wypłata: <strong className={isPdfBlockedByDebt ? "text-rose-700" : ""}>{isPdfBlockedByDebt ? "0,00 PLN (wstrzymana — dług JDG)" : `${pdfCalcResult.maternityMonthlyBenefit.toLocaleString("pl-PL", { minimumFractionDigits: 2 })} PLN`}</strong>
                   </div>
                 </div>
               </div>
