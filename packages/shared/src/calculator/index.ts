@@ -25,6 +25,7 @@ export * from './risk-detector';
 export * from './riskEngine';
 export * from './decisionGenerator';
 export * from './z3Generator';
+export * from './family-sharing-planner';
 
 /**
  * Master calculation engine for ZUS parental benefits (Stan prawny 2026).
@@ -44,13 +45,18 @@ export function calculateParentalBenefits(
   const netBase = baseResult.netBaseMonthly;
   const dailyBase = baseResult.dailyBaseAmount;
 
-  // 2. Urlop macierzyński
+  // 2. Urlop macierzyński / na warunkach macierzyńskiego (art. 180 i 183 KP)
   const maternityResult = calculateMaternityLeave(
     input.childrenCount,
     input.submissionWithin21Days,
     dailyBase,
     netBase,
-    params
+    params,
+    {
+      parenthoodType: input.parenthoodType,
+      childAgeMonthsAtAdoption: input.childAgeMonthsAtAdoption,
+      hasSchoolDeferral: input.hasSchoolDeferral,
+    }
   );
 
   // 3. Urlop uzupełniający dla wcześniaków (art. 180² KP)
@@ -123,17 +129,21 @@ export function calculateParentalBenefits(
   // 8. Oś czasu (Timeline Segments)
   const timelineSegments: BenefitTimelineSegment[] = [];
 
-  // Segment 1: Urlop macierzyński
+  // Segment 1: Urlop macierzyński / na warunkach macierzyńskiego
   timelineSegments.push({
-    title: `Urlop macierzyński (${maternityResult.totalWeeks} tyg.)`,
-    recipient: 'mother',
+    title: maternityResult.leaveTitle,
+    recipient: maternityResult.isAdoptionOrFoster ? 'both' : 'mother',
     durationWeeks: maternityResult.totalWeeks,
     durationDays: maternityResult.totalDays,
     ratePercent: maternityResult.ratePercent,
     monthlyAmountGross: maternityResult.monthlyBenefitAmount,
     dailyRateGross: maternityResult.dailyBenefitAmount,
     totalGrossAmount: maternityResult.totalBenefitAmount,
-    notes: `Pierwsze 14 tygodni obligatoryjnie dla matki; pozostałe ${maternityResult.transferableToFatherWeeks} tyg. może przejąć ojciec.`,
+    notes: maternityResult.isAdoptionOrFoster
+      ? (maternityResult.guaranteedMinWeeksApplied
+          ? 'Zastosowano gwarantowany minimalny wymiar 9 tygodni (art. 183 § 3 KP).'
+          : 'Urlop na warunkach urlopu macierzyńskiego dla opiekunów przyjmujących dziecko na wychowanie (art. 183 KP).')
+      : `Pierwsze 14 tygodni obligatoryjnie dla matki; pozostałe ${maternityResult.transferableToFatherWeeks} tyg. może przejąć ojciec.`,
   });
 
   // Segment 2: Uzupełniający urlop macierzyński (jeśli przysługuje)
@@ -221,6 +231,9 @@ export function calculateParentalBenefits(
     dadParentalReservedRatePercent: parentalResult.fatherReservedRatePercent,
     supplementaryRatePercent: supplementaryResult.ratePercent,
     paternityRatePercent: paternityResult.ratePercent,
+    isAdoptionOrFoster: maternityResult.isAdoptionOrFoster,
+    guaranteedMinWeeksApplied: maternityResult.guaranteedMinWeeksApplied,
+    parenthoodTitle: maternityResult.leaveTitle,
     timelineSegments,
     riskWarnings,
   };

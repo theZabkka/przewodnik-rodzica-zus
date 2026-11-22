@@ -24,6 +24,8 @@ import {
  ChevronRight,
  BookOpen,
  Cloud,
+ Landmark,
+ ExternalLink,
 } from "lucide-react";
 import { calculateBenefits, DEFAULT_LEGISLATIVE_2026, InspectorCase } from "@hacknation/shared";
 import { ZusLogo } from "../../components/ZusLogo";
@@ -102,7 +104,7 @@ function ZamQrCode({ seed }: { seed: string }) {
 
 export default function EUslugiPage() {
  const { profile, openGlossary } = useParentProfile();
- const [activeTab, setActiveTab] = useState<"zam" | "mobywatel" | "pue" | "ezla">("zam");
+ const [activeTab, setActiveTab] = useState<"zam" | "mobywatel" | "pue" | "ezla" | "usc">("zam");
 
   // Stan widoku kreatora wniosku ZAM
  const [zamStep, setZamStep] = useState<number>(1);
@@ -141,6 +143,81 @@ export default function EUslugiPage() {
  const [isPayingDebt, setIsPayingDebt] = useState<boolean>(false);
  const [debtPaymentSuccess, setDebtPaymentSuccess] = useState<boolean>(false);
  const [prefilledFromCalc, setPrefilledFromCalc] = useState<boolean>(false);
+
+ // Stan Rejestru Stanu Cywilnego (USC)
+ const [uscChildName, setUscChildName] = useState<string>("Jan Kowalski");
+ const [uscBirthDate, setUscBirthDate] = useState<string>("2026-03-15");
+ const [uscBirthCity, setUscBirthCity] = useState<string>("Warszawa");
+ const [uscActNumber, setUscActNumber] = useState<string>("USC/WAW/2026/04192");
+ const [uscChildPesel, setUscChildPesel] = useState<string>("26231508912");
+ const [uscIsDownloaded, setUscIsDownloaded] = useState<boolean>(false);
+
+ const handleDownloadZusRwn = () => {
+   const text = `ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH
+ZAŚWIADCZENIE O NIEZALEGANIU W OPŁACANIU SKŁADEK (ZUS RWN)
+Data wystawienia: ${new Date().toLocaleDateString("pl-PL")}
+Znak sprawy: ZUS/RWN/2026/${Math.floor(100000 + Math.random() * 900000)}
+
+Płatnik składek:
+Imię i nazwisko / Firma: ${parentName}
+PESEL / NIP: ${pesel} / ${employerNip}
+
+Zaświadcza się, że wyżej wymieniony płatnik składek na dzień ${new Date().toLocaleDateString("pl-PL")}
+NIE POSIADA ZALEGŁOŚCI w opłacaniu składek na ubezpieczenia społeczne,
+ubezpieczenie zdrowotne, Fundusz Pracy, Fundusz Solidarnościowy i FGŚP.
+
+Spełniony warunek art. 2a ustawy o świadczeniach pieniężnych z ubezpieczenia społecznego
+w razie choroby i macierzyństwa (zadłużenie: 0,00 PLN, poniżej progu 48,06 PLN).
+Brak przeszkód do wypłaty pełnej kwoty zasiłku macierzyńskiego i rodzicielskiego.
+
+Podpisano kwalifikowanym podpisem elektronicznym ZUS.
+Kod weryfikacji: SHA256-${Math.random().toString(36).substring(2, 12).toUpperCase()}`;
+
+   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+   const url = URL.createObjectURL(blob);
+   const link = document.createElement("a");
+   link.href = url;
+   link.download = `Zaswiadczenie_ZUS_RWN_${pesel}.txt`;
+   link.click();
+   URL.revokeObjectURL(url);
+ };
+
+ const handleDownloadUscAct = () => {
+   setUscIsDownloaded(true);
+   const text = `RZECZPOSPOLITA POLSKA
+URZĄD STANU CYWILNEGO W: ${uscBirthCity.toUpperCase()}
+ODPIS SKRÓCONY AKTU URODZENIA
+Numer aktu: ${uscActNumber}
+
+DANE DZIECKA:
+Nazwisko i imię: ${uscChildName}
+Data urodzenia: ${uscBirthDate}
+Miejsce urodzenia: ${uscBirthCity}
+PESEL: ${uscChildPesel}
+
+DANE RODZICÓW:
+Matka: ${parentName} (PESEL: ${pesel})
+Ojciec: Jan Kowalski (st.)
+
+Poświadcza się zgodność niniejszego odpisu z rejestrem stanu cywilnego.
+Pieczęć urzędowa Rzeczypospolitej Polskiej.
+Dokument sporządzony w systemie Rejestrów Państwowych (gov.pl / RSC).
+Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpperCase()}-2026`;
+
+   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+   const url = URL.createObjectURL(blob);
+   const link = document.createElement("a");
+   link.href = url;
+   link.download = `Odpis_Aktu_Urodzenia_${uscActNumber.replace(/\//g, "_")}.txt`;
+   link.click();
+   URL.revokeObjectURL(url);
+ };
+
+ const handleTransferUscToZam = () => {
+   setChildName(uscChildName);
+   setChildBirthDate(uscBirthDate);
+   setActiveTab("zam");
+ };
 
   // Automatyczne wczytanie danych z Profilu Rodziny lub Kalkulatora Świadczeń
  useEffect(() => {
@@ -491,6 +568,19 @@ export default function EUslugiPage() {
         >
           <Clock className="w-4 h-4" />
           <span>e-ZLA (Zwolnienia lekarskie w ciąży kod B)</span>
+        </button>
+
+        <button
+ type="button"
+ onClick={() => setActiveTab("usc")}
+ className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
+ activeTab === "usc"
+              ? "bg-[#007834] text-white "
+              : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
+          }`}
+        >
+          <Landmark className="w-4 h-4" />
+          <span>Urząd Stanu Cywilnego (USC / gov.pl)</span>
         </button>
 
         <button
@@ -1918,6 +2008,26 @@ export default function EUslugiPage() {
               )}
             </div>
           </div>
+
+          {/* Sekcja Zaświadczeń i Usług PUE ZUS */}
+          <div className="pt-4 border-t border-[#DCE8D3] flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold text-[#10371E] block">
+                Zaświadczenie o niezaleganiu w opłacaniu składek (ZUS RWN)
+              </span>
+              <p className="text-[11px] text-[#425B4A]">
+                Pobierz urzędowe potwierdzenie zerowego salda zadłużenia (art. 2a ustawy zasiłkowej) z podpisem elektronicznym ZUS.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleDownloadZusRwn}
+              className="inline-flex items-center gap-2 bg-white hover:bg-[#EFF3EA] text-[#10371E] border border-[#B9CCB6] font-bold text-xs px-4 py-2 rounded transition-colors shadow-xs"
+            >
+              <Download className="w-4 h-4 text-[#007834]" />
+              <span>Pobierz zaświadczenie ZUS RWN (.txt)</span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -1955,6 +2065,199 @@ export default function EUslugiPage() {
                 <strong className="text-base text-[#007834] font-black">
                   {liveCalculation.dailyBaseAmount.toFixed(2)} PLN / dzień
                 </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ZAKŁADKA 5: URZĄD STANU CYWILNEGO (USC / gov.pl) */}
+      {activeTab === "usc" && (
+        <div className="zus-card p-6 sm:p-8 space-y-6">
+          <div className="border-b border-[#DCE8D3] pb-4 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Landmark className="w-5 h-5 text-[#007834]" />
+                <h2 className="text-lg font-bold text-[#10371E]">
+                  Rejestr Stanu Cywilnego (USC / gov.pl) &ndash; Akt Urodzenia
+                </h2>
+              </div>
+              <p className="text-xs text-[#425B4A]">
+                Elektroniczne odpisy aktów stanu cywilnego i automatyczna integracja z wnioskiem o zasiłek macierzyński ZUS ZAM.
+              </p>
+            </div>
+            <a
+              href="https://www.gov.pl/web/gov/uzyskaj-odpis-aktu-stanu-cywilnego"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#007834] bg-[#EFF3EA] hover:bg-[#DCE8D3] border border-[#B9CCB6] px-3 py-1.5 rounded transition-colors"
+            >
+              <span>Oficjalny portal gov.pl</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Formularz edycji danych aktu */}
+            <div className="space-y-4">
+              <h3 className="font-bold text-[#10371E] text-sm">
+                Parametry odpisu aktu urodzenia
+              </h3>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-bold text-[#2E4B38] block mb-1">
+                    Imię i nazwisko dziecka:
+                  </label>
+                  <input
+                    type="text"
+                    value={uscChildName}
+                    onChange={(e) => setUscChildName(e.target.value)}
+                    className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-bold text-[#2E4B38] block mb-1">
+                      Data urodzenia:
+                    </label>
+                    <input
+                      type="date"
+                      value={uscBirthDate}
+                      onChange={(e) => setUscBirthDate(e.target.value)}
+                      className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-bold text-[#2E4B38] block mb-1">
+                      Miejsce urodzenia (USC):
+                    </label>
+                    <input
+                      type="text"
+                      value={uscBirthCity}
+                      onChange={(e) => setUscBirthCity(e.target.value)}
+                      className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-bold text-[#2E4B38] block mb-1">
+                      Numer aktu urodzenia:
+                    </label>
+                    <input
+                      type="text"
+                      value={uscActNumber}
+                      onChange={(e) => setUscActNumber(e.target.value)}
+                      className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-bold text-[#2E4B38] block mb-1">
+                      PESEL dziecka:
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={11}
+                      value={uscChildPesel}
+                      onChange={(e) => setUscChildPesel(e.target.value)}
+                      className="w-full px-3 py-2 bg-[#EFF3EA] border border-[#B9CCB6] rounded text-xs font-bold text-[#10371E] focus:outline-none focus:ring-2 focus:ring-[#007834]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Informacja o braku konieczności dostarczania papierowego odpisu */}
+              <div className="p-3.5 bg-[#EFF3EA] border border-[#B9CCB6] rounded-xl text-xs space-y-1.5 text-[#10371E]">
+                <div className="flex items-center gap-2 font-bold text-[#007834]">
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  <span>Elektroniczny obieg dokumentów z ZUS</span>
+                </div>
+                <p className="text-[11px] text-[#425B4A] leading-relaxed">
+                  ZUS weryfikuje fakt urodzenia dziecka bezpośrednio w Rejestrze Stanu Cywilnego (art. 61a KPA).
+                  Jeżeli akt urodzenia został sporządzony w Polsce, <strong>nie musisz dołączać papierowego zaświadczenia</strong> &ndash;
+                  wystarczy podać numer aktu we wniosku ZAM!
+                </p>
+              </div>
+
+              {/* Przyciski Akcji */}
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={handleDownloadUscAct}
+                  className="inline-flex items-center gap-2 bg-white hover:bg-[#EFF3EA] text-[#10371E] border border-[#B9CCB6] font-bold text-xs px-4 py-2.5 rounded transition-colors shadow-xs"
+                >
+                  <Download className="w-4 h-4 text-[#007834]" />
+                  <span>{uscIsDownloaded ? "Pobrano odpis (.txt)" : "Pobierz odpis skrócony aktu"}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleTransferUscToZam}
+                  className="inline-flex items-center gap-2 bg-[#007834] hover:bg-[#00622a] text-white font-bold text-xs px-4 py-2.5 rounded transition-colors shadow-xs"
+                >
+                  <FileCheck className="w-4 h-4" />
+                  <span>Przenieś do wniosku ZAM</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Podgląd wizualny odpisu urzędowego */}
+            <div className="bg-[#FAF8F2] border-2 border-dashed border-[#B9CCB6] rounded-2xl p-6 relative font-serif text-[#10371E] space-y-4">
+              <div className="text-center space-y-1 border-b border-[#DCE8D3] pb-3">
+                <div className="w-10 h-10 mx-auto rounded-full bg-[#10371E] text-white flex items-center justify-center font-bold text-xs">
+                  RP
+                </div>
+                <h4 className="text-sm font-bold tracking-wider uppercase">
+                  Rzeczpospolita Polska
+                </h4>
+                <p className="text-xs uppercase tracking-widest text-[#425B4A]">
+                  Odpis skrócony aktu urodzenia
+                </p>
+                <span className="text-[11px] font-sans font-semibold text-[#007834] block">
+                  Akt nr: {uscActNumber}
+                </span>
+              </div>
+
+              <div className="font-sans text-xs space-y-2.5">
+                <div className="flex justify-between border-b border-[#EFF3EA] pb-1">
+                  <span className="text-[#425B4A]">Nazwisko i imię dziecka:</span>
+                  <strong className="text-[#10371E]">{uscChildName}</strong>
+                </div>
+                <div className="flex justify-between border-b border-[#EFF3EA] pb-1">
+                  <span className="text-[#425B4A]">Data urodzenia:</span>
+                  <strong className="text-[#10371E]">{uscBirthDate}</strong>
+                </div>
+                <div className="flex justify-between border-b border-[#EFF3EA] pb-1">
+                  <span className="text-[#425B4A]">Miejsce urodzenia:</span>
+                  <strong className="text-[#10371E]">{uscBirthCity}</strong>
+                </div>
+                <div className="flex justify-between border-b border-[#EFF3EA] pb-1">
+                  <span className="text-[#425B4A]">Numer PESEL dziecka:</span>
+                  <strong className="text-[#10371E] font-mono">{uscChildPesel}</strong>
+                </div>
+                <div className="flex justify-between border-b border-[#EFF3EA] pb-1">
+                  <span className="text-[#425B4A]">Matka:</span>
+                  <strong className="text-[#10371E]">{parentName}</strong>
+                </div>
+              </div>
+
+              {/* Pieczęć Urzędowa */}
+              <div className="pt-3 border-t border-[#DCE8D3] flex items-center justify-between text-[11px] font-sans">
+                <div className="space-y-0.5 text-[#425B4A]">
+                  <p>Urząd Stanu Cywilnego w {uscBirthCity}</p>
+                  <p className="text-[10px]">Certyfikat kwalifikowany: RSC-2026-GOV</p>
+                </div>
+                <div className="w-16 h-16 rounded-full border-2 border-[#007834] flex flex-col items-center justify-center text-[8px] font-bold text-[#007834] text-center p-1 uppercase leading-tight rotate-[-12deg]">
+                  <span>Pieczęć</span>
+                  <span>Cyfrowa</span>
+                  <span>RSC / GOV</span>
+                </div>
               </div>
             </div>
           </div>

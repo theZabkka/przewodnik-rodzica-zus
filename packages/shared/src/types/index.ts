@@ -6,6 +6,7 @@
 export type ContractType = 'employment' | 'mandate' | 'b2b'; // Umowa o pracę | Zlecenie | Działalność gospodarcza (JDG)
 export type ParentRole = 'mother' | 'father';
 export type BenefitRateVariant = 'unified_81_5' | 'standard_100_70';
+export type ParenthoodType = 'birth' | 'adoption' | 'foster_family'; // Urodzenie biologiczne | Adopcja (przysposobienie) | Rodzina zastępcza niezawodowa
 
 export interface BenefitCalculationInput {
   parentRole: ParentRole;
@@ -15,6 +16,11 @@ export interface BenefitCalculationInput {
   hasLifeCertificate: boolean; // Zaświadczenie z ustawy "Za życiem" (art. 4 ust. 3)
   submissionWithin21Days: boolean; // Czy wniosek ZAM o pełen okres złożony w ciągu 21 dni po porodzie
   
+  // Przyjęcie dziecka na wychowanie (art. 183 KP: adopcja i rodzina zastępcza niezawodowa)
+  parenthoodType?: ParenthoodType;
+  childAgeMonthsAtAdoption?: number; // Wiek dziecka w miesiącach w chwili przyjęcia
+  hasSchoolDeferral?: boolean; // Odroczenie obowiązku szkolnego (dla rodziny zastępczej do 10 lat)
+
   // Wcześniactwo i hospitalizacja (art. 180² KP)
   isPrematureOrHospitalized: boolean;
   birthWeek?: number; // Tydzień ciąży w chwili porodu (np. 27, 32, 38)
@@ -79,6 +85,11 @@ export interface BenefitCalculationOutput {
   dadParentalReservedRatePercent: number; // Zawsze 70
   supplementaryRatePercent: number; // Zawsze 100
   paternityRatePercent: number; // Zawsze 100
+
+  // Status adopcji / rodziny zastępczej (art. 183 KP)
+  isAdoptionOrFoster?: boolean;
+  guaranteedMinWeeksApplied?: boolean;
+  parenthoodTitle?: string;
 
   // Oś czasu i segmenty
   timelineSegments: BenefitTimelineSegment[];

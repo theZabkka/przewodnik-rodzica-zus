@@ -438,7 +438,7 @@ export default function PanelPracownikaPage() {
   // Wysłanie urzędowego wezwania do uzupełnienia braków (art. 64 § 2 KPA)
   const handleSendRequisition = async () => {
     const docNotice = {
-      formal: `WEZWANIE DO USUNIĘCIA BRAKÓW FORMALNYCH (art. 64 § 2 KPA)\nZnak sprawy: ${selectedCase.caseNumber}\nWzywa się ubezpieczoną ${selectedCase.applicantName} (PESEL: ${selectedCase.pesel}) do przedłożenia w terminie ${requisitionDaysLimit} dni:\n- ${
+      formal: `WEZWANIE DO UZUPEŁNIENIA BRAKÓW FORMALNYCH (art. 64 § 2 KPA)\nZnak sprawy: ${selectedCase.caseNumber}\nWzywa się ubezpieczoną ${selectedCase.applicantName} (PESEL: ${selectedCase.pesel}) do przedłożenia w terminie ${requisitionDaysLimit} dni:\n- ${
         requisitionDocType === "karta_szpital"
           ? "Karta informacyjna leczenia szpitalnego noworodka (wymóg art. 180² KP)"
           : requisitionDocType === "zaświadczenie_z3"
@@ -1414,7 +1414,7 @@ export default function PanelPracownikaPage() {
                   className="py-3 px-4 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded-xl text-xs sm:text-sm font-bold border border-amber-300 transition-colors flex items-center gap-1.5"
                 >
                   <Mail className="w-4 h-4 text-amber-700" />
-                  <span>Wezwij do usunięcia braków (art. 64 KPA)</span>
+                  <span>Wezwij do uzupełnienia braków (art. 64 § 2 KPA)</span>
                 </button>
 
                 {selectedCase.riskCategory === "SUSPECT_CONTRACT" && (
@@ -1830,7 +1830,7 @@ export default function PanelPracownikaPage() {
             <div className="flex items-center justify-between border-b border-[#EFF3EA] pb-3">
               <h3 className="text-base font-bold text-[#10371E] flex items-center gap-2">
                 <Mail className="w-5 h-5 text-amber-600" />
-                <span>Wezwanie do uzupełnienia braków (art. 64 KPA)</span>
+                <span>Wezwanie do uzupełnienia braków formalnych (art. 64 § 2 KPA)</span>
               </h3>
               <button
                 type="button"

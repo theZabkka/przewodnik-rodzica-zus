@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { calculateBenefits } from '../index';
 import { calculateNetBase } from '../base';
+import { calculateFamilySharing } from '../family-sharing-planner';
 import { OFFICIAL_ZUS_TEST_CASES } from '../../constants/legislative-2026';
 import { BenefitCalculationInput } from '../../types';
 
@@ -569,6 +570,87 @@ describe('ZUS Parental Benefit Calculation Engine (2026 Statutory Rules)', () =>
       expect(result.parentalDadReservedWeeks).toBe(9);
       expect(result.momMaternityRatePercent).toBe(81.5);
       expect(result.dadParentalReservedRatePercent).toBe(70);
+    });
+  });
+
+  describe('Adopcja i Rodzina Zastępcza Niezawodowa (Art. 183 Kodeksu pracy)', () => {
+    it('przyznaje standardowe 20 tygodni urlopu na warunkach macierzyńskiego dla 1 dziecka', () => {
+      const input: BenefitCalculationInput = {
+        parentRole: 'mother',
+        contractType: 'employment',
+        monthlyBaseGross: 6000.00,
+        childrenCount: 1,
+        hasLifeCertificate: false,
+        submissionWithin21Days: true,
+        isPrematureOrHospitalized: false,
+        workPartTimeDuringParental: false,
+        parenthoodType: 'adoption',
+        childAgeMonthsAtAdoption: 24, // 2-letnie dziecko
+      };
+
+      const result = calculateBenefits(input);
+      expect(result.maternityWeeks).toBe(20);
+      expect(result.isAdoptionOrFoster).toBe(true);
+      expect(result.parenthoodTitle).toContain('art. 183 KP');
+    });
+
+    it('gwarantuje minimalny wymiar 9 tygodni dla dziecka zbliżającego się do limitu wieku (art. 183 § 3 KP)', () => {
+      const input: BenefitCalculationInput = {
+        parentRole: 'mother',
+        contractType: 'employment',
+        monthlyBaseGross: 6000.00,
+        childrenCount: 1,
+        hasLifeCertificate: false,
+        submissionWithin21Days: true,
+        isPrematureOrHospitalized: false,
+        workPartTimeDuringParental: false,
+        parenthoodType: 'foster_family',
+        childAgeMonthsAtAdoption: 83, // 6 lat i 11 miesięcy (tuż przed 7. rokiem życia)
+      };
+
+      const result = calculateBenefits(input);
+      expect(result.maternityWeeks).toBeGreaterThanOrEqual(9);
+      expect(result.isAdoptionOrFoster).toBe(true);
+    });
+  });
+
+  describe('Planer Dzielenia Opieki Między Oboje Rodziców (Work-Life Balance)', () => {
+    it('prawidłowo oblicza korzyści w trybie naprzemiennym (sequential)', () => {
+      const result = calculateFamilySharing({
+        childrenCount: 1,
+        submissionWithin21Days: true,
+        momGrossSalary: 6000,
+        dadGrossSalary: 8000,
+        momMaternityWeeksTaken: 20,
+        momParentalWeeks: 20,
+        dadParentalWeeks: 12,
+        dadTakesExclusive9Weeks: true,
+        dadTakesPaternityLeave: true,
+        sharingMode: 'sequential',
+      });
+
+      expect(result.totalLeaveSpanCalendarWeeks).toBe(20 + 20 + 12 + 9); // 61 tygodni
+      expect(result.momTotalBenefitsPaid).toBeGreaterThan(0);
+      expect(result.dadTotalBenefitsPaid).toBeGreaterThan(0);
+      expect(result.legalNotes.length).toBeGreaterThan(0);
+    });
+
+    it('prawidłowo oblicza wspólny czas w trybie jednoczesnym (simultaneous)', () => {
+      const result = calculateFamilySharing({
+        childrenCount: 1,
+        submissionWithin21Days: true,
+        momGrossSalary: 6000,
+        dadGrossSalary: 8000,
+        momMaternityWeeksTaken: 20,
+        momParentalWeeks: 20,
+        dadParentalWeeks: 12,
+        dadTakesExclusive9Weeks: true,
+        dadTakesPaternityLeave: true,
+        sharingMode: 'simultaneous',
+      });
+
+      // W trybie simultaneous: 20 tyg. macierzyńskiego + max(20, 21) = 41 tyg.
+      expect(result.totalLeaveSpanCalendarWeeks).toBe(41);
     });
   });
 

@@ -27,7 +27,7 @@ export function Footer() {
   return (
     <footer className="w-full bg-[#EFF3EA] text-[#10371E] border-t border-[#C6D6C3] mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-xs">
           {/* Kolumna 1: ZUS */}
           <div className="space-y-3">
             <ZusLogo size="sm" />
@@ -39,7 +39,7 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Kolumna 2: Linki */}
+          {/* Kolumna 2: Linki wewnętrzne */}
           <div className="space-y-2.5">
             <h4 className="font-bold text-[#10371E]">Na skróty</h4>
             <ul className="space-y-1.5 text-[#355240]">
@@ -50,12 +50,12 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/kalkulator" className="hover:text-[#007834] hover:underline">
-                  Kalkulator zasiłku
+                  Kalkulator zasiłku & WLB 2026
                 </Link>
               </li>
               <li>
                 <Link href="/e-uslugi" className="hover:text-[#007834] hover:underline">
-                  Wniosek ZAM i eZUS
+                  Wniosek ZAM, eZUS & USC
                 </Link>
               </li>
               <li>
@@ -70,14 +70,65 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-[#007834] hover:underline inline-flex items-center gap-1"
                 >
-                  <span>Oficjalny Poradnik ZUS 2026 (PDF)</span>
+                  <span>Poradnik dla rodziców ZUS 2026 (PDF)</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Kolumna 3: Kontakt */}
+          {/* Kolumna 3: Instytucje Państwowe (gov.pl, PIP, ZUS) */}
+          <div className="space-y-2.5">
+            <h4 className="font-bold text-[#10371E]">Instytucje państwowe</h4>
+            <ul className="space-y-1.5 text-[#355240]">
+              <li>
+                <a
+                  href="https://www.zus.pl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#007834] hover:underline inline-flex items-center gap-1"
+                >
+                  <span>Zakład Ubezpieczeń Społecznych (zus.pl)</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.gov.pl/web/rodzina/urlop-rodzicielski"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#007834] hover:underline inline-flex items-center gap-1"
+                >
+                  <span>MRPiPS &ndash; Uprawnienia rodzicielskie</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.pip.gov.pl/dla-pracodawcow/porady-prawne/rodzicielstwo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#007834] hover:underline inline-flex items-center gap-1"
+                >
+                  <span>Państwowa Inspekcja Pracy (PIP)</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.gov.pl/web/cyfryzacja/rejestr-stanu-cywilnego"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#007834] hover:underline inline-flex items-center gap-1"
+                >
+                  <span>Rejestr Stanu Cywilnego (USC / gov.pl)</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Kolumna 4: Kontakt */}
           <div className="space-y-2.5">
             <h4 className="font-bold text-[#10371E]">Kontakt z ZUS</h4>
             <div className="space-y-1.5 text-[#355240]">
@@ -88,7 +139,7 @@ export function Footer() {
                 <Phone className="w-4 h-4 text-[#007834]" />
                 <span>22 560 16 00</span>
               </a>
-              <p>Poniedziałek – piątek, 7:00 – 18:00</p>
+              <p>Centrum Kontaktu Klientów (pn&ndash;pt 7:00&ndash;18:00)</p>
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <a href="mailto:mama@zus.pl" className="font-bold text-[#007834] hover:underline">
                   mama@zus.pl

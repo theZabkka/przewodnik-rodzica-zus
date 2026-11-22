@@ -7,9 +7,12 @@ import { CalculatorIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
 import {
  calculateParentalBenefits,
+ calculateFamilySharing,
+ calculateSickLeavePregnancy,
  BenefitCalculationInput,
  ContractType,
  ParentRole,
+ ParenthoodType,
 } from "@hacknation/shared";
 import {
  TrendingUp,
@@ -31,6 +34,10 @@ import {
  SlidersHorizontal,
  BookOpen,
  Sparkles,
+ Baby,
+ Clock,
+ HeartHandshake,
+ ShieldAlert,
 } from "lucide-react";
 
 export default function KalkulatorPage() {
@@ -40,6 +47,27 @@ export default function KalkulatorPage() {
  const [viewMode, setViewMode] = useState<"wizard" | "full">("wizard");
  const [currentStep, setCurrentStep] = useState<number>(1);
  const totalSteps = 8;
+
+  // Zakładka główna kalkulatora ZUS
+  const [calcTab, setCalcTab] = useState<"standard" | "family_sharing" | "pregnancy_leave">("standard");
+
+  // Typ rodzicielstwa: poród biologiczny / adopcja / rodzina zastępcza (art. 183 KP)
+  const [parenthoodType, setParenthoodType] = useState<ParenthoodType>("birth");
+  const [childAgeMonthsAtAdoption, setChildAgeMonthsAtAdoption] = useState<number>(18);
+  const [hasSchoolDeferral, setHasSchoolDeferral] = useState<boolean>(false);
+
+  // Stan dla Planera Wspólnego Dzielenia Opieki (Mama & Tata)
+  const [familySharingMode, setFamilySharingMode] = useState<"sequential" | "simultaneous">("sequential");
+  const [dadGrossSalary, setDadGrossSalary] = useState<number>(8000);
+  const [momParentalWeeksShare, setMomParentalWeeksShare] = useState<number>(20);
+  const [dadParentalWeeksShare, setDadParentalWeeksShare] = useState<number>(12);
+  const [dadTakesExclusive9Weeks, setDadTakesExclusive9Weeks] = useState<boolean>(true);
+  const [dadTakesPaternityLeave, setDadTakesPaternityLeave] = useState<boolean>(true);
+
+  // Stan dla Kalkulatora Świadczeń w Czasie Ciąży (L4 kod B & Karencja)
+  const [pregnancySickDays, setPregnancySickDays] = useState<number>(90);
+  const [insuranceTenureDays, setInsuranceTenureDays] = useState<number>(180);
+  const [isEmployeeOver50, setIsEmployeeOver50] = useState<boolean>(false);
 
   // Stan formularza wejściowego
  const [parentRole, setParentRole] = useState<ParentRole>("mother");
@@ -141,44 +169,102 @@ export default function KalkulatorPage() {
   };
 
   // Wyliczenia z silnika obliczeniowego
- const activeInput: BenefitCalculationInput = useMemo(
+  const activeInput: BenefitCalculationInput = useMemo(
     () => ({
- parentRole,
- contractType,
- monthlyBaseGross: grossSalary,
- childrenCount,
- hasLifeCertificate,
- submissionWithin21Days: submittedIn21Days,
- isPrematureOrHospitalized: isPretermOrHospitalized,
- birthWeek: isPretermOrHospitalized ? birthWeek : undefined,
- birthWeightGrams: isPretermOrHospitalized ? birthWeightGrams : undefined,
- hospitalDaysTotal: isPretermOrHospitalized ? hospitalDaysTotal : undefined,
- workPartTimeDuringParental: worksPartTime,
- workFteRatio: worksPartTime ? workFteRatio : undefined,
- workWeeks: worksPartTime ? workWeeks : undefined,
- includePaternityLeave,
+      parentRole,
+      contractType,
+      monthlyBaseGross: grossSalary,
+      childrenCount,
+      hasLifeCertificate,
+      submissionWithin21Days: submittedIn21Days,
+      parenthoodType,
+      childAgeMonthsAtAdoption: parenthoodType !== "birth" ? childAgeMonthsAtAdoption : undefined,
+      hasSchoolDeferral: parenthoodType === "foster_family" ? hasSchoolDeferral : undefined,
+      isPrematureOrHospitalized: isPretermOrHospitalized,
+      birthWeek: isPretermOrHospitalized ? birthWeek : undefined,
+      birthWeightGrams: isPretermOrHospitalized ? birthWeightGrams : undefined,
+      hospitalDaysTotal: isPretermOrHospitalized ? hospitalDaysTotal : undefined,
+      workPartTimeDuringParental: worksPartTime,
+      workFteRatio: worksPartTime ? workFteRatio : undefined,
+      workWeeks: worksPartTime ? workWeeks : undefined,
+      includePaternityLeave,
     }),
- [
- parentRole,
- contractType,
- grossSalary,
- childrenCount,
- hasLifeCertificate,
- submittedIn21Days,
- isPretermOrHospitalized,
- birthWeek,
- birthWeightGrams,
- hospitalDaysTotal,
- worksPartTime,
- workFteRatio,
- workWeeks,
- includePaternityLeave,
- ]
+    [
+      parentRole,
+      contractType,
+      grossSalary,
+      childrenCount,
+      hasLifeCertificate,
+      submittedIn21Days,
+      parenthoodType,
+      childAgeMonthsAtAdoption,
+      hasSchoolDeferral,
+      isPretermOrHospitalized,
+      birthWeek,
+      birthWeightGrams,
+      hospitalDaysTotal,
+      worksPartTime,
+      workFteRatio,
+      workWeeks,
+      includePaternityLeave,
+    ]
   );
 
- const activeResults = useMemo(() => {
- return calculateParentalBenefits(activeInput);
+  const activeResults = useMemo(() => {
+    return calculateParentalBenefits(activeInput);
   }, [activeInput]);
+
+  // Kalkulacja dla Planera Dzielenia Opieki (Mama & Tata)
+  const familySharingResult = useMemo(() => {
+    return calculateFamilySharing({
+      childrenCount,
+      hasLifeCertificate,
+      submissionWithin21Days: submittedIn21Days,
+      momGrossSalary: grossSalary,
+      dadGrossSalary,
+      momMaternityWeeksTaken: activeResults.maternityWeeks,
+      momParentalWeeks: momParentalWeeksShare,
+      dadParentalWeeks: dadParentalWeeksShare,
+      dadTakesExclusive9Weeks,
+      dadTakesPaternityLeave,
+      sharingMode: familySharingMode,
+    });
+  }, [
+    childrenCount,
+    hasLifeCertificate,
+    submittedIn21Days,
+    grossSalary,
+    dadGrossSalary,
+    activeResults.maternityWeeks,
+    momParentalWeeksShare,
+    dadParentalWeeksShare,
+    dadTakesExclusive9Weeks,
+    dadTakesPaternityLeave,
+    familySharingMode,
+  ]);
+
+  // Kalkulacja dla Świadczeń w Czasie Ciąży (L4 kod B & Karencja)
+  const pregnancySickLeaveResult = useMemo(() => {
+    const netBase = Math.round(grossSalary * (1 - 0.1371) * 100) / 100;
+    const dailyBase = Math.round((netBase / 30) * 100) / 100;
+    const calc = calculateSickLeavePregnancy(
+      {
+        sickDaysRequested: pregnancySickDays,
+        contractType,
+        isEmployeeUnder50: !isEmployeeOver50,
+      },
+      dailyBase
+    );
+    const waitingPeriodDays = contractType === "employment" ? 30 : 90;
+    const isWaitingPeriodMet = insuranceTenureDays >= waitingPeriodDays;
+    return {
+      ...calc,
+      netBase,
+      dailyBase,
+      waitingPeriodDays,
+      isWaitingPeriodMet,
+    };
+  }, [grossSalary, contractType, pregnancySickDays, isEmployeeOver50, insuranceTenureDays]);
 
   // Porównanie z wariantem przeciwnym (81,5% vs 100/70%)
  const comparisonResults = useMemo(() => {
@@ -444,6 +530,53 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
           </span>
         </div>
       )}
+
+      {/* 3 GŁÓWNE ZAKŁADKI KALKULATORA ZUS (WYMÓG PDF) */}
+      <div className="flex border-b border-[#C6D6C3] gap-2 overflow-x-auto text-xs font-bold pt-1">
+        <button
+          type="button"
+          onClick={() => setCalcTab("standard")}
+          className={`py-3 px-4 border-b-2 flex items-center gap-2 whitespace-nowrap transition-colors ${
+            calcTab === "standard"
+              ? "border-[#007834] text-[#10371E] bg-[#EFF3EA] rounded-t-lg shadow-xs"
+              : "border-transparent text-[#425B4A] hover:text-[#10371E]"
+          }`}
+        >
+          <Baby className="w-4 h-4 text-[#007834]" />
+          <span>Zintegrowany Kalkulator Zasiłków (Urodzenie / Adopcja)</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCalcTab("family_sharing")}
+          className={`py-3 px-4 border-b-2 flex items-center gap-2 whitespace-nowrap transition-colors ${
+            calcTab === "family_sharing"
+              ? "border-[#007834] text-[#10371E] bg-[#EFF3EA] rounded-t-lg shadow-xs"
+              : "border-transparent text-[#425B4A] hover:text-[#10371E]"
+          }`}
+        >
+          <Users className="w-4 h-4 text-[#007834]" />
+          <span>Planer Dzielenia Opieki (Mama & Tata)</span>
+          <span className="bg-[#10371E] text-white px-1.5 py-0.5 rounded text-[10px]">WLB 2026</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCalcTab("pregnancy_leave")}
+          className={`py-3 px-4 border-b-2 flex items-center gap-2 whitespace-nowrap transition-colors ${
+            calcTab === "pregnancy_leave"
+              ? "border-[#007834] text-[#10371E] bg-[#EFF3EA] rounded-t-lg shadow-xs"
+              : "border-transparent text-[#425B4A] hover:text-[#10371E]"
+          }`}
+        >
+          <Clock className="w-4 h-4 text-[#007834]" />
+          <span>Świadczenia w Ciąży & Detektor Karencji</span>
+          <span className="bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded text-[10px]">Kod „B”</span>
+        </button>
+      </div>
+
+      {calcTab === "standard" && (
+        <>
 
       {/* GŁÓWNA CZĘŚĆ: INTERAKTYWNY KREATOR PYTANIE PO PYTANIU (NA PEŁNĄ SZEROKOŚĆ) */}
       {viewMode === "wizard" && (
@@ -809,6 +942,101 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
                         </button>
                       );
                     })}
+                  </div>
+
+                  {/* Forma rodzicielstwa (Art. 180 vs Art. 183 Kodeksu pracy) */}
+                  <div className="pt-4 border-t border-[#EFF3EA] space-y-3">
+                    <label className="text-xs font-bold text-[#10371E] block">
+                      Tytuł rodzicielstwa (Art. 180 vs Art. 183 Kodeksu pracy):
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      <button
+                        type="button"
+                        onClick={() => setParenthoodType("birth")}
+                        className={`p-3 rounded-xl border text-left transition-all ${
+                          parenthoodType === "birth"
+                            ? "border-[#007834] bg-[#EFF3EA] text-[#10371E] font-bold"
+                            : "border-[#C6D6C3] bg-white text-slate-700 hover:border-[#8CA68E]"
+                        }`}
+                      >
+                        <div className="text-xs font-bold">Urodzenie dziecka</div>
+                        <div className="text-[11px] text-[#425B4A]">Urlop macierzyński (art. 180 KP)</div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setParenthoodType("adoption")}
+                        className={`p-3 rounded-xl border text-left transition-all ${
+                          parenthoodType === "adoption"
+                            ? "border-[#007834] bg-[#EFF3EA] text-[#10371E] font-bold"
+                            : "border-[#C6D6C3] bg-white text-slate-700 hover:border-[#8CA68E]"
+                        }`}
+                      >
+                        <div className="text-xs font-bold">Adopcja (Przysposobienie)</div>
+                        <div className="text-[11px] text-[#425B4A]">Do 14. roku życia (art. 183 KP)</div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setParenthoodType("foster_family")}
+                        className={`p-3 rounded-xl border text-left transition-all ${
+                          parenthoodType === "foster_family"
+                            ? "border-[#007834] bg-[#EFF3EA] text-[#10371E] font-bold"
+                            : "border-[#C6D6C3] bg-white text-slate-700 hover:border-[#8CA68E]"
+                        }`}
+                      >
+                        <div className="text-xs font-bold">Rodzina zastępcza niezawodowa</div>
+                        <div className="text-[11px] text-[#425B4A]">Do 7 / 10 lat z odroczeniem</div>
+                      </button>
+                    </div>
+
+                    {parenthoodType !== "birth" && (
+                      <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl space-y-3 text-xs animate-in fade-in">
+                        <div className="flex items-center gap-2 text-amber-900 font-bold">
+                          <HeartHandshake className="w-4 h-4 text-amber-700" />
+                          <span>
+                            {parenthoodType === "adoption"
+                              ? "Przyjęcie dziecka na wychowanie w celu przysposobienia"
+                              : "Przyjęcie dziecka jako rodzina zastępcza niezawodowa"}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4">
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-semibold text-amber-950 block">
+                              Wiek dziecka w chwili przyjęcia (miesiące):
+                            </label>
+                            <input
+                              type="number"
+                              min={1}
+                              max={parenthoodType === "adoption" ? 168 : hasSchoolDeferral ? 120 : 84}
+                              value={childAgeMonthsAtAdoption}
+                              onChange={(e) => setChildAgeMonthsAtAdoption(Math.max(1, Number(e.target.value)))}
+                              className="w-24 px-2 py-1 bg-white border border-amber-300 rounded text-xs font-bold text-amber-900"
+                            />
+                            <span className="text-[10px] text-amber-800 ml-2">
+                              ({Math.floor(childAgeMonthsAtAdoption / 12)} lat i {childAgeMonthsAtAdoption % 12} mies.)
+                            </span>
+                          </div>
+
+                          {parenthoodType === "foster_family" && (
+                            <label className="flex items-center gap-2 cursor-pointer pt-3">
+                              <input
+                                type="checkbox"
+                                checked={hasSchoolDeferral}
+                                onChange={(e) => setHasSchoolDeferral(e.target.checked)}
+                                className="w-4 h-4 rounded text-[#007834]"
+                              />
+                              <span className="text-[11px] font-semibold text-amber-950">
+                                Decyzja o odroczeniu obowiązku szkolnego (wydłuża limit wieku z 7 do 10 lat)
+                              </span>
+                            </label>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-amber-800 leading-relaxed border-t border-amber-200/60 pt-2">
+                          <strong>Gwarancja art. 183 § 3 KP:</strong> Przysługuje urlop na warunkach macierzyńskiego w wymiarze co najmniej <strong>9 tygodni</strong>, nawet jeśli dziecko zbliża się do granicy wieku!
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -1590,6 +1818,634 @@ Wygenerowano w portalu: Zasiłkowy Przewodnik Rodzica (zus.pl).
           </div>
         </div>
       </div>
+      </>
+      )}
+
+      {/* ZAKŁADKA 2: PLANER DZIELENIA OPIEKI (MAMA & TATA) - WORK-LIFE BALANCE 2026 */}
+      {calcTab === "family_sharing" && (
+        <div className="space-y-6">
+          {/* Header Card WLB */}
+          <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="inline-flex items-center gap-2 bg-[#EFF3EA] border border-[#B9CCB6] px-3 py-1 rounded text-xs font-bold text-[#10371E]">
+                <Users className="w-4 h-4 text-[#007834]" />
+                <span>Dyrektywa Work-Life Balance & Kodeks Pracy 2026 (art. 182¹ᵃ KP)</span>
+              </div>
+              <span className="text-xs font-semibold text-[#425B4A]">
+                Pula urlopu rodzicielskiego: <strong className="text-[#10371E]">{familySharingResult.totalParentalPoolWeeks} tygodni</strong>
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-black text-[#10371E] tracking-tight">
+                Planer i Symulator Budżetu Domowego (Mama & Tata)
+              </h2>
+              <p className="text-sm text-[#425B4A] leading-relaxed max-w-4xl">
+                Oblicz łączny dochód Waszej rodziny w trakcie urlopu macierzyńskiego i rodzicielskiego.
+                Każdy z rodziców ma <strong>9 tygodni urlopu na wyłączność</strong> (zasiłek 70%), którego nie można przenieść na drugiego rodzica.
+                Możecie korzystać z urlopu kolejno (maksymalizując czas opieki domowej) lub równocześnie.
+              </p>
+            </div>
+
+            {/* Tryb korzystania */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <button
+                type="button"
+                onClick={() => setFamilySharingMode("sequential")}
+                className={`p-4 rounded-xl border-2 text-left transition-all ${
+                  familySharingMode === "sequential"
+                    ? "border-[#007834] bg-[#EFF3EA] shadow-xs"
+                    : "border-[#DCE8D3] bg-white hover:border-[#B9CCB6]"
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-bold text-[#10371E]">Sekwencyjnie (jedno po drugim)</span>
+                  {familySharingMode === "sequential" && <CheckCircle2 className="w-4 h-4 text-[#007834]" />}
+                </div>
+                <p className="text-xs text-[#425B4A]">
+                  Najdłuższa bezpośrednia opieka domowa. Mama korzysta ze swojej puli, a po jej powrocie do pracy tata przejmuje opiekę.
+                </p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setFamilySharingMode("simultaneous")}
+                className={`p-4 rounded-xl border-2 text-left transition-all ${
+                  familySharingMode === "simultaneous"
+                    ? "border-[#007834] bg-[#EFF3EA] shadow-xs"
+                    : "border-[#DCE8D3] bg-white hover:border-[#B9CCB6]"
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-bold text-[#10371E]">Równocześnie (oboje w tym samym czasie)</span>
+                  {familySharingMode === "simultaneous" && <CheckCircle2 className="w-4 h-4 text-[#007834]" />}
+                </div>
+                <p className="text-xs text-[#425B4A]">
+                  Oboje rodzice przebywają z dzieckiem razem (np. w pierwszych miesiącach). Tygodnie pobierane są z łącznej puli podwójnie.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          {/* Formularz Parametrów Obojga Rodziców */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Karta Mamy */}
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 space-y-5 shadow-xs">
+              <div className="flex items-center justify-between pb-3 border-b border-[#DCE8D3]">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-[#EFF3EA] flex items-center justify-center text-[#007834] font-bold text-xs">
+                    M
+                  </div>
+                  <h3 className="font-bold text-[#10371E]">Mama dziecka</h3>
+                </div>
+                <span className="text-xs text-[#425B4A]">Macierzyński: 20 tyg.</span>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-[#2E4B38] flex justify-between">
+                  <span>Średnie wynagrodzenie brutto mamy:</span>
+                  <span className="text-[#007834] font-bold">{grossSalary.toLocaleString("pl-PL")} zł</span>
+                </label>
+                <input
+                  type="range"
+                  min="4806"
+                  max="25000"
+                  step="100"
+                  value={grossSalary}
+                  onChange={(e) => setGrossSalary(Number(e.target.value))}
+                  className="w-full accent-[#007834]"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-[#2E4B38] flex justify-between">
+                  <span>Tygodnie urlopu rodzicielskiego mamy:</span>
+                  <span className="text-[#007834] font-black">{momParentalWeeksShare} z 32 tyg.</span>
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="32"
+                  step="1"
+                  value={momParentalWeeksShare}
+                  onChange={(e) => {
+                    const momW = Number(e.target.value);
+                    setMomParentalWeeksShare(momW);
+                    setDadParentalWeeksShare(32 - momW);
+                  }}
+                  className="w-full accent-[#007834]"
+                />
+                <p className="text-[11px] text-[#425B4A]">
+                  Pula wspólna: 32 tygodnie (pozostałe 9 tygodni przysługuje tacie na wyłączność).
+                </p>
+              </div>
+
+              <div className="p-3 bg-[#EFF3EA] rounded-xl text-xs space-y-1 text-[#1D4029]">
+                <div className="flex justify-between font-semibold">
+                  <span>Łączny czas urlopu mamy:</span>
+                  <span>{20 + momParentalWeeksShare} tygodni</span>
+                </div>
+                <div className="flex justify-between font-bold text-[#007834]">
+                  <span>Szacowane świadczenia mamy:</span>
+                  <span>{familySharingResult.momTotalBenefitsPaid.toLocaleString("pl-PL")} zł</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Karta Taty */}
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 space-y-5 shadow-xs">
+              <div className="flex items-center justify-between pb-3 border-b border-[#DCE8D3]">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-[#EFF3EA] flex items-center justify-center text-[#007834] font-bold text-xs">
+                    T
+                  </div>
+                  <h3 className="font-bold text-[#10371E]">Tata dziecka</h3>
+                </div>
+                <span className="text-xs text-[#425B4A]">Uprawnienia WLB 2026</span>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-[#2E4B38] flex justify-between">
+                  <span>Średnie wynagrodzenie brutto taty:</span>
+                  <span className="text-[#007834] font-bold">{dadGrossSalary.toLocaleString("pl-PL")} zł</span>
+                </label>
+                <input
+                  type="range"
+                  min="4806"
+                  max="25000"
+                  step="100"
+                  value={dadGrossSalary}
+                  onChange={(e) => setDadGrossSalary(Number(e.target.value))}
+                  className="w-full accent-[#007834]"
+                />
+              </div>
+
+              <div className="space-y-3 pt-1">
+                <label className="flex items-start gap-3 p-3 rounded-xl border border-[#DCE8D3] hover:bg-[#EFF3EA] cursor-pointer transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={dadTakesExclusive9Weeks}
+                    onChange={(e) => setDadTakesExclusive9Weeks(e.target.checked)}
+                    className="mt-0.5 rounded border-[#C6D6C3] text-[#007834] focus:ring-[#007834]"
+                  />
+                  <div className="text-xs">
+                    <span className="font-bold text-[#10371E] block">
+                      Tata wykorzystuje swoje 9 tygodni wyłączne (70%)
+                    </span>
+                    <span className="text-[#425B4A]">
+                      Gwarancja art. 182¹ᵃ § 4 KP. Jeśli tata z nich nie skorzysta, <strong>te 9 tygodni przepada bezpowrotnie</strong>.
+                    </span>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 p-3 rounded-xl border border-[#DCE8D3] hover:bg-[#EFF3EA] cursor-pointer transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={dadTakesPaternityLeave}
+                    onChange={(e) => setDadTakesPaternityLeave(e.target.checked)}
+                    className="mt-0.5 rounded border-[#C6D6C3] text-[#007834] focus:ring-[#007834]"
+                  />
+                  <div className="text-xs">
+                    <span className="font-bold text-[#10371E] block">
+                      Tata korzysta z 2 tygodni urlopu ojcowskiego (100% ZUS)
+                    </span>
+                    <span className="text-[#425B4A]">
+                      Niezależne od urlopu macierzyńskiego i rodzicielskiego, do ukończenia przez dziecko 12 miesięcy życia.
+                    </span>
+                  </div>
+                </label>
+              </div>
+
+              <div className="p-3 bg-[#EFF3EA] rounded-xl text-xs space-y-1 text-[#1D4029]">
+                <div className="flex justify-between font-semibold">
+                  <span>Łączny czas urlopu taty:</span>
+                  <span>{familySharingResult.dadTotalLeaveWeeks} tygodni</span>
+                </div>
+                <div className="flex justify-between font-bold text-[#007834]">
+                  <span>Szacowane świadczenia taty:</span>
+                  <span>{familySharingResult.dadTotalBenefitsPaid.toLocaleString("pl-PL")} zł</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Podsumowanie Finansowe KPI */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Łączny budżet rodziny z zasiłków
+              </span>
+              <p className="text-2xl font-black text-[#10371E]">
+                {familySharingResult.familyTotalBenefitsCombined.toLocaleString("pl-PL")} zł
+              </p>
+              <span className="text-[11px] text-[#425B4A]">Zasiłki ZUS obojga rodziców łącznie</span>
+            </div>
+
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Czas bezpośredniej opieki
+              </span>
+              <p className="text-2xl font-black text-[#007834]">
+                {familySharingResult.totalLeaveSpanCalendarWeeks} tygodni
+              </p>
+              <span className="text-[11px] text-[#425B4A]">
+                {familySharingMode === "sequential"
+                  ? "Tygodnie kalendarzowe opieki rodzicielskiej"
+                  : "Tryb równoległy (jednocześnie oboje)"}
+              </span>
+            </div>
+
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Świadczenia mamy (ZUS)
+              </span>
+              <p className="text-2xl font-black text-[#10371E]">
+                {familySharingResult.momTotalBenefitsPaid.toLocaleString("pl-PL")} zł
+              </p>
+              <span className="text-[11px] text-[#425B4A]">{familySharingResult.momTotalLeaveWeeks} tyg. macierzyński + rodzicielski</span>
+            </div>
+
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Świadczenia taty (ZUS)
+              </span>
+              <p className="text-2xl font-black text-[#10371E]">
+                {familySharingResult.dadTotalBenefitsPaid.toLocaleString("pl-PL")} zł
+              </p>
+              <span className="text-[11px] text-[#425B4A]">{familySharingResult.dadTotalLeaveWeeks} tyg. (WLB 9 tyg. + ojcowski)</span>
+            </div>
+          </div>
+
+          {/* Alert Ryzyka Utraty 9 Tygodni WLB */}
+          {!dadTakesExclusive9Weeks ? (
+            <div className="p-4 rounded-xl bg-red-50 border border-red-200 flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+              <div className="text-xs space-y-1 text-red-950">
+                <span className="font-bold text-sm block">
+                  Uwaga! Bezpowrotnie tracicie 9 tygodni płatnego zasiłku (art. 182¹ᵃ § 4 KP)
+                </span>
+                <p>
+                  Zgodnie z Kodeksem Pracy 9 tygodni urlopu rodzicielskiego jest prawem niezbywalnym drugiego rodzica.
+                  Mama <strong>nie może przejąć</strong> tych tygodni. Jeśli tata ich nie wykorzysta, przepadają one w całości wraz ze świadczeniem pieniężnym.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-[#007834] shrink-0 mt-0.5" />
+              <div className="text-xs space-y-1 text-[#10371E]">
+                <span className="font-bold text-sm block">
+                  Optymalne wykorzystanie uprawnień rodzicielskich (WLB 2026)
+                </span>
+                <p>
+                  Wykorzystujecie 100% przysługujących świadczeń ZUS. Tata odbiera swoje 9 tygodni (70% podstawy),
+                  a dziecko ma zapewnioną dłuższą bliską więź z obojgiem rodziców.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Oś Czasu i Kaskada Budżetu w Poszczególnych Fazach */}
+          <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 space-y-4 shadow-xs">
+            <h3 className="text-base font-bold text-[#10371E] flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#007834]" />
+              <span>Kaskada Budżetu Domowego w Poszczególnych Fazach Opieki</span>
+            </h3>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-[#DCE8D3] text-[#425B4A]">
+                    <th className="py-2.5 px-3 font-bold">Okres / Faza opieki</th>
+                    <th className="py-2.5 px-3 font-bold">Status Mamy</th>
+                    <th className="py-2.5 px-3 font-bold">Status Taty</th>
+                    <th className="py-2.5 px-3 font-bold text-right">Dochód Mamy (brutto)</th>
+                    <th className="py-2.5 px-3 font-bold text-right">Dochód Taty (brutto)</th>
+                    <th className="py-2.5 px-3 font-bold text-right text-[#007834]">Łączny budżet domowy</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#EFF3EA]">
+                  {familySharingResult.budgetPhases.map((phase, idx) => (
+                    <tr key={idx} className="hover:bg-[#FAF8F2] transition-colors">
+                      <td className="py-3 px-3 font-semibold text-[#10371E]">{phase.periodLabel}</td>
+                      <td className="py-3 px-3">
+                        <span className={`inline-flex px-2 py-0.5 rounded text-[11px] font-semibold ${
+                          phase.momStatus === "maternity"
+                            ? "bg-purple-100 text-purple-900"
+                            : phase.momStatus === "parental"
+                            ? "bg-blue-100 text-blue-900"
+                            : "bg-gray-100 text-gray-800"
+                        }`}>
+                          {phase.momStatus === "maternity" ? "Urlop macierzyński" : phase.momStatus === "parental" ? "Urlop rodzicielski" : "Praca"}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3">
+                        <span className={`inline-flex px-2 py-0.5 rounded text-[11px] font-semibold ${
+                          phase.dadStatus === "paternity"
+                            ? "bg-teal-100 text-teal-900"
+                            : phase.dadStatus === "parental"
+                            ? "bg-blue-100 text-blue-900"
+                            : "bg-gray-100 text-gray-800"
+                        }`}>
+                          {phase.dadStatus === "paternity" ? "Urlop ojcowski (100%)" : phase.dadStatus === "parental" ? "Urlop rodzicielski (70%)" : "Praca"}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium text-[#10371E]">
+                        {phase.momMonthlyIncome.toLocaleString("pl-PL")} zł
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium text-[#10371E]">
+                        {phase.dadMonthlyIncome.toLocaleString("pl-PL")} zł
+                      </td>
+                      <td className="py-3 px-3 text-right font-black text-[#007834] text-sm">
+                        {phase.combinedFamilyMonthlyIncome.toLocaleString("pl-PL")} zł
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Pouczenia Prawne */}
+            <div className="pt-3 border-t border-[#DCE8D3] space-y-2">
+              <h4 className="text-xs font-bold text-[#10371E] uppercase tracking-wider">
+                Wskazówki prawne ZUS i Kodeksu Pracy:
+              </h4>
+              <ul className="space-y-1.5 text-xs text-[#425B4A]">
+                {familySharingResult.legalNotes.map((note, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-[#007834] font-bold">•</span>
+                    <span>{note}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ZAKŁADKA 3: ŚWIADCZENIA W CIĄŻY & DETEKTOR KARENCJI (KOD "B") */}
+      {calcTab === "pregnancy_leave" && (
+        <div className="space-y-6">
+          {/* Header Card Ciąża */}
+          <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 px-3 py-1 rounded text-xs font-bold text-amber-900">
+                <ShieldAlert className="w-4 h-4 text-amber-700" />
+                <span>e-ZLA z Kodem „B” (Ciąża) & Art. 92 KP / Art. 11 Ustawy Zasiłkowej</span>
+              </div>
+              <span className="text-xs font-bold text-[#007834] bg-[#EFF3EA] px-2.5 py-1 rounded">
+                Wysokość zasiłku: 100% podstawy wymiaru
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-black text-[#10371E] tracking-tight">
+                Kalkulator Zwolnienia w Ciąży & Detektor Karencji Ubezpieczeniowej
+              </h2>
+              <p className="text-sm text-[#425B4A] leading-relaxed max-w-4xl">
+                W okresie ciąży za czas niezdolności do pracy z kodem „B” przysługuje <strong>100% wynagrodzenia lub zasiłku chorobowego</strong>.
+                Maksymalny limit wypłaty wynosi aż <strong>270 dni</strong> (zamiast standardowych 182 dni).
+                Sprawdź, czy spełniasz wymagany okres wyczekiwania (karencję) i kto finansuje Twoje świadczenie.
+              </p>
+            </div>
+          </div>
+
+          {/* Formularz Parametrów Ciążowych */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 space-y-5 shadow-xs">
+              <h3 className="font-bold text-[#10371E] pb-3 border-b border-[#DCE8D3]">
+                Dane Zatrudnienia i Wynagrodzenia
+              </h3>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-[#2E4B38] flex justify-between">
+                  <span>Miesięczne wynagrodzenie brutto:</span>
+                  <span className="text-[#007834] font-black">{grossSalary.toLocaleString("pl-PL")} zł</span>
+                </label>
+                <input
+                  type="range"
+                  min="4806"
+                  max="25000"
+                  step="100"
+                  value={grossSalary}
+                  onChange={(e) => setGrossSalary(Number(e.target.value))}
+                  className="w-full accent-[#007834]"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-[#2E4B38]">Forma zatrudnienia / ubezpieczenia:</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: "employment" as const, label: "Umowa o pracę (UoP)" },
+                    { id: "mandate" as const, label: "Zlecenie" },
+                    { id: "b2b" as const, label: "Działalność (JDG)" },
+                  ].map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => setContractType(c.id)}
+                      className={`p-2.5 rounded text-xs font-semibold border transition-all text-center ${
+                        contractType === c.id
+                          ? "border-[#007834] bg-[#EFF3EA] text-[#007834]"
+                          : "border-[#C6D6C3] text-[#2E4B38] hover:bg-[#EFF3EA]"
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {contractType === "employment" && (
+                <div className="space-y-2 pt-2">
+                  <label className="text-xs font-bold text-[#2E4B38]">Wiek pracownicy:</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsEmployeeOver50(false)}
+                      className={`p-2 rounded text-xs font-semibold border transition-all text-center ${
+                        !isEmployeeOver50
+                          ? "border-[#007834] bg-[#EFF3EA] text-[#007834]"
+                          : "border-[#C6D6C3] text-[#2E4B38] hover:bg-[#EFF3EA]"
+                      }`}
+                    >
+                      Do 50 roku życia (33 dni płaci firma)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsEmployeeOver50(true)}
+                      className={`p-2 rounded text-xs font-semibold border transition-all text-center ${
+                        isEmployeeOver50
+                          ? "border-[#007834] bg-[#EFF3EA] text-[#007834]"
+                          : "border-[#C6D6C3] text-[#2E4B38] hover:bg-[#EFF3EA]"
+                      }`}
+                    >
+                      Ukończone 50 lat (14 dni płaci firma)
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Karta Stażu i Dni Zwolnienia */}
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 space-y-5 shadow-xs">
+              <h3 className="font-bold text-[#10371E] pb-3 border-b border-[#DCE8D3]">
+                Dni Zwolnienia & Staż Ubezpieczeniowy (Karencja)
+              </h3>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-[#2E4B38] flex justify-between">
+                  <span>Wnioskowana liczba dni L4 w roku (kod B):</span>
+                  <span className="text-[#007834] font-black">{pregnancySickDays} dni (maks. 270)</span>
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="270"
+                  step="1"
+                  value={pregnancySickDays}
+                  onChange={(e) => setPregnancySickDays(Number(e.target.value))}
+                  className="w-full accent-[#007834]"
+                />
+                <div className="flex justify-between text-[11px] text-[#425B4A]">
+                  <span>1 dzień</span>
+                  <span>182 dni (standard)</span>
+                  <span>270 dni (ciąża)</span>
+                </div>
+              </div>
+
+              <div className="space-y-2 pt-2">
+                <label className="text-xs font-bold text-[#2E4B38] flex justify-between">
+                  <span>Twój nieprzerwany staż ubezpieczenia chorobowego:</span>
+                  <span className="text-[#007834] font-black">{insuranceTenureDays} dni</span>
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="365"
+                  step="5"
+                  value={insuranceTenureDays}
+                  onChange={(e) => setInsuranceTenureDays(Number(e.target.value))}
+                  className="w-full accent-[#007834]"
+                />
+                <p className="text-[11px] text-[#425B4A]">
+                  Wymóg art. 4 ustawy zasiłkowej: <strong>30 dni</strong> przy umowie o pracę lub <strong>90 dni</strong> przy zleceniu/JDG.
+                </p>
+              </div>
+
+              {/* Status Karencji */}
+              {!pregnancySickLeaveResult.isWaitingPeriodMet ? (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs space-y-1 text-red-950">
+                  <span className="font-bold block">
+                    ⚠️ Karencja nieupłynęła! Zasiłek obecnie NIE PRZYSŁUGUJE!
+                  </span>
+                  <p>
+                    Brakuje jeszcze <strong>{pregnancySickLeaveResult.waitingPeriodDays - insuranceTenureDays} dni</strong> opłacania składek.
+                    Wyjątki od karencji: absolwenci do 90 dni od ukończenia szkoły/studiów, wypadek w drodze do pracy lub co najmniej 10 lat ubezpieczenia obowiązkowego.
+                  </p>
+                </div>
+              ) : (
+                <div className="p-3 bg-[#EFF3EA] border border-[#B9CCB6] rounded-xl text-xs flex items-center gap-2 text-[#10371E]">
+                  <CheckCircle2 className="w-4 h-4 text-[#007834] shrink-0" />
+                  <span>
+                    <strong>Okres wyczekiwania spełniony!</strong> Przysługuje prawo do 100% świadczenia od 1. dnia zwolnienia.
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Podsumowanie Świadczenia Ciążowego */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Wynagrodzenie od pracodawcy
+              </span>
+              <p className="text-2xl font-black text-[#10371E]">
+                {pregnancySickLeaveResult.employerPaidAmount.toLocaleString("pl-PL")} zł
+              </p>
+              <span className="text-[11px] text-[#425B4A]">
+                {pregnancySickLeaveResult.employerPaidDays} dni (art. 92 Kodeksu Pracy – 100%)
+              </span>
+            </div>
+
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Zasiłek chorobowy z ZUS
+              </span>
+              <p className="text-2xl font-black text-[#007834]">
+                {pregnancySickLeaveResult.zusPaidAmount.toLocaleString("pl-PL")} zł
+              </p>
+              <span className="text-[11px] text-[#425B4A]">
+                {pregnancySickLeaveResult.zusPaidDays} dni (Fundusz Ubezpieczeń Społecznych – 100%)
+              </span>
+            </div>
+
+            <div className="bg-white border border-[#C6D6C3] rounded-2xl p-5 shadow-xs">
+              <span className="text-xs font-bold text-[#425B4A] uppercase tracking-wider block mb-1">
+                Łączna kwota świadczeń
+              </span>
+              <p className="text-2xl font-black text-[#10371E]">
+                {pregnancySickLeaveResult.totalAmountGross.toLocaleString("pl-PL")} zł
+              </p>
+              <span className="text-[11px] text-[#425B4A]">
+                Za {pregnancySickLeaveResult.totalDaysGranted} dni zwolnienia (dzienna stawka: {pregnancySickLeaveResult.dailyBenefitAmount} zł)
+              </span>
+            </div>
+          </div>
+
+          {/* Karty Ochrony Prawnej Kobiety w Ciąży */}
+          <div className="bg-white border border-[#C6D6C3] rounded-2xl p-6 space-y-4 shadow-xs">
+            <h3 className="text-base font-bold text-[#10371E] flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-[#007834]" />
+              <span>Gwarancje Prawne dla Kobiet w Ciąży (Kodeks Pracy 2026)</span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-[#2E4B38]">
+              <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1.5">
+                <span className="font-bold text-[#10371E] text-sm block">
+                  Szczególna ochrona przed zwolnieniem (art. 177 KP)
+                </span>
+                <p>
+                  Pracodawca nie może wypowiedzieć ani rozwiązać umowy o pracę w okresie ciąży oraz urlopu macierzyńskiego.
+                  Wypowiedzenie jest dopuszczalne wyłącznie w razie ogłoszenia upadłości lub likwidacji pracodawcy.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1.5">
+                <span className="font-bold text-[#10371E] text-sm block">
+                  Przedłużenie umowy na czas określony (art. 177 § 3 KP)
+                </span>
+                <p>
+                  Jeżeli umowa o pracę na czas określony rozwiązałaby się po upływie 3. miesiąca ciąży,
+                  ulega ona automatycznemu przedłużeniu z mocy prawa do dnia porodu. W dniu porodu kobieta nabywa pełne prawo do rocznego zasiłku macierzyńskiego!
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1.5">
+                <span className="font-bold text-[#10371E] text-sm block">
+                  Świadczenie rehabilitacyjne (100% podstawy)
+                </span>
+                <p>
+                  Jeżeli po wyczerpaniu 270 dni zasiłku chorobowego stan zdrowia nadal nie pozwala na powrót do pracy,
+                  a dalsze leczenie rokuje odzyskanie zdolności, przysługuje świadczenie rehabilitacyjne (art. 18 ustawy zasiłkowej) płatne w 100% podstawy.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#EFF3EA] border border-[#B9CCB6] space-y-1.5">
+                <span className="font-bold text-[#10371E] text-sm block">
+                  Zakaz pracy w godzinach nadliczbowych i w nocy (art. 178 KP)
+                </span>
+                <p>
+                  Pracownicy w ciąży nie wolno zatrudniać w godzinach nadliczbowych ani w porze nocnej,
+                  ani też bez jej zgody delegować poza stałe miejsce pracy lub zatrudniać w systemie przerywanego czasu pracy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
