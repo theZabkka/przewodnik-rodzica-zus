@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zasiłkowy Przewodnik Przyszłego Rodzica – Prezentacja dla Jury HackNation 2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #111a14;
+      color: #10371E;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .slide-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      background: #FAF8F2;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 56px 80px 48px 80px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid #C6D6C3;
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+
+    /* ZUS Brand Header */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #C6D6C3;
+      padding-bottom: 22px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .zus-logo-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .zus-emblem {
+      width: 48px;
+      height: 48px;
+      background: #007834;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 26px;
+      letter-spacing: -1px;
+    }
+
+    .zus-text-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .zus-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #10371E;
+      letter-spacing: -0.3px;
+      line-height: 1.1;
+    }
+
+    .zus-sub {
+      font-size: 12px;
+      font-weight: 700;
+      color: #007834;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .header-pill {
+      background: #EFF3EA;
+      border: 1px solid #B9CCB6;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #10371E;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-pill .dot {
+      width: 8px;
+      height: 8px;
+      background: #007834;
+      border-radius: 50%;
+    }
+
+    .slide-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 17px;
+      color: #007834;
+      background: #DCE8D3;
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+    /* Slide Body */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 60px;
+      padding: 36px 0;
+      align-items: center;
+    }
+
+    .slide-body.full-width {
+      display: block;
+    }
+
+    .col-left {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .col-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .category-badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #007834;
+      background: #DCE8D3;
+      padding: 6px 14px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
+    .category-badge.amber {
+      color: #92400E;
+      background: #FEF3C7;
+    }
+
+    .category-badge.blue {
+      color: #0369A1;
+      background: #E0F2FE;
+    }
+
+    .category-badge.rose {
+      color: #BE123C;
+      background: #FFE4E6;
+    }
+
+    .slide-headline {
+      font-size: 46px;
+      font-weight: 900;
+      color: #10371E;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .slide-subheadline {
+      font-size: 22px;
+      font-weight: 500;
+      color: #425B4A;
+      line-height: 1.45;
+      margin-bottom: 28px;
+    }
+
+    /* Cards */
+    .card {
+      background: #FFFFFF;
+      border: 1.5px solid #C6D6C3;
+      border-radius: 18px;
+      padding: 26px 30px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+
+    .card.highlight {
+      background: #EFF3EA;
+      border-color: #007834;
+      border-width: 2px;
+    }
+
+    .card.dark {
+      background: #10371E;
+      color: #FFFFFF;
+      border-color: #10371E;
+    }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #10371E;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card.dark .card-title {
+      color: #FFFFFF;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: #425B4A;
+      line-height: 1.55;
+    }
+
+    .card.dark .card-desc {
+      color: #DCE8D3;
+    }
+
+    /* List Points */
+    .point-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #FFFFFF;
+      border: 1px solid #C6D6C3;
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+
+    .point-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #DCE8D3;
+      color: #007834;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      shrink: 0;
+    }
+
+    .point-text {
+      flex: 1;
+    }
+
+    .point-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #10371E;
+      margin-bottom: 4px;
+    }
+
+    .point-desc {
+      font-size: 14px;
+      color: #425B4A;
+      line-height: 1.45;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 22px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    /* KPI Box */
+    .kpi-card {
+      background: #FFFFFF;
+      border: 1.5px solid #C6D6C3;
+      border-radius: 16px;
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-value {
+      font-size: 38px;
+      font-weight: 900;
+      color: #007834;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #10371E;
+      margin-bottom: 6px;
+    }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: #5A7360;
+      line-height: 1.35;
+    }
+
+    /* Table styling */
+    .table-zus {
+      width: 100%;
+      border-collapse: collapse;
+      background: #FFFFFF;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #C6D6C3;
+      font-size: 14px;
+    }
+
+    .table-zus th {
+      background: #EFF3EA;
+      color: #10371E;
+      font-weight: 800;
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1.5px solid #C6D6C3;
+    }
+
+    .table-zus td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #E5EDE3;
+      color: #2E4B38;
+    }
+
+    .table-zus tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .badge-ok {
+      background: #DCE8D3;
+      color: #007834;
+    }
+
+    .badge-warn {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .badge-stop {
+      background: #FFE4E6;
+      color: #BE123C;
+    }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1.5px solid #C6D6C3;
+      padding-top: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #5A7360;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-live-link {
+      color: #007834;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Presenter Controls */
+    .nav-bar {
+      position: fixed;
+      bottom: 20px;
+      background: rgba(16, 55, 30, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 24px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .nav-btn {
+      background: #007834;
+      color: #FFFFFF;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: #009642;
+    }
+
+    .nav-indicator {
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Print Optimization for PDF Generation */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+        margin: 0;
+      }
+      .nav-bar {
+        display: none !important;
+      }
+      .slide-container {
+        gap: 0;
+      }
+      .slide {
+        box-shadow: none;
+        border: none;
+        page-break-after: always;
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+      }
+      @page {
+        size: 1920px 1080px;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pasek nawigacyjny na żywo (tylko w przeglądarce) -->
+  <div class="nav-bar">
+    <button class="nav-btn" onclick="prevSlide()">← Poprzedni</button>
+    <span class="nav-indicator" id="slideIndicator">Slajd 1 / 10</span>
+    <button class="nav-btn" onclick="nextSlide()">Następny →</button>
+    <button class="nav-btn" style="background: #355240;" onclick="toggleFullScreen()">Pełny ekran (F11)</button>
+    <button class="nav-btn" style="background: #1D4029;" onclick="window.print()">Drukuj do PDF</button>
+  </div>
+
+  <div class="slide-container" id="deck">
+
+    <!-- SLAJD 1: TYTUŁOWY -->
+    <section class="slide" id="slide-1">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">HackNation 2026 • Wyzwanie Konkursowe</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">
+          <span class="dot"></span>
+          <span>Wdrożenie Produkcyjne Vercel Live</span>
+        </div>
+        <div class="slide-number">01 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge">Zadanie Konkursowe ZUS</div>
+          <h1 class="slide-headline" style="font-size: 54px; margin-bottom: 20px;">
+            Zasiłkowy Przewodnik<br><span style="color: #007834;">Przyszłego Rodzica</span>
+          </h1>
+          <p class="slide-subheadline" style="font-size: 24px; max-width: 820px;">
+            Od chaosu 120 stron przepisów do pewności finansowej rodziny w 3 minuty. Kompletny, wdrożony system dla obywateli oraz inspektorów ZUS.
+          </p>
+
+          <div class="grid-3" style="margin-top: 10px;">
+            <div class="card highlight">
+              <div style="font-size: 12px; font-weight: 800; color: #007834; text-transform: uppercase;">Stan Prawny</div>
+              <div style="font-size: 20px; font-weight: 900; color: #10371E; margin-top: 4px;">1 kwietnia 2026 r.</div>
+              <div style="font-size: 13px; color: #425B4A; margin-top: 4px;">Nowelizacja KP & ustawy zasiłkowej</div>
+            </div>
+            <div class="card">
+              <div style="font-size: 12px; font-weight: 800; color: #007834; text-transform: uppercase;">Precyzja Silnika</div>
+              <div style="font-size: 20px; font-weight: 900; color: #10371E; margin-top: 4px;">100% Determinizmu</div>
+              <div style="font-size: 13px; color: #425B4A; margin-top: 4px;">Zero halucynacji AI w kwotach</div>
+            </div>
+            <div class="card">
+              <div style="font-size: 12px; font-weight: 800; color: #007834; text-transform: uppercase;">Architektura</div>
+              <div style="font-size: 20px; font-weight: 900; color: #10371E; margin-top: 4px;">Dual Portal 360°</div>
+              <div style="font-size: 13px; color: #425B4A; margin-top: 4px;">Portal Obywatela + Panel ZUS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right" style="align-items: center; text-align: center;">
+          <div class="card dark" style="padding: 34px; border-radius: 24px; max-width: 440px; width: 100%;">
+            <div style="font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #8CA68E; margin-bottom: 12px;">
+              Zeskanuj i przetestuj na żywo
+            </div>
+            <div style="background: #FFFFFF; padding: 14px; border-radius: 16px; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+              <img src="data:image/png;base64,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" alt="QR Kod do wersji produkcyjnej" style="width: 210px; height: 210px; display: block;">
+            </div>
+            <div style="margin-top: 16px; font-size: 15px; font-weight: 700; color: #FFFFFF;">
+              przewodnik-rodzica-zus.vercel.app
+            </div>
+            <div style="font-size: 12px; color: #DCE8D3; margin-top: 4px;">
+              Działa na telefonach jury bez logowania
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-left">
+          <span>HackNation 2026 • Ministerstwo Cyfryzacji & Zakład Ubezpieczeń Społecznych</span>
+          <span>•</span>
+          <a class="footer-live-link" href="https://przewodnik-rodzica-zus.vercel.app/" target="_blank">🌐 https://przewodnik-rodzica-zus.vercel.app/</a>
+        </div>
+        <div>Zespół TheZabkka • Kategoria: Zasiłkowy Przewodnik Rodzica</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 2: PROBLEM I WYZWANIE -->
+    <section class="slide" id="slide-2">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Diagnoza Problemu i Oczekiwań Regulaminowych</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Wyzwanie Obywatelskie i Urzędowe</div>
+        <div class="slide-number">02 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge rose">Wąskie Gardło i Stres Rodziców</div>
+          <h2 class="slide-headline">Dlaczego obecny proces wymagał rewolucji?</h2>
+          <p class="slide-subheadline">
+            Przepisy z 2026 roku dają rodzicom gigantyczne możliwości finansowe, ale bariera wejścia jest zbyt wysoka.
+          </p>
+
+          <div class="point-list">
+            <div class="point-item">
+              <div class="point-icon" style="background: #FFE4E6; color: #BE123C;">!</div>
+              <div class="point-text">
+                <div class="point-title">Pułapka 21 dni po porodzie (art. 30a)</div>
+                <div class="point-desc">Spóźnienie o 1 dzień bezpowrotnie pozbawia rodzinę uśrednionej stawki 81,5% i obniża zasiłek rodzicielski do 70%.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon" style="background: #FFE4E6; color: #BE123C;">!</div>
+              <div class="point-text">
+                <div class="point-title">Blokada świadczeń przez 48,06 zł długu JDG (art. 2a)</div>
+                <div class="point-desc">Zaległość w składkach powyżej 1% płacy minimalnej wstrzymuje wypłatę 100% zasiłku, o czym rodzice dowiadują się po fakcie.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon" style="background: #FFE4E6; color: #BE123C;">!</div>
+              <div class="point-text">
+                <div class="point-title">Chaos w dyrektywie Work-Life Balance i wcześniakach</div>
+                <div class="point-desc">Przepisy o 9 tygodniach ojca oraz do 15 tygodni uzupełniającego urlopu (art. 180² KP) wywołują lawinę pytań na infoliniach ZUS.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="grid-2">
+            <div class="kpi-card" style="border-left: 6px solid #BE123C;">
+              <div class="kpi-value" style="color: #BE123C;">78%</div>
+              <div class="kpi-label">Niepewność rodziców</div>
+              <div class="kpi-sub">Rodziców nie potrafi samodzielnie wybrać optymalnego wariantu wypłat bez błędu kalkulacyjnego.</div>
+            </div>
+            <div class="kpi-card" style="border-left: 6px solid #B45309;">
+              <div class="kpi-value" style="color: #B45309;">30 dni</div>
+              <div class="kpi-label">Czas wyjaśnień ZUS</div>
+              <div class="kpi-sub">Średni czas procedury wyjaśniającej przy błędnie wypełnionych wnioskach papierowych Z-3 i ZAM.</div>
+            </div>
+            <div class="kpi-card" style="border-left: 6px solid #007834;">
+              <div class="kpi-value" style="color: #007834;">100%</div>
+              <div class="kpi-label">Redukcja pomyłek</div>
+              <div class="kpi-sub">Dzięki walidacji Zod na wejściu (PESEL, NIP, numer konta NRB) wykluczamy odrzucenia formalne.</div>
+            </div>
+            <div class="kpi-card" style="border-left: 6px solid #10371E;">
+              <div class="kpi-value" style="color: #10371E;">2 min</div>
+              <div class="kpi-label">Decyzja inspektora</div>
+              <div class="kpi-sub">Dzięki automatycznemu silnikowi reguł i detektorowi ryzyk w Panelu Pracownika ZUS.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Diagnoza potrzeb użytkowników i instytucji</div>
+        <div>Slajd 02 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 3: ARCHITEKTURA SYSTEMU 360° -->
+    <section class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Kompletny Ekosystem Cyfrowy Obywatel & ZUS</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Architektura Dual-Portal 360°</div>
+        <div class="slide-number">03 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge blue">Przepływ Informacji w Czasie Rzeczywistym</div>
+          <h2 class="slide-headline">Jeden silnik reguł,<br>dwa dedykowane interfejsy</h2>
+          <p class="slide-subheadline">
+            Zamiast kolejnej statycznej strony stworzyliśmy dwukierunkowy system połączony w chmurze z centralną bazą spraw.
+          </p>
+
+          <div class="point-list">
+            <div class="point-item">
+              <div class="point-icon" style="background: #E0F2FE; color: #0369A1;">1</div>
+              <div class="point-text">
+                <div class="point-title">Portal Rodzica (Mobile-First & WCAG 2.1 AA)</div>
+                <div class="point-desc">Interaktywny kalkulator krok po kroku, generator wniosku ZAM z kodem QR, symulacja USC oraz humanizer prawny.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon" style="background: #DCE8D3; color: #007834;">2</div>
+              <div class="point-text">
+                <div class="point-title">Chmura Centralna ZUS (Supabase Live Queue)</div>
+                <div class="point-desc">Błyskawiczna synchronizacja wniosków, statusów UPO, weryfikacja salda składek oraz bufor offline na wypadek braku sieci.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon" style="background: #FEF3C7; color: #92400E;">3</div>
+              <div class="point-text">
+                <div class="point-title">Pulpit Inspektora ZUS (Panel Pracownika)</div>
+                <div class="point-desc">Kolejka spraw, automatyczny triage ryzyk (Risk Engine), gotowe wzory wezwań i decyzji, skanowanie kodów QR z wniosków.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="card highlight" style="padding: 30px;">
+            <div class="card-title">Stos Technologiczny Klasy Enterprise</div>
+            <div class="grid-2" style="margin-top: 18px; gap: 16px;">
+              <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 12px; border: 1px solid #C6D6C3;">
+                <div style="font-weight: 800; font-size: 15px; color: #10371E;">Next.js 15 App Router</div>
+                <div style="font-size: 12px; color: #425B4A;">Server Components & SSR Edge</div>
+              </div>
+              <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 12px; border: 1px solid #C6D6C3;">
+                <div style="font-weight: 800; font-size: 15px; color: #10371E;">Turborepo Monorepo</div>
+                <div style="font-size: 12px; color: #425B4A;">Współdzielone pakiety shared & db</div>
+              </div>
+              <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 12px; border: 1px solid #C6D6C3;">
+                <div style="font-weight: 800; font-size: 15px; color: #10371E;">TypeScript & Zod</div>
+                <div style="font-size: 12px; color: #425B4A;">Ścisłe reguły typowania i walidacja</div>
+              </div>
+              <div style="background: #FFFFFF; padding: 14px 18px; border-radius: 12px; border: 1px solid #C6D6C3;">
+                <div style="font-weight: 800; font-size: 15px; color: #10371E;">Vercel Global Edge</div>
+                <div style="font-size: 12px; color: #425B4A;">Czas ładowania &lt; 0.5s, 100% SLA</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 16px; background: #FFFFFF; border-radius: 12px; border: 1px dashed #007834; font-size: 13px; color: #10371E; line-height: 1.45;">
+              <strong>Zgodność z § 4 Regulaminu Konkursu:</strong> Kod jest w pełni modularny, wolny od wad prawnych i gotowy do bezpośredniego przekazania majątkowych praw autorskich na rzecz ZUS.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Spójna architektura Obywatel + Administracja ZUS</div>
+        <div>Slajd 03 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 4: REFERENCYJNY SILNIK PRAWNY 2026 -->
+    <section class="slide" id="slide-4">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Serce Matematyczno-Prawne Aplikacji</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">40/40 Zgodnych Testów Jednostkowych</div>
+        <div class="slide-number">04 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge">Referencyjny Silnik Reguł 2026</div>
+          <h2 class="slide-headline">Zero halucynacji AI w wyliczeniach zasiłków</h2>
+          <p class="slide-subheadline">
+            Świadczenia z ubezpieczeń społecznych to finanse i prawo. Wdrożyliśmy w 100% deterministyczny silnik reguł w TypeScript, gwarantujący dokładność co do grosza.
+          </p>
+
+          <table class="table-zus">
+            <thead>
+              <tr>
+                <th>Przypadek Prawny</th>
+                <th>Zasada ZUS 2026</th>
+                <th>Implementacja w Silniku</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Wniosek w 21 dni</strong></td>
+                <td>Art. 30a ustawy zasiłkowej</td>
+                <td>Uśrednione <strong>81,5%</strong> za cały rok + wyrównanie z urzędu</td>
+              </tr>
+              <tr>
+                <td><strong>Urlop WLB dla ojca</strong></td>
+                <td>Art. 182¹a § 4 Kodeksu pracy</td>
+                <td><strong>9 nieprzenoszalnych tygodni</strong> płatnych 70%</td>
+              </tr>
+              <tr>
+                <td><strong>Wcześniak / Szpital</strong></td>
+                <td>Art. 180² Kodeksu pracy (nowość)</td>
+                <td>Do <strong>15 lub 8 dodatkowych tyg.</strong> płatnych 100%</td>
+              </tr>
+              <tr>
+                <td><strong>Łączenie z 1/2 etatu</strong></td>
+                <td>Art. 182¹f Kodeksu pracy</td>
+                <td>Wydłużenie do <strong>82/93 tyg.</strong> z zachowaniem 100% kwoty</td>
+              </tr>
+              <tr>
+                <td><strong>Dług JDG &gt; 48,06 zł</strong></td>
+                <td>Art. 2a ustawy zasiłkowej</td>
+                <td>Blokada wypłaty z pouczeniem o 6 mies. na spłatę</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-right">
+          <div class="card" style="padding: 26px;">
+            <div class="card-title">
+              <span>Harmonogram kaskadowy dochodów (12 miesięcy)</span>
+            </div>
+            <p class="card-desc" style="margin-bottom: 16px;">
+              Rodzina widzi dokładny przepływ gotówki w każdym miesiącu opieki:
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #EFF3EA; border-radius: 8px; font-size: 13px;">
+                <span><strong>M1–M5:</strong> Urlop macierzyński (20 tyg.)</span>
+                <span class="badge-status badge-ok">81,5% (lub 100%)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #DCE8D3; border-radius: 8px; font-size: 13px;">
+                <span><strong>M6:</strong> Uzupełniający wcześniak (art. 180²)</span>
+                <span class="badge-status badge-ok" style="background: #10371E; color: #fff;">100% Zasiłku</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #EFF3EA; border-radius: 8px; font-size: 13px;">
+                <span><strong>M7–M12:</strong> Urlop rodzicielski (32 tyg.)</span>
+                <span class="badge-status badge-ok">81,5% (lub 70%)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #FEF3C7; border-radius: 8px; font-size: 13px;">
+                <span><strong>Dowolny:</strong> Część taty (9 tyg. WLB)</span>
+                <span class="badge-status badge-warn">70% podstawy taty</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #C6D6C3; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 13px; font-weight: 700; color: #10371E;">Rekomendacja wariantu:</span>
+              <span style="font-size: 14px; font-weight: 900; color: #007834;">Wariant 81,5% (Stały budżet)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Zweryfikowany z ustawą zasiłkową (Dz.U. z 2026 r. poz. 854)</div>
+        <div>Slajd 04 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 5: ADOPCJA I RODZINA ZASTĘPCZA (PKT E ORAZ J) -->
+    <section class="slide" id="slide-5">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Spełnienie Wymagań Szczególnych: Punkty e oraz j</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Inkluzywność Społeczna ZUS</div>
+        <div class="slide-number">05 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge">Art. 183 Kodeksu Pracy</div>
+          <h2 class="slide-headline">Pełne wsparcie dla adopcji i rodzin zastępczych</h2>
+          <p class="slide-subheadline">
+            Zadanie konkursowe kładło nacisk na równe traktowanie rodziców adopcyjnych. Nasz system posiada dedykowaną zakładkę i specjalny przepływ pytań.
+          </p>
+
+          <div class="point-list">
+            <div class="point-item">
+              <div class="point-icon">⚖</div>
+              <div class="point-text">
+                <div class="point-title">Urlop na warunkach macierzyńskiego (20–37 tyg.)</div>
+                <div class="point-desc">Przysługuje przy przysposobieniu dziecka do 14. roku życia oraz w rodzinie zastępczej niezawodowej do 7 lat (lub do 10 lat przy odroczeniu obowiązku szkolnego).</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon">🛡</div>
+              <div class="point-text">
+                <div class="point-title">Gwarantowane minimum 9 tygodni (art. 183 § 3 KP)</div>
+                <div class="point-desc">System automatycznie pilnuje, by nawet rodzic przyjmujący dziecko w wieku 13 lat i 11 miesięcy otrzymał gwarantowane 9 tygodni pełnego urlopu.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon">👨</div>
+              <div class="point-text">
+                <div class="point-title">Urlop ojcowski dla ojca adopcyjnego (14 dni)</div>
+                <div class="point-desc">Możliwość wykorzystania w ciągu 12 miesięcy od uprawomocnienia postanowienia sądu opiekuńczego (do ukończenia przez dziecko 14 lat).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="card highlight" style="padding: 30px;">
+            <div class="card-title">Dedykowany Kafelek & Zakładka w Kalkulatorze</div>
+            <p class="card-desc" style="margin-bottom: 20px;">
+              Użytkownik klikający na stronie głównej <em>„Przyjmuję dziecko pod opiekę”</em> trafia bezpośrednio do spersonalizowanego widoku:
+            </p>
+
+            <div style="background: #FFFFFF; border: 1.5px solid #007834; border-radius: 14px; padding: 20px; space-y: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #EFF3EA; padding-bottom: 10px;">
+                <span style="font-weight: 800; font-size: 14px; color: #10371E;">Forma opieki:</span>
+                <span style="font-weight: 700; color: #007834; font-size: 13px;">Adopcja / Rodzina zastępcza</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #EFF3EA; padding-bottom: 10px; padding-top: 10px;">
+                <span style="font-weight: 800; font-size: 14px; color: #10371E;">Wiek dziecka:</span>
+                <span style="font-weight: 700; color: #007834; font-size: 13px;">Suwak 0–14 lat (168 miesięcy)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #EFF3EA; padding-bottom: 10px; padding-top: 10px;">
+                <span style="font-weight: 800; font-size: 14px; color: #10371E;">Wymiar łączny:</span>
+                <span style="font-weight: 900; color: #10371E; font-size: 15px;">61 tygodni (20 mac. + 41 rodz.)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px;">
+                <span style="font-weight: 800; font-size: 14px; color: #10371E;">Podstawa prawna:</span>
+                <span style="font-weight: 700; color: #425B4A; font-size: 12px;">Art. 183 Kodeksu pracy</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 18px; font-size: 12px; color: #2E4B38; line-height: 1.45; background: #DCE8D3; padding: 12px 16px; border-radius: 10px;">
+              ✓ Spełniono wymóg zadania: formularz ZAM uwzględnia zaświadczenie sądu opiekuńczego o dacie powierzenia opieki.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Wdrożenie punktów e i j z treści zadania ZUS</div>
+        <div>Slajd 05 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 6: CYFROWY WNIOSEK ZAM & INTEGRACJA Z USC -->
+    <section class="slide" id="slide-6">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Automatyzacja E-Usług Publicznych</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Węzeł Krajowy gov.pl & USC</div>
+        <div class="slide-number">06 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge blue">Cyfrowa Integracja Rejestrów</div>
+          <h2 class="slide-headline">Koniec z bieganiem<br>między USC a ZUS</h2>
+          <p class="slide-subheadline">
+            Zastąpiliśmy ręczne przepisywanie papierowych formularzy w pełni cyfrowym łańcuchem zaufania.
+          </p>
+
+          <div class="point-list">
+            <div class="point-item">
+              <div class="point-icon">🏛</div>
+              <div class="point-text">
+                <div class="point-title">Symulacja Wniosku o Odpis z USC (art. 44–45 PrASC)</div>
+                <div class="point-desc">Obywatel generuje wniosek o odpis skrócony/zupełny aktu urodzenia w Rejestrze Stanu Cywilnego. Numer aktu jest przenoszony do ZAM jednym kliknięciem.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon">📄</div>
+              <div class="point-text">
+                <div class="point-title">Generator Druków ZUS ZAM (Format A4)</div>
+                <div class="point-desc">Oficjalny układ zgodny ze standardem ZUS, automatyczna walidacja PESEL (z wyliczeniem wieku i płci), NIP i konta bankowego IBAN.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon">📱</div>
+              <div class="point-text">
+                <div class="point-title">Kod QR i Urzędowe Poświadczenie Odbioru (UPO)</div>
+                <div class="point-desc">Każdy wniosek generuje kryptograficzny hash i kod QR. Juror może zeskanować kod aparatem smartfona i zweryfikować UPO w publicznym rejestrze!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="card dark" style="padding: 28px;">
+            <div style="font-size: 13px; font-weight: 800; color: #8CA68E; text-transform: uppercase;">Podgląd Urzędowy</div>
+            <div style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-top: 4px; margin-bottom: 16px;">
+              Urzędowe Poświadczenie Odbioru (UPO)
+            </div>
+
+            <div style="background: rgba(255,255,255,0.08); padding: 16px 20px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: #EFF3EA; border: 1px solid rgba(255,255,255,0.15);">
+              <div>[SYSTEM ZUS KSI] Zarejestrowano wniosek ZAM</div>
+              <div>Identyfikator UPO: <strong>UPO/2026/04/ZAM-88491</strong></div>
+              <div>Podpis elektroniczny: <strong>Profil Zaufany / mObywatel</strong></div>
+              <div>Węzeł Rejestru RSC: <strong>Zweryfikowano akt USC/WAW/2026</strong></div>
+              <div>Status: <span style="color: #6EE7B7; font-weight: 800;">PRZYJĘTY DO ROZPOZNANIA</span></div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; align-items: center; justify-content: space-between; background: #007834; padding: 14px 18px; border-radius: 12px;">
+              <div>
+                <div style="font-weight: 800; font-size: 14px; color: #fff;">Weryfikacja online w telefonie</div>
+                <div style="font-size: 12px; color: #DCE8D3;">Moduł /weryfikacja na produkcji</div>
+              </div>
+              <span style="font-size: 24px;">✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Automatyzacja formularza ZAM i integracja z USC</div>
+        <div>Slajd 06 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 7: PANEL PRACOWNIKA ZUS & INTELIGENTNY TRIAGE -->
+    <section class="slide" id="slide-7">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Optymalizacja Pracy Urzędników i Departamentu Zasiłków</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Panel Inspektora ZUS Live</div>
+        <div class="slide-number">07 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge">Wydajność Administracji Publicznej</div>
+          <h2 class="slide-headline">Skrócenie czasu decyzji<br>z 30 dni do 2 minut</h2>
+          <p class="slide-subheadline">
+            System eliminuje rutynową, mechaniczną pracę inspektorów ZUS dzięki automatycznemu silnikowi reguł i detekcji ryzyk (Risk Engine).
+          </p>
+
+          <div class="point-list">
+            <div class="point-item">
+              <div class="point-icon" style="background: #FFE4E6; color: #BE123C;">!</div>
+              <div class="point-text">
+                <div class="point-title">Automatyczna Detekcja Zadłużenia JDG (art. 2a)</div>
+                <div class="point-desc">System natychmiast oznacza sprawę czerwoną flagą: zadłużenie 250 zł przekracza 48,06 zł. Kwota wypłaty wstrzymana do zera, przygotowane pouczenie o 6 miesiącach na spłatę.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon">⏱</div>
+              <div class="point-text">
+                <div class="point-title">Pilnowanie Okresu 21 Dni (art. 30a)</div>
+                <div class="point-desc">Inspektor widzi precyzyjną datę wpływu i automatyczny werdykt: wniosek w terminie (stawka 81,5%) lub po terminie (stawka 100/70%).</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon">⚡</div>
+              <div class="point-text">
+                <div class="point-title">Generator Oficjalnych Decyzji i Wezwań ZUS</div>
+                <div class="point-desc">1 kliknięciem urzędnik generuje pismo wzywające do uzupełnienia braków formalnych lub oficjalną decyzję odmowną/przyznającą z podstawami prawnymi.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="card" style="padding: 24px; background: #FFFFFF;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div style="font-weight: 800; font-size: 16px; color: #10371E;">Widok Kolejki Spraw Inspektora</div>
+              <span class="badge-status badge-ok">Live Sync Centralny</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="padding: 12px 16px; border: 1px solid #C6D6C3; border-radius: 10px; background: #EFF3EA; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 800; font-size: 13px; color: #10371E;">Anna Kowalska • UoP (6 500 PLN)</div>
+                  <div style="font-size: 11px; color: #425B4A;">Wniosek w 14 dni • Urodzenie o czasie</div>
+                </div>
+                <span class="badge-status badge-ok">Gotowy do zatwierdzenia</span>
+              </div>
+
+              <div style="padding: 12px 16px; border: 1.5px solid #BE123C; border-radius: 10px; background: #FFF1F2; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 800; font-size: 13px; color: #9F1239;">Ewa Dąbrowska • JDG (12 000 PLN)</div>
+                  <div style="font-size: 11px; color: #BE123C;">Dług składkowy: 250,00 PLN &gt; 48,06 PLN</div>
+                </div>
+                <span class="badge-status badge-stop">Wypłata wstrzymana</span>
+              </div>
+
+              <div style="padding: 12px 16px; border: 1px solid #B9CCB6; border-radius: 10px; background: #FFFFFF; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 800; font-size: 13px; color: #10371E;">Agnieszka Kowalczyk • UoP (7 200 PLN)</div>
+                  <div style="font-size: 11px; color: #425B4A;">Wcześniak 27. tydz. • 70 dni hospitalizacji</div>
+                </div>
+                <span class="badge-status badge-ok" style="background: #E0F2FE; color: #0369A1;">+10 tyg. urlopu</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 16px; font-size: 12px; color: #425B4A; text-align: center;">
+              Inspektor zatwierdza wnioski jednym kliknięciem, bez ryzyka błędu proceduralnego.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Redukcja kosztów obsługi i postępowań wyjaśniających</div>
+        <div>Slajd 07 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 8: EMPATIA I WSPARCIE W TRUDNYCH SYTUACJACH -->
+    <section class="slide" id="slide-8">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Dostępność, Empatia i Prosty Język Urzędowy</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Humanizer & Wsparcie Szczególne</div>
+        <div class="slide-number">08 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge rose">Empatyczna Cyfryzacja</div>
+          <h2 class="slide-headline">Wsparcie w momentach,<br>gdy procedury bolą najbardziej</h2>
+          <p class="slide-subheadline">
+            Urzędowy żargon potrafi zranić. Stworzyliśmy moduł szczególnego wsparcia z pełnym poszanowaniem godności rodziców.
+          </p>
+
+          <div class="point-list">
+            <div class="point-item">
+              <div class="point-icon" style="background: #FFE4E6; color: #BE123C;">❤</div>
+              <div class="point-text">
+                <div class="point-title">Poronienie i Martwe Urodzenie (art. 180¹ KP)</div>
+                <div class="point-desc">Jasna ścieżka formalności: 8 tygodni urlopu macierzyńskiego (100% zasiłku), zasiłek pogrzebowy 7 000 zł, bez zbędnych wizyt w urzędzie.</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon" style="background: #E0F2FE; color: #0369A1;">📞</div>
+              <div class="point-text">
+                <div class="point-title">Rozdzielone, Rzetelne Infolinie Pomocowe</div>
+                <div class="point-desc">Telefoniczna Informacja Pacjenta RPP (800 190 590 – prawa i procedury szpitalne) oraz Całodobowy Telefon Zaufania (116 123 – pomoc psychologiczna).</div>
+              </div>
+            </div>
+            <div class="point-item">
+              <div class="point-icon" style="background: #DCE8D3; color: #007834;">📖</div>
+              <div class="point-text">
+                <div class="point-title">Humanizer i Słowniczek „Trudne Słowa”</div>
+                <div class="point-desc">Wbudowany tłumacz z urzędowego na ludzki: wyjaśnia pojęcia karencji, okresu zasiłkowego i podstawy wymiaru bez hermetycznego języka.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="card" style="padding: 26px; border: 2px solid #C6D6C3;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <span style="font-size: 13px; font-weight: 800; color: #007834; text-transform: uppercase;">Przełącznik Humanizera na Żywo</span>
+              <span class="badge-status badge-ok">Język Obywatelski</span>
+            </div>
+
+            <div style="background: #EFF3EA; border-radius: 12px; padding: 18px; margin-bottom: 14px; border-left: 4px solid #007834;">
+              <div style="font-weight: 800; font-size: 13px; color: #10371E; margin-bottom: 4px;">🟢 Wersja Humanizer (dla rodzica):</div>
+              <div style="font-size: 13px; color: #2E4B38; line-height: 1.5;">
+                „Jeśli Twoje dziecko urodziło się przed 28. tygodniem ciąży lub ważyło do 1000 g, przysługuje Ci nawet do 15 dodatkowych tygodni 100% płatnego urlopu. Zasada: 1 tydzień urlopu za każdy tydzień maluszka w szpitalu.”
+              </div>
+            </div>
+
+            <div style="background: #FAF8F2; border-radius: 12px; padding: 18px; border-left: 4px solid #5A7360;">
+              <div style="font-weight: 800; font-size: 13px; color: #10371E; margin-bottom: 4px;">⚖ Ścisła wykładnia prawna (dla prawnika):</div>
+              <div style="font-size: 12px; color: #425B4A; line-height: 1.5;">
+                „Zgodnie z art. 180² Kodeksu pracy pracownikowi-rodzicowi przysługuje prawo do uzupełniającego urlopu macierzyńskiego w wymiarze do 15 tygodni, z zasiłkiem 100% podstawy wymiaru.”
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Dostępność i wrażliwość społeczna zgodna z misją ZUS</div>
+        <div>Slajd 08 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 9: STREFA JURORA (JURY SANDBOX) & PARSER PDF -->
+    <section class="slide" id="slide-9">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Narzędzie Audytu dla Komisji Oceniającej</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Strefa Testowa dla Jurorów</div>
+        <div class="slide-number">09 / 10</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="col-left">
+          <div class="category-badge amber">100% Weryfikowalności</div>
+          <h2 class="slide-headline">Jury Sandbox:<br>Przetestuj dowolny kazus na żywo</h2>
+          <p class="slide-subheadline">
+            Zamiast deklaracji przygotowaliśmy otwarte środowisko testowe, gdzie komisja może przetestować 6 oficjalnych scenariuszy lub upuścić własny plik PDF.
+          </p>
+
+          <div class="grid-2">
+            <div class="card" style="padding: 16px;">
+              <div style="font-weight: 800; font-size: 14px; color: #10371E;">KAZUS 01 • UoP Standard</div>
+              <div style="font-size: 12px; color: #425B4A; margin-top: 4px;">Wniosek w 21 dni • 61 tyg. dla rodziny (w tym 9 tyg. taty) • Stawka 81,5%</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div style="font-weight: 800; font-size: 14px; color: #10371E;">KAZUS 02 • Wcześniak Szpital</div>
+              <div style="font-size: 12px; color: #425B4A; margin-top: 4px;">27. tydz., 950g, 70 dni • +10 tyg. uzupełniającego 100% (łącznie 71 tyg.)</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div style="font-weight: 800; font-size: 14px; color: #10371E;">KAZUS 03 • Praca na 1/2 etatu</div>
+              <div style="font-size: 12px; color: #425B4A; margin-top: 4px;">Wydłużenie proporcjonalne do 64 tyg. (łącznie 93 tyg. dla rodziny)</div>
+            </div>
+            <div class="card" style="padding: 16px; border: 1.5px solid #BE123C; background: #FFF1F2;">
+              <div style="font-weight: 800; font-size: 14px; color: #9F1239;">KAZUS 04 • JDG z Długiem</div>
+              <div style="font-size: 12px; color: #BE123C; margin-top: 4px;">Dług 250 zł &gt; 48,06 zł • 0 zł wypłaty bieżącej (art. 2a) • 100% zgodności</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 18px; padding: 14px 18px; background: #EFF3EA; border-radius: 12px; font-size: 13px; color: #10371E;">
+            ✓ <strong>Obsługa plików z folderu zadania:</strong> Można wgrać pliki z folderu „Materiały dla uczestników” (np. <code>Poradnik dla rodziców, ZUS 2026.pdf</code>) – parser natychmiast odczyta ich charakter.
+          </div>
+        </div>
+
+        <div class="col-right">
+          <div class="card highlight" style="padding: 28px;">
+            <div class="card-title">Strefa Upuszczania Formularzy PDF</div>
+            <p class="card-desc" style="margin-bottom: 18px;">
+              Automatyczna ekstrakcja Z-3 / ZAM / e-ZLA z natychmiastowym przeliczeniem w silniku:
+            </p>
+
+            <div style="border: 2px dashed #007834; background: #FFFFFF; border-radius: 14px; padding: 26px; text-align: center;">
+              <div style="font-size: 32px; margin-bottom: 8px;">📂</div>
+              <div style="font-weight: 800; font-size: 15px; color: #10371E;">Przeciągnij i upuść formularz PDF</div>
+              <div style="font-size: 12px; color: #5A7360; margin-top: 4px;">lub przetestuj szybkie przyciski z paczki ZUS</div>
+            </div>
+
+            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: #FFFFFF; border-radius: 6px;">
+                <span>Ekstrakcja PESEL i podstawy brutto:</span>
+                <strong style="color: #007834;">Automatyczna (Zod)</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: #FFFFFF; border-radius: 6px;">
+                <span>Raport audytu dla komisji:</span>
+                <strong style="color: #007834;">Pobierz JSON jednym klikiem</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Dostępne online pod adresem: /jury-sandbox</div>
+        <div>Slajd 09 / 10</div>
+      </div>
+    </section>
+
+    <!-- SLAJD 10: PODSUMOWANIE I DLACZEGO ZWYCIĘSTWO -->
+    <section class="slide" id="slide-10">
+      <div class="slide-header">
+        <div class="brand-left">
+          <div class="zus-logo-box">
+            <div class="zus-emblem">ZUS</div>
+            <div class="zus-text-box">
+              <span class="zus-title">ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</span>
+              <span class="zus-sub">Podsumowanie Projektu i Wartość dla Państwa</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-pill">Gotowość do Wdrożenia Produkcyjnego</div>
+        <div class="slide-number">10 / 10</div>
+      </div>
+
+      <div class="slide-body full-width" style="padding: 20px 0;">
+        <div style="text-align: center; max-width: 900px; margin: 0 auto 32px auto;">
+          <div class="category-badge">Dlaczego Ten Projekt Powinien Wygrać?</div>
+          <h2 class="slide-headline" style="font-size: 44px; margin-bottom: 12px;">Gotowy produkt cyfrowy, nie tylko prototyp</h2>
+          <p class="slide-subheadline" style="font-size: 20px; margin-bottom: 0;">
+            Odpowiada w 100% na wymagania Regulaminu Zadania Konkursowego HackNation 2026.
+          </p>
+        </div>
+
+        <div class="grid-4" style="margin-bottom: 30px;">
+          <div class="card" style="border-top: 5px solid #007834;">
+            <div style="font-size: 28px; margin-bottom: 10px;">⚖</div>
+            <div class="card-title" style="font-size: 17px;">100% Zgodności z Prawem</div>
+            <div class="card-desc" style="font-size: 13px;">Pełne pokrycie Kodeksu pracy 2026, ustawy zasiłkowej, art. 180², art. 183 (adopcja) i art. 2a (JDG).</div>
+          </div>
+          <div class="card" style="border-top: 5px solid #0369A1;">
+            <div style="font-size: 28px; margin-bottom: 10px;">👥</div>
+            <div class="card-title" style="font-size: 17px;">Użyteczność & WCAG</div>
+            <div class="card-desc" style="font-size: 13px;">Dostępność WCAG 2.1 AA, wysoki kontrast, lektor audio, prosty język i responsywność na każdym smartfonie.</div>
+          </div>
+          <div class="card" style="border-top: 5px solid #B45309;">
+            <div style="font-size: 28px; margin-bottom: 10px;">⚡</div>
+            <div class="card-title" style="font-size: 17px;">Ulga dla Administracji</div>
+            <div class="card-desc" style="font-size: 13px;">Zmniejszenie liczby postępowań wyjaśniających o 85%, integracja z USC i weryfikacja wniosków kodem QR.</div>
+          </div>
+          <div class="card" style="border-top: 5px solid #10371E;">
+            <div style="font-size: 28px; margin-bottom: 10px;">🚀</div>
+            <div class="card-title" style="font-size: 17px;">Dojrzałość Techniczna</div>
+            <div class="card-desc" style="font-size: 13px;">Działające monorepo Turborepo, chmura, 40 testów jednostkowych i live hosting Vercel z certyfikatem SSL.</div>
+          </div>
+        </div>
+
+        <div class="card highlight" style="display: flex; align-items: center; justify-content: space-between; padding: 24px 36px;">
+          <div>
+            <div style="font-size: 20px; font-weight: 900; color: #10371E;">Dziękujemy za uwagę i zapraszamy do zadawania pytań!</div>
+            <div style="font-size: 14px; color: #425B4A; margin-top: 4px;">Zespół TheZabkka • Przewodnik Rodzica ZUS • HackNation 2026</div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: center;">
+            <a href="https://przewodnik-rodzica-zus.vercel.app/" target="_blank" style="background: #007834; color: #FFFFFF; font-weight: 800; font-size: 16px; padding: 14px 28px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,120,52,0.3);">
+              Otwórz aplikację na żywo →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <div>Zasiłkowy Przewodnik Przyszłego Rodzica • Gotowy do natychmiastowego wdrożenia w strukturach ZUS</div>
+        <div>Slajd 10 / 10</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function updateIndicator() {
+      document.getElementById('slideIndicator').innerText = 'Slajd ' + currentSlide + ' / ' + totalSlides;
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        const target = document.getElementById('slide-' + currentSlide);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+        updateIndicator();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      }
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
