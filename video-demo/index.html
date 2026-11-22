@@ -6,14 +6,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
     <style>
       :root {
         --bg: #faf8f2;
-        --surface: #eff3ea;
         --sage: #dce8d3;
         --ink: #10371e;
         --ink-muted: #425c4b;
@@ -33,7 +32,7 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: #0d2c18;
+        background: #0a2414;
         font-family: var(--font);
         color: var(--ink);
         -webkit-font-smoothing: antialiased;
@@ -44,58 +43,96 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: radial-gradient(circle at 18% 20%, #174929 0%, #0d2c18 65%, #092012 100%);
+        perspective: 1800px;
+        background: radial-gradient(circle at 15% 15%, #1c5731 0%, #0d2e19 52%, #071b0f 100%);
       }
 
-      .slide {
+      /* Subtle animated ambient glow orbs in background */
+      .glow-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(110px);
+        opacity: 0.35;
+        pointer-events: none;
+      }
+      .glow-1 {
+        width: 680px;
+        height: 680px;
+        background: #27a85a;
+        top: -180px;
+        left: -120px;
+      }
+      .glow-2 {
+        width: 620px;
+        height: 620px;
+        background: #dce8d3;
+        bottom: -220px;
+        right: -120px;
+        opacity: 0.2;
+      }
+
+      /* Scene wrapper */
+      .scene {
         position: absolute;
         inset: 0;
-        padding: 36px 42px 54px;
-        display: grid;
-        grid-template-columns: 1300px 1fr;
-        gap: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         opacity: 0;
+        transform-style: preserve-3d;
         will-change: transform, opacity;
       }
 
-      /* Left: Real Website Browser Frame */
-      .browser-box {
+      /* Large, prominent full-stage real browser window */
+      .stage-browser {
+        width: 1680px;
+        height: 940px;
+        margin-top: -10px;
         background: #ffffff;
-        border-radius: 22px;
+        border-radius: 26px;
         overflow: hidden;
-        border: 2px solid rgba(220, 232, 211, 0.35);
-        box-shadow: 0 32px 72px rgba(0, 0, 0, 0.42);
+        border: 2px solid rgba(220, 232, 211, 0.48);
+        box-shadow:
+          0 45px 100px rgba(0, 0, 0, 0.52),
+          0 0 0 1px rgba(255, 255, 255, 0.08);
         display: flex;
         flex-direction: column;
+        transform-style: preserve-3d;
         will-change: transform, opacity;
       }
 
       .browser-top {
-        height: 46px;
+        height: 48px;
         background: #eff3ea;
         border-bottom: 1.5px solid #c6d6c3;
-        padding: 0 18px;
+        padding: 0 22px;
         display: flex;
         align-items: center;
-        gap: 9px;
+        justify-content: space-between;
         flex-shrink: 0;
       }
 
+      .browser-dots {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
       .dot {
-        width: 11px;
-        height: 11px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
       }
       .dot.r { background: #e38c7b; }
       .dot.y { background: #e5c478; }
       .dot.g { background: #74b887; }
 
-      .url-bar {
-        margin-left: 12px;
+      .url-pill {
+        margin-left: 16px;
         background: #ffffff;
         border: 1px solid #b9ccb6;
         border-radius: 999px;
-        padding: 4px 16px;
+        padding: 5px 18px;
         font-size: 14px;
         font-weight: 700;
         color: #2e4b38;
@@ -109,6 +146,16 @@
         height: 8px;
         border-radius: 50%;
         background: var(--zus-green);
+      }
+
+      .route-badge {
+        background: var(--ink);
+        color: #faf8f2;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        padding: 6px 14px;
+        border-radius: 999px;
       }
 
       .screen-viewport {
@@ -126,114 +173,155 @@
         will-change: transform;
       }
 
-      /* Right: Crisp, Short Info Card */
-      .info-panel {
-        background: var(--bg);
-        border-radius: 22px;
-        padding: 36px 32px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+      /* Floating Chat Bubbles (Dymki czatu) */
+      .bubble-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 25;
+      }
+
+      .chat-bubble {
+        position: absolute;
+        max-width: 500px;
+        background: rgba(16, 55, 30, 0.94);
+        color: #faf8f2;
         border: 2px solid rgba(220, 232, 211, 0.55);
-        box-shadow: 0 26px 56px rgba(0, 0, 0, 0.3);
+        border-radius: 22px;
+        padding: 18px 22px;
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        opacity: 0;
         will-change: transform, opacity;
       }
 
-      .step-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--sage);
-        border: 1px solid var(--border);
+      .chat-bubble.light {
+        background: rgba(250, 248, 242, 0.97);
         color: var(--ink);
-        font-size: 14px;
-        font-weight: 800;
-        padding: 7px 16px;
-        border-radius: 999px;
-        letter-spacing: 0.05em;
-        margin-bottom: 18px;
-        align-self: flex-start;
+        border: 2px solid var(--zus-green);
+        box-shadow: 0 22px 50px rgba(16, 55, 30, 0.28);
       }
 
-      .info-title {
-        font-size: 40px;
-        line-height: 1.1;
-        font-weight: 800;
-        letter-spacing: -0.028em;
-        color: var(--ink);
-        margin-bottom: 14px;
+      .chat-bubble.warm {
+        background: rgba(92, 37, 25, 0.95);
+        color: #fdf1ec;
+        border: 2px solid #f0c2b2;
       }
 
-      .info-lead {
-        font-size: 20px;
-        line-height: 1.42;
-        color: var(--ink-muted);
-        font-weight: 600;
-        margin-bottom: 28px;
+      /* Speech bubble tails */
+      .chat-bubble.tail-bl {
+        border-bottom-left-radius: 6px;
+      }
+      .chat-bubble.tail-br {
+        border-bottom-right-radius: 6px;
+      }
+      .chat-bubble.tail-tl {
+        border-top-left-radius: 6px;
+      }
+      .chat-bubble.tail-tr {
+        border-top-right-radius: 6px;
       }
 
-      .bullet-list {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .bullet-item {
-        background: var(--surface);
-        border: 1.5px solid var(--border);
-        border-left: 5px solid var(--zus-green);
-        border-radius: 14px;
-        padding: 16px 18px;
-        font-size: 18px;
-        line-height: 1.38;
-        font-weight: 700;
-        color: var(--ink);
-      }
-
-      .panel-footer {
-        margin-top: 24px;
-        padding-top: 18px;
-        border-top: 1.5px solid var(--sage);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--ink-muted);
-      }
-
-      .zus-mini {
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
         background: var(--zus-green);
-        color: #fff;
-        padding: 6px 13px;
-        border-radius: 9px;
-        font-weight: 800;
+        color: #ffffff;
         font-size: 13px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
       }
 
-      /* Bottom sleek 8-segment step indicator + progress line */
+      .chat-bubble.light .avatar {
+        background: var(--ink);
+      }
+
+      .chat-bubble.warm .avatar {
+        background: #b44b34;
+      }
+
+      .bubble-kicker {
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #8ee5ac;
+        margin-bottom: 4px;
+      }
+
+      .chat-bubble.light .bubble-kicker {
+        color: var(--zus-green);
+      }
+
+      .chat-bubble.warm .bubble-kicker {
+        color: #f6c6b5;
+      }
+
+      .bubble-text {
+        font-size: 19px;
+        line-height: 1.35;
+        font-weight: 700;
+      }
+
+      /* Floating Cursor + Click Ripple */
+      .cursor-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 35;
+        pointer-events: none;
+        opacity: 0;
+      }
+
+      .cursor-ring {
+        position: absolute;
+        top: -16px;
+        left: -16px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 3px solid var(--zus-green);
+        background: rgba(0, 120, 52, 0.18);
+        transform: scale(0.3);
+        opacity: 0;
+      }
+
+      .cursor-svg {
+        width: 34px;
+        height: 34px;
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+      }
+
+      /* Bottom 8-segment dynamic rail */
       .bottom-rail {
         position: absolute;
-        left: 42px;
-        right: 42px;
-        bottom: 16px;
+        left: 120px;
+        right: 120px;
+        bottom: 20px;
         display: grid;
         grid-template-columns: repeat(8, 1fr);
-        gap: 10px;
-        z-index: 40;
+        gap: 12px;
+        z-index: 50;
       }
 
       .rail-seg {
-        height: 6px;
+        height: 7px;
         border-radius: 999px;
-        background: rgba(250, 248, 242, 0.18);
+        background: rgba(250, 248, 242, 0.2);
         overflow: hidden;
       }
 
       .rail-fill {
         height: 100%;
         width: 0%;
-        background: #4cd97b;
+        background: #52e082;
         border-radius: 999px;
       }
     </style>
@@ -247,239 +335,295 @@
       data-width="1920"
       data-height="1080"
     >
-      <!-- SLIDE 1: STRONA GŁÓWNA (0s - 10.5s) -->
-      <section class="slide clip" id="slide1" data-start="0" data-duration="10.5" data-track-index="0">
-        <div class="browser-box" id="b1">
+      <div class="glow-orb glow-1" id="orb1"></div>
+      <div class="glow-orb glow-2" id="orb2"></div>
+
+      <!-- SCENE 1: STRONA GŁÓWNA (0s - 10.5s) -->
+      <section class="scene clip" id="s1" data-start="0" data-duration="10.5" data-track-index="0">
+        <div class="stage-browser" id="b1">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/</div>
+            </div>
+            <div class="route-badge">01 / 08 · STRONA GŁÓWNA</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img1" src="./assets/screens/home-full.png" alt="Strona główna" />
           </div>
         </div>
-        <aside class="info-panel" id="p1">
-          <div>
-            <div class="step-pill anim">01 / 08 · STRONA GŁÓWNA</div>
-            <h1 class="info-title anim">Strona główna</h1>
-            <p class="info-lead anim">Szybki start i wybór sytuacji życiowej rodzica.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Lektor głosowy, powiększanie tekstu (WCAG) i logowanie eZUS / mObywatel</div>
-              <div class="bullet-item anim">4 ścieżki: planowanie, ciąża, narodziny i adopcja</div>
-              <div class="bullet-item anim">Szybki dostęp do wsparcia oraz 3 kluczowe zasady</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble tail-tr" id="s1_c1" style="top: 120px; right: 70px;">
+            <div class="avatar">ZUS</div>
+            <div>
+              <div class="bubble-kicker">Start & Dostępność</div>
+              <div class="bubble-text">Lektor „Posłuchaj”, powiększanie tekstu WCAG i logowanie eZUS / mObywatel zawsze pod ręką.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>Zasiłkowy Przewodnik Rodzica</span>
-            <span class="zus-mini">ZUS · 2026</span>
+          <div class="chat-bubble light tail-bl" id="s1_c2" style="bottom: 140px; left: 70px;">
+            <div class="avatar">4×</div>
+            <div>
+              <div class="bubble-kicker">Wybierz swoją sytuację</div>
+              <div class="bubble-text">Planujesz, oczekujesz, masz już dziecko czy adoptujesz? Jedno kliknięcie prowadzi do Twojej ścieżki.</div>
+            </div>
           </div>
-        </aside>
+          <div class="chat-bubble tail-br" id="s1_c3" style="bottom: 95px; right: 70px;">
+            <div class="avatar">♥</div>
+            <div>
+              <div class="bubble-kicker">Pomoc & 3 zasady</div>
+              <div class="bubble-text">Wyróżnione wsparcie w kryzysie, słownik trudnych słów i 3 najważniejsze terminy na start.</div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SLIDE 2: PRZEWODNIK (10.5s - 18s) -->
-      <section class="slide clip" id="slide2" data-start="10.5" data-duration="7.5" data-track-index="0">
-        <div class="browser-box" id="b2">
+      <!-- SCENE 2: PRZEWODNIK (10.5s - 18s) -->
+      <section class="scene clip" id="s2" data-start="10.5" data-duration="7.5" data-track-index="0">
+        <div class="stage-browser" id="b2">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/przewodnik</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/przewodnik</div>
+            </div>
+            <div class="route-badge">02 / 08 · PRZEWODNIK</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img2" src="./assets/screens/przewodnik.png" alt="Przewodnik" />
           </div>
         </div>
-        <aside class="info-panel" id="p2">
-          <div>
-            <div class="step-pill anim">02 / 08 · PRZEWODNIK</div>
-            <h2 class="info-title anim">Przewodnik</h2>
-            <p class="info-lead anim">Wszystkie terminy i obowiązki krok po kroku.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Oś czasu: od e-ZLA (kod „B”) po powrót do pracy</div>
-              <div class="bullet-item anim">Kto wypłaca zasiłek: pracodawca (&gt;20 osób) czy ZUS</div>
-              <div class="bullet-item anim">Ostrzeżenia przed utratą prawa do świadczeń</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble light tail-tl" id="s2_c1" style="top: 150px; left: 70px;">
+            <div class="avatar">02</div>
+            <div>
+              <div class="bubble-kicker">Przewodnik krok po kroku</div>
+              <div class="bubble-text">Oś czasu od e-ZLA z kodem „B” po powrót do pracy — bez szukania po ustawach.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>Ścieżka formalna 2026</span>
-            <span class="zus-mini">/przewodnik</span>
+          <div class="chat-bubble tail-br" id="s2_c2" style="bottom: 110px; right: 70px;">
+            <div class="avatar">!</div>
+            <div>
+              <div class="bubble-kicker">Kto wypłaca & ryzyka</div>
+              <div class="bubble-text">Jasny podział: pracodawca (&gt;20 osób) czy ZUS, plus ostrzeżenia przed utratą zasiłku.</div>
+            </div>
           </div>
-        </aside>
+        </div>
       </section>
 
-      <!-- SLIDE 3: KALKULATOR (18s - 26s) -->
-      <section class="slide clip" id="slide3" data-start="18" data-duration="8" data-track-index="0">
-        <div class="browser-box" id="b3">
+      <!-- SCENE 3: KALKULATOR (18s - 26s) -->
+      <section class="scene clip" id="s3" data-start="18" data-duration="8" data-track-index="0">
+        <div class="stage-browser" id="b3">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/kalkulator</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/kalkulator</div>
+            </div>
+            <div class="route-badge">03 / 08 · KALKULATOR 2026</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img3" src="./assets/screens/kalkulator.png" alt="Kalkulator" />
           </div>
         </div>
-        <aside class="info-panel" id="p3">
-          <div>
-            <div class="step-pill anim">03 / 08 · KALKULATOR</div>
-            <h2 class="info-title anim">Kalkulator zasiłku</h2>
-            <p class="info-lead anim">Dokładne wyliczenie kwot i wymiaru urlopów.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Porównanie 81,5% vs 100%/70% (UoP, zlecenie, JDG)</div>
-              <div class="bullet-item anim">Podział dla obojga rodziców, ½ etatu, adopcja i wcześniaki</div>
-              <div class="bullet-item anim">Przeniesienie danych 1 kliknięciem do wniosku ZAM</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble tail-tr" id="s3_c1" style="top: 140px; right: 70px;">
+            <div class="avatar">%</div>
+            <div>
+              <div class="bubble-kicker">Zintegrowany kalkulator</div>
+              <div class="bubble-text">Porównuje stawkę 81,5% z 100%/70% dla umowy o pracę, zlecenia i JDG.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>Deterministyczny silnik TS</span>
-            <span class="zus-mini">/kalkulator</span>
+          <div class="chat-bubble light tail-bl" id="s3_c2" style="bottom: 195px; left: 70px;">
+            <div class="avatar">2+</div>
+            <div>
+              <div class="bubble-kicker">Wszystkie scenariusze</div>
+              <div class="bubble-text">Podział urlopu dla obojga rodziców, praca na ½ etatu, adopcja i wcześniaki (art. 180² KP).</div>
+            </div>
           </div>
-        </aside>
+          <div class="chat-bubble tail-br" id="s3_c3" style="bottom: 95px; right: 70px;">
+            <div class="avatar">→</div>
+            <div>
+              <div class="bubble-kicker">1 klik do wniosku</div>
+              <div class="bubble-text">Wyliczone dane przenosisz automatycznie prosto do kreatora ZAM!</div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SLIDE 4: WNIOSKI I E-USŁUGI (26s - 34.5s) -->
-      <section class="slide clip" id="slide4" data-start="26" data-duration="8.5" data-track-index="0">
-        <div class="browser-box" id="b4">
+      <!-- SCENE 4: WNIOSKI I e-USŁUGI (26s - 34.5s) -->
+      <section class="scene clip" id="s4" data-start="26" data-duration="8.5" data-track-index="0">
+        <div class="stage-browser" id="b4">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/e-uslugi</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/e-uslugi</div>
+            </div>
+            <div class="route-badge">04 / 08 · WNIOSKI I e-USŁUGI</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img4" src="./assets/screens/e-uslugi.png" alt="e-Usługi" />
           </div>
         </div>
-        <aside class="info-panel" id="p4">
-          <div>
-            <div class="step-pill anim">04 / 08 · WNIOSKI I e-USŁUGI</div>
-            <h2 class="info-title anim">Wnioski i e-Usługi</h2>
-            <p class="info-lead anim">Gotowe dokumenty i symulacja portali państwowych.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Kreator wniosku ZAM (6 kroków + wydruk A4 z QR)</div>
-              <div class="bullet-item anim">Zaprojektowany wniosek o urlop do pracodawcy</div>
-              <div class="bullet-item anim">Symulacja mObywatel, eZUS (JDG + POG), e-ZLA i USC</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble light tail-tl" id="s4_c1" style="top: 155px; left: 70px;">
+            <div class="avatar">A4</div>
+            <div>
+              <div class="bubble-kicker">Wniosek ZAM & Urlop HR</div>
+              <div class="bubble-text">6-krokowy kreator ZAM z podglądem A4 + QR oraz gotowy wniosek o urlop do pracodawcy.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>ZAM · Urlop HR · eZUS · USC</span>
-            <span class="zus-mini">/e-uslugi</span>
+          <div class="chat-bubble tail-tr" id="s4_c2" style="top: 320px; right: 70px;">
+            <div class="avatar">QR</div>
+            <div>
+              <div class="bubble-kicker">mObywatel & Konto eZUS</div>
+              <div class="bubble-text">Symulacja mObywatela, monitor zadłużenia JDG (48,06 zł), ZUS RWN i zapytanie POG.</div>
+            </div>
           </div>
-        </aside>
+          <div class="chat-bubble light tail-br" id="s4_c3" style="bottom: 95px; right: 70px;">
+            <div class="avatar">USC</div>
+            <div>
+              <div class="bubble-kicker">e-ZLA i Akt urodzenia</div>
+              <div class="bubble-text">Podgląd zwolnień lekarskich e-ZLA i pobranie odpisu aktu urodzenia z USC.</div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SLIDE 5: TRUDNE SYTUACJE (34.5s - 41.5s) -->
-      <section class="slide clip" id="slide5" data-start="34.5" data-duration="7" data-track-index="0">
-        <div class="browser-box" id="b5">
+      <!-- SCENE 5: TRUDNE SYTUACJE (34.5s - 41.5s) -->
+      <section class="scene clip" id="s5" data-start="34.5" data-duration="7" data-track-index="0">
+        <div class="stage-browser" id="b5">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/trudne-sytuacje</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/trudne-sytuacje</div>
+            </div>
+            <div class="route-badge">05 / 08 · WSPARCIE SZCZEGÓLNE</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img5" src="./assets/screens/trudne-sytuacje.png" alt="Trudne sytuacje" />
           </div>
         </div>
-        <aside class="info-panel" id="p5">
-          <div>
-            <div class="step-pill anim">05 / 08 · WSPARCIE</div>
-            <h2 class="info-title anim">Trudne sytuacje</h2>
-            <p class="info-lead anim">Spokojna pomoc w najtrudniejszych chwilach.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Poronienie i martwe urodzenie — 8 tyg. i checklista</div>
-              <div class="bullet-item anim">Wcześniaki (do 15 tyg. extra) i ustawa „Za życiem”</div>
-              <div class="bullet-item anim">Utrata pracy w ciąży (100%) i zweryfikowane fundacje</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble warm tail-tl" id="s5_c1" style="top: 155px; left: 70px;">
+            <div class="avatar">♥</div>
+            <div>
+              <div class="bubble-kicker">Wsparcie w kryzysie</div>
+              <div class="bubble-text">Poronienie i martwe urodzenie (8 tyg. zasiłku), wcześniaki oraz ustawa „Za życiem”.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>Empatyczna baza pomocy</span>
-            <span class="zus-mini">/trudne-sytuacje</span>
+          <div class="chat-bubble light tail-br" id="s5_c2" style="bottom: 105px; right: 70px;">
+            <div class="avatar">100%</div>
+            <div>
+              <div class="bubble-kicker">Utrata pracy & Fundacje</div>
+              <div class="bubble-text">Zasiłek w wysokości zasiłku macierzyńskiego (art. 30 ust. 3) + zweryfikowane fundacje pomocowe.</div>
+            </div>
           </div>
-        </aside>
+        </div>
       </section>
 
-      <!-- SLIDE 6: ASYSTENT AI (41.5s - 48s) -->
-      <section class="slide clip" id="slide6" data-start="41.5" data-duration="6.5" data-track-index="0">
-        <div class="browser-box" id="b6">
+      <!-- SCENE 6: ASYSTENT AI (41.5s - 48s) -->
+      <section class="scene clip" id="s6" data-start="41.5" data-duration="6.5" data-track-index="0">
+        <div class="stage-browser" id="b6">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/asystent-ai</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/asystent-ai</div>
+            </div>
+            <div class="route-badge">06 / 08 · ASYSTENT RODZICA AI</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img6" src="./assets/screens/asystent-ai.png" alt="Asystent AI" />
           </div>
         </div>
-        <aside class="info-panel" id="p6">
-          <div>
-            <div class="step-pill anim">06 / 08 · ASYSTENT AI</div>
-            <h2 class="info-title anim">Asystent Rodzica</h2>
-            <p class="info-lead anim">Tłumaczenie przepisów ZUS na prosty język.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Przełącznik: język prosty lub pełna wykładnia prawna</div>
-              <div class="bullet-item anim">Odpowiedzi dopasowane do umowy i etapu rodzica</div>
-              <div class="bullet-item anim">Jasne oddzielenie AI od deterministycznego kalkulatora</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble tail-tr" id="s6_c1" style="top: 150px; right: 70px;">
+            <div class="avatar">AI</div>
+            <div>
+              <div class="bubble-kicker">Prosty język lub ustawa</div>
+              <div class="bubble-text">Zadaj pytanie własnymi słowami — Asystent dopasuje odpowiedź do Twojej umowy i etapu.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>Wsparcie edukacyjne AI</span>
-            <span class="zus-mini">/asystent-ai</span>
+          <div class="chat-bubble light tail-bl" id="s6_c2" style="bottom: 105px; left: 70px;">
+            <div class="avatar">✓</div>
+            <div>
+              <div class="bubble-kicker">Zero halucynacji w kwotach</div>
+              <div class="bubble-text">AI tłumaczy przepisy, a wszystkie wyliczenia wykonuje 100% deterministyczny silnik.</div>
+            </div>
           </div>
-        </aside>
+        </div>
       </section>
 
-      <!-- SLIDE 7: JURY SANDBOX (48s - 54s) -->
-      <section class="slide clip" id="slide7" data-start="48" data-duration="6" data-track-index="0">
-        <div class="browser-box" id="b7">
+      <!-- SCENE 7: STREFA JURORA (48s - 54s) -->
+      <section class="scene clip" id="s7" data-start="48" data-duration="6" data-track-index="0">
+        <div class="stage-browser" id="b7">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/jury-sandbox</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/jury-sandbox</div>
+            </div>
+            <div class="route-badge">07 / 08 · STREFA JURORA</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img7" src="./assets/screens/jury-sandbox.png" alt="Strefa Jurora" />
           </div>
         </div>
-        <aside class="info-panel" id="p7">
-          <div>
-            <div class="step-pill anim">07 / 08 · STREFA JURORA</div>
-            <h2 class="info-title anim">Strefa Jurora</h2>
-            <p class="info-lead anim">Weryfikacja obliczeń na przykładowych sprawach.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Upload własnych wniosków PDF do analizy</div>
-              <div class="bullet-item anim">Gotowe kazusy ZUS z porównaniem wyników</div>
-              <div class="bullet-item anim">Zgodność z testami Vitest i REST API (/api/calculate)</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble light tail-tl" id="s7_c1" style="top: 150px; left: 70px;">
+            <div class="avatar">PDF</div>
+            <div>
+              <div class="bubble-kicker">Testuj na prawdziwych sprawach</div>
+              <div class="bubble-text">Wgraj przykładowy wniosek PDF lub wybierz gotowy kazus ZUS, by zweryfikować wynik.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>Testy i walidacja PDF</span>
-            <span class="zus-mini">/jury-sandbox</span>
+          <div class="chat-bubble tail-br" id="s7_c2" style="bottom: 105px; right: 70px;">
+            <div class="avatar">API</div>
+            <div>
+              <div class="bubble-kicker">REST API & Vitest</div>
+              <div class="bubble-text">Silnik przetestowany jednostkowo i dostępny pod endpointem POST /api/calculate.</div>
+            </div>
           </div>
-        </aside>
+        </div>
       </section>
 
-      <!-- SLIDE 8: PANEL ADMINA (54s - 60s) -->
-      <section class="slide clip" id="slide8" data-start="54" data-duration="6" data-track-index="0">
-        <div class="browser-box" id="b8">
+      <!-- SCENE 8: PANEL ADMINISTRACYJNY (54s - 60s) -->
+      <section class="scene clip" id="s8" data-start="54" data-duration="6" data-track-index="0">
+        <div class="stage-browser" id="b8">
           <div class="browser-top">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/admin</div>
+            <div class="browser-dots">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/admin</div>
+            </div>
+            <div class="route-badge">08 / 08 · PANEL ADMINISTRACYJNY</div>
           </div>
           <div class="screen-viewport">
             <img class="screen-img" id="img8" src="./assets/screens/admin.png" alt="Panel Administracyjny" />
           </div>
         </div>
-        <aside class="info-panel" id="p8">
-          <div>
-            <div class="step-pill anim">08 / 08 · ADMINISTRACJA</div>
-            <h2 class="info-title anim">Panel Administracyjny</h2>
-            <p class="info-lead anim">Zmiana parametrów prawnych bez edycji kodu.</p>
-            <div class="bullet-list">
-              <div class="bullet-item anim">Edycja stawek (100%, 81,5%, 70%) i płacy minimalnej</div>
-              <div class="bullet-item anim">Zapis w Supabase i odczyt przez REST API (/api/parameters)</div>
-              <div class="bullet-item anim">Gotowe do wdrożenia: Next.js 15, RWD i WCAG</div>
+        <div class="bubble-layer">
+          <div class="chat-bubble tail-tr" id="s8_c1" style="top: 150px; right: 70px;">
+            <div class="avatar">⚙</div>
+            <div>
+              <div class="bubble-kicker">Zmiany prawa bez kodu</div>
+              <div class="bubble-text">Edytuj stawki (81,5%, 70%) i płacę minimalną (4 806 zł) jednym zapisem w Supabase.</div>
             </div>
           </div>
-          <div class="panel-footer anim">
-            <span>HackNation 2026 · ZUS</span>
-            <span class="zus-mini">/admin</span>
+          <div class="chat-bubble light tail-bl" id="s8_c2" style="bottom: 105px; left: 70px;">
+            <div class="avatar">ZUS</div>
+            <div>
+              <div class="bubble-kicker">HackNation 2026</div>
+              <div class="bubble-text">Zasiłkowy Przewodnik Przyszłego Rodzica — gotowy do wdrożenia!</div>
+            </div>
           </div>
-        </aside>
+        </div>
       </section>
 
-      <!-- 8-segment dynamic bottom timeline rail -->
+      <!-- Animated Floating Cursor -->
+      <div class="cursor-wrap" id="cursor">
+        <div class="cursor-ring" id="cursorRing"></div>
+        <svg class="cursor-svg" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 3L23 13.5L14.5 15.8L11.2 24L5 3Z" fill="#10371E" stroke="#FAF8F2" stroke-width="2" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <!-- 8-segment dynamic progress bar -->
       <div class="bottom-rail">
         <div class="rail-seg"><div class="rail-fill" id="r1"></div></div>
         <div class="rail-seg"><div class="rail-fill" id="r2"></div></div>
@@ -495,75 +639,115 @@
     <script>
       const tl = gsap.timeline({ paused: true });
 
-      const slides = [
-        { id: 1, start: 0.0, dur: 10.5, scrollY: -810, scrollDelay: 1.4, scrollDur: 7.8 },
-        { id: 2, start: 10.5, dur: 7.5, scrollY: -135, scrollDelay: 0.9, scrollDur: 5.5 },
-        { id: 3, start: 18.0, dur: 8.0, scrollY: -140, scrollDelay: 0.9, scrollDur: 6.0 },
-        { id: 4, start: 26.0, dur: 8.5, scrollY: -200, scrollDelay: 0.9, scrollDur: 6.5 },
-        { id: 5, start: 34.5, dur: 7.0, scrollY: -135, scrollDelay: 0.9, scrollDur: 5.0 },
-        { id: 6, start: 41.5, dur: 6.5, scrollY: -130, scrollDelay: 0.9, scrollDur: 4.6 },
-        { id: 7, start: 48.0, dur: 6.0, scrollY: -130, scrollDelay: 0.9, scrollDur: 4.1 },
-        { id: 8, start: 54.0, dur: 6.0, scrollY: -125, scrollDelay: 0.9, scrollDur: 4.4 }
+      // Ambient drifting background orbs for depth
+      tl.to("#orb1", { x: 240, y: 120, duration: 60, ease: "sine.inOut" }, 0);
+      tl.to("#orb2", { x: -220, y: -140, duration: 60, ease: "sine.inOut" }, 0);
+
+      // Helper: pop a chat bubble in with springy physics + gentle float
+      function popBubble(sel, at, fromX = 0, fromY = 34) {
+        tl.fromTo(
+          sel,
+          { opacity: 0, x: fromX, y: fromY, scale: 0.84 },
+          { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.6)" },
+          at
+        );
+        tl.to(sel, { y: -7, duration: 2.2, ease: "sine.inOut" }, at + 0.6);
+      }
+
+      // Helper: cursor glide + click ripple
+      function cursorClick(x, y, at) {
+        tl.to("#cursor", { opacity: 1, x, y, duration: 0.65, ease: "power3.inOut" }, at);
+        tl.fromTo(
+          "#cursorRing",
+          { scale: 0.25, opacity: 0.9 },
+          { scale: 1.7, opacity: 0, duration: 0.5, ease: "power2.out" },
+          at + 0.62
+        );
+      }
+
+      const scenes = [
+        { id: 1, start: 0.0, dur: 10.5, scrollY: -960, scrollDelay: 1.2, scrollDur: 8.2, enterX: 0, enterY: 60, rotY: 0 },
+        { id: 2, start: 10.5, dur: 7.5, scrollY: -190, scrollDelay: 0.8, scrollDur: 5.6, enterX: 220, enterY: 0, rotY: -10 },
+        { id: 3, start: 18.0, dur: 8.0, scrollY: -180, scrollDelay: 0.8, scrollDur: 6.2, enterX: -220, enterY: 0, rotY: 10 },
+        { id: 4, start: 26.0, dur: 8.5, scrollY: -270, scrollDelay: 0.8, scrollDur: 6.6, enterX: 0, enterY: 140, rotY: -6 },
+        { id: 5, start: 34.5, dur: 7.0, scrollY: -180, scrollDelay: 0.8, scrollDur: 5.2, enterX: 220, enterY: 0, rotY: -10 },
+        { id: 6, start: 41.5, dur: 6.5, scrollY: -170, scrollDelay: 0.8, scrollDur: 4.7, enterX: -220, enterY: 0, rotY: 10 },
+        { id: 7, start: 48.0, dur: 6.0, scrollY: -170, scrollDelay: 0.8, scrollDur: 4.2, enterX: 0, enterY: 120, rotY: -6 },
+        { id: 8, start: 54.0, dur: 6.0, scrollY: -160, scrollDelay: 0.8, scrollDur: 4.4, enterX: 200, enterY: 0, rotY: -8 }
       ];
 
-      slides.forEach((s, idx) => {
-        const slideSel = `#slide${s.id}`;
-        const browserSel = `#b${s.id}`;
-        const panelSel = `#p${s.id}`;
-        const imgSel = `#img${s.id}`;
-        const animItems = `#p${s.id} .anim`;
-        const railSel = `#r${s.id}`;
+      scenes.forEach((sc, idx) => {
+        const sSel = `#s${sc.id}`;
+        const bSel = `#b${sc.id}`;
+        const imgSel = `#img${sc.id}`;
+        const rSel = `#r${sc.id}`;
 
-        // Bottom segment fill
-        tl.to(railSel, { width: "100%", duration: s.dur, ease: "none" }, s.start);
+        tl.to(rSel, { width: "100%", duration: sc.dur, ease: "none" }, sc.start);
 
-        // Smooth overlapping entrance (starts 0.35s early for seamless flow after slide 1)
-        const enterAt = idx === 0 ? 0 : s.start - 0.35;
-
-        tl.set(slideSel, { opacity: 1 }, enterAt);
+        const enterAt = idx === 0 ? 0 : sc.start - 0.35;
+        tl.set(sSel, { opacity: 1 }, enterAt);
         tl.fromTo(
-          browserSel,
-          { opacity: 0, x: idx === 0 ? 0 : 95, y: idx === 0 ? 28 : 0, scale: 0.955 },
-          { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.72, ease: "power4.out" },
+          bSel,
+          { opacity: 0, x: sc.enterX, y: sc.enterY, rotateY: sc.rotY, scale: 0.9 },
+          { opacity: 1, x: 0, y: 0, rotateY: 0, scale: 1, duration: 0.82, ease: "power4.out" },
           enterAt
         );
-        tl.fromTo(
-          panelSel,
-          { opacity: 0, x: 65, scale: 0.97 },
-          { opacity: 1, x: 0, scale: 1, duration: 0.68, ease: "power4.out" },
-          enterAt + 0.06
-        );
-        tl.fromTo(
-          animItems,
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.48, stagger: 0.07, ease: "power3.out" },
-          enterAt + 0.16
-        );
 
-        // Subtle kinetic zoom + smooth vertical scroll of real page
+        // Smooth dynamic camera zoom + scroll
         tl.fromTo(
           imgSel,
-          { scale: 1.028, y: 0 },
-          { scale: 1.0, y: s.scrollY, duration: s.scrollDur, ease: "sine.inOut" },
-          s.start + s.scrollDelay
+          { scale: 1.045, y: 0 },
+          { scale: 1.0, y: sc.scrollY, duration: sc.scrollDur, ease: "sine.inOut" },
+          sc.start + sc.scrollDelay
         );
 
-        // Dynamic exit (slide left + scale down smoothly) except last slide
-        if (idx < slides.length - 1) {
-          const exitAt = s.start + s.dur - 0.55;
+        // Dynamic 3D exit
+        if (idx < scenes.length - 1) {
+          const exitAt = sc.start + sc.dur - 0.55;
           tl.to(
-            browserSel,
-            { opacity: 0, x: -85, scale: 0.955, duration: 0.55, ease: "power3.inOut" },
+            sSel,
+            { opacity: 0, x: idx % 2 === 0 ? -150 : 150, scale: 0.92, duration: 0.55, ease: "power3.inOut" },
             exitAt
           );
-          tl.to(
-            panelSel,
-            { opacity: 0, x: -45, scale: 0.97, duration: 0.5, ease: "power3.inOut" },
-            exitAt
-          );
-          tl.set(slideSel, { opacity: 0 }, exitAt + 0.56);
         }
       });
+
+      // Chat bubble choreography per scene
+      popBubble("#s1_c1", 0.7, 40, -18);
+      popBubble("#s1_c2", 3.4, -40, 28);
+      popBubble("#s1_c3", 6.5, 40, 28);
+      cursorClick(1465, 118, 1.3);
+      cursorClick(760, 560, 4.3);
+
+      popBubble("#s2_c1", 11.1, -40, -18);
+      popBubble("#s2_c2", 13.8, 40, 28);
+      cursorClick(520, 420, 12.2);
+
+      popBubble("#s3_c1", 18.6, 40, -18);
+      popBubble("#s3_c2", 20.6, -40, 26);
+      popBubble("#s3_c3", 22.8, 40, 26);
+      cursorClick(960, 510, 19.6);
+
+      popBubble("#s4_c1", 26.6, -40, -18);
+      popBubble("#s4_c2", 29.0, 40, 20);
+      popBubble("#s4_c3", 31.3, 40, 28);
+      cursorClick(625, 295, 27.7);
+
+      popBubble("#s5_c1", 35.1, -40, -18);
+      popBubble("#s5_c2", 37.8, 40, 28);
+      cursorClick(900, 480, 36.2);
+
+      popBubble("#s6_c1", 42.1, 40, -18);
+      popBubble("#s6_c2", 44.5, -40, 28);
+      cursorClick(1040, 540, 43.2);
+
+      popBubble("#s7_c1", 48.6, -40, -18);
+      popBubble("#s7_c2", 50.9, 40, 28);
+      cursorClick(880, 460, 49.6);
+
+      popBubble("#s8_c1", 54.6, 40, -18);
+      popBubble("#s8_c2", 56.8, -40, 28);
+      tl.to("#cursor", { opacity: 0, duration: 0.4 }, 55.5);
 
       tl.to({}, { duration: 0.1 }, 59.9);
 
