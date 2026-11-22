@@ -19,10 +19,6 @@
         --ink-muted: #425c4b;
         --border: #b9ccb6;
         --zus-green: #007834;
-        --zus-green-dark: #005c27;
-        --support-bg: #fdf1ec;
-        --support-border: #e8c3b5;
-        --support-accent: #b44b34;
         --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
@@ -37,7 +33,7 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: var(--bg);
+        background: var(--ink);
         font-family: var(--font);
         color: var(--ink);
         -webkit-font-smoothing: antialiased;
@@ -48,134 +44,62 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: var(--bg);
+        background: var(--ink);
       }
 
-      /* Fullscreen scene layers */
-      .scene {
+      .slide {
         position: absolute;
         inset: 0;
+        padding: 36px 40px 44px;
+        display: grid;
+        grid-template-columns: 1290px 1fr;
+        gap: 32px;
         opacity: 0;
-        pointer-events: none;
       }
 
-      /* Intro & Outro dark forest slides */
-      .cover-slide {
-        background: var(--ink);
-        color: #faf8f2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 90px;
-      }
-
-      .cover-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        background: rgba(220, 232, 211, 0.14);
-        border: 1.5px solid rgba(220, 232, 211, 0.34);
-        color: #dce8d3;
-        font-size: 20px;
-        font-weight: 700;
-        padding: 10px 26px;
-        border-radius: 999px;
-        margin-bottom: 30px;
-        letter-spacing: 0.05em;
-      }
-
-      .cover-title {
-        font-size: 80px;
-        line-height: 1.06;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        color: #faf8f2;
-        max-width: 1320px;
-        margin-bottom: 24px;
-      }
-
-      .cover-sub {
-        font-size: 30px;
-        line-height: 1.45;
-        color: #c2d4be;
-        max-width: 1050px;
-        font-weight: 500;
-        margin-bottom: 46px;
-      }
-
-      .cover-pills {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 18px;
-      }
-
-      .cover-pill {
-        background: rgba(250, 248, 242, 0.09);
-        border: 1.5px solid rgba(185, 204, 182, 0.35);
-        border-radius: 16px;
-        padding: 16px 28px;
-        font-size: 21px;
-        font-weight: 700;
-        color: #faf8f2;
-      }
-
-      /* Shared Browser Stage */
-      .browser-stage {
-        position: absolute;
-        top: 34px;
-        left: 60px;
-        right: 60px;
-        bottom: 96px;
-        background: var(--bg);
-        border: 2px solid var(--border);
-        border-radius: 26px;
-        box-shadow: 0 28px 70px rgba(16, 55, 30, 0.11);
+      /* Left: Real Website Browser Frame */
+      .browser-box {
+        background: #ffffff;
+        border-radius: 22px;
         overflow: hidden;
+        border: 2px solid rgba(220, 232, 211, 0.35);
+        box-shadow: 0 28px 65px rgba(0, 0, 0, 0.35);
         display: flex;
         flex-direction: column;
       }
 
-      .browser-bar {
-        height: 50px;
-        background: #f2f6ee;
-        border-bottom: 1.5px solid var(--border);
+      .browser-top {
+        height: 46px;
+        background: #eff3ea;
+        border-bottom: 1.5px solid #c6d6c3;
+        padding: 0 18px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 0 22px;
+        gap: 9px;
         flex-shrink: 0;
       }
 
-      .browser-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
       .dot {
-        width: 12px;
-        height: 12px;
+        width: 11px;
+        height: 11px;
         border-radius: 50%;
       }
       .dot.r { background: #e38c7b; }
       .dot.y { background: #e5c478; }
       .dot.g { background: #74b887; }
 
-      .url-pill {
-        margin-left: 14px;
+      .url-bar {
+        margin-left: 12px;
         background: #ffffff;
-        border: 1px solid var(--border);
+        border: 1px solid #b9ccb6;
         border-radius: 999px;
-        padding: 5px 18px;
-        font-size: 15px;
-        font-weight: 600;
-        color: var(--ink-muted);
+        padding: 4px 16px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #2e4b38;
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 8px;
       }
 
       .url-dot {
@@ -185,634 +109,128 @@
         background: var(--zus-green);
       }
 
-      .scene-tag {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--zus-green-dark);
-        background: var(--sage);
-        border: 1px solid var(--border);
-        padding: 5px 14px;
-        border-radius: 999px;
-      }
-
-      /* Portal Header inside browser */
-      .portal-header {
-        height: 76px;
-        background: rgba(250, 248, 242, 0.98);
-        border-bottom: 1.5px solid var(--border);
-        padding: 0 44px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-shrink: 0;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
-
-      .brand-mark {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: var(--ink);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 16px;
-      }
-
-      .brand-title {
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--ink);
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .nav-item {
-        padding: 8px 16px;
-        border-radius: 10px;
-        font-size: 15px;
-        font-weight: 700;
-        color: var(--ink-muted);
-      }
-
-      .nav-item.active {
-        background: var(--sage);
-        color: var(--ink);
-      }
-
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .pill-btn {
-        height: 40px;
-        padding: 0 16px;
-        border-radius: 10px;
-        border: 1.5px solid var(--border);
-        background: #fff;
-        color: var(--ink);
-        font-size: 14px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 7px;
-      }
-
-      .pill-btn.primary {
-        background: var(--zus-green);
-        border-color: var(--zus-green);
-        color: #fff;
-      }
-
-      .pill-btn.logged {
-        background: #eaf5ed;
-        border-color: var(--zus-green);
-        color: var(--zus-green-dark);
-      }
-
-      /* Viewport */
-      .viewport {
+      .screen-viewport {
         position: relative;
         flex: 1;
         overflow: hidden;
-        padding: 34px 48px;
+        background: var(--bg);
       }
 
-      /* Scene 2: Homepage */
-      .home-scroll {
+      .screen-img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Right: Clear Explanation Card ("Co za co odpowiada") */
+      .info-panel {
+        background: var(--bg);
+        border-radius: 22px;
+        padding: 36px 34px;
         display: flex;
         flex-direction: column;
-        gap: 42px;
+        justify-content: space-between;
+        border: 2px solid rgba(220, 232, 211, 0.5);
+        box-shadow: 0 24px 55px rgba(0, 0, 0, 0.25);
       }
 
-      .hero-card {
-        background: var(--sage);
-        border: 1.5px solid var(--border);
-        border-radius: 24px;
-        padding: 44px 52px;
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        align-items: center;
-        gap: 40px;
-      }
-
-      .hero-badge {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid var(--border);
-        color: var(--zus-green-dark);
-        font-size: 15px;
-        font-weight: 700;
-        padding: 7px 16px;
-        border-radius: 999px;
-        margin-bottom: 18px;
-      }
-
-      .hero-title {
-        font-size: 54px;
-        line-height: 1.07;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        margin-bottom: 16px;
-      }
-
-      .hero-sub {
-        font-size: 22px;
-        line-height: 1.45;
-        color: var(--ink-muted);
-        margin-bottom: 28px;
-      }
-
-      .cta-btn {
+      .step-pill {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        background: var(--zus-green);
-        color: #fff;
-        font-size: 19px;
-        font-weight: 700;
-        padding: 16px 30px;
-        border-radius: 14px;
-      }
-
-      .hero-img-wrap {
-        border-radius: 20px;
-        overflow: hidden;
-        height: 350px;
-        border: 1.5px solid rgba(16, 55, 30, 0.08);
-      }
-
-      .hero-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .section-title {
-        font-size: 38px;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        margin-bottom: 22px;
-      }
-
-      .cards-4 {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-      }
-
-      .sit-card {
-        background: #fff;
-        border: 1.5px solid var(--border);
-        border-radius: 20px;
-        overflow: hidden;
-      }
-
-      .sit-img-box {
-        height: 185px;
-        overflow: hidden;
-      }
-
-      .sit-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .sit-body {
-        padding: 18px 20px 22px;
-      }
-
-      .sit-title {
-        font-size: 20px;
-        font-weight: 800;
-        margin-bottom: 4px;
-      }
-
-      .sit-desc {
-        font-size: 15px;
-        color: var(--ink-muted);
-      }
-
-      .support-banner {
-        margin-top: 22px;
-        background: var(--support-bg);
-        border: 1.5px solid var(--support-border);
-        border-radius: 18px;
-        padding: 22px 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .support-title {
-        font-size: 22px;
-        font-weight: 800;
-        color: #5c2519;
-        margin-bottom: 4px;
-      }
-
-      .support-text {
-        font-size: 16px;
-        color: #7c3f31;
-      }
-
-      .support-btn {
-        background: var(--support-accent);
-        color: #fff;
-        font-size: 17px;
-        font-weight: 700;
-        padding: 13px 24px;
-        border-radius: 12px;
-      }
-
-      /* Scene 3: Login Modal */
-      .login-backdrop {
-        display: grid;
-        grid-template-columns: 1fr 1.05fr;
-        gap: 36px;
-        align-items: center;
-        height: 100%;
-      }
-
-      .login-methods {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .method-card {
-        background: #fff;
-        border: 2px solid var(--border);
-        border-radius: 18px;
-        padding: 22px 26px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .method-card.active {
-        border-color: var(--zus-green);
-        background: #f4faf5;
-        box-shadow: 0 12px 28px rgba(0, 120, 52, 0.12);
-      }
-
-      .method-title {
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 4px;
-      }
-
-      .method-sub {
-        font-size: 15px;
-        color: var(--ink-muted);
-      }
-
-      .qr-panel {
-        background: #fff;
-        border: 2px solid var(--border);
-        border-radius: 24px;
-        padding: 36px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 18px;
-      }
-
-      .qr-box {
-        width: 220px;
-        height: 220px;
-        border-radius: 18px;
-        border: 2px solid var(--ink);
-        padding: 16px;
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: repeat(7, 1fr);
-        gap: 5px;
-        background: #fff;
-      }
-
-      .qr-cell {
-        border-radius: 3px;
-        background: var(--ink);
-      }
-      .qr-cell.w {
-        background: transparent;
-      }
-
-      .auth-success-pill {
-        background: #eaf5ed;
-        border: 1.5px solid var(--zus-green);
-        color: var(--zus-green-dark);
-        font-size: 18px;
-        font-weight: 800;
-        padding: 12px 24px;
-        border-radius: 14px;
-      }
-
-      /* Scene 4: Calculator */
-      .calc-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.1fr;
-        gap: 32px;
-        height: 100%;
-        align-items: start;
-      }
-
-      .card-box {
-        background: #fff;
-        border: 1.5px solid var(--border);
-        border-radius: 22px;
-        padding: 30px;
-      }
-
-      .step-bars {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
         gap: 8px;
-        margin-bottom: 24px;
-      }
-
-      .step-bar {
-        height: 8px;
-        border-radius: 999px;
         background: var(--sage);
-      }
-      .step-bar.done {
-        background: var(--zus-green);
-      }
-
-      .param-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 18px;
-        border-radius: 12px;
-        background: var(--surface);
         border: 1px solid var(--border);
-        margin-bottom: 12px;
-        font-size: 17px;
-      }
-
-      .param-row strong {
         color: var(--ink);
-        font-weight: 800;
-      }
-
-      .kpi-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        margin-bottom: 20px;
-      }
-
-      .kpi-card {
-        background: var(--sage);
-        border: 1.5px solid var(--border);
-        border-radius: 18px;
-        padding: 22px;
-      }
-
-      .kpi-card.dark {
-        background: var(--ink);
-        color: #faf8f2;
-        border-color: var(--ink);
-      }
-
-      .kpi-label {
-        font-size: 14px;
-        font-weight: 700;
-        opacity: 0.8;
-        margin-bottom: 6px;
-      }
-
-      .kpi-val {
-        font-size: 40px;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-      }
-
-      .timeline-bar {
-        display: flex;
-        height: 44px;
-        border-radius: 12px;
-        overflow: hidden;
-        margin: 18px 0;
         font-size: 14px;
         font-weight: 800;
-        color: #fff;
-      }
-
-      .seg-1 { background: var(--ink); width: 38%; display: flex; align-items: center; justify-content: center; }
-      .seg-2 { background: var(--zus-green); width: 45%; display: flex; align-items: center; justify-content: center; }
-      .seg-3 { background: #3b7a57; width: 17%; display: flex; align-items: center; justify-content: center; }
-
-      /* Scene 5: e-Uslugi */
-      .tabs-row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 24px;
-      }
-
-      .tab-pill {
-        padding: 11px 18px;
-        border-radius: 12px;
-        border: 1.5px solid var(--border);
-        background: #fff;
-        font-size: 15px;
-        font-weight: 700;
-        color: var(--ink-muted);
-      }
-
-      .tab-pill.active {
-        background: var(--zus-green);
-        border-color: var(--zus-green);
-        color: #fff;
-      }
-
-      .docs-grid {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: 28px;
-      }
-
-      .a4-preview {
-        background: #fff;
-        border: 2px solid var(--ink);
-        border-radius: 16px;
-        padding: 28px 32px;
-        box-shadow: 0 14px 36px rgba(16, 55, 30, 0.08);
-      }
-
-      .a4-head {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 2px solid var(--ink);
-        padding-bottom: 14px;
+        padding: 7px 15px;
+        border-radius: 999px;
+        letter-spacing: 0.04em;
         margin-bottom: 18px;
+        align-self: flex-start;
       }
 
-      .a4-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 9px 0;
-        border-bottom: 1px solid #e4ece1;
-        font-size: 16px;
-      }
-
-      /* Scene 6: Guide & Difficult Situations */
-      .split-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 28px;
-      }
-
-      .list-item {
-        background: var(--surface);
-        border: 1.5px solid var(--border);
-        border-radius: 14px;
-        padding: 16px 20px;
-        margin-bottom: 12px;
-      }
-
-      .list-item.warm {
-        background: var(--support-bg);
-        border-color: var(--support-border);
-      }
-
-      .list-title {
-        font-size: 18px;
+      .info-title {
+        font-size: 38px;
+        line-height: 1.12;
         font-weight: 800;
-        margin-bottom: 4px;
-      }
-
-      .list-sub {
-        font-size: 15px;
-        color: var(--ink-muted);
-        line-height: 1.4;
-      }
-
-      /* Scene 7: AI + Mobile + Admin/API */
-      .eco-grid {
-        display: grid;
-        grid-template-columns: 1.15fr 0.72fr 0.95fr;
-        gap: 24px;
-        align-items: stretch;
-      }
-
-      .chat-bubble {
-        padding: 16px 20px;
-        border-radius: 16px;
-        font-size: 16px;
-        line-height: 1.45;
+        letter-spacing: -0.025em;
+        color: var(--ink);
         margin-bottom: 14px;
       }
 
-      .chat-user {
-        background: var(--ink);
-        color: #fff;
-        margin-left: 40px;
+      .info-lead {
+        font-size: 19px;
+        line-height: 1.48;
+        color: var(--ink-muted);
+        font-weight: 500;
+        margin-bottom: 26px;
       }
 
-      .chat-ai {
+      .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .feature-item {
         background: var(--surface);
         border: 1.5px solid var(--border);
+        border-radius: 14px;
+        padding: 15px 18px;
+      }
+
+      .feature-item strong {
+        display: block;
+        font-size: 17px;
+        font-weight: 800;
         color: var(--ink);
+        margin-bottom: 4px;
       }
 
-      .phone-frame {
-        background: #10371e;
-        border-radius: 34px;
-        padding: 14px;
-        display: flex;
-        flex-direction: column;
+      .feature-item span {
+        display: block;
+        font-size: 15px;
+        line-height: 1.4;
+        color: var(--ink-muted);
       }
 
-      .phone-screen {
-        flex: 1;
-        background: var(--bg);
-        border-radius: 24px;
-        padding: 18px;
+      .panel-footer {
+        margin-top: 24px;
+        padding-top: 18px;
+        border-top: 1.5px solid var(--sage);
         display: flex;
-        flex-direction: column;
+        align-items: center;
         justify-content: space-between;
-      }
-
-      .phone-bar {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 4px;
-        border-top: 1px solid var(--border);
-        padding-top: 10px;
-        text-align: center;
-        font-size: 11px;
+        font-size: 14px;
         font-weight: 700;
         color: var(--ink-muted);
       }
 
-      /* Bottom narration caption & progress bar */
-      .caption-dock {
-        position: absolute;
-        left: 60px;
-        right: 60px;
-        bottom: 18px;
-        height: 62px;
-        background: rgba(16, 55, 30, 0.95);
-        color: #faf8f2;
-        border-radius: 16px;
-        padding: 0 28px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        z-index: 40;
-      }
-
-      .caption-text {
-        font-size: 21px;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-      }
-
-      .caption-step {
-        font-size: 15px;
+      .zus-mini {
+        background: var(--zus-green);
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 8px;
         font-weight: 800;
-        color: #dce8d3;
-        background: rgba(255, 255, 255, 0.12);
-        padding: 6px 14px;
-        border-radius: 999px;
-        white-space: nowrap;
+        font-size: 13px;
       }
 
+      /* Bottom global progress track */
       .progress-track {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
-        height: 6px;
-        background: rgba(16, 55, 30, 0.15);
+        height: 8px;
+        background: rgba(255, 255, 255, 0.14);
         z-index: 50;
       }
 
       .progress-fill {
         height: 100%;
         width: 0%;
-        background: var(--zus-green);
+        background: #4cd97b;
       }
     </style>
   </head>
@@ -825,494 +243,326 @@
       data-width="1920"
       data-height="1080"
     >
-      <!-- SCENE 1: INTRO (0s - 6s) -->
-      <section class="scene cover-slide clip" id="scene1" data-start="0" data-duration="6" data-track-index="0">
-        <div class="cover-badge" id="s1Badge">HACKNATION 2026 · ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH</div>
-        <h1 class="cover-title" id="s1Title">Zasiłkowy Przewodnik<br />Przyszłego Rodzica</h1>
-        <p class="cover-sub" id="s1Sub">
-          Jedno, proste i empatyczne narzędzie dla rodziców — od planowania ciąży, przez kalkulator zasiłku, aż po gotowy wniosek ZAM i urlop u pracodawcy.
-        </p>
-        <div class="cover-pills" id="s1Pills">
-          <div class="cover-pill">Stan prawny 2026</div>
-          <div class="cover-pill">Prosty język & WCAG</div>
-          <div class="cover-pill">mObywatel & eZUS</div>
-          <div class="cover-pill">REST API + Supabase</div>
-        </div>
-      </section>
-
-      <!-- SCENE 2: STRONA GŁÓWNA (6s - 15s) -->
-      <section class="scene clip" id="scene2" data-start="6" data-duration="9" data-track-index="0">
-        <div class="browser-stage">
-          <div class="browser-bar">
-            <div class="browser-left">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/</div>
-            </div>
-            <div class="scene-tag">1 / 6 · Strona główna</div>
+      <!-- SLIDE 1: STRONA GŁÓWNA (0s - 11s) -->
+      <section class="slide clip" id="slide1" data-start="0" data-duration="11" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/</div>
           </div>
-          <header class="portal-header">
-            <div class="brand">
-              <div class="brand-mark">ZUS</div>
-              <div class="brand-title">Przewodnik Rodzica</div>
-            </div>
-            <div class="nav-links">
-              <div class="nav-item active">Start</div>
-              <div class="nav-item">Przewodnik</div>
-              <div class="nav-item">Kalkulator</div>
-              <div class="nav-item">Wnioski</div>
-              <div class="nav-item">Wsparcie</div>
-              <div class="nav-item">Asystent</div>
-            </div>
-            <div class="header-actions">
-              <div class="pill-btn">Posłuchaj</div>
-              <div class="pill-btn">Aa</div>
-              <div class="pill-btn primary">Zaloguj (eZUS)</div>
-            </div>
-          </header>
-          <div class="viewport">
-            <div class="home-scroll" id="s2Scroll">
-              <div class="hero-card">
-                <div>
-                  <div class="hero-badge">Stan prawny: 1 kwietnia 2026 · Prosty język</div>
-                  <h2 class="hero-title">Zasiłkowy Przewodnik<br />Przyszłego Rodzica</h2>
-                  <p class="hero-sub">
-                    Sprawdź, jakie pieniądze i urlopy Ci przysługują, kiedy złożyć wniosek i uniknij pułapek formalnych.
-                  </p>
-                  <div class="cta-btn">Oblicz wysokość zasiłku →</div>
-                </div>
-                <div class="hero-img-wrap">
-                  <img class="hero-img" id="s2HeroImg" src="./assets/family-hero.png" alt="Rodzina" />
-                </div>
-              </div>
-
-              <div>
-                <h3 class="section-title">Jaka jest Twoja sytuacja?</h3>
-                <div class="cards-4">
-                  <div class="sit-card" id="s2c1">
-                    <div class="sit-img-box"><img class="sit-img" src="./assets/card-planning.jpg" alt="Planuję" /></div>
-                    <div class="sit-body">
-                      <div class="sit-title">Planuję dziecko</div>
-                      <div class="sit-desc">Okres wyczekiwania i składki</div>
-                    </div>
-                  </div>
-                  <div class="sit-card" id="s2c2">
-                    <div class="sit-img-box"><img class="sit-img" src="./assets/card-expecting.jpg" alt="Oczekuję" /></div>
-                    <div class="sit-body">
-                      <div class="sit-title">Oczekuję dziecka</div>
-                      <div class="sit-desc">e-ZLA kod „B” i ochrona pracy</div>
-                    </div>
-                  </div>
-                  <div class="sit-card" id="s2c3">
-                    <div class="sit-img-box"><img class="sit-img" src="./assets/card-born.jpg" alt="Urodziło się" /></div>
-                    <div class="sit-body">
-                      <div class="sit-title">Dziecko już się urodziło</div>
-                      <div class="sit-desc">21 dni na wniosek 81,5%</div>
-                    </div>
-                  </div>
-                  <div class="sit-card" id="s2c4">
-                    <div class="sit-img-box"><img class="sit-img" src="./assets/card-care.jpg" alt="Adopcja" /></div>
-                    <div class="sit-body">
-                      <div class="sit-title">Przyjmuję dziecko</div>
-                      <div class="sit-desc">Adopcja i rodzina zastępcza</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="support-banner" id="s2Support">
-                  <div>
-                    <div class="support-title">Potrzebujesz wsparcia w trudnej sytuacji?</div>
-                    <div class="support-text">Poronienie, martwe urodzenie, wcześniak lub utrata pracy w ciąży — jasne prawa i pomoc fundacji.</div>
-                  </div>
-                  <div class="support-btn">Znajdź pomoc →</div>
-                </div>
-              </div>
-            </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgHome" src="./assets/screens/home-full.png" alt="Strona główna" />
           </div>
         </div>
+        <aside class="info-panel" id="panel1">
+          <div>
+            <div class="step-pill">01 / 08 · STRONA GŁÓWNA</div>
+            <h1 class="info-title">Punkt startowy dla rodzica</h1>
+            <p class="info-lead">
+              Główny ekran portalu prowadzi użytkownika prosto do właściwych informacji — bez szukania po ustawach.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Górny pasek (dostępność i logowanie)</strong>
+                <span>Lektor głosowy „Posłuchaj”, powiększanie tekstu WCAG (Aa), podgląd mobilny i symulacja logowania eZUS / mObywatel.</span>
+              </div>
+              <div class="feature-item">
+                <strong>4 kafle sytuacji życiowej</strong>
+                <span>Planuję dziecko, Oczekuję dziecka, Dziecko już się urodziło oraz Przyjmuję dziecko pod opiekę (adopcja).</span>
+              </div>
+              <div class="feature-item">
+                <strong>Wyróżnione wsparcie i 3 kluczowe zasady</strong>
+                <span>Szybkie przejście do pomocy w trudnych sytuacjach, słownik trudnych słów oraz zasady 21 dni, 9 tyg. i ½ etatu.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>Zasiłkowy Przewodnik Rodzica</span>
+            <span class="zus-mini">ZUS · 2026</span>
+          </div>
+        </aside>
       </section>
 
-      <!-- SCENE 3: LOGOWANIE ZUS / mOBYWATEL (15s - 23s) -->
-      <section class="scene clip" id="scene3" data-start="15" data-duration="8" data-track-index="0">
-        <div class="browser-stage">
-          <div class="browser-bar">
-            <div class="browser-left">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>login.gov.pl · PUE / eZUS · mObywatel 2.0</div>
-            </div>
-            <div class="scene-tag">2 / 6 · Logowanie eZUS & mObywatel</div>
+      <!-- SLIDE 2: PRZEWODNIK (11s - 18.5s) -->
+      <section class="slide clip" id="slide2" data-start="11" data-duration="7.5" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/przewodnik</div>
           </div>
-          <header class="portal-header">
-            <div class="brand">
-              <div class="brand-mark">ZUS</div>
-              <div class="brand-title">Przewodnik Rodzica</div>
-            </div>
-            <div class="header-actions">
-              <div class="pill-btn logged" id="s3LoggedBadge" style="opacity: 0;">✓ Anna Kowalska (Zalogowano)</div>
-            </div>
-          </header>
-          <div class="viewport">
-            <div class="login-backdrop">
-              <div class="login-methods">
-                <h2 class="section-title" style="margin-bottom: 6px;">Wybierz metodę logowania</h2>
-                <p style="font-size: 18px; color: var(--ink-muted); margin-bottom: 10px;">
-                  Zaloguj się tak jak w PUE/eZUS, aby automatycznie pobrać dane o ubezpieczeniu chorobowym, e-ZLA i saldzie składek.
-                </p>
-                <div class="method-card active" id="s3m1">
-                  <div>
-                    <div class="method-title">Aplikacja mObywatel 2.0</div>
-                    <div class="method-sub">Szybkie skanowanie kodu QR telefonem</div>
-                  </div>
-                  <span class="scene-tag">Zalecane</span>
-                </div>
-                <div class="method-card" id="s3m2">
-                  <div>
-                    <div class="method-title">Profil Zaufany (login.gov.pl)</div>
-                    <div class="method-sub">Potwierdzenie jednorazowym kodem SMS</div>
-                  </div>
-                </div>
-                <div class="method-card" id="s3m3">
-                  <div>
-                    <div class="method-title">Login i hasło PUE / eZUS</div>
-                    <div class="method-sub">Tradycyjne logowanie do konta w ZUS</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="qr-panel" id="s3QrPanel">
-                <div style="font-size: 22px; font-weight: 800;">Zeskanuj kod QR w mObywatelu</div>
-                <div class="qr-box">
-                  <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div>
-                  <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
-                  <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div>
-                  <div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div>
-                  <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div>
-                  <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
-                  <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell w"></div>
-                </div>
-                <div style="font-size: 16px; color: var(--ink-muted);">Ważność kodu: 01:58 · Węzeł Krajowy login.gov.pl</div>
-                <div class="auth-success-pill" id="s3Success" style="opacity: 0;">
-                  ✓ Tożsamość potwierdzona · Pobrano dane z ZUS
-                </div>
-              </div>
-            </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgGuide" src="./assets/screens/przewodnik.png" alt="Przewodnik" />
           </div>
         </div>
+        <aside class="info-panel" id="panel2">
+          <div>
+            <div class="step-pill">02 / 08 · PRZEWODNIK</div>
+            <h2 class="info-title">Ścieżka prawna krok po kroku</h2>
+            <p class="info-lead">
+              Porządkuje wszystkie obowiązki, dokumenty i terminy od okresu ciąży aż po powrót do pracy.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Oś czasu i terminy</strong>
+                <span>Wskazuje m.in. e-ZLA z kodem „B” (100%), termin 21 dni na wniosek 81,5% oraz procedury w USC.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Kto wypłaca zasiłek?</strong>
+                <span>Rozróżnia płatnika składek (>20 ubezpieczonych) od bezpośredniej wypłaty przez ZUS (druki ZAM, Z-3, Z-3a).</span>
+              </div>
+              <div class="feature-item">
+                <strong>Zagrożenia i ryzyka</strong>
+                <span>Ostrzega przed utratą prawa do zasiłku: okres wyczekiwania (30/90 dni), zadłużenie JDG czy brak ubezpieczenia.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>Baza wiedzy 2026</span>
+            <span class="zus-mini">/przewodnik</span>
+          </div>
+        </aside>
       </section>
 
-      <!-- SCENE 4: KALKULATOR ŚWIADCZEŃ (23s - 33s) -->
-      <section class="scene clip" id="scene4" data-start="23" data-duration="10" data-track-index="0">
-        <div class="browser-stage">
-          <div class="browser-bar">
-            <div class="browser-left">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/kalkulator</div>
-            </div>
-            <div class="scene-tag">3 / 6 · Zintegrowany Kalkulator 2026</div>
+      <!-- SLIDE 3: KALKULATOR (18.5s - 26.5s) -->
+      <section class="slide clip" id="slide3" data-start="18.5" data-duration="8" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/kalkulator</div>
           </div>
-          <header class="portal-header">
-            <div class="brand">
-              <div class="brand-mark">ZUS</div>
-              <div class="brand-title">Przewodnik Rodzica</div>
-            </div>
-            <div class="nav-links">
-              <div class="nav-item">Start</div>
-              <div class="nav-item">Przewodnik</div>
-              <div class="nav-item active">Kalkulator</div>
-              <div class="nav-item">Wnioski</div>
-              <div class="nav-item">Wsparcie</div>
-              <div class="nav-item">Asystent</div>
-            </div>
-            <div class="header-actions">
-              <div class="pill-btn logged">✓ Anna Kowalska</div>
-            </div>
-          </header>
-          <div class="viewport">
-            <div class="calc-grid">
-              <div class="card-box" id="s4Left">
-                <div style="font-size: 15px; font-weight: 700; color: var(--zus-green); margin-bottom: 10px;">
-                  KROK 5 Z 5 · PODSUMOWANIE TWOICH ODPOWIEDZI
-                </div>
-                <div class="step-bars">
-                  <div class="step-bar done"></div><div class="step-bar done"></div><div class="step-bar done"></div><div class="step-bar done"></div><div class="step-bar done"></div>
-                </div>
-                <div class="param-row"><span>Forma zatrudnienia</span><strong>Umowa o pracę (UoP)</strong></div>
-                <div class="param-row"><span>Wynagrodzenie brutto</span><strong>6 500,00 zł / mies.</strong></div>
-                <div class="param-row"><span>Zdarzenie i liczba dzieci</span><strong>Poród · 1 dziecko</strong></div>
-                <div class="param-row"><span>Wniosek złożony do 21 dni</span><strong>Tak (stawka 81,5%)</strong></div>
-                <div class="param-row"><span>Dodatkowe opcje</span><strong>Podział dla ojca + ½ etatu + Za życiem</strong></div>
-                <div style="margin-top: 16px; font-size: 14px; color: var(--ink-muted);">
-                  Obsługuje także: JDG, zlecenie, wcześniaki (art. 180² KP), adopcję (7/10/14 lat) i utratę pracy w ciąży.
-                </div>
-              </div>
-
-              <div class="card-box" id="s4Right">
-                <div style="font-size: 24px; font-weight: 800; margin-bottom: 18px;">
-                  Twój wynik — deterministyczny silnik 2026
-                </div>
-                <div class="kpi-grid">
-                  <div class="kpi-card dark">
-                    <div class="kpi-label">Miesięczny zasiłek (81,5%)</div>
-                    <div class="kpi-val">4 567 zł</div>
-                  </div>
-                  <div class="kpi-card">
-                    <div class="kpi-label">Łączny wymiar dla rodziny</div>
-                    <div class="kpi-val">63 tyg.</div>
-                  </div>
-                </div>
-
-                <div style="font-size: 15px; font-weight: 700; color: var(--ink-muted);">Oś czasu urlopów (matka + ojciec):</div>
-                <div class="timeline-bar">
-                  <div class="seg-1">Macierzyński · 20 tyg.</div>
-                  <div class="seg-2">Rodzicielski · 32 tyg.</div>
-                  <div class="seg-3">Ojciec · 9+2</div>
-                </div>
-
-                <div class="param-row" style="background: #eaf5ed; border-color: var(--zus-green);">
-                  <span>Łączna kwota świadczeń (brutto)</span>
-                  <strong style="color: var(--zus-green-dark); font-size: 20px;">~64 310 zł</strong>
-                </div>
-                <div class="cta-btn" style="width: 100%; justify-content: center; margin-top: 8px;">
-                  Przenieś dane do kreatora wniosku ZAM →
-                </div>
-              </div>
-            </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgCalc" src="./assets/screens/kalkulator.png" alt="Kalkulator" />
           </div>
         </div>
+        <aside class="info-panel" id="panel3">
+          <div>
+            <div class="step-pill">03 / 08 · KALKULATOR ZASIŁKU</div>
+            <h2 class="info-title">Zintegrowany kalkulator 2026</h2>
+            <p class="info-lead">
+              Krokowy kreator oparty na 100% deterministycznym silniku prawnym — liczy dokładne kwoty i tygodnie urlopu.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Wszystkie warianty w jednym miejscu</strong>
+                <span>Umowa o pracę, zlecenie, JDG; porównanie 81,5% vs 100%/70%; podział urlopu między oboje rodziców.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Praca na ½ etatu, adopcja i wcześniaki</strong>
+                <span>Proporcjonalne wydłużenie rodzicielskiego, limity wieku dla adopcji (7/10/14 lat) i ustawa „Za życiem”.</span>
+              </div>
+              <div class="feature-item">
+                <strong>1-klik do wniosku ZAM</strong>
+                <span>Przenosi wyliczone dane prosto do generatora wniosku w zakładce e-Usługi.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>Silnik matematyczny TS</span>
+            <span class="zus-mini">/kalkulator</span>
+          </div>
+        </aside>
       </section>
 
-      <!-- SCENE 5: WNIOSKI I e-USŁUGI (33s - 41s) -->
-      <section class="scene clip" id="scene5" data-start="33" data-duration="8" data-track-index="0">
-        <div class="browser-stage">
-          <div class="browser-bar">
-            <div class="browser-left">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/e-uslugi</div>
-            </div>
-            <div class="scene-tag">4 / 6 · Wnioski ZAM, Urlop HR, eZUS, e-ZLA i USC</div>
+      <!-- SLIDE 4: E-USŁUGI / WNIOSKI (26.5s - 35s) -->
+      <section class="slide clip" id="slide4" data-start="26.5" data-duration="8.5" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/e-uslugi</div>
           </div>
-          <header class="portal-header">
-            <div class="brand">
-              <div class="brand-mark">ZUS</div>
-              <div class="brand-title">Przewodnik Rodzica</div>
-            </div>
-            <div class="nav-links">
-              <div class="nav-item">Start</div>
-              <div class="nav-item">Przewodnik</div>
-              <div class="nav-item">Kalkulator</div>
-              <div class="nav-item active">Wnioski</div>
-              <div class="nav-item">Wsparcie</div>
-              <div class="nav-item">Asystent</div>
-            </div>
-            <div class="header-actions">
-              <div class="pill-btn logged">✓ Anna Kowalska</div>
-            </div>
-          </header>
-          <div class="viewport">
-            <div class="tabs-row" id="s5Tabs">
-              <div class="tab-pill active">Wniosek ZAM (ZUS)</div>
-              <div class="tab-pill">Wniosek o urlop (Pracodawca)</div>
-              <div class="tab-pill">mObywatel</div>
-              <div class="tab-pill">Konto eZUS (JDG + POG)</div>
-              <div class="tab-pill">Zwolnienia e-ZLA</div>
-              <div class="tab-pill">Akt urodzenia (USC)</div>
-            </div>
-
-            <div class="docs-grid">
-              <div class="a4-preview" id="s5A4">
-                <div class="a4-head">
-                  <div>
-                    <div style="font-size: 22px; font-weight: 800;">ZUS ZAM — Wniosek o zasiłek macierzyński</div>
-                    <div style="font-size: 14px; color: var(--ink-muted);">Wzór 2026 · zastępuje ZUR i ZAO · wydruk A4 z kodem QR</div>
-                  </div>
-                  <div class="scene-tag">UPO Gotowe</div>
-                </div>
-                <div class="a4-row"><span>Wnioskodawca (PESEL zweryfikowany)</span><strong>Anna Kowalska · 92041203456</strong></div>
-                <div class="a4-row"><span>Dziecko & Akt urodzenia USC</span><strong>Jan Kowalski · USC/WAW/2026/04192</strong></div>
-                <div class="a4-row"><span>Wybrany wariant wypłaty</span><strong>81,5% przez cały okres (termin 21 dni OK)</strong></div>
-                <div class="a4-row"><span>Rachunek bankowy (NRB)</span><strong>12 1020 1013 0000 1234 5678 9012</strong></div>
-                <div class="a4-row" style="border-bottom: none;"><span>Urzędowe Poświadczenie Odbioru</span><strong style="color: var(--zus-green);">UPO/ZAM/2026/884120</strong></div>
-              </div>
-
-              <div class="card-box" id="s5Side" style="display: flex; flex-direction: column; gap: 14px;">
-                <div style="font-size: 22px; font-weight: 800;">Wszystkie formalności w 1 miejscu</div>
-                <div class="list-item" style="margin-bottom: 0;">
-                  <div class="list-title">Wniosek o urlop do pracodawcy</div>
-                  <div class="list-sub">Zaprojektowany wzór pisma do HR (macierzyński, rodzicielski ½ etatu, ojcowski) z pobraniem `.txt`.</div>
-                </div>
-                <div class="list-item" style="margin-bottom: 0;">
-                  <div class="list-title">Konto eZUS: Monitor JDG + POG</div>
-                  <div class="list-sub">Kontrola progu zadłużenia 48,06 zł, zaświadczenie ZUS RWN i wysyłka zapytania ogólnego (POG).</div>
-                </div>
-                <div class="list-item" style="margin-bottom: 0;">
-                  <div class="list-title">Rejestr e-ZLA i odpisy USC</div>
-                  <div class="list-sub">Podgląd zwolnień lekarskich (kod „B”) oraz pobranie odpisu aktu urodzenia z gov.pl.</div>
-                </div>
-              </div>
-            </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgEuslugi" src="./assets/screens/e-uslugi.png" alt="e-Usługi i Wniosek ZAM" />
           </div>
         </div>
+        <aside class="info-panel" id="panel4">
+          <div>
+            <div class="step-pill">04 / 08 · WNIOSKI I e-USŁUGI</div>
+            <h2 class="info-title">Komplet dokumentów i symulacji</h2>
+            <p class="info-lead">
+              Centrum załatwiania formalności — od wygenerowania gotowych pism po symulację systemów państwowych.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Wniosek ZAM (6 kroków + wydruk A4)</strong>
+                <span>Walidacja PESEL, NIP i NRB na żywo, kod QR, UPO oraz <strong>Wniosek o urlop do pracodawcy</strong> (druga zakładka).</span>
+              </div>
+              <div class="feature-item">
+                <strong>Konto eZUS (JDG) + zapytanie POG</strong>
+                <span>Sprawdzenie progu zadłużenia (48,06 zł), pobranie zaświadczenia ZUS RWN i wysłanie pytania do ZUS.</span>
+              </div>
+              <div class="feature-item">
+                <strong>mObywatel, e-ZLA i Akt urodzenia (USC)</strong>
+                <span>Symulacja podglądu zwolnień lekarskich oraz pobrania odpisu aktu urodzenia z Rejestru Stanu Cywilnego.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>ZAM · Urlop HR · eZUS · USC</span>
+            <span class="zus-mini">/e-uslugi</span>
+          </div>
+        </aside>
       </section>
 
-      <!-- SCENE 6: PRZEWODNIK & TRUDNE SYTUACJE (41s - 48s) -->
-      <section class="scene clip" id="scene6" data-start="41" data-duration="7" data-track-index="0">
-        <div class="browser-stage">
-          <div class="browser-bar">
-            <div class="browser-left">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/przewodnik & /trudne-sytuacje</div>
-            </div>
-            <div class="scene-tag">5 / 6 · Przewodnik i Wsparcie w trudnych sytuacjach</div>
+      <!-- SLIDE 5: TRUDNE SYTUACJE (35s - 42s) -->
+      <section class="slide clip" id="slide5" data-start="35" data-duration="7" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/trudne-sytuacje</div>
           </div>
-          <header class="portal-header">
-            <div class="brand">
-              <div class="brand-mark">ZUS</div>
-              <div class="brand-title">Przewodnik Rodzica</div>
-            </div>
-            <div class="nav-links">
-              <div class="nav-item">Start</div>
-              <div class="nav-item active">Przewodnik</div>
-              <div class="nav-item">Kalkulator</div>
-              <div class="nav-item">Wnioski</div>
-              <div class="nav-item active">Wsparcie</div>
-              <div class="nav-item">Asystent</div>
-            </div>
-            <div class="header-actions">
-              <div class="pill-btn logged">✓ Anna Kowalska</div>
-            </div>
-          </header>
-          <div class="viewport">
-            <div class="split-2">
-              <div class="card-box" id="s6Left">
-                <h3 style="font-size: 26px; font-weight: 800; margin-bottom: 16px;">Przewodnik & Ryzyka prawne</h3>
-                <div class="list-item">
-                  <div class="list-title">Kto wypłaca zasiłek? (>20 ubezpieczonych)</div>
-                  <div class="list-sub">Jasne wskazanie, czy wniosek składa się do pracodawcy (Z-3/Z-3a), czy bezpośrednio do ZUS (ZAM).</div>
-                </div>
-                <div class="list-item">
-                  <div class="list-title">Okres wyczekiwania: chorobowy vs macierzyński</div>
-                  <div class="list-sub">L4 w ciąży: 30 dni (UoP) / 90 dni (JDG/zlecenie). Zasiłek macierzyński: od 1. dnia bez wyczekiwania!</div>
-                </div>
-                <div class="list-item">
-                  <div class="list-title">Ostrzeżenia przed utratą świadczeń</div>
-                  <div class="list-sub">Pozorność umowy, zawyżenie podstawy w ciąży, brak ubezpieczenia w dniu porodu, dług w ZUS.</div>
-                </div>
-              </div>
-
-              <div class="card-box" id="s6Right">
-                <h3 style="font-size: 26px; font-weight: 800; color: #5c2519; margin-bottom: 16px;">Wsparcie w trudnych sytuacjach</h3>
-                <div class="list-item warm">
-                  <div class="list-title" style="color: #5c2519;">Poronienie i martwe urodzenie</div>
-                  <div class="list-sub">8 tygodni zasiłku macierzyńskiego, checklista formalna krok po kroku i brak zbędnych barier.</div>
-                </div>
-                <div class="list-item warm">
-                  <div class="list-title" style="color: #5c2519;">Wcześniaki (art. 180² KP) i Ustawa „Za życiem”</div>
-                  <div class="list-sub">Do 15 tyg. urlopu uzupełniającego (100%) oraz wydłużony rodzicielski 65 / 67 tygodni.</div>
-                </div>
-                <div class="list-item warm">
-                  <div class="list-title" style="color: #5c2519;">Utrata pracy w ciąży & Fundacje charytatywne</div>
-                  <div class="list-sub">Zasiłek w wysokości zasiłku macierzyńskiego (100%, art. 30 ust. 3) + Fundacja Ernesta, Wcześniak, Gajusz.</div>
-                </div>
-              </div>
-            </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgTrudne" src="./assets/screens/trudne-sytuacje.png" alt="Trudne sytuacje" />
           </div>
         </div>
-      </section>
-
-      <!-- SCENE 7: ASYSTENT AI + MOBILE + ADMIN / REST API (48s - 54.5s) -->
-      <section class="scene clip" id="scene7" data-start="48" data-duration="6.5" data-track-index="0">
-        <div class="browser-stage">
-          <div class="browser-bar">
-            <div class="browser-left">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/asystent-ai · /admin · /api/calculate</div>
-            </div>
-            <div class="scene-tag">6 / 6 · Asystent AI, Mobile RWD, Panel Admina i REST API</div>
-          </div>
-          <div class="viewport" style="padding-top: 28px;">
-            <div class="eco-grid" style="height: 100%;">
-              <!-- Asystent AI -->
-              <div class="card-box" id="s7Ai" style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                  <div style="font-size: 22px; font-weight: 800; margin-bottom: 14px;">Asystent Rodzica (Język prosty)</div>
-                  <div class="chat-bubble chat-user">
-                    Czy ojciec może wziąć 9 tygodni urlopu rodzicielskiego, jeśli matka nie była ubezpieczona?
-                  </div>
-                  <div class="chat-bubble chat-ai">
-                    <strong>Tak!</strong> Zasiłek za urlop rodzicielski przysługuje ojcu nawet wtedy, gdy matka w dniu porodu nie podlegała ubezpieczeniu chorobowemu (art. 182¹a KP).
-                  </div>
-                </div>
-                <div style="padding: 14px; border-radius: 12px; background: var(--sage); font-size: 14px; font-weight: 700;">
-                  Transparentność AI: Asystent wyjaśnia przepisy · Kalkulator jest w 100% deterministyczny (zero halucynacji).
-                </div>
+        <aside class="info-panel" id="panel5">
+          <div>
+            <div class="step-pill">05 / 08 · WSPARCIE SZCZEGÓLNE</div>
+            <h2 class="info-title">Pomoc w trudnych chwilach</h2>
+            <p class="info-lead">
+              Spokojny, empatyczny moduł dla rodziców w sytuacjach kryzysowych — bez urzędowego żargonu.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Poronienie i martwe urodzenie</strong>
+                <span>Prawo do 8 tygodni zasiłku macierzyńskiego oraz interaktywna checklista formalności krok po kroku.</span>
               </div>
-
-              <!-- Mobile RWD -->
-              <div class="phone-frame" id="s7Phone">
-                <div class="phone-screen">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                      <div class="brand-mark" style="width: 34px; height: 34px; font-size: 13px;">ZUS</div>
-                      <span style="font-size: 12px; font-weight: 800; color: var(--zus-green);">mObywatel OK</span>
-                    </div>
-                    <div style="background: var(--sage); border-radius: 16px; padding: 16px; margin-bottom: 14px;">
-                      <div style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Przewodnik Rodzica</div>
-                      <div style="font-size: 13px; color: var(--ink-muted);">Pełna responsywność RWD i czytelne ikony mobilne.</div>
-                    </div>
-                    <div class="param-row" style="padding: 11px 14px; font-size: 14px;"><span>Zasiłek 81,5%</span><strong>4 567 zł</strong></div>
-                    <div class="param-row" style="padding: 11px 14px; font-size: 14px;"><span>Termin ZAM</span><strong>21 dni</strong></div>
-                  </div>
-                  <div class="phone-bar">
-                    <span style="color: var(--zus-green);">Start</span>
-                    <span>Kalk.</span>
-                    <span>Wnioski</span>
-                    <span>Pomoc</span>
-                    <span>AI</span>
-                  </div>
-                </div>
+              <div class="feature-item">
+                <strong>Wcześniaki i Ustawa „Za życiem”</strong>
+                <span>Do 15 tyg. uzupełniającego urlopu macierzyńskiego (100%) i wydłużony rodzicielski (65/67 tyg.).</span>
               </div>
-
-              <!-- Admin + REST API + Jury Sandbox -->
-              <div class="card-box" id="s7Tech" style="display: flex; flex-direction: column; gap: 14px;">
-                <div style="font-size: 22px; font-weight: 800;">Gotowe do wdrożenia</div>
-                <div class="list-item" style="margin-bottom: 0;">
-                  <div class="list-title">Panel Administracyjny (/admin)</div>
-                  <div class="list-sub">Dynamiczna edycja stawek (81,5%, 70%), płacy minimalnej (4 806 zł) i wymiarów w Supabase.</div>
-                </div>
-                <div class="list-item" style="margin-bottom: 0;">
-                  <div class="list-title">Strefa Jurora (/jury-sandbox)</div>
-                  <div class="list-sub">Upload przykładowych wniosków PDF i automatyczna weryfikacja spraw ZUS.</div>
-                </div>
-                <div class="list-item" style="margin-bottom: 0;">
-                  <div class="list-title">REST API (Next.js 15)</div>
-                  <div class="list-sub">`POST /api/calculate` · `GET /api/parameters` · 36/36 testów jednostkowych Vitest.</div>
-                </div>
+              <div class="feature-item">
+                <strong>Utrata pracy w ciąży & Fundacje</strong>
+                <span>Zasiłek w wysokości zasiłku macierzyńskiego (art. 30 ust. 3) oraz baza organizacji charytatywnych.</span>
               </div>
             </div>
           </div>
-        </div>
+          <div class="panel-footer">
+            <span>Empatyczna ścieżka pomocy</span>
+            <span class="zus-mini">/trudne-sytuacje</span>
+          </div>
+        </aside>
       </section>
 
-      <!-- SCENE 8: OUTRO (54.5s - 60s) -->
-      <section class="scene cover-slide clip" id="scene8" data-start="54.5" data-duration="5.5" data-track-index="0">
-        <div class="cover-badge" id="s8Badge">ZUS · HACKNATION 2026</div>
-        <h2 class="cover-title" id="s8Title">Spokojne rodzicielstwo<br />zaczyna się od jasnej informacji</h2>
-        <p class="cover-sub" id="s8Sub">
-          Zasiłkowy Przewodnik Przyszłego Rodzica — kompletny, dostępny (WCAG AAA + lektor) i zgodny ze stanem prawnym 2026.
-        </p>
-        <div class="cover-pills" id="s8Pills">
-          <div class="cover-pill">Kalkulator 2026</div>
-          <div class="cover-pill">Wniosek ZAM & Urlop HR</div>
-          <div class="cover-pill">mObywatel & eZUS</div>
-          <div class="cover-pill">Wsparcie w kryzysie</div>
+      <!-- SLIDE 6: ASYSTENT AI (42s - 48.5s) -->
+      <section class="slide clip" id="slide6" data-start="42" data-duration="6.5" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/asystent-ai</div>
+          </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgAi" src="./assets/screens/asystent-ai.png" alt="Asystent AI" />
+          </div>
         </div>
+        <aside class="info-panel" id="panel6">
+          <div>
+            <div class="step-pill">06 / 08 · ASYSTENT RODZICA</div>
+            <h2 class="info-title">Wyjaśnienia w prostym języku</h2>
+            <p class="info-lead">
+              Czat tłumaczący zawiłe przepisy na ludzki język, dopasowany do roli i umowy użytkownika.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Tryb prosty vs wykładnia prawna</strong>
+                <span>Rodzic może przełączać się między krótkim podsumowaniem a pełną podstawą prawną.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Kontekst sytuacji rodzica</strong>
+                <span>Uwzględnia rolę (matka/ojciec), rodzaj umowy (UoP/zlecenie/JDG) i obecny etap życiowy.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Jawna transparentność AI</strong>
+                <span>Wyraźnie oddziela wsparcie edukacyjne AI od deterministycznego silnika obliczeń kalkulatora.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>Wsparcie edukacyjne AI</span>
+            <span class="zus-mini">/asystent-ai</span>
+          </div>
+        </aside>
       </section>
 
-      <!-- BOTTOM CAPTION BAR (visible during scenes 2-7) -->
-      <div class="caption-dock" id="captionDock" style="opacity: 0;">
-        <div class="caption-text" id="captionText">Strona główna: wybierz swoją sytuację życiową lub przejdź od razu do kalkulatora.</div>
-        <div class="caption-step" id="captionStep">01 / 06 · START</div>
-      </div>
+      <!-- SLIDE 7: JURY SANDBOX (48.5s - 54.5s) -->
+      <section class="slide clip" id="slide7" data-start="48.5" data-duration="6" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/jury-sandbox</div>
+          </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgJury" src="./assets/screens/jury-sandbox.png" alt="Strefa Jurora" />
+          </div>
+        </div>
+        <aside class="info-panel" id="panel7">
+          <div>
+            <div class="step-pill">07 / 08 · STREFA JURORA</div>
+            <h2 class="info-title">Weryfikacja spraw i wniosków PDF</h2>
+            <p class="info-lead">
+              Dedykowane narzędzie testowe pozwalające sprawdzić poprawność silnika na rzeczywistych przykładach ZUS.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Upload własnych plików PDF</strong>
+                <span>Umożliwia wgranie przykładowego wniosku PDF i weryfikację prawa do ubezpieczenia oraz zasiłku.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Gotowe kazusy konkursowe ZUS</strong>
+                <span>Szybki wybór zestawów testowych z natychmiastowym porównaniem wyniku obliczeń z decyzją.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Zgodność z bazą testów</strong>
+                <span>Logika pokryta testami jednostkowymi Vitest i udostępniona przez REST API (/api/calculate).</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>Testy i walidacja PDF</span>
+            <span class="zus-mini">/jury-sandbox</span>
+          </div>
+        </aside>
+      </section>
 
-      <!-- GLOBAL PROGRESS BAR -->
+      <!-- SLIDE 8: PANEL ADMINISTRACYJNY (54.5s - 60s) -->
+      <section class="slide clip" id="slide8" data-start="54.5" data-duration="5.5" data-track-index="0">
+        <div class="browser-box">
+          <div class="browser-top">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/admin</div>
+          </div>
+          <div class="screen-viewport">
+            <img class="screen-img" id="imgAdmin" src="./assets/screens/admin.png" alt="Panel Administracyjny" />
+          </div>
+        </div>
+        <aside class="info-panel" id="panel8">
+          <div>
+            <div class="step-pill">08 / 08 · PANEL ADMINISTRACYJNY</div>
+            <h2 class="info-title">Parametry prawne bez zmiany kodu</h2>
+            <p class="info-lead">
+              Pozwala aktualizować wskaźniki ustawowe w razie zmian legislacyjnych — bez wdrażania nowej wersji aplikacji.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <strong>Edycja stawek i płacy minimalnej</strong>
+                <span>Zmiana stawek procentowych (100%, 81,5%, 70%), płacy minimalnej (4 806 zł) oraz progów zadłużenia.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Synchronizacja z Supabase + REST API</strong>
+                <span>Zapis parametrów w bazie z historią zmian i natychmiastowy odczyt przez /api/parameters.</span>
+              </div>
+              <div class="feature-item">
+                <strong>Gotowe do wdrożenia produkcyjnego</strong>
+                <span>Nowoczesny stos Next.js 15, TypeScript, RWD mobile-first i pełna zgodność ze standardem WCAG.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>HackNation 2026 · ZUS</span>
+            <span class="zus-mini">/admin</span>
+          </div>
+        </aside>
+      </section>
+
       <div class="progress-track">
         <div class="progress-fill" id="progressFill"></div>
       </div>
@@ -1321,87 +571,55 @@
     <script>
       const tl = gsap.timeline({ paused: true });
 
-      const captionText = document.getElementById("captionText");
-      const captionStep = document.getElementById("captionStep");
-
-      function setCaption(step, text) {
-        if (captionStep) captionStep.textContent = step;
-        if (captionText) captionText.textContent = text;
-      }
-
-      // Global progress bar 0 -> 100% over 60s
+      // Progress bar 0 -> 100% over 60s
       tl.to("#progressFill", { width: "100%", duration: 60, ease: "none" }, 0);
 
-      // ===== SCENE 1: INTRO (0.0s - 6.0s) =====
-      tl.set("#scene1", { opacity: 1 }, 0);
-      tl.fromTo(
-        ["#s1Badge", "#s1Title", "#s1Sub", "#s1Pills"],
-        { opacity: 0, y: 32 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.14, ease: "power3.out" },
-        0.2
-      );
-      tl.to("#scene1", { opacity: 0, duration: 0.55, ease: "power2.inOut" }, 5.45);
+      // Slide 1: Home (0 - 11s) with smooth vertical scroll of real full-page screenshot
+      tl.set("#slide1", { opacity: 1 }, 0);
+      tl.fromTo("#panel1", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 0.15);
+      tl.to("#imgHome", { y: -790, duration: 7.5, ease: "power1.inOut" }, 2.2);
+      tl.to("#slide1", { opacity: 0, duration: 0.45 }, 10.55);
 
-      // ===== SCENE 2: HOMEPAGE (6.0s - 15.0s) =====
-      tl.call(setCaption, ["01 / 06 · STRONA GŁÓWNA", "Przejrzysty start: wybierz swoją sytuację życiową, użyj lektora lub przejdź do kalkulatora."], 6.0);
-      tl.to("#captionDock", { opacity: 1, duration: 0.4 }, 6.0);
-      tl.fromTo("#scene2", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.out" }, 6.0);
-      tl.fromTo("#s2HeroImg", { scale: 1.07 }, { scale: 1.0, duration: 3.5, ease: "power1.out" }, 6.1);
-      tl.to("#s2Scroll", { y: -495, duration: 1.3, ease: "power3.inOut" }, 9.2);
-      tl.fromTo(
-        ["#s2c1", "#s2c2", "#s2c3", "#s2c4"],
-        { opacity: 0, y: 28 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" },
-        10.1
-      );
-      tl.fromTo("#s2Support", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 10.9);
-      tl.to("#scene2", { opacity: 0, duration: 0.5 }, 14.5);
+      // Slide 2: Przewodnik (11 - 18.5s)
+      tl.fromTo("#slide2", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 11.0);
+      tl.fromTo("#panel2", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 11.1);
+      tl.to("#imgGuide", { y: -120, duration: 5.5, ease: "power1.inOut" }, 12.0);
+      tl.to("#slide2", { opacity: 0, duration: 0.45 }, 18.05);
 
-      // ===== SCENE 3: LOGIN mOBYWATEL & eZUS (15.0s - 23.0s) =====
-      tl.call(setCaption, ["02 / 06 · LOGOWANIE", "Symulacja logowania jak w ZUS: mObywatel 2.0 (kod QR), Profil Zaufany lub PUE/eZUS."], 15.0);
-      tl.fromTo("#scene3", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 15.0);
-      tl.fromTo(["#s3m1", "#s3m2", "#s3m3"], { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.12, ease: "power3.out" }, 15.3);
-      tl.fromTo("#s3QrPanel", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.55, ease: "power3.out" }, 15.7);
-      tl.to("#s3Success", { opacity: 1, duration: 0.45, ease: "power2.out" }, 19.2);
-      tl.to("#s3LoggedBadge", { opacity: 1, duration: 0.45, ease: "power2.out" }, 19.5);
-      tl.to("#scene3", { opacity: 0, duration: 0.5 }, 22.5);
+      // Slide 3: Kalkulator (18.5 - 26.5s)
+      tl.fromTo("#slide3", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 18.5);
+      tl.fromTo("#panel3", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 18.6);
+      tl.to("#imgCalc", { y: -120, duration: 6.0, ease: "power1.inOut" }, 19.5);
+      tl.to("#slide3", { opacity: 0, duration: 0.45 }, 26.05);
 
-      // ===== SCENE 4: KALKULATOR (23.0s - 33.0s) =====
-      tl.call(setCaption, ["03 / 06 · KALKULATOR 2026", "Zintegrowany kalkulator dla obojga rodziców: stawka 81,5% vs 100%/70%, ½ etatu, adopcja i wcześniaki."], 23.0);
-      tl.fromTo("#scene4", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 23.0);
-      tl.fromTo("#s4Left", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 23.3);
-      tl.fromTo("#s4Right", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 24.1);
-      tl.to("#scene4", { opacity: 0, duration: 0.5 }, 32.5);
+      // Slide 4: e-Usługi (26.5 - 35s)
+      tl.fromTo("#slide4", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 26.5);
+      tl.fromTo("#panel4", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 26.6);
+      tl.to("#imgEuslugi", { y: -180, duration: 6.5, ease: "power1.inOut" }, 27.5);
+      tl.to("#slide4", { opacity: 0, duration: 0.45 }, 34.55);
 
-      // ===== SCENE 5: WNIOSKI I e-USŁUGI (33.0s - 41.0s) =====
-      tl.call(setCaption, ["04 / 06 · WNIOSKI I e-USŁUGI", "Generator wniosku ZAM (A4 + UPO), wniosek o urlop do pracodawcy, monitor JDG, POG, e-ZLA i USC."], 33.0);
-      tl.fromTo("#scene5", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 33.0);
-      tl.fromTo("#s5Tabs", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.45 }, 33.2);
-      tl.fromTo("#s5A4", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 33.5);
-      tl.fromTo("#s5Side", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 33.8);
-      tl.to("#scene5", { opacity: 0, duration: 0.5 }, 40.5);
+      // Slide 5: Trudne sytuacje (35 - 42s)
+      tl.fromTo("#slide5", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 35.0);
+      tl.fromTo("#panel5", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 35.1);
+      tl.to("#imgTrudne", { y: -120, duration: 5.0, ease: "power1.inOut" }, 36.0);
+      tl.to("#slide5", { opacity: 0, duration: 0.45 }, 41.55);
 
-      // ===== SCENE 6: PRZEWODNIK & TRUDNE SYTUACJE (41.0s - 48.0s) =====
-      tl.call(setCaption, ["05 / 06 · PRZEWODNIK I WSPARCIE", "Ochrona przed ryzykami prawnymi oraz empatyczna pomoc w trudnych sytuacjach i kontakt z fundacjami."], 41.0);
-      tl.fromTo("#scene6", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 41.0);
-      tl.fromTo("#s6Left", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 41.3);
-      tl.fromTo("#s6Right", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 41.7);
-      tl.to("#scene6", { opacity: 0, duration: 0.5 }, 47.5);
+      // Slide 6: Asystent AI (42 - 48.5s)
+      tl.fromTo("#slide6", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 42.0);
+      tl.fromTo("#panel6", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 42.1);
+      tl.to("#imgAi", { y: -120, duration: 4.5, ease: "power1.inOut" }, 43.0);
+      tl.to("#slide6", { opacity: 0, duration: 0.45 }, 48.05);
 
-      // ===== SCENE 7: AI + MOBILE + ADMIN / REST API (48.0s - 54.5s) =====
-      tl.call(setCaption, ["06 / 06 · AI, MOBILE I WDROŻENIE", "Asystent w prostym języku, pełne RWD mobilne, Panel Admina 2026, Strefa Jurora i REST API."], 48.0);
-      tl.fromTo("#scene7", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 48.0);
-      tl.fromTo(["#s7Ai", "#s7Phone", "#s7Tech"], { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.14, ease: "power3.out" }, 48.3);
-      tl.to(["#scene7", "#captionDock"], { opacity: 0, duration: 0.5 }, 54.0);
+      // Slide 7: Jury Sandbox (48.5 - 54.5s)
+      tl.fromTo("#slide7", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 48.5);
+      tl.fromTo("#panel7", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 48.6);
+      tl.to("#imgJury", { y: -120, duration: 4.2, ease: "power1.inOut" }, 49.5);
+      tl.to("#slide7", { opacity: 0, duration: 0.45 }, 54.05);
 
-      // ===== SCENE 8: OUTRO (54.5s - 60.0s) =====
-      tl.fromTo("#scene8", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 54.5);
-      tl.fromTo(
-        ["#s8Badge", "#s8Title", "#s8Sub", "#s8Pills"],
-        { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: "power3.out" },
-        54.8
-      );
+      // Slide 8: Panel Admina (54.5 - 60s)
+      tl.fromTo("#slide8", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 54.5);
+      tl.fromTo("#panel8", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 54.6);
+      tl.to("#imgAdmin", { y: -120, duration: 4.2, ease: "power1.inOut" }, 55.2);
       tl.to({}, { duration: 0.1 }, 59.9);
 
       window.__timelines = window.__timelines || {};
