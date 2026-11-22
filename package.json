@@ -14,6 +14,7 @@
     "db:types": "pnpm --filter @hacknation/db run types"
   },
   "devDependencies": {
+    "hyperframes": "^0.9.80",
     "prettier": "^3.5.2",
     "turbo": "^2.4.4",
     "typescript": "^5.7.3"
