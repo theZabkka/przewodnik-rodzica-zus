@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #faf8f2;
+        --surface: #eff3ea;
+        --sage: #dce8d3;
+        --ink: #10371e;
+        --ink-muted: #425c4b;
+        --border: #b9ccb6;
+        --zus-green: #007834;
+        --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0a2414;
+        font-family: var(--font);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: radial-gradient(circle at 18% 18%, #1c5731 0%, #0d2e19 55%, #071b0f 100%);
+      }
+
+      .glow-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(110px);
+        opacity: 0.28;
+        pointer-events: none;
+      }
+      .glow-1 { width: 680px; height: 680px; background: #27a85a; top: -180px; left: -120px; }
+      .glow-2 { width: 620px; height: 620px; background: #dce8d3; bottom: -220px; right: -120px; opacity: 0.16; }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        padding: 58px 88px 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0;
+      }
+
+      .header-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 34px;
+        border-bottom: 1.5px solid rgba(220, 232, 211, 0.25);
+        padding-bottom: 22px;
+      }
+
+      .kicker {
+        display: inline-block;
+        background: rgba(82, 224, 130, 0.16);
+        border: 1.5px solid rgba(82, 224, 130, 0.45);
+        color: #8ee5ac;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 7px 18px;
+        border-radius: 999px;
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        font-size: 46px;
+        line-height: 1.12;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: #faf8f2;
+      }
+
+      .page-indicator {
+        font-size: 18px;
+        font-weight: 800;
+        color: #dce8d3;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(220, 232, 211, 0.3);
+        padding: 8px 18px;
+        border-radius: 999px;
+      }
+
+      .grid-2x2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+      }
+
+      .lesson-card {
+        background: var(--bg);
+        border: 2px solid rgba(220, 232, 211, 0.6);
+        border-radius: 22px;
+        padding: 30px 32px;
+        box-shadow: 0 24px 55px rgba(0, 0, 0, 0.32);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        opacity: 0;
+      }
+
+      .lesson-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: var(--zus-green);
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .lesson-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+        line-height: 1.24;
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: -0.015em;
+      }
+
+      .lesson-body {
+        font-size: 19px;
+        line-height: 1.48;
+        color: var(--ink-muted);
+        font-weight: 500;
+      }
+
+      /* Closing slide */
+      .cover-card {
+        max-width: 1400px;
+        margin: 0 auto;
+        text-align: center;
+        color: #faf8f2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 26px;
+      }
+
+      .cover-title {
+        font-size: 76px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #faf8f2;
+      }
+
+      .cover-sub {
+        font-size: 29px;
+        line-height: 1.45;
+        color: #c5d7c1;
+        max-width: 1120px;
+        font-weight: 500;
+      }
+
+      .story-chips {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .story-chip {
+        background: rgba(250, 248, 242, 0.1);
+        border: 1.5px solid rgba(185, 204, 182, 0.38);
+        border-radius: 16px;
+        padding: 16px 26px;
+        font-size: 21px;
+        font-weight: 700;
+        color: #faf8f2;
+      }
+
+      .progress-track {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 7px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #52e082;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="58"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="glow-orb glow-1"></div>
+      <div class="glow-orb glow-2"></div>
+      <audio src="./assets/wnioski-audio-58s.wav" data-start="0" data-duration="58" data-track-index="1"></audio>
+
+      <!-- SLIDE A: WNIOSKI 1–4 (0s - 28.4s) -->
+      <section class="scene clip" id="wSlide1" data-start="0" data-duration="28.4" data-track-index="0">
+        <div class="header-row" id="wh1">
+          <div>
+            <div class="kicker">Wnioski</div>
+            <h1 class="section-title">Czego nauczyliśmy się, tworząc Zasiłkowy Przewodnik Rodzica</h1>
+          </div>
+          <div class="page-indicator">1–4 / 7</div>
+        </div>
+
+        <div class="grid-2x2">
+          <div class="lesson-card" id="c1">
+            <div class="lesson-head">
+              <div class="lesson-num">1</div>
+              <h2 class="lesson-title">Rodzic nie szuka świadczenia, tylko odpowiedzi na swoją sytuację</h2>
+            </div>
+            <p class="lesson-body">
+              Nikt nie wpisuje „zasiłek macierzyński za okres urlopu rodzicielskiego”. Rodzic pyta: „rodzę w kwietniu, ile dostanę?”. Dlatego aplikacja zaczyna od sytuacji życiowej, a nie od przepisów.
+            </p>
+          </div>
+
+          <div class="lesson-card" id="c2">
+            <div class="lesson-head">
+              <div class="lesson-num">2</div>
+              <h2 class="lesson-title">Najwięcej problemów bierze się z terminów i formalności, a nie z samych kwot</h2>
+            </div>
+            <p class="lesson-body">
+              21 dni na wniosek ZAM, 30 lub 90 dni ubezpieczenia, 9 tygodni taty, które przepadają. Rodzic traci pieniądze głównie wtedy, gdy nie wie o terminie. Dlatego dodaliśmy przypomnienia i ostrzeżenia, a nie tylko kalkulator.
+            </p>
+          </div>
+
+          <div class="lesson-card" id="c3">
+            <div class="lesson-head">
+              <div class="lesson-num">3</div>
+              <h2 class="lesson-title">Wcześniejsza informacja oszczędza czas obu stronom</h2>
+            </div>
+            <p class="lesson-body">
+              ZUS dowiaduje się o dziecku dopiero po porodzie. Rodzic, który wie wcześniej, składa poprawny wniosek, a ZUS nie musi wysyłać pism z prośbą o uzupełnienie.
+            </p>
+          </div>
+
+          <div class="lesson-card" id="c4">
+            <div class="lesson-head">
+              <div class="lesson-num">4</div>
+              <h2 class="lesson-title">Ten sam zasiłek wygląda inaczej dla etatu, zlecenia i działalności</h2>
+            </div>
+            <p class="lesson-body">
+              Inna karencja, inny płatnik, przy JDG ryzyko zaległości w składkach. Jedno narzędzie musi to rozróżniać, zamiast podawać ogólną odpowiedź.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE B: WNIOSKI 5–7 (28.4s - 51s) -->
+      <section class="scene clip" id="wSlide2" data-start="28.4" data-duration="22.6" data-track-index="0">
+        <div class="header-row" id="wh2">
+          <div>
+            <div class="kicker">Wnioski</div>
+            <h2 class="section-title">Czego nauczyliśmy się, tworząc Zasiłkowy Przewodnik Rodzica</h2>
+          </div>
+          <div class="page-indicator">5–7 / 7</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="lesson-card" id="c5">
+            <div class="lesson-head">
+              <div class="lesson-num">5</div>
+              <h3 class="lesson-title">Przepisy się zmieniają, więc liczby nie mogą być wpisane na sztywno w kod</h3>
+            </div>
+            <p class="lesson-body">
+              Dlatego stawki, progi i limity tygodni są w panelu, który urzędnik zmienia bez programisty.
+            </p>
+          </div>
+
+          <div class="lesson-card" id="c6">
+            <div class="lesson-head">
+              <div class="lesson-num">6</div>
+              <h3 class="lesson-title">Za zasiłkami stoją ludzie w trudnych chwilach</h3>
+            </div>
+            <p class="lesson-body">
+              Przy stracie dziecka czy wcześniaku w szpitalu ważny jest spokojny język i prosta ścieżka, a nie tabela paragrafów.
+            </p>
+          </div>
+
+          <div class="lesson-card" id="c7">
+            <div class="lesson-head">
+              <div class="lesson-num">7</div>
+              <h3 class="lesson-title">Dostępność to nie dodatek</h3>
+            </div>
+            <p class="lesson-body">
+              Lektor, duży tekst, wysoki kontrast i telefon to dla wielu rodziców jedyny wygodny sposób korzystania z usług urzędu.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE C: PLANSZA KOŃCOWA (51s - 58s) -->
+      <section class="scene clip" id="wSlide3" data-start="51" data-duration="7" data-track-index="0">
+        <div class="cover-card">
+          <div class="kicker s3a">HACKNATION 2026 · WYZWANIE ZUS</div>
+          <h2 class="cover-title s3a">Zasiłkowy Przewodnik<br />Przyszłego Rodzica</h2>
+          <p class="cover-sub s3a">
+            Od pytania „ile dostanę?” do gotowego wniosku ZAM i urlopu u pracodawcy — na komputerze i telefonie.
+          </p>
+          <div class="story-chips s3a">
+            <div class="story-chip">Repo: github.com/theZabkka/przewodnik-rodzica-zus</div>
+            <div class="story-chip">REST API: /api/calculate · /api/chat · /api/parameters</div>
+            <div class="story-chip">Stan prawny 2026 · 40/40 testów Vitest</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.to("#pFill", { width: "100%", duration: 58, ease: "none" }, 0);
+
+      // Slide 1: Wnioski 1–4 (timed to voiceover w1)
+      tl.set("#wSlide1", { opacity: 1 }, 0);
+      tl.fromTo("#wh1", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.1);
+      tl.fromTo("#c1", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 3.8);
+      tl.fromTo("#c2", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 10.2);
+      tl.fromTo("#c3", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 18.5);
+      tl.fromTo("#c4", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 22.8);
+      tl.to("#wSlide1", { opacity: 0, x: -70, duration: 0.55, ease: "power2.inOut" }, 27.9);
+
+      // Slide 2: Wnioski 5–7 (timed to voiceover w2)
+      tl.set("#wSlide2", { opacity: 1 }, 28.2);
+      tl.fromTo("#wh2", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 28.3);
+      tl.fromTo("#c5", { opacity: 0, y: 34, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 29.0);
+      tl.fromTo("#c6", { opacity: 0, y: 34, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 35.8);
+      tl.fromTo("#c7", { opacity: 0, y: 34, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 43.2);
+      tl.to("#wSlide2", { opacity: 0, x: -70, duration: 0.55, ease: "power2.inOut" }, 50.5);
+
+      // Slide 3: Closing card
+      tl.set("#wSlide3", { opacity: 1 }, 50.8);
+      tl.fromTo(".s3a", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.14, ease: "power3.out" }, 51.0);
+      tl.to({}, { duration: 0.1 }, 57.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
