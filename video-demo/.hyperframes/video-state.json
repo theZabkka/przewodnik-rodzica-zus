@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "historyId": "fa722952-9578-4aa5-be4a-7431d97d7839",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "729e31835a21c7b42ee006e2aacc63016abc05d26883f871ad3bf206943f2cfb",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\72\\729e31835a21c7b42ee006e2aacc63016abc05d26883f871ad3bf206943f2cfb"
+    },
+    "CLAUDE.md": {
+      "hash": "729e31835a21c7b42ee006e2aacc63016abc05d26883f871ad3bf206943f2cfb",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\72\\729e31835a21c7b42ee006e2aacc63016abc05d26883f871ad3bf206943f2cfb"
+    },
+    "assets/card-born.jpg": {
+      "hash": "4e6f9cbe8375f9ddf7a60d1029b93967f157210a0054034f8c750ad277ae696e",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\4e\\4e6f9cbe8375f9ddf7a60d1029b93967f157210a0054034f8c750ad277ae696e"
+    },
+    "assets/card-care.jpg": {
+      "hash": "39205136a4f22d6647e997bcb4341b293df872012f2a0f8b88abc0393c7407ad",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\39\\39205136a4f22d6647e997bcb4341b293df872012f2a0f8b88abc0393c7407ad"
+    },
+    "assets/card-expecting.jpg": {
+      "hash": "e301d7012c2813fc85e67246dd4b69b0c09449815ade878f478cfbb3365da993",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\e3\\e301d7012c2813fc85e67246dd4b69b0c09449815ade878f478cfbb3365da993"
+    },
+    "assets/card-planning.jpg": {
+      "hash": "381c4b39751ddce4598baa1e60f730ea6f96eda34714669c71ca4951211c61ca",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\38\\381c4b39751ddce4598baa1e60f730ea6f96eda34714669c71ca4951211c61ca"
+    },
+    "assets/family-hero.png": {
+      "hash": "c35444f22c914e777c6645369525ea12dfada555791500a9cd736516f4c8ea28",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\c3\\c35444f22c914e777c6645369525ea12dfada555791500a9cd736516f4c8ea28"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "39588e015e2f0c24888d08d7dcd7e5b8f426896c5b521fca0dee513ee1866e9b",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\39\\39588e015e2f0c24888d08d7dcd7e5b8f426896c5b521fca0dee513ee1866e9b"
+    },
+    "meta.json": {
+      "hash": "3857982f42530575f2592a2a14921c5bb5221bc99dcf62ad3e9e3114ab8b8f49",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\38\\3857982f42530575f2592a2a14921c5bb5221bc99dcf62ad3e9e3114ab8b8f49"
+    },
+    "package.json": {
+      "hash": "997ff706c8b374e83d92bf8f10e121f4ce0e1ac9fa5aa8d62e3fb4d1045edf47",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\99\\997ff706c8b374e83d92bf8f10e121f4ce0e1ac9fa5aa8d62e3fb4d1045edf47"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "f2e0927b-9a27-4931-a71a-81a167dae357",
+      "completedAt": 1795328607745,
+      "output": "C:\\Users\\patry\\.gemini\\antigravity\\scratch\\przewodnik-rodzica-zus\\video-demo\\out\\przewodnik-demo-10s.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}

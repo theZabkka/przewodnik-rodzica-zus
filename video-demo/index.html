@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #faf8f2;
+        --surface: #eff3ea;
+        --sage: #dce8d3;
+        --ink: #10371e;
+        --ink-muted: #425c4b;
+        --border: #b9ccb6;
+        --zus-green: #007834;
+        --zus-green-dark: #005c27;
+        --support-bg: #fdf1ec;
+        --support-border: #e8c3b5;
+        --support-accent: #b44b34;
+        --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: var(--font);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      /* Browser chrome frame */
+      .browser-stage {
+        position: absolute;
+        inset: 44px 72px;
+        background: var(--bg);
+        border: 2px solid var(--border);
+        border-radius: 28px;
+        box-shadow: 0 32px 80px rgba(16, 55, 30, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .browser-bar {
+        height: 54px;
+        background: #f3f6ef;
+        border-bottom: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+
+      .dot {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #c8d6c4;
+      }
+      .dot.r { background: #e38c7b; }
+      .dot.y { background: #e5c478; }
+      .dot.g { background: #74b887; }
+
+      .url-pill {
+        margin-left: 16px;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 6px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink-muted);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .url-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--zus-green);
+      }
+
+      /* Viewport inside browser */
+      .viewport {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      /* Portal Header */
+      .portal-header {
+        height: 96px;
+        background: rgba(250, 248, 242, 0.96);
+        border-bottom: 1.5px solid var(--border);
+        padding: 0 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 10;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .brand-mark {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: var(--ink);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 19px;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: -0.02em;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .pill-btn {
+        height: 46px;
+        padding: 0 20px;
+        border-radius: 12px;
+        border: 1.5px solid var(--border);
+        background: #fff;
+        color: var(--ink);
+        font-size: 17px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pill-btn.primary {
+        background: var(--zus-green);
+        border-color: var(--zus-green);
+        color: #fff;
+      }
+
+      /* Scrollable page canvas */
+      .page-scroll {
+        padding: 44px 64px 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 56px;
+      }
+
+      /* Hero card */
+      .hero-card {
+        background: var(--sage);
+        border: 1.5px solid var(--border);
+        border-radius: 28px;
+        padding: 56px 64px;
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
+        gap: 48px;
+        overflow: hidden;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--border);
+        color: var(--zus-green-dark);
+        font-size: 16px;
+        font-weight: 700;
+        padding: 8px 18px;
+        border-radius: 999px;
+        margin-bottom: 24px;
+      }
+
+      .hero-title {
+        font-size: 62px;
+        line-height: 1.06;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        margin-bottom: 22px;
+      }
+
+      .hero-sub {
+        font-size: 25px;
+        line-height: 1.45;
+        color: var(--ink-muted);
+        font-weight: 500;
+        margin-bottom: 36px;
+        max-width: 680px;
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--zus-green);
+        color: #fff;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 20px 36px;
+        border-radius: 16px;
+        box-shadow: 0 12px 28px rgba(0, 120, 52, 0.24);
+      }
+
+      .hero-img-wrap {
+        border-radius: 22px;
+        overflow: hidden;
+        height: 410px;
+        background: #eaf1e4;
+        border: 1.5px solid rgba(16, 55, 30, 0.08);
+      }
+
+      .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Section 2: Situation cards */
+      .section-heading {
+        font-size: 46px;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: var(--ink);
+        margin-bottom: 28px;
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .sit-card {
+        background: #ffffff;
+        border: 1.5px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: border-color 0.2s;
+      }
+
+      .sit-card.highlighted {
+        border-color: var(--zus-green);
+        box-shadow: 0 16px 36px rgba(0, 120, 52, 0.16);
+      }
+
+      .sit-img-box {
+        height: 210px;
+        overflow: hidden;
+        background: var(--surface);
+      }
+
+      .sit-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .sit-body {
+        padding: 22px 22px 26px;
+      }
+
+      .sit-title {
+        font-size: 23px;
+        font-weight: 800;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+
+      .sit-desc {
+        font-size: 17px;
+        color: var(--ink-muted);
+        font-weight: 500;
+      }
+
+      /* Support banner */
+      .support-banner {
+        margin-top: 28px;
+        background: var(--support-bg);
+        border: 1.5px solid var(--support-border);
+        border-radius: 22px;
+        padding: 28px 36px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+
+      .support-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: #5c2519;
+        margin-bottom: 6px;
+      }
+
+      .support-text {
+        font-size: 19px;
+        color: #7c3f31;
+        font-weight: 500;
+      }
+
+      .support-btn {
+        background: var(--support-accent);
+        color: #fff;
+        font-size: 19px;
+        font-weight: 700;
+        padding: 16px 30px;
+        border-radius: 14px;
+        white-space: nowrap;
+      }
+
+      /* Outro overlay */
+      .outro-overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--ink);
+        color: #faf8f2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px;
+        opacity: 0;
+        z-index: 30;
+      }
+
+      .outro-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(220, 232, 211, 0.14);
+        border: 1px solid rgba(220, 232, 211, 0.3);
+        color: #dce8d3;
+        font-size: 20px;
+        font-weight: 700;
+        padding: 10px 26px;
+        border-radius: 999px;
+        margin-bottom: 32px;
+        letter-spacing: 0.04em;
+      }
+
+      .outro-title {
+        font-size: 74px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #faf8f2;
+        max-width: 1200px;
+        margin-bottom: 24px;
+      }
+
+      .outro-sub {
+        font-size: 28px;
+        color: #b9ccb6;
+        font-weight: 500;
+        margin-bottom: 48px;
+      }
+
+      .outro-pills {
+        display: flex;
+        gap: 20px;
+      }
+
+      .outro-pill {
+        background: rgba(250, 248, 242, 0.09);
+        border: 1.5px solid rgba(185, 204, 182, 0.35);
+        border-radius: 16px;
+        padding: 18px 32px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #faf8f2;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="10"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="browser-stage clip" id="browserStage" data-start="0" data-duration="8.2" data-track-index="0">
+        <div class="browser-bar">
+          <span class="dot r"></span>
+          <span class="dot y"></span>
+          <span class="dot g"></span>
+          <div class="url-pill">
+            <span class="url-dot"></span>
+            przewodnik-rodzica.zus.pl
+          </div>
+        </div>
+
+        <div class="viewport">
+          <header class="portal-header" id="portalHeader">
+            <div class="brand">
+              <div class="brand-mark">ZUS</div>
+              <div class="brand-title">Przewodnik Rodzica</div>
+            </div>
+            <div class="header-actions">
+              <div class="pill-btn">Posłuchaj</div>
+              <div class="pill-btn">Aa</div>
+              <div class="pill-btn primary">Zaloguj (eZUS)</div>
+            </div>
+          </header>
+
+          <div class="page-scroll" id="pageScroll">
+            <!-- Hero Section -->
+            <section class="hero-card" id="heroCard">
+              <div>
+                <div class="hero-badge" id="heroBadge">Stan prawny 2026 · Prosty język</div>
+                <h1 class="hero-title" id="heroTitle">
+                  Zasiłkowy Przewodnik<br />Przyszłego Rodzica
+                </h1>
+                <p class="hero-sub" id="heroSub">
+                  Sprawdź krok po kroku, jakie świadczenia Ci przysługują, oblicz wysokość zasiłku i wygeneruj wniosek ZAM.
+                </p>
+                <div class="hero-cta" id="heroCta">Oblicz wysokość zasiłku →</div>
+              </div>
+              <div class="hero-img-wrap">
+                <img class="hero-img" id="heroImg" src="./assets/family-hero.png" alt="Rodzice z dzieckiem" />
+              </div>
+            </section>
+
+            <!-- Situation Section -->
+            <section id="situationSection">
+              <h2 class="section-heading" id="situationHeading">Jaka jest Twoja sytuacja?</h2>
+              <div class="cards-grid">
+                <div class="sit-card" id="card1">
+                  <div class="sit-img-box">
+                    <img class="sit-img" src="./assets/card-planning.jpg" alt="Planuję dziecko" />
+                  </div>
+                  <div class="sit-body">
+                    <div class="sit-title">Planuję dziecko</div>
+                    <div class="sit-desc">Sprawdź składki i okres wyczekiwania</div>
+                  </div>
+                </div>
+
+                <div class="sit-card" id="card2">
+                  <div class="sit-img-box">
+                    <img class="sit-img" src="./assets/card-expecting.jpg" alt="Oczekuję dziecka" />
+                  </div>
+                  <div class="sit-body">
+                    <div class="sit-title">Oczekuję dziecka</div>
+                    <div class="sit-desc">Zwolnienie lekarskie i przygotowanie</div>
+                  </div>
+                </div>
+
+                <div class="sit-card" id="card3">
+                  <div class="sit-img-box">
+                    <img class="sit-img" src="./assets/card-born.jpg" alt="Dziecko już się urodziło" />
+                  </div>
+                  <div class="sit-body">
+                    <div class="sit-title">Dziecko już się urodziło</div>
+                    <div class="sit-desc">Urlop macierzyński i rodzicielski</div>
+                  </div>
+                </div>
+
+                <div class="sit-card" id="card4">
+                  <div class="sit-img-box">
+                    <img class="sit-img" src="./assets/card-care.jpg" alt="Przyjmuję dziecko pod opiekę" />
+                  </div>
+                  <div class="sit-body">
+                    <div class="sit-title">Przyjmuję dziecko</div>
+                    <div class="sit-desc">Adopcja i rodzina zastępcza</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="support-banner" id="supportBanner">
+                <div>
+                  <div class="support-title">Potrzebujesz wsparcia w trudnej sytuacji?</div>
+                  <div class="support-text">
+                    Poronienie, martwe urodzenie lub ustawa „Za życiem” — jasne prawa bez zbędnych formalności.
+                  </div>
+                </div>
+                <div class="support-btn">Znajdź pomoc →</div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- Outro Scene -->
+      <div class="outro-overlay clip" id="outroOverlay" data-start="7.4" data-duration="2.6" data-track-index="1">
+        <div class="outro-badge" id="outroBadge">HACKNATION 2026 · ZUS</div>
+        <h2 class="outro-title" id="outroTitle">Zasiłkowy Przewodnik<br />Przyszłego Rodzica</h2>
+        <p class="outro-sub" id="outroSub">Prosto, empatycznie i zgodnie z prawem 2026</p>
+        <div class="outro-pills" id="outroPills">
+          <div class="outro-pill">Kalkulator zasiłku</div>
+          <div class="outro-pill">Kreator wniosku ZAM</div>
+          <div class="outro-pill">Logowanie eZUS / mObywatel</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // 0.0s - 1.2s: Browser frame + Header + Hero reveal
+      tl.fromTo(
+        "#browserStage",
+        { opacity: 0, y: 28, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: "power3.out" },
+        0
+      );
+      tl.fromTo(
+        "#portalHeader",
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        0.2
+      );
+      tl.fromTo(
+        "#heroCard",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+        0.35
+      );
+      tl.fromTo(
+        ["#heroBadge", "#heroTitle", "#heroSub", "#heroCta"],
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.1, ease: "power3.out" },
+        0.55
+      );
+      tl.fromTo(
+        "#heroImg",
+        { scale: 1.08 },
+        { scale: 1.0, duration: 2.8, ease: "power1.out" },
+        0.35
+      );
+
+      // 3.3s - 4.4s: Smooth scroll down to "Jaka jest Twoja sytuacja?"
+      tl.to(
+        "#pageScroll",
+        { y: -575, duration: 1.15, ease: "power3.inOut" },
+        3.3
+      );
+
+      // 4.1s - 5.4s: Stagger 4 situation cards + support banner
+      tl.fromTo(
+        ["#card1", "#card2", "#card3", "#card4"],
+        { opacity: 0, y: 36 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.11, ease: "power3.out" },
+        4.05
+      );
+      tl.fromTo(
+        "#supportBanner",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
+        4.75
+      );
+
+      // 5.5s - 6.6s: Subtle highlight focus on card 2
+      tl.to(
+        "#card2",
+        {
+          y: -10,
+          borderColor: "#007834",
+          boxShadow: "0 18px 40px rgba(0, 120, 52, 0.22)",
+          duration: 0.45,
+          ease: "power2.out"
+        },
+        5.5
+      );
+
+      // 7.4s - 10.0s: Clean closing brand lockup
+      tl.to(
+        "#outroOverlay",
+        { opacity: 1, duration: 0.55, ease: "power2.inOut" },
+        7.4
+      );
+      tl.fromTo(
+        ["#outroBadge", "#outroTitle", "#outroSub", "#outroPills"],
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.1, ease: "power3.out" },
+        7.65
+      );
+
+      // Ensure total timeline duration reaches 10.0s
+      tl.to({}, { duration: 0.1 }, 9.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
