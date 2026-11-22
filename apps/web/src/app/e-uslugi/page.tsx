@@ -23,11 +23,13 @@ import {
  Check,
  ChevronRight,
  BookOpen,
+ Cloud,
 } from "lucide-react";
-import { calculateBenefits, DEFAULT_LEGISLATIVE_2026 } from "@hacknation/shared";
+import { calculateBenefits, DEFAULT_LEGISLATIVE_2026, InspectorCase } from "@hacknation/shared";
 import { ZusLogo } from "../../components/ZusLogo";
 import { DocumentZamIllustration } from "@/components/ZusIllustrations";
 import { useParentProfile } from "@/context/ParentProfileContext";
+import { saveApplicationToCloud } from "@/services/casesSyncService";
 
 function validatePesel(value: string): boolean {
  const digits = value.replace(/\D/g, "");
@@ -129,6 +131,7 @@ export default function EUslugiPage() {
   // Stan symulacji wysyłki
  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
  const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false);
+ const [isCloudSaved, setIsCloudSaved] = useState<boolean>(false);
  const [upoNumber, setUpoNumber] = useState<string>("");
  const [submissionTimestamp, setSubmissionTimestamp] = useState<string>("");
  const [upoHash, setUpoHash] = useState<string>("");
@@ -255,60 +258,65 @@ export default function EUslugiPage() {
  workPartTimeDuringParental: false,
   });
 
- const handleSimulateSubmit = () => {
- setIsSubmitting(true);
- setTimeout(() => {
- const randomId = Math.floor(100000 + Math.random() * 900000);
- const now = new Date();
- const dateStr = now.toISOString().replace("T", " ").substring(0, 19);
- const hash = `SHA256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f${randomId}`;
+ const handleSimulateSubmit = async () => {
+  setIsSubmitting(true);
+  const randomId = Math.floor(100000 + Math.random() * 900000);
+  const now = new Date();
+  const dateStr = now.toISOString().replace("T", " ").substring(0, 19);
+  const hash = `SHA256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f${randomId}`;
 
- const submittedCase = {
- id: `case-${randomId}`,
- caseNumber: `ZUS/2026/ZAM/${randomId}`,
- submissionDate: now.toISOString().split("T")[0],
- applicantName: parentName,
- pesel,
- bankAccountNumber: bankAccount,
- benefitType: chosenRate === "815" ? "MATERNITY_PARENTAL_UNIFIED" : "MATERNITY_STANDARD",
- contractType,
- monthlySalaryGross,
- childBirthDate,
- daysSinceBirth: 4,
- isPremature,
- birthWeek: isPremature ? 31 : 39,
- hospitalDays: isPremature ? hospitalDays : 0,
- employerNip,
- employerName: contractType === "b2b" ? "Własna Działalność Gospodarcza" : "Pracodawca Zgłoszony w ZUS",
- isEmployerOver20: contractType === "employment",
- hasDebt: contractType === "b2b" && jdgDebtAmount > 48.06,
- debtAmount: contractType === "b2b" ? jdgDebtAmount : 0,
- insuranceTenureDays: 365,
- riskLevel: isPremature ? "YELLOW" : (contractType === "b2b" && jdgDebtAmount > 48.06 ? "RED" : "GREEN"),
- riskCategory: isPremature ? "PREMATURE_AUDIT" : (contractType === "b2b" && jdgDebtAmount > 48.06 ? "JDG_DEBT_BLOCK" : "FAST_TRACK"),
- riskReasons: [
-          `Wniosek złożony w portalu obywatelskim (UPO: UPO-ZUS-2026-${randomId})`,
- isPremature ? `Zgłoszono hospitalizację noworodka (${hospitalDays} dni)` : "Wniosek terminowy 81,5%",
- ],
- suggestedDecision: isPremature ? "AUDIT_HOSPITAL_DOCS" : "AUTO_APPROVE_81_5",
- status: "NEW",
- upoHash: hash,
-      };
-
- try {
- const stored = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("zus_submitted_applications") || "[]") : [];
- localStorage.setItem("zus_submitted_applications", JSON.stringify([submittedCase, ...stored]));
-      } catch (err) {
- console.error("Failed to store submitted application in local registry", err);
-      }
-
- setIsSubmitting(false);
- setSubmissionSuccess(true);
- setUpoNumber(`UPO-ZUS-2026-${randomId}`);
- setSubmissionTimestamp(dateStr);
- setUpoHash(hash);
-    }, 1200);
+  const submittedCase: InspectorCase = {
+    id: `case-${randomId}`,
+    caseNumber: `ZUS/2026/ZAM/${randomId}`,
+    submissionDate: now.toISOString().split("T")[0],
+    applicantName: parentName,
+    pesel,
+    bankAccountNumber: bankAccount,
+    benefitType: chosenRate === "815" ? "MATERNITY_PARENTAL_UNIFIED" : "MATERNITY_STANDARD",
+    contractType,
+    monthlySalaryGross,
+    childBirthDate,
+    daysSinceBirth: 4,
+    childName: childName || "Jan Kowalski",
+    otherParentName: "Piotr Kowalski",
+    otherParentPesel: "89110507890",
+    isPremature,
+    birthWeek: isPremature ? 30 : 39,
+    birthWeightGrams: isPremature ? 1350 : 3400,
+    hospitalDays: isPremature ? hospitalDays : 0,
+    hospitalName: isPremature ? "Szpital Kliniczny im. ks. Anny Mazowieckiej (OION)" : undefined,
+    employerNip,
+    employerName: contractType === "b2b" ? "Własna Działalność Gospodarcza" : "TechCorp Poland Sp. z o.o.",
+    isEmployerOver20: contractType === "employment",
+    hasDebt: contractType === "b2b" && jdgDebtAmount > 48.06,
+    debtAmount: contractType === "b2b" ? jdgDebtAmount : 0,
+    insuranceTenureDays: 365,
+    riskLevel: isPremature ? "YELLOW" : (contractType === "b2b" && jdgDebtAmount > 48.06 ? "RED" : "GREEN"),
+    riskCategory: isPremature ? "PREMATURE_AUDIT" : (contractType === "b2b" && jdgDebtAmount > 48.06 ? "JDG_DEBT_BLOCK" : "FAST_TRACK"),
+    riskReasons: [
+      `Wniosek złożony w portalu obywatelskim (UPO: UPO-ZUS-2026-${randomId})`,
+      isPremature
+        ? `Zgłoszono hospitalizację noworodka (${hospitalDays} dni, 30. tc, waga 1350g) – art. 180² KP`
+        : contractType === "b2b" && jdgDebtAmount > 48.06
+        ? `Wykryto zaległość składkową na NRS (${jdgDebtAmount.toFixed(2)} zł) przekraczającą 1% minimalnej krajowej – art. 2a`
+        : "Wniosek terminowy złożony w ciągu 21 dni. Spełnia kryteria procedury Fast-Track 81,5%.",
+    ],
+    suggestedDecision: isPremature ? "AUDIT_HOSPITAL_DOCS" : "AUTO_APPROVE_81_5",
+    status: "NEW",
+    upoHash: hash,
+    source: "cloud",
   };
+
+  // Zapis w chmurze Supabase z buforem lokalnym
+  const cloudRes = await saveApplicationToCloud(submittedCase);
+  setIsCloudSaved(cloudRes.cloudSaved);
+
+  setIsSubmitting(false);
+  setSubmissionSuccess(true);
+  setUpoNumber(`UPO-ZUS-2026-${randomId}`);
+  setSubmissionTimestamp(dateStr);
+  setUpoHash(hash);
+ };
 
  const handlePayDebt = () => {
  setIsPayingDebt(true);
@@ -1249,8 +1257,14 @@ export default function EUslugiPage() {
                       <strong className="font-mono text-[#10371E]">{upoNumber}</strong>
                     </p>
                     <p className="text-[11px] text-slate-500 font-mono">
- Data i czas wpływu: {submissionTimestamp} &bull; {upoHash}
+                      Data i czas wpływu: {submissionTimestamp} &bull; {upoHash}
                     </p>
+                    {isCloudSaved && (
+                      <div className="flex items-center gap-1.5 text-xs text-emerald-900 font-bold bg-white px-3 py-1 rounded-md border border-emerald-300 w-fit mt-1">
+                        <Cloud className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Zsynchronizowano w czasie rzeczywistym z chmurą centralną ZUS (Supabase Live Queue)</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

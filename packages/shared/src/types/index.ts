@@ -247,9 +247,14 @@ export interface InspectorCase {
   monthlySalaryGross: number;
   childBirthDate: string;
   daysSinceBirth: number;
+  childName?: string;
+  otherParentName?: string;
+  otherParentPesel?: string;
   isPremature: boolean;
   birthWeek?: number;
+  birthWeightGrams?: number;
   hospitalDays?: number;
+  hospitalName?: string;
   employerNip: string;
   employerName: string;
   isEmployerOver20: boolean;
@@ -263,6 +268,7 @@ export interface InspectorCase {
   status: 'NEW' | 'IN_REVIEW' | 'APPROVED' | 'BLOCKED' | 'AUDIT_REQUESTED';
   assignedOfficer?: string;
   upoHash: string;
+  source?: 'cloud' | 'local';
   decisionDocument?: {
     formal: string;
     plainLanguage: string;
