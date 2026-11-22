@@ -33,7 +33,7 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: var(--ink);
+        background: #0d2c18;
         font-family: var(--font);
         color: var(--ink);
         -webkit-font-smoothing: antialiased;
@@ -44,17 +44,18 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: var(--ink);
+        background: radial-gradient(circle at 18% 20%, #174929 0%, #0d2c18 65%, #092012 100%);
       }
 
       .slide {
         position: absolute;
         inset: 0;
-        padding: 36px 40px 44px;
+        padding: 36px 42px 54px;
         display: grid;
-        grid-template-columns: 1290px 1fr;
+        grid-template-columns: 1300px 1fr;
         gap: 32px;
         opacity: 0;
+        will-change: transform, opacity;
       }
 
       /* Left: Real Website Browser Frame */
@@ -63,9 +64,10 @@
         border-radius: 22px;
         overflow: hidden;
         border: 2px solid rgba(220, 232, 211, 0.35);
-        box-shadow: 0 28px 65px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 32px 72px rgba(0, 0, 0, 0.42);
         display: flex;
         flex-direction: column;
+        will-change: transform, opacity;
       }
 
       .browser-top {
@@ -120,18 +122,21 @@
         width: 100%;
         height: auto;
         display: block;
+        transform-origin: center top;
+        will-change: transform;
       }
 
-      /* Right: Clear Explanation Card ("Co za co odpowiada") */
+      /* Right: Crisp, Short Info Card */
       .info-panel {
         background: var(--bg);
         border-radius: 22px;
-        padding: 36px 34px;
+        padding: 36px 32px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        border: 2px solid rgba(220, 232, 211, 0.5);
-        box-shadow: 0 24px 55px rgba(0, 0, 0, 0.25);
+        border: 2px solid rgba(220, 232, 211, 0.55);
+        box-shadow: 0 26px 56px rgba(0, 0, 0, 0.3);
+        will-change: transform, opacity;
       }
 
       .step-pill {
@@ -143,56 +148,46 @@
         color: var(--ink);
         font-size: 14px;
         font-weight: 800;
-        padding: 7px 15px;
+        padding: 7px 16px;
         border-radius: 999px;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
         margin-bottom: 18px;
         align-self: flex-start;
       }
 
       .info-title {
-        font-size: 38px;
-        line-height: 1.12;
+        font-size: 40px;
+        line-height: 1.1;
         font-weight: 800;
-        letter-spacing: -0.025em;
+        letter-spacing: -0.028em;
         color: var(--ink);
         margin-bottom: 14px;
       }
 
       .info-lead {
-        font-size: 19px;
-        line-height: 1.48;
+        font-size: 20px;
+        line-height: 1.42;
         color: var(--ink-muted);
-        font-weight: 500;
-        margin-bottom: 26px;
+        font-weight: 600;
+        margin-bottom: 28px;
       }
 
-      .feature-list {
+      .bullet-list {
         display: flex;
         flex-direction: column;
         gap: 14px;
       }
 
-      .feature-item {
+      .bullet-item {
         background: var(--surface);
         border: 1.5px solid var(--border);
+        border-left: 5px solid var(--zus-green);
         border-radius: 14px;
-        padding: 15px 18px;
-      }
-
-      .feature-item strong {
-        display: block;
-        font-size: 17px;
-        font-weight: 800;
+        padding: 16px 18px;
+        font-size: 18px;
+        line-height: 1.38;
+        font-weight: 700;
         color: var(--ink);
-        margin-bottom: 4px;
-      }
-
-      .feature-item span {
-        display: block;
-        font-size: 15px;
-        line-height: 1.4;
-        color: var(--ink-muted);
       }
 
       .panel-footer {
@@ -210,27 +205,36 @@
       .zus-mini {
         background: var(--zus-green);
         color: #fff;
-        padding: 5px 12px;
-        border-radius: 8px;
+        padding: 6px 13px;
+        border-radius: 9px;
         font-weight: 800;
         font-size: 13px;
       }
 
-      /* Bottom global progress track */
-      .progress-track {
+      /* Bottom sleek 8-segment step indicator + progress line */
+      .bottom-rail {
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 8px;
-        background: rgba(255, 255, 255, 0.14);
-        z-index: 50;
+        left: 42px;
+        right: 42px;
+        bottom: 16px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 10px;
+        z-index: 40;
       }
 
-      .progress-fill {
+      .rail-seg {
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(250, 248, 242, 0.18);
+        overflow: hidden;
+      }
+
+      .rail-fill {
         height: 100%;
         width: 0%;
         background: #4cd97b;
+        border-radius: 999px;
       }
     </style>
   </head>
@@ -243,383 +247,324 @@
       data-width="1920"
       data-height="1080"
     >
-      <!-- SLIDE 1: STRONA GŁÓWNA (0s - 11s) -->
-      <section class="slide clip" id="slide1" data-start="0" data-duration="11" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 1: STRONA GŁÓWNA (0s - 10.5s) -->
+      <section class="slide clip" id="slide1" data-start="0" data-duration="10.5" data-track-index="0">
+        <div class="browser-box" id="b1">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgHome" src="./assets/screens/home-full.png" alt="Strona główna" />
+            <img class="screen-img" id="img1" src="./assets/screens/home-full.png" alt="Strona główna" />
           </div>
         </div>
-        <aside class="info-panel" id="panel1">
+        <aside class="info-panel" id="p1">
           <div>
-            <div class="step-pill">01 / 08 · STRONA GŁÓWNA</div>
-            <h1 class="info-title">Punkt startowy dla rodzica</h1>
-            <p class="info-lead">
-              Główny ekran portalu prowadzi użytkownika prosto do właściwych informacji — bez szukania po ustawach.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Górny pasek (dostępność i logowanie)</strong>
-                <span>Lektor głosowy „Posłuchaj”, powiększanie tekstu WCAG (Aa), podgląd mobilny i symulacja logowania eZUS / mObywatel.</span>
-              </div>
-              <div class="feature-item">
-                <strong>4 kafle sytuacji życiowej</strong>
-                <span>Planuję dziecko, Oczekuję dziecka, Dziecko już się urodziło oraz Przyjmuję dziecko pod opiekę (adopcja).</span>
-              </div>
-              <div class="feature-item">
-                <strong>Wyróżnione wsparcie i 3 kluczowe zasady</strong>
-                <span>Szybkie przejście do pomocy w trudnych sytuacjach, słownik trudnych słów oraz zasady 21 dni, 9 tyg. i ½ etatu.</span>
-              </div>
+            <div class="step-pill anim">01 / 08 · STRONA GŁÓWNA</div>
+            <h1 class="info-title anim">Strona główna</h1>
+            <p class="info-lead anim">Szybki start i wybór sytuacji życiowej rodzica.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Lektor głosowy, powiększanie tekstu (WCAG) i logowanie eZUS / mObywatel</div>
+              <div class="bullet-item anim">4 ścieżki: planowanie, ciąża, narodziny i adopcja</div>
+              <div class="bullet-item anim">Szybki dostęp do wsparcia oraz 3 kluczowe zasady</div>
             </div>
           </div>
-          <div class="panel-footer">
+          <div class="panel-footer anim">
             <span>Zasiłkowy Przewodnik Rodzica</span>
             <span class="zus-mini">ZUS · 2026</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 2: PRZEWODNIK (11s - 18.5s) -->
-      <section class="slide clip" id="slide2" data-start="11" data-duration="7.5" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 2: PRZEWODNIK (10.5s - 18s) -->
+      <section class="slide clip" id="slide2" data-start="10.5" data-duration="7.5" data-track-index="0">
+        <div class="browser-box" id="b2">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/przewodnik</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgGuide" src="./assets/screens/przewodnik.png" alt="Przewodnik" />
+            <img class="screen-img" id="img2" src="./assets/screens/przewodnik.png" alt="Przewodnik" />
           </div>
         </div>
-        <aside class="info-panel" id="panel2">
+        <aside class="info-panel" id="p2">
           <div>
-            <div class="step-pill">02 / 08 · PRZEWODNIK</div>
-            <h2 class="info-title">Ścieżka prawna krok po kroku</h2>
-            <p class="info-lead">
-              Porządkuje wszystkie obowiązki, dokumenty i terminy od okresu ciąży aż po powrót do pracy.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Oś czasu i terminy</strong>
-                <span>Wskazuje m.in. e-ZLA z kodem „B” (100%), termin 21 dni na wniosek 81,5% oraz procedury w USC.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Kto wypłaca zasiłek?</strong>
-                <span>Rozróżnia płatnika składek (>20 ubezpieczonych) od bezpośredniej wypłaty przez ZUS (druki ZAM, Z-3, Z-3a).</span>
-              </div>
-              <div class="feature-item">
-                <strong>Zagrożenia i ryzyka</strong>
-                <span>Ostrzega przed utratą prawa do zasiłku: okres wyczekiwania (30/90 dni), zadłużenie JDG czy brak ubezpieczenia.</span>
-              </div>
+            <div class="step-pill anim">02 / 08 · PRZEWODNIK</div>
+            <h2 class="info-title anim">Przewodnik</h2>
+            <p class="info-lead anim">Wszystkie terminy i obowiązki krok po kroku.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Oś czasu: od e-ZLA (kod „B”) po powrót do pracy</div>
+              <div class="bullet-item anim">Kto wypłaca zasiłek: pracodawca (&gt;20 osób) czy ZUS</div>
+              <div class="bullet-item anim">Ostrzeżenia przed utratą prawa do świadczeń</div>
             </div>
           </div>
-          <div class="panel-footer">
-            <span>Baza wiedzy 2026</span>
+          <div class="panel-footer anim">
+            <span>Ścieżka formalna 2026</span>
             <span class="zus-mini">/przewodnik</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 3: KALKULATOR (18.5s - 26.5s) -->
-      <section class="slide clip" id="slide3" data-start="18.5" data-duration="8" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 3: KALKULATOR (18s - 26s) -->
+      <section class="slide clip" id="slide3" data-start="18" data-duration="8" data-track-index="0">
+        <div class="browser-box" id="b3">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/kalkulator</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgCalc" src="./assets/screens/kalkulator.png" alt="Kalkulator" />
+            <img class="screen-img" id="img3" src="./assets/screens/kalkulator.png" alt="Kalkulator" />
           </div>
         </div>
-        <aside class="info-panel" id="panel3">
+        <aside class="info-panel" id="p3">
           <div>
-            <div class="step-pill">03 / 08 · KALKULATOR ZASIŁKU</div>
-            <h2 class="info-title">Zintegrowany kalkulator 2026</h2>
-            <p class="info-lead">
-              Krokowy kreator oparty na 100% deterministycznym silniku prawnym — liczy dokładne kwoty i tygodnie urlopu.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Wszystkie warianty w jednym miejscu</strong>
-                <span>Umowa o pracę, zlecenie, JDG; porównanie 81,5% vs 100%/70%; podział urlopu między oboje rodziców.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Praca na ½ etatu, adopcja i wcześniaki</strong>
-                <span>Proporcjonalne wydłużenie rodzicielskiego, limity wieku dla adopcji (7/10/14 lat) i ustawa „Za życiem”.</span>
-              </div>
-              <div class="feature-item">
-                <strong>1-klik do wniosku ZAM</strong>
-                <span>Przenosi wyliczone dane prosto do generatora wniosku w zakładce e-Usługi.</span>
-              </div>
+            <div class="step-pill anim">03 / 08 · KALKULATOR</div>
+            <h2 class="info-title anim">Kalkulator zasiłku</h2>
+            <p class="info-lead anim">Dokładne wyliczenie kwot i wymiaru urlopów.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Porównanie 81,5% vs 100%/70% (UoP, zlecenie, JDG)</div>
+              <div class="bullet-item anim">Podział dla obojga rodziców, ½ etatu, adopcja i wcześniaki</div>
+              <div class="bullet-item anim">Przeniesienie danych 1 kliknięciem do wniosku ZAM</div>
             </div>
           </div>
-          <div class="panel-footer">
-            <span>Silnik matematyczny TS</span>
+          <div class="panel-footer anim">
+            <span>Deterministyczny silnik TS</span>
             <span class="zus-mini">/kalkulator</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 4: E-USŁUGI / WNIOSKI (26.5s - 35s) -->
-      <section class="slide clip" id="slide4" data-start="26.5" data-duration="8.5" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 4: WNIOSKI I E-USŁUGI (26s - 34.5s) -->
+      <section class="slide clip" id="slide4" data-start="26" data-duration="8.5" data-track-index="0">
+        <div class="browser-box" id="b4">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/e-uslugi</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgEuslugi" src="./assets/screens/e-uslugi.png" alt="e-Usługi i Wniosek ZAM" />
+            <img class="screen-img" id="img4" src="./assets/screens/e-uslugi.png" alt="e-Usługi" />
           </div>
         </div>
-        <aside class="info-panel" id="panel4">
+        <aside class="info-panel" id="p4">
           <div>
-            <div class="step-pill">04 / 08 · WNIOSKI I e-USŁUGI</div>
-            <h2 class="info-title">Komplet dokumentów i symulacji</h2>
-            <p class="info-lead">
-              Centrum załatwiania formalności — od wygenerowania gotowych pism po symulację systemów państwowych.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Wniosek ZAM (6 kroków + wydruk A4)</strong>
-                <span>Walidacja PESEL, NIP i NRB na żywo, kod QR, UPO oraz <strong>Wniosek o urlop do pracodawcy</strong> (druga zakładka).</span>
-              </div>
-              <div class="feature-item">
-                <strong>Konto eZUS (JDG) + zapytanie POG</strong>
-                <span>Sprawdzenie progu zadłużenia (48,06 zł), pobranie zaświadczenia ZUS RWN i wysłanie pytania do ZUS.</span>
-              </div>
-              <div class="feature-item">
-                <strong>mObywatel, e-ZLA i Akt urodzenia (USC)</strong>
-                <span>Symulacja podglądu zwolnień lekarskich oraz pobrania odpisu aktu urodzenia z Rejestru Stanu Cywilnego.</span>
-              </div>
+            <div class="step-pill anim">04 / 08 · WNIOSKI I e-USŁUGI</div>
+            <h2 class="info-title anim">Wnioski i e-Usługi</h2>
+            <p class="info-lead anim">Gotowe dokumenty i symulacja portali państwowych.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Kreator wniosku ZAM (6 kroków + wydruk A4 z QR)</div>
+              <div class="bullet-item anim">Zaprojektowany wniosek o urlop do pracodawcy</div>
+              <div class="bullet-item anim">Symulacja mObywatel, eZUS (JDG + POG), e-ZLA i USC</div>
             </div>
           </div>
-          <div class="panel-footer">
+          <div class="panel-footer anim">
             <span>ZAM · Urlop HR · eZUS · USC</span>
             <span class="zus-mini">/e-uslugi</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 5: TRUDNE SYTUACJE (35s - 42s) -->
-      <section class="slide clip" id="slide5" data-start="35" data-duration="7" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 5: TRUDNE SYTUACJE (34.5s - 41.5s) -->
+      <section class="slide clip" id="slide5" data-start="34.5" data-duration="7" data-track-index="0">
+        <div class="browser-box" id="b5">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/trudne-sytuacje</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgTrudne" src="./assets/screens/trudne-sytuacje.png" alt="Trudne sytuacje" />
+            <img class="screen-img" id="img5" src="./assets/screens/trudne-sytuacje.png" alt="Trudne sytuacje" />
           </div>
         </div>
-        <aside class="info-panel" id="panel5">
+        <aside class="info-panel" id="p5">
           <div>
-            <div class="step-pill">05 / 08 · WSPARCIE SZCZEGÓLNE</div>
-            <h2 class="info-title">Pomoc w trudnych chwilach</h2>
-            <p class="info-lead">
-              Spokojny, empatyczny moduł dla rodziców w sytuacjach kryzysowych — bez urzędowego żargonu.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Poronienie i martwe urodzenie</strong>
-                <span>Prawo do 8 tygodni zasiłku macierzyńskiego oraz interaktywna checklista formalności krok po kroku.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Wcześniaki i Ustawa „Za życiem”</strong>
-                <span>Do 15 tyg. uzupełniającego urlopu macierzyńskiego (100%) i wydłużony rodzicielski (65/67 tyg.).</span>
-              </div>
-              <div class="feature-item">
-                <strong>Utrata pracy w ciąży & Fundacje</strong>
-                <span>Zasiłek w wysokości zasiłku macierzyńskiego (art. 30 ust. 3) oraz baza organizacji charytatywnych.</span>
-              </div>
+            <div class="step-pill anim">05 / 08 · WSPARCIE</div>
+            <h2 class="info-title anim">Trudne sytuacje</h2>
+            <p class="info-lead anim">Spokojna pomoc w najtrudniejszych chwilach.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Poronienie i martwe urodzenie — 8 tyg. i checklista</div>
+              <div class="bullet-item anim">Wcześniaki (do 15 tyg. extra) i ustawa „Za życiem”</div>
+              <div class="bullet-item anim">Utrata pracy w ciąży (100%) i zweryfikowane fundacje</div>
             </div>
           </div>
-          <div class="panel-footer">
-            <span>Empatyczna ścieżka pomocy</span>
+          <div class="panel-footer anim">
+            <span>Empatyczna baza pomocy</span>
             <span class="zus-mini">/trudne-sytuacje</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 6: ASYSTENT AI (42s - 48.5s) -->
-      <section class="slide clip" id="slide6" data-start="42" data-duration="6.5" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 6: ASYSTENT AI (41.5s - 48s) -->
+      <section class="slide clip" id="slide6" data-start="41.5" data-duration="6.5" data-track-index="0">
+        <div class="browser-box" id="b6">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/asystent-ai</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgAi" src="./assets/screens/asystent-ai.png" alt="Asystent AI" />
+            <img class="screen-img" id="img6" src="./assets/screens/asystent-ai.png" alt="Asystent AI" />
           </div>
         </div>
-        <aside class="info-panel" id="panel6">
+        <aside class="info-panel" id="p6">
           <div>
-            <div class="step-pill">06 / 08 · ASYSTENT RODZICA</div>
-            <h2 class="info-title">Wyjaśnienia w prostym języku</h2>
-            <p class="info-lead">
-              Czat tłumaczący zawiłe przepisy na ludzki język, dopasowany do roli i umowy użytkownika.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Tryb prosty vs wykładnia prawna</strong>
-                <span>Rodzic może przełączać się między krótkim podsumowaniem a pełną podstawą prawną.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Kontekst sytuacji rodzica</strong>
-                <span>Uwzględnia rolę (matka/ojciec), rodzaj umowy (UoP/zlecenie/JDG) i obecny etap życiowy.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Jawna transparentność AI</strong>
-                <span>Wyraźnie oddziela wsparcie edukacyjne AI od deterministycznego silnika obliczeń kalkulatora.</span>
-              </div>
+            <div class="step-pill anim">06 / 08 · ASYSTENT AI</div>
+            <h2 class="info-title anim">Asystent Rodzica</h2>
+            <p class="info-lead anim">Tłumaczenie przepisów ZUS na prosty język.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Przełącznik: język prosty lub pełna wykładnia prawna</div>
+              <div class="bullet-item anim">Odpowiedzi dopasowane do umowy i etapu rodzica</div>
+              <div class="bullet-item anim">Jasne oddzielenie AI od deterministycznego kalkulatora</div>
             </div>
           </div>
-          <div class="panel-footer">
+          <div class="panel-footer anim">
             <span>Wsparcie edukacyjne AI</span>
             <span class="zus-mini">/asystent-ai</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 7: JURY SANDBOX (48.5s - 54.5s) -->
-      <section class="slide clip" id="slide7" data-start="48.5" data-duration="6" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 7: JURY SANDBOX (48s - 54s) -->
+      <section class="slide clip" id="slide7" data-start="48" data-duration="6" data-track-index="0">
+        <div class="browser-box" id="b7">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/jury-sandbox</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgJury" src="./assets/screens/jury-sandbox.png" alt="Strefa Jurora" />
+            <img class="screen-img" id="img7" src="./assets/screens/jury-sandbox.png" alt="Strefa Jurora" />
           </div>
         </div>
-        <aside class="info-panel" id="panel7">
+        <aside class="info-panel" id="p7">
           <div>
-            <div class="step-pill">07 / 08 · STREFA JURORA</div>
-            <h2 class="info-title">Weryfikacja spraw i wniosków PDF</h2>
-            <p class="info-lead">
-              Dedykowane narzędzie testowe pozwalające sprawdzić poprawność silnika na rzeczywistych przykładach ZUS.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Upload własnych plików PDF</strong>
-                <span>Umożliwia wgranie przykładowego wniosku PDF i weryfikację prawa do ubezpieczenia oraz zasiłku.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Gotowe kazusy konkursowe ZUS</strong>
-                <span>Szybki wybór zestawów testowych z natychmiastowym porównaniem wyniku obliczeń z decyzją.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Zgodność z bazą testów</strong>
-                <span>Logika pokryta testami jednostkowymi Vitest i udostępniona przez REST API (/api/calculate).</span>
-              </div>
+            <div class="step-pill anim">07 / 08 · STREFA JURORA</div>
+            <h2 class="info-title anim">Strefa Jurora</h2>
+            <p class="info-lead anim">Weryfikacja obliczeń na przykładowych sprawach.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Upload własnych wniosków PDF do analizy</div>
+              <div class="bullet-item anim">Gotowe kazusy ZUS z porównaniem wyników</div>
+              <div class="bullet-item anim">Zgodność z testami Vitest i REST API (/api/calculate)</div>
             </div>
           </div>
-          <div class="panel-footer">
+          <div class="panel-footer anim">
             <span>Testy i walidacja PDF</span>
             <span class="zus-mini">/jury-sandbox</span>
           </div>
         </aside>
       </section>
 
-      <!-- SLIDE 8: PANEL ADMINISTRACYJNY (54.5s - 60s) -->
-      <section class="slide clip" id="slide8" data-start="54.5" data-duration="5.5" data-track-index="0">
-        <div class="browser-box">
+      <!-- SLIDE 8: PANEL ADMINA (54s - 60s) -->
+      <section class="slide clip" id="slide8" data-start="54" data-duration="6" data-track-index="0">
+        <div class="browser-box" id="b8">
           <div class="browser-top">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <div class="url-bar"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/admin</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="imgAdmin" src="./assets/screens/admin.png" alt="Panel Administracyjny" />
+            <img class="screen-img" id="img8" src="./assets/screens/admin.png" alt="Panel Administracyjny" />
           </div>
         </div>
-        <aside class="info-panel" id="panel8">
+        <aside class="info-panel" id="p8">
           <div>
-            <div class="step-pill">08 / 08 · PANEL ADMINISTRACYJNY</div>
-            <h2 class="info-title">Parametry prawne bez zmiany kodu</h2>
-            <p class="info-lead">
-              Pozwala aktualizować wskaźniki ustawowe w razie zmian legislacyjnych — bez wdrażania nowej wersji aplikacji.
-            </p>
-            <div class="feature-list">
-              <div class="feature-item">
-                <strong>Edycja stawek i płacy minimalnej</strong>
-                <span>Zmiana stawek procentowych (100%, 81,5%, 70%), płacy minimalnej (4 806 zł) oraz progów zadłużenia.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Synchronizacja z Supabase + REST API</strong>
-                <span>Zapis parametrów w bazie z historią zmian i natychmiastowy odczyt przez /api/parameters.</span>
-              </div>
-              <div class="feature-item">
-                <strong>Gotowe do wdrożenia produkcyjnego</strong>
-                <span>Nowoczesny stos Next.js 15, TypeScript, RWD mobile-first i pełna zgodność ze standardem WCAG.</span>
-              </div>
+            <div class="step-pill anim">08 / 08 · ADMINISTRACJA</div>
+            <h2 class="info-title anim">Panel Administracyjny</h2>
+            <p class="info-lead anim">Zmiana parametrów prawnych bez edycji kodu.</p>
+            <div class="bullet-list">
+              <div class="bullet-item anim">Edycja stawek (100%, 81,5%, 70%) i płacy minimalnej</div>
+              <div class="bullet-item anim">Zapis w Supabase i odczyt przez REST API (/api/parameters)</div>
+              <div class="bullet-item anim">Gotowe do wdrożenia: Next.js 15, RWD i WCAG</div>
             </div>
           </div>
-          <div class="panel-footer">
+          <div class="panel-footer anim">
             <span>HackNation 2026 · ZUS</span>
             <span class="zus-mini">/admin</span>
           </div>
         </aside>
       </section>
 
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
+      <!-- 8-segment dynamic bottom timeline rail -->
+      <div class="bottom-rail">
+        <div class="rail-seg"><div class="rail-fill" id="r1"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r2"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r3"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r4"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r5"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r6"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r7"></div></div>
+        <div class="rail-seg"><div class="rail-fill" id="r8"></div></div>
       </div>
     </div>
 
     <script>
       const tl = gsap.timeline({ paused: true });
 
-      // Progress bar 0 -> 100% over 60s
-      tl.to("#progressFill", { width: "100%", duration: 60, ease: "none" }, 0);
+      const slides = [
+        { id: 1, start: 0.0, dur: 10.5, scrollY: -810, scrollDelay: 1.4, scrollDur: 7.8 },
+        { id: 2, start: 10.5, dur: 7.5, scrollY: -135, scrollDelay: 0.9, scrollDur: 5.5 },
+        { id: 3, start: 18.0, dur: 8.0, scrollY: -140, scrollDelay: 0.9, scrollDur: 6.0 },
+        { id: 4, start: 26.0, dur: 8.5, scrollY: -200, scrollDelay: 0.9, scrollDur: 6.5 },
+        { id: 5, start: 34.5, dur: 7.0, scrollY: -135, scrollDelay: 0.9, scrollDur: 5.0 },
+        { id: 6, start: 41.5, dur: 6.5, scrollY: -130, scrollDelay: 0.9, scrollDur: 4.6 },
+        { id: 7, start: 48.0, dur: 6.0, scrollY: -130, scrollDelay: 0.9, scrollDur: 4.1 },
+        { id: 8, start: 54.0, dur: 6.0, scrollY: -125, scrollDelay: 0.9, scrollDur: 4.4 }
+      ];
 
-      // Slide 1: Home (0 - 11s) with smooth vertical scroll of real full-page screenshot
-      tl.set("#slide1", { opacity: 1 }, 0);
-      tl.fromTo("#panel1", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.55, ease: "power3.out" }, 0.15);
-      tl.to("#imgHome", { y: -790, duration: 7.5, ease: "power1.inOut" }, 2.2);
-      tl.to("#slide1", { opacity: 0, duration: 0.45 }, 10.55);
+      slides.forEach((s, idx) => {
+        const slideSel = `#slide${s.id}`;
+        const browserSel = `#b${s.id}`;
+        const panelSel = `#p${s.id}`;
+        const imgSel = `#img${s.id}`;
+        const animItems = `#p${s.id} .anim`;
+        const railSel = `#r${s.id}`;
 
-      // Slide 2: Przewodnik (11 - 18.5s)
-      tl.fromTo("#slide2", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 11.0);
-      tl.fromTo("#panel2", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 11.1);
-      tl.to("#imgGuide", { y: -120, duration: 5.5, ease: "power1.inOut" }, 12.0);
-      tl.to("#slide2", { opacity: 0, duration: 0.45 }, 18.05);
+        // Bottom segment fill
+        tl.to(railSel, { width: "100%", duration: s.dur, ease: "none" }, s.start);
 
-      // Slide 3: Kalkulator (18.5 - 26.5s)
-      tl.fromTo("#slide3", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 18.5);
-      tl.fromTo("#panel3", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 18.6);
-      tl.to("#imgCalc", { y: -120, duration: 6.0, ease: "power1.inOut" }, 19.5);
-      tl.to("#slide3", { opacity: 0, duration: 0.45 }, 26.05);
+        // Smooth overlapping entrance (starts 0.35s early for seamless flow after slide 1)
+        const enterAt = idx === 0 ? 0 : s.start - 0.35;
 
-      // Slide 4: e-Usługi (26.5 - 35s)
-      tl.fromTo("#slide4", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 26.5);
-      tl.fromTo("#panel4", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 26.6);
-      tl.to("#imgEuslugi", { y: -180, duration: 6.5, ease: "power1.inOut" }, 27.5);
-      tl.to("#slide4", { opacity: 0, duration: 0.45 }, 34.55);
+        tl.set(slideSel, { opacity: 1 }, enterAt);
+        tl.fromTo(
+          browserSel,
+          { opacity: 0, x: idx === 0 ? 0 : 95, y: idx === 0 ? 28 : 0, scale: 0.955 },
+          { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.72, ease: "power4.out" },
+          enterAt
+        );
+        tl.fromTo(
+          panelSel,
+          { opacity: 0, x: 65, scale: 0.97 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.68, ease: "power4.out" },
+          enterAt + 0.06
+        );
+        tl.fromTo(
+          animItems,
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.48, stagger: 0.07, ease: "power3.out" },
+          enterAt + 0.16
+        );
 
-      // Slide 5: Trudne sytuacje (35 - 42s)
-      tl.fromTo("#slide5", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 35.0);
-      tl.fromTo("#panel5", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 35.1);
-      tl.to("#imgTrudne", { y: -120, duration: 5.0, ease: "power1.inOut" }, 36.0);
-      tl.to("#slide5", { opacity: 0, duration: 0.45 }, 41.55);
+        // Subtle kinetic zoom + smooth vertical scroll of real page
+        tl.fromTo(
+          imgSel,
+          { scale: 1.028, y: 0 },
+          { scale: 1.0, y: s.scrollY, duration: s.scrollDur, ease: "sine.inOut" },
+          s.start + s.scrollDelay
+        );
 
-      // Slide 6: Asystent AI (42 - 48.5s)
-      tl.fromTo("#slide6", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 42.0);
-      tl.fromTo("#panel6", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 42.1);
-      tl.to("#imgAi", { y: -120, duration: 4.5, ease: "power1.inOut" }, 43.0);
-      tl.to("#slide6", { opacity: 0, duration: 0.45 }, 48.05);
+        // Dynamic exit (slide left + scale down smoothly) except last slide
+        if (idx < slides.length - 1) {
+          const exitAt = s.start + s.dur - 0.55;
+          tl.to(
+            browserSel,
+            { opacity: 0, x: -85, scale: 0.955, duration: 0.55, ease: "power3.inOut" },
+            exitAt
+          );
+          tl.to(
+            panelSel,
+            { opacity: 0, x: -45, scale: 0.97, duration: 0.5, ease: "power3.inOut" },
+            exitAt
+          );
+          tl.set(slideSel, { opacity: 0 }, exitAt + 0.56);
+        }
+      });
 
-      // Slide 7: Jury Sandbox (48.5 - 54.5s)
-      tl.fromTo("#slide7", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 48.5);
-      tl.fromTo("#panel7", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 48.6);
-      tl.to("#imgJury", { y: -120, duration: 4.2, ease: "power1.inOut" }, 49.5);
-      tl.to("#slide7", { opacity: 0, duration: 0.45 }, 54.05);
-
-      // Slide 8: Panel Admina (54.5 - 60s)
-      tl.fromTo("#slide8", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 54.5);
-      tl.fromTo("#panel8", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 54.6);
-      tl.to("#imgAdmin", { y: -120, duration: 4.2, ease: "power1.inOut" }, 55.2);
       tl.to({}, { duration: 0.1 }, 59.9);
 
       window.__timelines = window.__timelines || {};
