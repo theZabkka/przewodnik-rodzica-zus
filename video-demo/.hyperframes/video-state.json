@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "fa722952-9578-4aa5-be4a-7431d97d7839",
-  "currentRevision": null,
+  "currentRevision": "4fd32e6b-fe95-4b9f-938f-83b9fae5aa09",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -37,8 +37,8 @@
       "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
     },
     "index.html": {
-      "hash": "39588e015e2f0c24888d08d7dcd7e5b8f426896c5b521fca0dee513ee1866e9b",
-      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\39\\39588e015e2f0c24888d08d7dcd7e5b8f426896c5b521fca0dee513ee1866e9b"
+      "hash": "eaf42a51647ee6ca9b65f1026ab121bc5a6688fd07289278e866a44956416a6f",
+      "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\ea\\eaf42a51647ee6ca9b65f1026ab121bc5a6688fd07289278e866a44956416a6f"
     },
     "meta.json": {
       "hash": "3857982f42530575f2592a2a14921c5bb5221bc99dcf62ad3e9e3114ab8b8f49",
@@ -49,7 +49,23 @@
       "content": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\99\\997ff706c8b374e83d92bf8f10e121f4ce0e1ac9fa5aa8d62e3fb4d1045edf47"
     }
   },
-  "revisions": {},
+  "revisions": {
+    "4fd32e6b-fe95-4b9f-938f-83b9fae5aa09": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1795329925257,
+      "endedAt": 1795329925258,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\39\\39588e015e2f0c24888d08d7dcd7e5b8f426896c5b521fca0dee513ee1866e9b",
+          "after": "C:\\Users\\patry\\.cache\\hyperframes\\history\\fa722952-9578-4aa5-be4a-7431d97d7839\\blobs\\ea\\eaf42a51647ee6ca9b65f1026ab121bc5a6688fd07289278e866a44956416a6f"
+        }
+      }
+    }
+  },
   "checks": {
     "latest": null,
     "revisions": {},
@@ -62,13 +78,15 @@
   },
   "renders": {
     "latest": {
-      "id": "f2e0927b-9a27-4931-a71a-81a167dae357",
-      "completedAt": 1795328607745,
-      "output": "C:\\Users\\patry\\.gemini\\antigravity\\scratch\\przewodnik-rodzica-zus\\video-demo\\out\\przewodnik-demo-10s.mp4",
+      "id": "2409e13b-500b-4285-b1dc-59a8b318d14d",
+      "completedAt": 1795329981850,
+      "output": "C:\\Users\\patry\\.gemini\\antigravity\\scratch\\przewodnik-rodzica-zus\\video-demo\\out\\przewodnik-tour-60s.mp4",
       "status": "completed",
-      "revision": null
+      "revision": "4fd32e6b-fe95-4b9f-938f-83b9fae5aa09"
     },
-    "retainedRevisions": []
+    "retainedRevisions": [
+      "4fd32e6b-fe95-4b9f-938f-83b9fae5aa09"
+    ]
   },
   "pendingArtifactCleanup": []
 }
