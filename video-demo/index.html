@@ -44,34 +44,19 @@
         height: 1080px;
         overflow: hidden;
         perspective: 1800px;
-        background: radial-gradient(circle at 15% 15%, #1c5731 0%, #0d2e19 52%, #071b0f 100%);
+        background: radial-gradient(circle at 18% 18%, #1c5731 0%, #0d2e19 55%, #071b0f 100%);
       }
 
-      /* Subtle animated ambient glow orbs in background */
       .glow-orb {
         position: absolute;
         border-radius: 50%;
         filter: blur(110px);
-        opacity: 0.35;
+        opacity: 0.3;
         pointer-events: none;
       }
-      .glow-1 {
-        width: 680px;
-        height: 680px;
-        background: #27a85a;
-        top: -180px;
-        left: -120px;
-      }
-      .glow-2 {
-        width: 620px;
-        height: 620px;
-        background: #dce8d3;
-        bottom: -220px;
-        right: -120px;
-        opacity: 0.2;
-      }
+      .glow-1 { width: 680px; height: 680px; background: #27a85a; top: -180px; left: -120px; }
+      .glow-2 { width: 620px; height: 620px; background: #dce8d3; bottom: -220px; right: -120px; opacity: 0.18; }
 
-      /* Scene wrapper */
       .scene {
         position: absolute;
         inset: 0;
@@ -79,33 +64,89 @@
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transform-style: preserve-3d;
         will-change: transform, opacity;
       }
 
-      /* Large, prominent full-stage real browser window */
-      .stage-browser {
-        width: 1680px;
-        height: 940px;
-        margin-top: -10px;
-        background: #ffffff;
-        border-radius: 26px;
-        overflow: hidden;
-        border: 2px solid rgba(220, 232, 211, 0.48);
-        box-shadow:
-          0 45px 100px rgba(0, 0, 0, 0.52),
-          0 0 0 1px rgba(255, 255, 255, 0.08);
+      /* Intro & Outro cover slides */
+      .cover-card {
+        max-width: 1400px;
+        text-align: center;
+        color: #faf8f2;
+        padding: 60px;
         display: flex;
         flex-direction: column;
-        transform-style: preserve-3d;
+        align-items: center;
+        gap: 26px;
+      }
+
+      .cover-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(220, 232, 211, 0.14);
+        border: 1.5px solid rgba(220, 232, 211, 0.35);
+        color: #dce8d3;
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        padding: 10px 24px;
+        border-radius: 999px;
+      }
+
+      .cover-title {
+        font-size: 74px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #faf8f2;
+      }
+
+      .cover-sub {
+        font-size: 29px;
+        line-height: 1.45;
+        color: #c5d7c1;
+        max-width: 1120px;
+        font-weight: 500;
+      }
+
+      .story-chips {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .story-chip {
+        background: rgba(250, 248, 242, 0.1);
+        border: 1.5px solid rgba(185, 204, 182, 0.38);
+        border-radius: 16px;
+        padding: 16px 26px;
+        font-size: 21px;
+        font-weight: 700;
+        color: #faf8f2;
+      }
+
+      /* Full-stage browser frame (leaves clean space at bottom for subtitles) */
+      .stage-browser {
+        width: 1620px;
+        height: 850px;
+        margin-top: -66px;
+        background: #ffffff;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 2px solid rgba(220, 232, 211, 0.48);
+        box-shadow: 0 40px 90px rgba(0, 0, 0, 0.48);
+        display: flex;
+        flex-direction: column;
         will-change: transform, opacity;
       }
 
       .browser-top {
-        height: 48px;
+        height: 46px;
         background: #eff3ea;
         border-bottom: 1.5px solid #c6d6c3;
-        padding: 0 22px;
+        padding: 0 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -115,24 +156,20 @@
       .browser-dots {
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 8px;
       }
 
-      .dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-      }
+      .dot { width: 11px; height: 11px; border-radius: 50%; }
       .dot.r { background: #e38c7b; }
       .dot.y { background: #e5c478; }
       .dot.g { background: #74b887; }
 
       .url-pill {
-        margin-left: 16px;
+        margin-left: 14px;
         background: #ffffff;
         border: 1px solid #b9ccb6;
         border-radius: 999px;
-        padding: 5px 18px;
+        padding: 4px 16px;
         font-size: 14px;
         font-weight: 700;
         color: #2e4b38;
@@ -141,20 +178,14 @@
         gap: 8px;
       }
 
-      .url-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--zus-green);
-      }
+      .url-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--zus-green); }
 
-      .route-badge {
+      .scene-badge {
         background: var(--ink);
         color: #faf8f2;
         font-size: 13px;
         font-weight: 800;
-        letter-spacing: 0.04em;
-        padding: 6px 14px;
+        padding: 5px 14px;
         border-radius: 999px;
       }
 
@@ -173,156 +204,100 @@
         will-change: transform;
       }
 
-      /* Floating Chat Bubbles (Dymki czatu) */
-      .bubble-layer {
+      /* Highlight callout badge for the hero KPI frame */
+      .kpi-spotlight {
         position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 25;
-      }
-
-      .chat-bubble {
-        position: absolute;
-        max-width: 500px;
-        background: rgba(16, 55, 30, 0.94);
-        color: #faf8f2;
-        border: 2px solid rgba(220, 232, 211, 0.55);
-        border-radius: 22px;
-        padding: 18px 22px;
-        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
-        opacity: 0;
-        will-change: transform, opacity;
-      }
-
-      .chat-bubble.light {
-        background: rgba(250, 248, 242, 0.97);
-        color: var(--ink);
-        border: 2px solid var(--zus-green);
-        box-shadow: 0 22px 50px rgba(16, 55, 30, 0.28);
-      }
-
-      .chat-bubble.warm {
-        background: rgba(92, 37, 25, 0.95);
-        color: #fdf1ec;
-        border: 2px solid #f0c2b2;
-      }
-
-      /* Speech bubble tails */
-      .chat-bubble.tail-bl {
-        border-bottom-left-radius: 6px;
-      }
-      .chat-bubble.tail-br {
-        border-bottom-right-radius: 6px;
-      }
-      .chat-bubble.tail-tl {
-        border-top-left-radius: 6px;
-      }
-      .chat-bubble.tail-tr {
-        border-top-right-radius: 6px;
-      }
-
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        background: var(--zus-green);
+        top: 64px;
+        right: 170px;
+        background: #007834;
         color: #ffffff;
-        font-size: 13px;
+        border: 2px solid #dce8d3;
+        border-radius: 18px;
+        padding: 16px 26px;
+        font-size: 22px;
         font-weight: 800;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        z-index: 30;
+      }
+
+      /* Mobile dual-phone showcase */
+      .phones-row {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
-        margin-top: 2px;
+        gap: 64px;
+        margin-top: -66px;
       }
 
-      .chat-bubble.light .avatar {
-        background: var(--ink);
-      }
-
-      .chat-bubble.warm .avatar {
-        background: #b44b34;
-      }
-
-      .bubble-kicker {
-        font-size: 12px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: #8ee5ac;
-        margin-bottom: 4px;
-      }
-
-      .chat-bubble.light .bubble-kicker {
-        color: var(--zus-green);
-      }
-
-      .chat-bubble.warm .bubble-kicker {
-        color: #f6c6b5;
-      }
-
-      .bubble-text {
-        font-size: 19px;
-        line-height: 1.35;
-        font-weight: 700;
-      }
-
-      /* Floating Cursor + Click Ripple */
-      .cursor-wrap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 35;
-        pointer-events: none;
-        opacity: 0;
-      }
-
-      .cursor-ring {
-        position: absolute;
-        top: -16px;
-        left: -16px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 3px solid var(--zus-green);
-        background: rgba(0, 120, 52, 0.18);
-        transform: scale(0.3);
-        opacity: 0;
-      }
-
-      .cursor-svg {
-        width: 34px;
-        height: 34px;
-        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
-      }
-
-      /* Bottom 8-segment dynamic rail */
-      .bottom-rail {
-        position: absolute;
-        left: 120px;
-        right: 120px;
-        bottom: 20px;
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 12px;
-        z-index: 50;
-      }
-
-      .rail-seg {
-        height: 7px;
-        border-radius: 999px;
-        background: rgba(250, 248, 242, 0.2);
+      .phone-bezel {
+        width: 390px;
+        height: 810px;
+        background: #0c1f13;
+        border-radius: 46px;
+        padding: 14px;
+        border: 3px solid rgba(220, 232, 211, 0.45);
+        box-shadow: 0 36px 80px rgba(0, 0, 0, 0.55);
         overflow: hidden;
       }
 
-      .rail-fill {
+      .phone-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 34px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      .phone-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+      }
+
+      /* Clean, high-contrast bottom subtitles bar (always readable without sound) */
+      .subtitle-bar {
+        position: absolute;
+        left: 150px;
+        right: 150px;
+        bottom: 30px;
+        min-height: 86px;
+        background: rgba(7, 25, 14, 0.92);
+        border: 1.5px solid rgba(220, 232, 211, 0.35);
+        border-radius: 18px;
+        padding: 16px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 45;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      }
+
+      .subtitle-text {
+        color: #faf8f2;
+        font-size: 26px;
+        line-height: 1.35;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      /* Global bottom progress line */
+      .progress-track {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 7px;
+        background: rgba(255, 255, 255, 0.15);
+        z-index: 60;
+      }
+      .progress-fill {
         height: 100%;
         width: 0%;
         background: #52e082;
-        border-radius: 999px;
       }
     </style>
   </head>
@@ -331,426 +306,252 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="60"
+      data-duration="93"
       data-width="1920"
       data-height="1080"
     >
       <div class="glow-orb glow-1" id="orb1"></div>
       <div class="glow-orb glow-2" id="orb2"></div>
-      <audio src="./assets/soundtrack-60s.wav" data-start="0" data-duration="60" data-track-index="1"></audio>
+      <audio src="./assets/story-audio-93s.wav" data-start="0" data-duration="93" data-track-index="1"></audio>
 
-      <!-- SCENE 1: STRONA GŁÓWNA (0s - 10.5s) -->
-      <section class="scene clip" id="s1" data-start="0" data-duration="10.5" data-track-index="0">
-        <div class="stage-browser" id="b1">
-          <div class="browser-top">
-            <div class="browser-dots">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/</div>
-            </div>
-            <div class="route-badge">01 / 08 · STRONA GŁÓWNA</div>
-          </div>
-          <div class="screen-viewport">
-            <img class="screen-img" id="img1" src="./assets/screens/home-full.png" alt="Strona główna" />
-          </div>
-        </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble tail-tr" id="s1_c1" style="top: 120px; right: 70px;">
-            <div class="avatar">ZUS</div>
-            <div>
-              <div class="bubble-kicker">Start & Dostępność</div>
-              <div class="bubble-text">Lektor „Posłuchaj”, powiększanie tekstu WCAG i logowanie eZUS / mObywatel zawsze pod ręką.</div>
-            </div>
-          </div>
-          <div class="chat-bubble light tail-bl" id="s1_c2" style="bottom: 140px; left: 70px;">
-            <div class="avatar">4×</div>
-            <div>
-              <div class="bubble-kicker">Wybierz swoją sytuację</div>
-              <div class="bubble-text">Planujesz, oczekujesz, masz już dziecko czy adoptujesz? Jedno kliknięcie prowadzi do Twojej ścieżki.</div>
-            </div>
-          </div>
-          <div class="chat-bubble tail-br" id="s1_c3" style="bottom: 95px; right: 70px;">
-            <div class="avatar">♥</div>
-            <div>
-              <div class="bubble-kicker">Pomoc & 3 zasady</div>
-              <div class="bubble-text">Wyróżnione wsparcie w kryzysie, słownik trudnych słów i 3 najważniejsze terminy na start.</div>
-            </div>
+      <!-- 1. INTRO: HISTORIA ANNY I TOMKA (0s - 11s) -->
+      <section class="scene clip" id="s1" data-start="0" data-duration="11" data-track-index="0">
+        <div class="cover-card">
+          <div class="cover-kicker s1a">HACKNATION 2026 · WYZWANIE ZUS</div>
+          <h1 class="cover-title s1a">Anna za 4 miesiące rodzi.<br />Nie wie, ile dostanie ani co złożyć.</h1>
+          <p class="cover-sub s1a">
+            Anna pracuje na etacie, jej partner Tomek prowadzi własną firmę (JDG). Zamiast szukać odpowiedzi w ustawach, przechodzą całą drogę w jednym narzędziu.
+          </p>
+          <div class="story-chips s1a">
+            <div class="story-chip">Anna · Umowa o pracę</div>
+            <div class="story-chip">Tomek · Działalność JDG</div>
+            <div class="story-chip">Cel: kwota zasiłku + gotowy wniosek</div>
           </div>
         </div>
       </section>
 
-      <!-- SCENE 2: PRZEWODNIK (10.5s - 18s) -->
-      <section class="scene clip" id="s2" data-start="10.5" data-duration="7.5" data-track-index="0">
+      <!-- 2. STRONA GŁÓWNA (11s - 21s) -->
+      <section class="scene clip" id="s2" data-start="11" data-duration="10" data-track-index="0">
         <div class="stage-browser" id="b2">
           <div class="browser-top">
             <div class="browser-dots">
               <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/przewodnik</div>
+              <div class="url-pill"><span class="url-dot"></span>demo · przewodnik-rodzica-zus /</div>
             </div>
-            <div class="route-badge">02 / 08 · PRZEWODNIK</div>
+            <div class="scene-badge">KROK 1 · WYBÓR SYTUACJI</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="img2" src="./assets/screens/przewodnik.png" alt="Przewodnik" />
-          </div>
-        </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble light tail-tl" id="s2_c1" style="top: 150px; left: 70px;">
-            <div class="avatar">02</div>
-            <div>
-              <div class="bubble-kicker">Przewodnik krok po kroku</div>
-              <div class="bubble-text">Oś czasu od e-ZLA z kodem „B” po powrót do pracy — bez szukania po ustawach.</div>
-            </div>
-          </div>
-          <div class="chat-bubble tail-br" id="s2_c2" style="bottom: 110px; right: 70px;">
-            <div class="avatar">!</div>
-            <div>
-              <div class="bubble-kicker">Kto wypłaca & ryzyka</div>
-              <div class="bubble-text">Jasny podział: pracodawca (&gt;20 osób) czy ZUS, plus ostrzeżenia przed utratą zasiłku.</div>
-            </div>
+            <img class="screen-img" id="img2" src="./assets/story/01-home.png" alt="Strona główna" />
           </div>
         </div>
       </section>
 
-      <!-- SCENE 3: KALKULATOR (18s - 26s) -->
-      <section class="scene clip" id="s3" data-start="18" data-duration="8" data-track-index="0">
+      <!-- 3. KALKULATOR WEJŚCIE: PORÓD + ADOPCJA (21s - 31.2s) -->
+      <section class="scene clip" id="s3" data-start="21" data-duration="10.2" data-track-index="0">
         <div class="stage-browser" id="b3">
           <div class="browser-top">
             <div class="browser-dots">
               <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/kalkulator</div>
+              <div class="url-pill"><span class="url-dot"></span>demo · przewodnik-rodzica-zus /kalkulator</div>
             </div>
-            <div class="route-badge">03 / 08 · KALKULATOR 2026</div>
+            <div class="scene-badge">KROK 2 · KALKULATOR (PORÓD, ADOPCJA, JDG)</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="img3" src="./assets/screens/kalkulator.png" alt="Kalkulator" />
-          </div>
-        </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble tail-tr" id="s3_c1" style="top: 140px; right: 70px;">
-            <div class="avatar">%</div>
-            <div>
-              <div class="bubble-kicker">Zintegrowany kalkulator</div>
-              <div class="bubble-text">Porównuje stawkę 81,5% z 100%/70% dla umowy o pracę, zlecenia i JDG.</div>
-            </div>
-          </div>
-          <div class="chat-bubble light tail-bl" id="s3_c2" style="bottom: 195px; left: 70px;">
-            <div class="avatar">2+</div>
-            <div>
-              <div class="bubble-kicker">Wszystkie scenariusze</div>
-              <div class="bubble-text">Podział urlopu dla obojga rodziców, praca na ½ etatu, adopcja i wcześniaki (art. 180² KP).</div>
-            </div>
-          </div>
-          <div class="chat-bubble tail-br" id="s3_c3" style="bottom: 95px; right: 70px;">
-            <div class="avatar">→</div>
-            <div>
-              <div class="bubble-kicker">1 klik do wniosku</div>
-              <div class="bubble-text">Wyliczone dane przenosisz automatycznie prosto do kreatora ZAM!</div>
-            </div>
+            <img class="screen-img" id="img3" src="./assets/story/02-calc-step1.png" alt="Kalkulator krok 1" />
           </div>
         </div>
       </section>
 
-      <!-- SCENE 4: WNIOSKI I e-USŁUGI (26s - 34.5s) -->
-      <section class="scene clip" id="s4" data-start="26" data-duration="8.5" data-track-index="0">
+      <!-- 4. NAJWAŻNIEJSZY KADR: REALNY WYNIK KALKULATORA (31.2s - 45.2s) -->
+      <section class="scene clip" id="s4" data-start="31.2" data-duration="14" data-track-index="0">
         <div class="stage-browser" id="b4">
           <div class="browser-top">
             <div class="browser-dots">
               <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/e-uslugi</div>
+              <div class="url-pill"><span class="url-dot"></span>demo · przewodnik-rodzica-zus /kalkulator</div>
             </div>
-            <div class="route-badge">04 / 08 · WNIOSKI I e-USŁUGI</div>
+            <div class="scene-badge">KROK 3 · WYNIK ANNY: 5 274 ZŁ / M-C · 76 532 ZŁ ŁĄCZNIE</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="img4" src="./assets/screens/e-uslugi.png" alt="e-Usługi" />
+            <img class="screen-img" id="img4" src="./assets/story/03-calc-result.png" alt="Wynik kalkulatora" />
           </div>
         </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble light tail-tl" id="s4_c1" style="top: 155px; left: 70px;">
-            <div class="avatar">A4</div>
-            <div>
-              <div class="bubble-kicker">Wniosek ZAM & Urlop HR</div>
-              <div class="bubble-text">6-krokowy kreator ZAM z podglądem A4 + QR oraz gotowy wniosek o urlop do pracodawcy.</div>
-            </div>
-          </div>
-          <div class="chat-bubble tail-tr" id="s4_c2" style="top: 320px; right: 70px;">
-            <div class="avatar">QR</div>
-            <div>
-              <div class="bubble-kicker">mObywatel & Konto eZUS</div>
-              <div class="bubble-text">Symulacja mObywatela, monitor zadłużenia JDG (48,06 zł), ZUS RWN i zapytanie POG.</div>
-            </div>
-          </div>
-          <div class="chat-bubble light tail-br" id="s4_c3" style="bottom: 95px; right: 70px;">
-            <div class="avatar">USC</div>
-            <div>
-              <div class="bubble-kicker">e-ZLA i Akt urodzenia</div>
-              <div class="bubble-text">Podgląd zwolnień lekarskich e-ZLA i pobranie odpisu aktu urodzenia z USC.</div>
-            </div>
-          </div>
-        </div>
+        <div class="kpi-spotlight" id="kpiSpot">5 274 zł / mies. · 76 532 zł łącznie · 9 tyg. dla Tomka</div>
       </section>
 
-      <!-- SCENE 5: TRUDNE SYTUACJE (34.5s - 41.5s) -->
-      <section class="scene clip" id="s5" data-start="34.5" data-duration="7" data-track-index="0">
+      <!-- 5. WNIOSEK ZAM A4 + WNIOSEK O URLOP HR (45.2s - 56.8s) -->
+      <section class="scene clip" id="s5" data-start="45.2" data-duration="11.6" data-track-index="0">
         <div class="stage-browser" id="b5">
           <div class="browser-top">
             <div class="browser-dots">
               <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/trudne-sytuacje</div>
+              <div class="url-pill"><span class="url-dot"></span>demo · przewodnik-rodzica-zus /e-uslugi</div>
             </div>
-            <div class="route-badge">05 / 08 · WSPARCIE SZCZEGÓLNE</div>
+            <div class="scene-badge">KROK 4 · GOTOWY WNIOSEK ZAM (A4) &amp; URLOP DO PRACODAWCY</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="img5" src="./assets/screens/trudne-sytuacje.png" alt="Trudne sytuacje" />
-          </div>
-        </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble warm tail-tl" id="s5_c1" style="top: 155px; left: 70px;">
-            <div class="avatar">♥</div>
-            <div>
-              <div class="bubble-kicker">Wsparcie w kryzysie</div>
-              <div class="bubble-text">Poronienie i martwe urodzenie (8 tyg. zasiłku), wcześniaki oraz ustawa „Za życiem”.</div>
-            </div>
-          </div>
-          <div class="chat-bubble light tail-br" id="s5_c2" style="bottom: 105px; right: 70px;">
-            <div class="avatar">100%</div>
-            <div>
-              <div class="bubble-kicker">Utrata pracy & Fundacje</div>
-              <div class="bubble-text">Zasiłek w wysokości zasiłku macierzyńskiego (art. 30 ust. 3) + zweryfikowane fundacje pomocowe.</div>
-            </div>
+            <img class="screen-img" id="img5a" src="./assets/story/04-zam-a4.png" alt="Wniosek ZAM A4" />
+            <img
+              class="screen-img"
+              id="img5b"
+              src="./assets/story/05-urlop-hr.png"
+              alt="Wniosek o urlop HR"
+              style="position: absolute; inset: 0; opacity: 0;"
+            />
           </div>
         </div>
       </section>
 
-      <!-- SCENE 6: ASYSTENT AI (41.5s - 48s) -->
-      <section class="scene clip" id="s6" data-start="41.5" data-duration="6.5" data-track-index="0">
+      <!-- 6. DORADCA /api/chat: REALNE PYTANIE I ODPOWIEDŹ (56.8s - 67.8s) -->
+      <section class="scene clip" id="s6" data-start="56.8" data-duration="11" data-track-index="0">
         <div class="stage-browser" id="b6">
           <div class="browser-top">
             <div class="browser-dots">
               <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/asystent-ai</div>
+              <div class="url-pill"><span class="url-dot"></span>demo · przewodnik-rodzica-zus /asystent-ai</div>
             </div>
-            <div class="route-badge">06 / 08 · ASYSTENT RODZICA AI</div>
+            <div class="scene-badge">KROK 5 · SERWEROWY DORADCA (/api/chat)</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="img6" src="./assets/screens/asystent-ai.png" alt="Asystent AI" />
-          </div>
-        </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble tail-tr" id="s6_c1" style="top: 150px; right: 70px;">
-            <div class="avatar">AI</div>
-            <div>
-              <div class="bubble-kicker">Prosty język lub ustawa</div>
-              <div class="bubble-text">Zadaj pytanie własnymi słowami — Asystent dopasuje odpowiedź do Twojej umowy i etapu.</div>
-            </div>
-          </div>
-          <div class="chat-bubble light tail-bl" id="s6_c2" style="bottom: 105px; left: 70px;">
-            <div class="avatar">✓</div>
-            <div>
-              <div class="bubble-kicker">Zero halucynacji w kwotach</div>
-              <div class="bubble-text">AI tłumaczy przepisy, a wszystkie wyliczenia wykonuje 100% deterministyczny silnik.</div>
-            </div>
+            <img class="screen-img" id="img6" src="./assets/story/06-ai-answer.png" alt="Odpowiedź doradcy" />
           </div>
         </div>
       </section>
 
-      <!-- SCENE 7: STREFA JURORA (48s - 54s) -->
-      <section class="scene clip" id="s7" data-start="48" data-duration="6" data-track-index="0">
+      <!-- 7. STREFA JURORA: WGRANY PDF WCZEŚNIAK + 10 TYG. (67.8s - 77.4s) -->
+      <section class="scene clip" id="s7" data-start="67.8" data-duration="9.6" data-track-index="0">
         <div class="stage-browser" id="b7">
           <div class="browser-top">
             <div class="browser-dots">
               <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/jury-sandbox</div>
+              <div class="url-pill"><span class="url-dot"></span>demo · przewodnik-rodzica-zus /jury-sandbox</div>
             </div>
-            <div class="route-badge">07 / 08 · STREFA JURORA</div>
+            <div class="scene-badge">KROK 6 · WERYFIKACJA PDF (WCZEŚNIAK + 10 TYG.)</div>
           </div>
           <div class="screen-viewport">
-            <img class="screen-img" id="img7" src="./assets/screens/jury-sandbox.png" alt="Strefa Jurora" />
+            <img class="screen-img" id="img7" src="./assets/story/07-jury-pdf.png" alt="Strefa Jurora PDF" />
           </div>
         </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble light tail-tl" id="s7_c1" style="top: 150px; left: 70px;">
-            <div class="avatar">PDF</div>
-            <div>
-              <div class="bubble-kicker">Testuj na prawdziwych sprawach</div>
-              <div class="bubble-text">Wgraj przykładowy wniosek PDF lub wybierz gotowy kazus ZUS, by zweryfikować wynik.</div>
+      </section>
+
+      <!-- 8. WIDOK NA TELEFONIE (RWD) (77.4s - 85.4s) -->
+      <section class="scene clip" id="s8" data-start="77.4" data-duration="8" data-track-index="0">
+        <div class="phones-row">
+          <div class="phone-bezel" id="ph1">
+            <div class="phone-inner">
+              <img src="./assets/story/08-mobile-home.png" alt="Widok mobilny start" />
             </div>
           </div>
-          <div class="chat-bubble tail-br" id="s7_c2" style="bottom: 105px; right: 70px;">
-            <div class="avatar">API</div>
-            <div>
-              <div class="bubble-kicker">REST API & Vitest</div>
-              <div class="bubble-text">Silnik przetestowany jednostkowo i dostępny pod endpointem POST /api/calculate.</div>
+          <div class="phone-bezel" id="ph2">
+            <div class="phone-inner">
+              <img src="./assets/story/09-mobile-calc.png" alt="Widok mobilny kalkulator" />
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SCENE 8: PANEL ADMINISTRACYJNY (54s - 60s) -->
-      <section class="scene clip" id="s8" data-start="54" data-duration="6" data-track-index="0">
-        <div class="stage-browser" id="b8">
-          <div class="browser-top">
-            <div class="browser-dots">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-              <div class="url-pill"><span class="url-dot"></span>przewodnik-rodzica.zus.pl/admin</div>
-            </div>
-            <div class="route-badge">08 / 08 · PANEL ADMINISTRACYJNY</div>
-          </div>
-          <div class="screen-viewport">
-            <img class="screen-img" id="img8" src="./assets/screens/admin.png" alt="Panel Administracyjny" />
-          </div>
-        </div>
-        <div class="bubble-layer">
-          <div class="chat-bubble tail-tr" id="s8_c1" style="top: 150px; right: 70px;">
-            <div class="avatar">⚙</div>
-            <div>
-              <div class="bubble-kicker">Zmiany prawa bez kodu</div>
-              <div class="bubble-text">Edytuj stawki (81,5%, 70%) i płacę minimalną (4 806 zł) jednym zapisem w Supabase.</div>
-            </div>
-          </div>
-          <div class="chat-bubble light tail-bl" id="s8_c2" style="bottom: 105px; left: 70px;">
-            <div class="avatar">ZUS</div>
-            <div>
-              <div class="bubble-kicker">HackNation 2026</div>
-              <div class="bubble-text">Zasiłkowy Przewodnik Przyszłego Rodzica — gotowy do wdrożenia!</div>
-            </div>
+      <!-- 9. PLANSZA KOŃCOWA (85.4s - 93s) -->
+      <section class="scene clip" id="s9" data-start="85.4" data-duration="7.6" data-track-index="0">
+        <div class="cover-card">
+          <div class="cover-kicker s9a">HACKNATION 2026 · WYZWANIE ZUS</div>
+          <h2 class="cover-title s9a">Zasiłkowy Przewodnik<br />Przyszłego Rodzica</h2>
+          <p class="cover-sub s9a">
+            Od pytania „ile dostanę?” do gotowego wniosku ZAM i urlopu u pracodawcy — na komputerze i telefonie.
+          </p>
+          <div class="story-chips s9a">
+            <div class="story-chip">Repo: github.com/theZabkka/przewodnik-rodzica-zus</div>
+            <div class="story-chip">REST API: /api/calculate · /api/chat · /api/parameters</div>
+            <div class="story-chip">Stan prawny 2026 · 40/40 testów Vitest</div>
           </div>
         </div>
       </section>
 
-      <!-- Animated Floating Cursor -->
-      <div class="cursor-wrap" id="cursor">
-        <div class="cursor-ring" id="cursorRing"></div>
-        <svg class="cursor-svg" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 3L23 13.5L14.5 15.8L11.2 24L5 3Z" fill="#10371E" stroke="#FAF8F2" stroke-width="2" stroke-linejoin="round" />
-        </svg>
+      <!-- SUBTITLES BAR -->
+      <div class="subtitle-bar" id="subBar">
+        <div class="subtitle-text" id="subText">
+          Anna za 4 miesiące rodzi. Pracuje na etacie, a jej partner Tomek prowadzi własną firmę (JDG).
+        </div>
       </div>
 
-      <!-- 8-segment dynamic progress bar -->
-      <div class="bottom-rail">
-        <div class="rail-seg"><div class="rail-fill" id="r1"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r2"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r3"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r4"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r5"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r6"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r7"></div></div>
-        <div class="rail-seg"><div class="rail-fill" id="r8"></div></div>
-      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
     <script>
       const tl = gsap.timeline({ paused: true });
-
-      // Ambient drifting background orbs for depth
-      tl.to("#orb1", { x: 240, y: 120, duration: 60, ease: "sine.inOut" }, 0);
-      tl.to("#orb2", { x: -220, y: -140, duration: 60, ease: "sine.inOut" }, 0);
-
-      // Helper: pop a chat bubble in with springy physics + gentle float
-      function popBubble(sel, at, fromX = 0, fromY = 34) {
-        tl.fromTo(
-          sel,
-          { opacity: 0, x: fromX, y: fromY, scale: 0.84 },
-          { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.6)" },
-          at
-        );
-        tl.to(sel, { y: -7, duration: 2.2, ease: "sine.inOut" }, at + 0.6);
+      const subText = document.getElementById("subText");
+      function setSub(txt) {
+        if (subText) subText.textContent = txt;
       }
 
-      // Helper: cursor glide + click ripple
-      function cursorClick(x, y, at) {
-        tl.to("#cursor", { opacity: 1, x, y, duration: 0.65, ease: "power3.inOut" }, at);
-        tl.fromTo(
-          "#cursorRing",
-          { scale: 0.25, opacity: 0.9 },
-          { scale: 1.7, opacity: 0, duration: 0.5, ease: "power2.out" },
-          at + 0.62
-        );
-      }
+      tl.to("#progressFill", { width: "100%", duration: 93, ease: "none" }, 0);
+      tl.to("#orb1", { x: 260, y: 120, duration: 93, ease: "sine.inOut" }, 0);
+      tl.to("#orb2", { x: -240, y: -120, duration: 93, ease: "sine.inOut" }, 0);
 
-      const scenes = [
-        { id: 1, start: 0.0, dur: 10.5, scrollY: -960, scrollDelay: 1.2, scrollDur: 8.2, enterX: 0, enterY: 60, rotY: 0 },
-        { id: 2, start: 10.5, dur: 7.5, scrollY: -190, scrollDelay: 0.8, scrollDur: 5.6, enterX: 220, enterY: 0, rotY: -10 },
-        { id: 3, start: 18.0, dur: 8.0, scrollY: -180, scrollDelay: 0.8, scrollDur: 6.2, enterX: -220, enterY: 0, rotY: 10 },
-        { id: 4, start: 26.0, dur: 8.5, scrollY: -270, scrollDelay: 0.8, scrollDur: 6.6, enterX: 0, enterY: 140, rotY: -6 },
-        { id: 5, start: 34.5, dur: 7.0, scrollY: -180, scrollDelay: 0.8, scrollDur: 5.2, enterX: 220, enterY: 0, rotY: -10 },
-        { id: 6, start: 41.5, dur: 6.5, scrollY: -170, scrollDelay: 0.8, scrollDur: 4.7, enterX: -220, enterY: 0, rotY: 10 },
-        { id: 7, start: 48.0, dur: 6.0, scrollY: -170, scrollDelay: 0.8, scrollDur: 4.2, enterX: 0, enterY: 120, rotY: -6 },
-        { id: 8, start: 54.0, dur: 6.0, scrollY: -160, scrollDelay: 0.8, scrollDur: 4.4, enterX: 200, enterY: 0, rotY: -8 }
-      ];
+      // SCENE 1 (0 - 11s)
+      tl.set("#s1", { opacity: 1 }, 0);
+      tl.call(setSub, ["Anna za 4 miesiące rodzi. Pracuje na etacie, a jej partner Tomek prowadzi własną firmę (JDG)."], 0.2);
+      tl.call(setSub, ["Nie wiedzą, ile dostaną zasiłku ani jakie wnioski złożyć do ZUS i pracodawcy."], 5.4);
+      tl.fromTo(".s1a", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.65, stagger: 0.14, ease: "power3.out" }, 0.15);
+      tl.to("#s1", { opacity: 0, scale: 0.96, duration: 0.55, ease: "power2.inOut" }, 10.45);
 
-      scenes.forEach((sc, idx) => {
-        const sSel = `#s${sc.id}`;
-        const bSel = `#b${sc.id}`;
-        const imgSel = `#img${sc.id}`;
-        const rSel = `#r${sc.id}`;
+      // SCENE 2 (11 - 21s)
+      tl.call(setSub, ["Zasiłkowy Przewodnik Rodzica porządkuje wszystko w jednym miejscu — od ciąży po adopcję i wsparcie."], 11.1);
+      tl.set("#s2", { opacity: 1 }, 10.7);
+      tl.fromTo("#b2", { opacity: 0, x: 120, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.75, ease: "power4.out" }, 10.7);
+      tl.fromTo("#img2", { scale: 1.03, y: 0 }, { scale: 1.0, y: -70, duration: 8.5, ease: "sine.inOut" }, 11.4);
+      tl.to("#s2", { opacity: 0, x: -90, duration: 0.5 }, 20.5);
 
-        tl.to(rSel, { width: "100%", duration: sc.dur, ease: "none" }, sc.start);
+      // SCENE 3 (21 - 31.2s)
+      tl.call(setSub, ["W zintegrowanym kalkulatorze Anna podaje umowę i pensję. Narzędzie obsługuje też adopcję, rodzinę zastępczą i wcześniaki."], 21.1);
+      tl.set("#s3", { opacity: 1 }, 20.7);
+      tl.fromTo("#b3", { opacity: 0, x: 120, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.75, ease: "power4.out" }, 20.7);
+      tl.fromTo("#img3", { scale: 1.03, y: 0 }, { scale: 1.0, y: -85, duration: 8.8, ease: "sine.inOut" }, 21.4);
+      tl.to("#s3", { opacity: 0, x: -90, duration: 0.5 }, 30.7);
 
-        const enterAt = idx === 0 ? 0 : sc.start - 0.35;
-        tl.set(sSel, { opacity: 1 }, enterAt);
-        tl.fromTo(
-          bSel,
-          { opacity: 0, x: sc.enterX, y: sc.enterY, rotateY: sc.rotY, scale: 0.9 },
-          { opacity: 1, x: 0, y: 0, rotateY: 0, scale: 1, duration: 0.82, ease: "power4.out" },
-          enterAt
-        );
+      // SCENE 4 (31.2 - 45.2s) — HERO RESULT FRAME
+      tl.call(setSub, ["Po chwili widzi konkretny wynik: 5 274 zł miesięcznie i 76 532 zł łącznie (wariant 81,5%)."], 31.3);
+      tl.call(setSub, ["Kalkulator od razu porównuje 81,5% ze stawką 100/70% oraz uwzględnia 9 tygodni wyłącznie dla Tomka."], 38.2);
+      tl.set("#s4", { opacity: 1 }, 30.9);
+      tl.fromTo("#b4", { opacity: 0, scale: 0.92, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "power4.out" }, 30.9);
+      tl.fromTo("#kpiSpot", { opacity: 0, y: -20, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 32.1);
+      tl.fromTo("#img4", { scale: 1.04, y: 0 }, { scale: 1.0, y: -90, duration: 12.2, ease: "sine.inOut" }, 31.8);
+      tl.to("#s4", { opacity: 0, x: -90, duration: 0.5 }, 44.7);
 
-        // Smooth dynamic camera zoom + scroll
-        tl.fromTo(
-          imgSel,
-          { scale: 1.045, y: 0 },
-          { scale: 1.0, y: sc.scrollY, duration: sc.scrollDur, ease: "sine.inOut" },
-          sc.start + sc.scrollDelay
-        );
+      // SCENE 5 (45.2 - 56.8s) — ZAM A4 + URLOP HR
+      tl.call(setSub, ["Jednym kliknięciem Anna przenosi dane do wniosku ZAM z gotowym wydrukiem A4 do druku lub wysyłki."], 45.3);
+      tl.call(setSub, ["Obok generuje wniosek o urlop dla pracodawcy, a Tomek sprawdza składki JDG i akt urodzenia z USC."], 51.0);
+      tl.set("#s5", { opacity: 1 }, 44.9);
+      tl.fromTo("#b5", { opacity: 0, x: 120, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.75, ease: "power4.out" }, 44.9);
+      tl.to("#img5a", { y: -70, duration: 5.0, ease: "sine.inOut" }, 45.6);
+      tl.to("#img5b", { opacity: 1, duration: 0.65, ease: "power2.inOut" }, 50.8);
+      tl.to("#s5", { opacity: 0, x: -90, duration: 0.5 }, 56.3);
 
-        // Dynamic 3D exit
-        if (idx < scenes.length - 1) {
-          const exitAt = sc.start + sc.dur - 0.55;
-          tl.to(
-            sSel,
-            { opacity: 0, x: idx % 2 === 0 ? -150 : 150, scale: 0.92, duration: 0.55, ease: "power3.inOut" },
-            exitAt
-          );
-        }
-      });
+      // SCENE 6 (56.8 - 67.8s) — REAL /api/chat ANSWER
+      tl.call(setSub, ["Przy pytaniu o L4 w ciąży na zleceniu po 2 miesiącach doradca wyjaśnia 90 dni okresu wyczekiwania i podstawę prawną."], 56.9);
+      tl.set("#s6", { opacity: 1 }, 56.5);
+      tl.fromTo("#b6", { opacity: 0, x: 120, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.75, ease: "power4.out" }, 56.5);
+      tl.fromTo("#img6", { scale: 1.03, y: 0 }, { scale: 1.0, y: -65, duration: 9.5, ease: "sine.inOut" }, 57.2);
+      tl.to("#s6", { opacity: 0, x: -90, duration: 0.5 }, 67.3);
 
-      // Chat bubble choreography per scene
-      popBubble("#s1_c1", 0.7, 40, -18);
-      popBubble("#s1_c2", 3.4, -40, 28);
-      popBubble("#s1_c3", 6.5, 40, 28);
-      cursorClick(1465, 118, 1.3);
-      cursorClick(760, 560, 4.3);
+      // SCENE 7 (67.8 - 77.4s) — JURY PDF UPLOAD RESULT
+      tl.call(setSub, ["W Strefie Jurora można wgrać przykładowy PDF — np. sprawę wcześniaka — i od razu sprawdzić 10 tygodni dodatkowego urlopu."], 67.9);
+      tl.set("#s7", { opacity: 1 }, 67.5);
+      tl.fromTo("#b7", { opacity: 0, x: 120, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.75, ease: "power4.out" }, 67.5);
+      tl.fromTo("#img7", { scale: 1.03, y: 0 }, { scale: 1.0, y: -60, duration: 8.2, ease: "sine.inOut" }, 68.2);
+      tl.to("#s7", { opacity: 0, x: -90, duration: 0.5 }, 76.9);
 
-      popBubble("#s2_c1", 11.1, -40, -18);
-      popBubble("#s2_c2", 13.8, 40, 28);
-      cursorClick(520, 420, 12.2);
+      // SCENE 8 (77.4 - 85.4s) — REAL MOBILE VIEW
+      tl.call(setSub, ["Cały przewodnik i kalkulator działają wygodnie także na telefonie — z responsywnym układem, lektorem i WCAG."], 77.5);
+      tl.set("#s8", { opacity: 1 }, 77.1);
+      tl.fromTo("#ph1", { opacity: 0, y: 70, rotateY: 12 }, { opacity: 1, y: 0, rotateY: 0, duration: 0.75, ease: "power4.out" }, 77.2);
+      tl.fromTo("#ph2", { opacity: 0, y: 70, rotateY: -12 }, { opacity: 1, y: 0, rotateY: 0, duration: 0.75, ease: "power4.out" }, 77.5);
+      tl.to("#s8", { opacity: 0, scale: 0.94, duration: 0.5 }, 84.9);
 
-      popBubble("#s3_c1", 18.6, 40, -18);
-      popBubble("#s3_c2", 20.6, -40, 26);
-      popBubble("#s3_c3", 22.8, 40, 26);
-      cursorClick(960, 510, 19.6);
-
-      popBubble("#s4_c1", 26.6, -40, -18);
-      popBubble("#s4_c2", 29.0, 40, 20);
-      popBubble("#s4_c3", 31.3, 40, 28);
-      cursorClick(625, 295, 27.7);
-
-      popBubble("#s5_c1", 35.1, -40, -18);
-      popBubble("#s5_c2", 37.8, 40, 28);
-      cursorClick(900, 480, 36.2);
-
-      popBubble("#s6_c1", 42.1, 40, -18);
-      popBubble("#s6_c2", 44.5, -40, 28);
-      cursorClick(1040, 540, 43.2);
-
-      popBubble("#s7_c1", 48.6, -40, -18);
-      popBubble("#s7_c2", 50.9, 40, 28);
-      cursorClick(880, 460, 49.6);
-
-      popBubble("#s8_c1", 54.6, 40, -18);
-      popBubble("#s8_c2", 56.8, -40, 28);
-      tl.to("#cursor", { opacity: 0, duration: 0.4 }, 55.5);
-
-      tl.to({}, { duration: 0.1 }, 59.9);
+      // SCENE 9 (85.4 - 93s) — CLOSING CARD
+      tl.call(setSub, ["Zasiłkowy Przewodnik Przyszłego Rodzica — prosto, empatycznie i zgodnie z prawem 2026."], 85.5);
+      tl.set("#s9", { opacity: 1 }, 85.1);
+      tl.fromTo(".s9a", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.65, stagger: 0.14, ease: "power3.out" }, 85.25);
+      tl.to({}, { duration: 0.1 }, 92.9);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
