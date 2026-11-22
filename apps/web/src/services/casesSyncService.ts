@@ -159,16 +159,24 @@ export async function fetchCasesFromCloud(): Promise<SyncResult> {
   }
 
   // 3. Połącz i usuń duplikaty (priorytet mają dane z chmury, a lokalne uzupełniają brakujące)
+  // Deduplikujemy wielokrotne zgłoszenia tego samego wnioskodawcy (ten sam PESEL / nazwisko)
   const caseMap = new Map<string, InspectorCase>();
+  const seenApplicants = new Set<string>();
 
-  // Dodaj sprawy z chmury
+  // Dodaj sprawy z chmury (najnowsze mają pierwszeństwo, eliminujemy wielokrotne kliknięcia testowe)
   cloudCases.forEach((c) => {
-    caseMap.set(c.caseNumber, c);
+    const applicantKey = `${c.applicantName?.trim().toLowerCase()}_${c.pesel}`;
+    if (!seenApplicants.has(applicantKey)) {
+      seenApplicants.add(applicantKey);
+      caseMap.set(c.caseNumber, c);
+    }
   });
 
-  // Dodaj sprawy lokalne (jeśli nie ma ich w chmurze)
+  // Dodaj sprawy lokalne (jeśli nie ma ich w chmurze ani pod tym wnioskodawcą)
   localCases.forEach((c) => {
-    if (!caseMap.has(c.caseNumber)) {
+    const applicantKey = `${c.applicantName?.trim().toLowerCase()}_${c.pesel}`;
+    if (!seenApplicants.has(applicantKey) && !caseMap.has(c.caseNumber)) {
+      seenApplicants.add(applicantKey);
       caseMap.set(c.caseNumber, { ...c, source: "local" });
     }
   });

@@ -100,7 +100,7 @@ export function Header() {
     { href: "/", label: "Strona główna" },
     { href: "/przewodnik", label: "Przewodnik" },
     { href: "/kalkulator", label: "Kalkulator zasiłku" },
-    { href: "/e-uslugi", label: "Wniosek ZAM i eZUS" },
+    { href: "/e-uslugi", label: "Wniosek ZAM, eZUS & USC" },
     { href: "/trudne-sytuacje", label: "Wsparcie szczególne" },
     { href: "/asystent-ai", label: "Zapytaj AI" },
   ];

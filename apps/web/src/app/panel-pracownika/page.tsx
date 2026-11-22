@@ -293,10 +293,27 @@ export default function PanelPracownikaPage() {
       setLastSyncedAt(syncResult.lastSyncedAt);
 
       if (syncResult.cases.length > 0) {
-        // Połącz pobrane sprawy z wbudowanymi sprawami testowymi
+        // Połącz pobrane sprawy z wbudowanymi sprawami testowymi, eliminując duplikaty tego samego wnioskodawcy
         const initialMap = new Map<string, InspectorCase>();
-        INITIAL_ZUS_CASES.forEach((c) => initialMap.set(c.caseNumber, c));
-        syncResult.cases.forEach((c) => initialMap.set(c.caseNumber, c));
+        const seenApplicants = new Set<string>();
+
+        // Najpierw sprawy zsynchronizowane z chmury (najnowsze zgłoszenia obywateli)
+        syncResult.cases.forEach((c) => {
+          const key = `${c.applicantName?.trim().toLowerCase()}_${c.pesel}`;
+          if (!seenApplicants.has(key)) {
+            seenApplicants.add(key);
+            initialMap.set(c.caseNumber, c);
+          }
+        });
+
+        // Uzupełnij o unikalne kazusy referencyjne ZUS (np. wcześniak, zadłużenie JDG, adopcja)
+        INITIAL_ZUS_CASES.forEach((c) => {
+          const key = `${c.applicantName?.trim().toLowerCase()}_${c.pesel}`;
+          if (!seenApplicants.has(key) && !initialMap.has(c.caseNumber)) {
+            seenApplicants.add(key);
+            initialMap.set(c.caseNumber, c);
+          }
+        });
 
         const mergedList = Array.from(initialMap.values());
         setCases(mergedList);
@@ -311,6 +328,14 @@ export default function PanelPracownikaPage() {
       setIsSyncing(false);
     }
   }, []);
+
+  // Automatyczna synchronizacja w tle co 8 sekund, aby nowe wnioski pojawiały się natychmiast
+  useEffect(() => {
+    const timer = setInterval(() => {
+      loadCloudCases();
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [loadCloudCases]);
 
   // Inicjalizacja sesji oraz pobranie spraw z Supabase przy starcie
   useEffect(() => {

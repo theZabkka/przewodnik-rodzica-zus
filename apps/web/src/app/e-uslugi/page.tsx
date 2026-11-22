@@ -240,6 +240,17 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
       }
 
  const params = new URLSearchParams(window.location.search);
+ const tabParam = params.get("tab");
+ if (tabParam === "usc") {
+   setActiveTab("usc");
+ } else if (tabParam === "pue") {
+   setActiveTab("pue");
+ } else if (tabParam === "mobywatel") {
+   setActiveTab("mobywatel");
+ } else if (tabParam === "ezla") {
+   setActiveTab("ezla");
+ }
+
  if (params.get("prefill") === "1") {
  const raw = window.localStorage.getItem("zus_zam_prefill");
  if (raw) {
@@ -575,12 +586,15 @@ Identyfikator dokumentu: RSC-${Math.random().toString(36).substring(2, 10).toUpp
  onClick={() => setActiveTab("usc")}
  className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-bold transition-all ${
  activeTab === "usc"
-              ? "bg-[#007834] text-white "
+              ? "bg-[#007834] text-white shadow-xs"
               : "text-[#2E4B38] hover:bg-[#EFF3EA] hover:text-[#10371E]"
           }`}
         >
           <Landmark className="w-4 h-4" />
           <span>Urząd Stanu Cywilnego (USC / gov.pl)</span>
+          <span className="bg-[#10371E] text-white text-[10px] px-1.5 py-0.5 rounded font-mono">
+            Akt urodzenia
+          </span>
         </button>
 
         <button

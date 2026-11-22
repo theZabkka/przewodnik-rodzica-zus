@@ -230,14 +230,14 @@ export default function HomePage() {
             <div className="space-y-2">
               <FileText className="w-5 h-5 text-[#007834]" />
               <h3 className="text-base font-extrabold text-[#10371E]">
-                Wniosek ZAM do druku A4
+                Wniosek ZAM, eZUS & USC
               </h3>
               <p className="text-sm text-[#425B4A] leading-relaxed">
-                Wypełnij formularz pytanie po pytaniu ze sprawdzaniem PESEL i NIP, a potem wydrukuj gotową kartkę A4.
+                Wypełnij wniosek ZAM, pobierz elektroniczny odpis aktu urodzenia z USC i zweryfikuj stan składek w PUE/eZUS.
               </p>
             </div>
             <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#007834] group-hover:underline">
-              <span>Wypełnij wniosek</span>
+              <span>Wypełnij wniosek & USC</span>
               <ArrowRight className="w-4 h-4" />
             </span>
           </Link>
